@@ -1,0 +1,829 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3C4324FE0E42FEAD006C46D5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C4324F80E42FEAD006C46D5 /* MainMenu.xib */; };
+		3C4324FF0E42FEAD006C46D5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C4324FA0E42FEAD006C46D5 /* InfoPlist.strings */; };
+		3C4325000E42FEAD006C46D5 /* DrawingDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C4324FC0E42FEAD006C46D5 /* DrawingDocument.xib */; };
+		3CD4D7500E42F12F00F37DC9 /* ViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD4D74A0E42F12F00F37DC9 /* ViewerController.m */; };
+		3CD4D7510E42F12F00F37DC9 /* StatusItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD4D74C0E42F12F00F37DC9 /* StatusItemView.m */; };
+		3CD4D7520E42F12F00F37DC9 /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD4D74E0E42F12F00F37DC9 /* PreferencesController.m */; };
+		3CD4D7530E42F13500F37DC9 /* Installer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8FCB0E428F4E00777579 /* Installer.m */; };
+		3CD4D7540E42F13600F37DC9 /* Exporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8F220E428D7200777579 /* Exporter.m */; };
+		3CD4D7610E42F19600F37DC9 /* Viewer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CD4D7600E42F19600F37DC9 /* Viewer.xib */; };
+		3CD4D7680E42F2D600F37DC9 /* Built-in.tds in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3CD4D7630E42F24200F37DC9 /* Built-in.tds */; };
+		3CD4D7840E42F34B00F37DC9 /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8FBF0E428F2100777579 /* Renderer.m */; };
+		3CD4D79D0E42F39800F37DC9 /* ViewerMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD4D79C0E42F39800F37DC9 /* ViewerMain.m */; };
+		3CD4D7B80E42F69000F37DC9 /* TopDrawRenderer in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9B4A8EE00E428BAF00777579 /* TopDrawRenderer */; };
+		3CD4D7EE0E42F9ED00F37DC9 /* TopDraw.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9B4A90240E42970000777579 /* TopDraw.icns */; };
+		8D15AC320486D014006FF6A4 /* Editormain.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* Editormain.m */; settings = {ATTRIBUTES = (); }; };
+		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+		9B1164000E47BCB100C230D5 /* NSColor+Adjustment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1163FF0E47BCB100C230D5 /* NSColor+Adjustment.m */; };
+		9B1164010E47BCB100C230D5 /* NSColor+Adjustment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1163FF0E47BCB100C230D5 /* NSColor+Adjustment.m */; };
+		9B296FB10E43EC0F00D89930 /* SimulatorObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B296FB00E43EC0F00D89930 /* SimulatorObject.m */; };
+		9B4A8EAD0E427E3B00777579 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4A8EAA0E427E3B00777579 /* Accelerate.framework */; };
+		9B4A8EAE0E427E3B00777579 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4A8EAB0E427E3B00777579 /* JavaScriptCore.framework */; };
+		9B4A8EAF0E427E3B00777579 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4A8EAC0E427E3B00777579 /* QuartzCore.framework */; };
+		9B4A8EE50E428BF000777579 /* NSColor+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8ED60E428B8400777579 /* NSColor+Random.m */; };
+		9B4A8EE60E428BF100777579 /* NSColor+String.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8ED40E428B8400777579 /* NSColor+String.m */; };
+		9B4A8EE70E428BF200777579 /* NSScreen+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8ED20E428B8400777579 /* NSScreen+Convenience.m */; };
+		9B4A8F0B0E428C7700777579 /* Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8EE90E428C7700777579 /* Color.m */; };
+		9B4A8F0C0E428C7700777579 /* Compositor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8EEB0E428C7700777579 /* Compositor.m */; };
+		9B4A8F0D0E428C7700777579 /* Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8EED0E428C7700777579 /* Filter.m */; };
+		9B4A8F0E0E428C7700777579 /* Gradient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8EEF0E428C7700777579 /* Gradient.m */; };
+		9B4A8F0F0E428C7700777579 /* GravityWell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8EF10E428C7700777579 /* GravityWell.m */; };
+		9B4A8F100E428C7700777579 /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8EF30E428C7700777579 /* Image.m */; };
+		9B4A8F110E428C7700777579 /* Layer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8EF50E428C7700777579 /* Layer.m */; };
+		9B4A8F120E428C7700777579 /* Noise.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8EF70E428C7700777579 /* Noise.m */; };
+		9B4A8F130E428C7700777579 /* Particles.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8EF90E428C7700777579 /* Particles.m */; };
+		9B4A8F140E428C7700777579 /* Plasma.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8EFB0E428C7700777579 /* Plasma.m */; };
+		9B4A8F150E428C7700777579 /* PointObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8EFD0E428C7700777579 /* PointObject.m */; };
+		9B4A8F160E428C7700777579 /* Randomizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8EFF0E428C7700777579 /* Randomizer.m */; };
+		9B4A8F170E428C7700777579 /* RectObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8F010E428C7700777579 /* RectObject.m */; };
+		9B4A8F180E428C7700777579 /* RendererMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8F020E428C7700777579 /* RendererMain.m */; };
+		9B4A8F190E428C7700777579 /* Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8F040E428C7700777579 /* Runtime.m */; };
+		9B4A8F1A0E428C7700777579 /* RuntimeObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8F060E428C7700777579 /* RuntimeObject.m */; };
+		9B4A8F1B0E428C7700777579 /* Simulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8F080E428C7700777579 /* Simulator.m */; };
+		9B4A8F1C0E428C7700777579 /* Text.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8F0A0E428C7700777579 /* Text.m */; };
+		9B4A8F230E428D7200777579 /* Exporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8F220E428D7200777579 /* Exporter.m */; };
+		9B4A8F240E428D7200777579 /* Exporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8F220E428D7200777579 /* Exporter.m */; };
+		9B4A8F290E428D9900777579 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */; };
+		9B4A8F2A0E428D9A00777579 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4A8EAB0E427E3B00777579 /* JavaScriptCore.framework */; };
+		9B4A8F2B0E428D9B00777579 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4A8EAC0E427E3B00777579 /* QuartzCore.framework */; };
+		9B4A8F2C0E428D9C00777579 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4A8EAA0E427E3B00777579 /* Accelerate.framework */; };
+		9B4A8F9B0E428E8D00777579 /* TopDrawRenderer in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9B4A8EE00E428BAF00777579 /* TopDrawRenderer */; };
+		9B4A8FA40E428EAF00777579 /* DrawingDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8FA20E428EAF00777579 /* DrawingDocument.m */; };
+		9B4A8FC00E428F2100777579 /* CGImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8FB50E428F2100777579 /* CGImageView.m */; };
+		9B4A8FC10E428F2100777579 /* ColorizingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8FB70E428F2100777579 /* ColorizingTextView.m */; };
+		9B4A8FC20E428F2100777579 /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8FB90E428F2100777579 /* Controller.m */; };
+		9B4A8FC30E428F2100777579 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8FBB0E428F2100777579 /* Logging.m */; };
+		9B4A8FC40E428F2100777579 /* Preview.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8FBD0E428F2100777579 /* Preview.m */; };
+		9B4A8FC50E428F2100777579 /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8FBF0E428F2100777579 /* Renderer.m */; };
+		9B4A8FCC0E428F4E00777579 /* Installer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8FCB0E428F4E00777579 /* Installer.m */; };
+		9B4A90250E42970000777579 /* TopDrawEditor.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9B4A90220E42970000777579 /* TopDrawEditor.icns */; };
+		9B4A90260E42970000777579 /* TopDrawDoc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9B4A90230E42970000777579 /* TopDrawDoc.icns */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3CD4D5D30E42DD1300F37DC9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9B4A8EDF0E428BAF00777579;
+			remoteInfo = Renderer;
+		};
+		9B296DE50E437A6000D89930 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9B4A8EDF0E428BAF00777579;
+			remoteInfo = Renderer;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3CD4D76C0E42F2FC00F37DC9 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				3CD4D7680E42F2D600F37DC9 /* Built-in.tds in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3CD4D7BB0E42F69900F37DC9 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				3CD4D7B80E42F69000F37DC9 /* TopDrawRenderer in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9B4A8FA10E428E9400777579 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				9B4A8F9B0E428E8D00777579 /* TopDrawRenderer in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		2A37F4B0FDCFA73011CA2CEA /* Editormain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Editormain.m; sourceTree = "<group>"; };
+		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		32DBCF750370BD2300C91783 /* TopDraw_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopDraw_Prefix.pch; sourceTree = "<group>"; };
+		3C4324F90E42FEAD006C46D5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		3C4324FB0E42FEAD006C46D5 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3C4324FD0E42FEAD006C46D5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/DrawingDocument.xib; sourceTree = "<group>"; };
+		3CD4D7440E42F08000F37DC9 /* Top Draw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Top Draw.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CD4D7460E42F08000F37DC9 /* Viewer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Viewer-Info.plist"; sourceTree = "<group>"; };
+		3CD4D74A0E42F12F00F37DC9 /* ViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewerController.m; sourceTree = "<group>"; };
+		3CD4D74B0E42F12F00F37DC9 /* ViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewerController.h; sourceTree = "<group>"; };
+		3CD4D74C0E42F12F00F37DC9 /* StatusItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusItemView.m; sourceTree = "<group>"; };
+		3CD4D74D0E42F12F00F37DC9 /* StatusItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusItemView.h; sourceTree = "<group>"; };
+		3CD4D74E0E42F12F00F37DC9 /* PreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesController.m; sourceTree = "<group>"; };
+		3CD4D74F0E42F12F00F37DC9 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
+		3CD4D7600E42F19600F37DC9 /* Viewer.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Viewer.xib; sourceTree = "<group>"; };
+		3CD4D7630E42F24200F37DC9 /* Built-in.tds */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Built-in.tds"; sourceTree = "<group>"; };
+		3CD4D79C0E42F39800F37DC9 /* ViewerMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewerMain.m; sourceTree = "<group>"; };
+		8D15AC360486D014006FF6A4 /* Editor-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Editor-Info.plist"; sourceTree = "<group>"; };
+		8D15AC370486D014006FF6A4 /* Top Draw Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Top Draw Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B1163CF0E47B95A00C230D5 /* Top Draw.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "Top Draw.css"; path = "Documentation/Top Draw.css"; sourceTree = "<group>"; };
+		9B1163FE0E47BCB100C230D5 /* NSColor+Adjustment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+Adjustment.h"; sourceTree = "<group>"; };
+		9B1163FF0E47BCB100C230D5 /* NSColor+Adjustment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Adjustment.m"; sourceTree = "<group>"; };
+		9B296FAF0E43EC0F00D89930 /* SimulatorObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatorObject.h; sourceTree = "<group>"; };
+		9B296FB00E43EC0F00D89930 /* SimulatorObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimulatorObject.m; sourceTree = "<group>"; };
+		9B4A8EAA0E427E3B00777579 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
+		9B4A8EAB0E427E3B00777579 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = /System/Library/Frameworks/JavaScriptCore.framework; sourceTree = "<absolute>"; };
+		9B4A8EAC0E427E3B00777579 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
+		9B4A8ED20E428B8400777579 /* NSScreen+Convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSScreen+Convenience.m"; sourceTree = "<group>"; };
+		9B4A8ED30E428B8400777579 /* NSScreen+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSScreen+Convenience.h"; sourceTree = "<group>"; };
+		9B4A8ED40E428B8400777579 /* NSColor+String.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+String.m"; sourceTree = "<group>"; };
+		9B4A8ED50E428B8400777579 /* NSColor+String.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+String.h"; sourceTree = "<group>"; };
+		9B4A8ED60E428B8400777579 /* NSColor+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Random.m"; sourceTree = "<group>"; };
+		9B4A8ED70E428B8400777579 /* NSColor+Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+Random.h"; sourceTree = "<group>"; };
+		9B4A8EE00E428BAF00777579 /* TopDrawRenderer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TopDrawRenderer; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B4A8EE80E428C7700777579 /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
+		9B4A8EE90E428C7700777579 /* Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Color.m; sourceTree = "<group>"; };
+		9B4A8EEA0E428C7700777579 /* Compositor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Compositor.h; sourceTree = "<group>"; };
+		9B4A8EEB0E428C7700777579 /* Compositor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Compositor.m; sourceTree = "<group>"; };
+		9B4A8EEC0E428C7700777579 /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
+		9B4A8EED0E428C7700777579 /* Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Filter.m; sourceTree = "<group>"; };
+		9B4A8EEE0E428C7700777579 /* Gradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gradient.h; sourceTree = "<group>"; };
+		9B4A8EEF0E428C7700777579 /* Gradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Gradient.m; sourceTree = "<group>"; };
+		9B4A8EF00E428C7700777579 /* GravityWell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GravityWell.h; sourceTree = "<group>"; };
+		9B4A8EF10E428C7700777579 /* GravityWell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GravityWell.m; sourceTree = "<group>"; };
+		9B4A8EF20E428C7700777579 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
+		9B4A8EF30E428C7700777579 /* Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Image.m; sourceTree = "<group>"; };
+		9B4A8EF40E428C7700777579 /* Layer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layer.h; sourceTree = "<group>"; };
+		9B4A8EF50E428C7700777579 /* Layer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Layer.m; sourceTree = "<group>"; };
+		9B4A8EF60E428C7700777579 /* Noise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Noise.h; sourceTree = "<group>"; };
+		9B4A8EF70E428C7700777579 /* Noise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Noise.m; sourceTree = "<group>"; };
+		9B4A8EF80E428C7700777579 /* Particles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Particles.h; sourceTree = "<group>"; };
+		9B4A8EF90E428C7700777579 /* Particles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Particles.m; sourceTree = "<group>"; };
+		9B4A8EFA0E428C7700777579 /* Plasma.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Plasma.h; sourceTree = "<group>"; };
+		9B4A8EFB0E428C7700777579 /* Plasma.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Plasma.m; sourceTree = "<group>"; };
+		9B4A8EFC0E428C7700777579 /* PointObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointObject.h; sourceTree = "<group>"; };
+		9B4A8EFD0E428C7700777579 /* PointObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointObject.m; sourceTree = "<group>"; };
+		9B4A8EFE0E428C7700777579 /* Randomizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Randomizer.h; sourceTree = "<group>"; };
+		9B4A8EFF0E428C7700777579 /* Randomizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Randomizer.m; sourceTree = "<group>"; };
+		9B4A8F000E428C7700777579 /* RectObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectObject.h; sourceTree = "<group>"; };
+		9B4A8F010E428C7700777579 /* RectObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RectObject.m; sourceTree = "<group>"; };
+		9B4A8F020E428C7700777579 /* RendererMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RendererMain.m; sourceTree = "<group>"; };
+		9B4A8F030E428C7700777579 /* Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Runtime.h; sourceTree = "<group>"; };
+		9B4A8F040E428C7700777579 /* Runtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Runtime.m; sourceTree = "<group>"; };
+		9B4A8F050E428C7700777579 /* RuntimeObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuntimeObject.h; sourceTree = "<group>"; };
+		9B4A8F060E428C7700777579 /* RuntimeObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RuntimeObject.m; sourceTree = "<group>"; };
+		9B4A8F070E428C7700777579 /* Simulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Simulator.h; sourceTree = "<group>"; };
+		9B4A8F080E428C7700777579 /* Simulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Simulator.m; sourceTree = "<group>"; };
+		9B4A8F090E428C7700777579 /* Text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Text.h; sourceTree = "<group>"; };
+		9B4A8F0A0E428C7700777579 /* Text.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Text.m; sourceTree = "<group>"; };
+		9B4A8F200E428CDE00777579 /* Renderer_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Renderer_Prefix.pch; sourceTree = "<group>"; };
+		9B4A8F210E428D7200777579 /* Exporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Exporter.h; sourceTree = "<group>"; };
+		9B4A8F220E428D7200777579 /* Exporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Exporter.m; sourceTree = "<group>"; };
+		9B4A8FA20E428EAF00777579 /* DrawingDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingDocument.m; sourceTree = "<group>"; };
+		9B4A8FA30E428EAF00777579 /* DrawingDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingDocument.h; sourceTree = "<group>"; };
+		9B4A8FB40E428F2100777579 /* CGImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGImageView.h; sourceTree = "<group>"; };
+		9B4A8FB50E428F2100777579 /* CGImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGImageView.m; sourceTree = "<group>"; };
+		9B4A8FB60E428F2100777579 /* ColorizingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorizingTextView.h; sourceTree = "<group>"; };
+		9B4A8FB70E428F2100777579 /* ColorizingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorizingTextView.m; sourceTree = "<group>"; };
+		9B4A8FB80E428F2100777579 /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
+		9B4A8FB90E428F2100777579 /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
+		9B4A8FBA0E428F2100777579 /* Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logging.h; sourceTree = "<group>"; };
+		9B4A8FBB0E428F2100777579 /* Logging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Logging.m; sourceTree = "<group>"; };
+		9B4A8FBC0E428F2100777579 /* Preview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preview.h; sourceTree = "<group>"; };
+		9B4A8FBD0E428F2100777579 /* Preview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preview.m; sourceTree = "<group>"; };
+		9B4A8FBE0E428F2100777579 /* Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
+		9B4A8FBF0E428F2100777579 /* Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Renderer.m; sourceTree = "<group>"; };
+		9B4A8FCA0E428F4E00777579 /* Installer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Installer.h; sourceTree = "<group>"; };
+		9B4A8FCB0E428F4E00777579 /* Installer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Installer.m; sourceTree = "<group>"; };
+		9B4A90220E42970000777579 /* TopDrawEditor.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = TopDrawEditor.icns; sourceTree = "<group>"; };
+		9B4A90230E42970000777579 /* TopDrawDoc.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = TopDrawDoc.icns; sourceTree = "<group>"; };
+		9B4A90240E42970000777579 /* TopDraw.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = TopDraw.icns; sourceTree = "<group>"; };
+		9BE3C04B0E4370AC00E3AA8A /* TopDrawEditor.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html.documentation; name = TopDrawEditor.html; path = Documentation/TopDrawEditor.html; sourceTree = "<group>"; };
+		9BE3C04C0E4370AC00E3AA8A /* TopDraw.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html.documentation; name = TopDraw.html; path = Documentation/TopDraw.html; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3CD4D7420E42F08000F37DC9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D15AC330486D014006FF6A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
+				9B4A8EAD0E427E3B00777579 /* Accelerate.framework in Frameworks */,
+				9B4A8EAE0E427E3B00777579 /* JavaScriptCore.framework in Frameworks */,
+				9B4A8EAF0E427E3B00777579 /* QuartzCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9B4A8EDE0E428BAF00777579 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B4A8F290E428D9900777579 /* Foundation.framework in Frameworks */,
+				9B4A8F2A0E428D9A00777579 /* JavaScriptCore.framework in Frameworks */,
+				9B4A8F2B0E428D9B00777579 /* QuartzCore.framework in Frameworks */,
+				9B4A8F2C0E428D9C00777579 /* Accelerate.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		19C28FB0FE9D524F11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D15AC370486D014006FF6A4 /* Top Draw Editor.app */,
+				9B4A8EE00E428BAF00777579 /* TopDrawRenderer */,
+				3CD4D7440E42F08000F37DC9 /* Top Draw.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2A37F4AAFDCFA73011CA2CEA /* TopDraw */ = {
+			isa = PBXGroup;
+			children = (
+				9BE3C03F0E43703C00E3AA8A /* Documentation */,
+				3CD4D6A90E42EBE400F37DC9 /* Common */,
+				2A37F4ABFDCFA73011CA2CEA /* Editor */,
+				2A37F4AFFDCFA73011CA2CEA /* Renderer */,
+				9B4A8EC70E4285FC00777579 /* Viewer */,
+				9B4A90200E4296F700777579 /* Icons */,
+				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
+				19C28FB0FE9D524F11CA2CBB /* Products */,
+			);
+			name = TopDraw;
+			sourceTree = "<group>";
+		};
+		2A37F4ABFDCFA73011CA2CEA /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				9B4A8FB40E428F2100777579 /* CGImageView.h */,
+				9B4A8FB50E428F2100777579 /* CGImageView.m */,
+				9B4A8FB60E428F2100777579 /* ColorizingTextView.h */,
+				9B4A8FB70E428F2100777579 /* ColorizingTextView.m */,
+				9B4A8FB80E428F2100777579 /* Controller.h */,
+				9B4A8FB90E428F2100777579 /* Controller.m */,
+				9B4A8FA30E428EAF00777579 /* DrawingDocument.h */,
+				9B4A8FA20E428EAF00777579 /* DrawingDocument.m */,
+				9B4A8FBA0E428F2100777579 /* Logging.h */,
+				9B4A8FBB0E428F2100777579 /* Logging.m */,
+				2A37F4B0FDCFA73011CA2CEA /* Editormain.m */,
+				9B4A8FBC0E428F2100777579 /* Preview.h */,
+				9B4A8FBD0E428F2100777579 /* Preview.m */,
+				8D15AC360486D014006FF6A4 /* Editor-Info.plist */,
+				3C4324F80E42FEAD006C46D5 /* MainMenu.xib */,
+				3C4324FA0E42FEAD006C46D5 /* InfoPlist.strings */,
+				3C4324FC0E42FEAD006C46D5 /* DrawingDocument.xib */,
+			);
+			path = Editor;
+			sourceTree = "<group>";
+		};
+		2A37F4AFFDCFA73011CA2CEA /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				9B4A8F200E428CDE00777579 /* Renderer_Prefix.pch */,
+				9B4A8F020E428C7700777579 /* RendererMain.m */,
+				9B4A8F420E428E1D00777579 /* Runtime */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
+		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9B4A8EAA0E427E3B00777579 /* Accelerate.framework */,
+				2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */,
+				1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */,
+				2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */,
+				9B4A8EAB0E427E3B00777579 /* JavaScriptCore.framework */,
+				9B4A8EAC0E427E3B00777579 /* QuartzCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3CD4D6A90E42EBE400F37DC9 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				9B4A8F210E428D7200777579 /* Exporter.h */,
+				9B4A8F220E428D7200777579 /* Exporter.m */,
+				9B4A8FCA0E428F4E00777579 /* Installer.h */,
+				9B4A8FCB0E428F4E00777579 /* Installer.m */,
+				9B1163FE0E47BCB100C230D5 /* NSColor+Adjustment.h */,
+				9B1163FF0E47BCB100C230D5 /* NSColor+Adjustment.m */,
+				9B4A8FBE0E428F2100777579 /* Renderer.h */,
+				9B4A8FBF0E428F2100777579 /* Renderer.m */,
+				32DBCF750370BD2300C91783 /* TopDraw_Prefix.pch */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		9B4A8EC70E4285FC00777579 /* Viewer */ = {
+			isa = PBXGroup;
+			children = (
+				3CD4D74F0E42F12F00F37DC9 /* PreferencesController.h */,
+				3CD4D74E0E42F12F00F37DC9 /* PreferencesController.m */,
+				3CD4D74D0E42F12F00F37DC9 /* StatusItemView.h */,
+				3CD4D74C0E42F12F00F37DC9 /* StatusItemView.m */,
+				3CD4D74B0E42F12F00F37DC9 /* ViewerController.h */,
+				3CD4D74A0E42F12F00F37DC9 /* ViewerController.m */,
+				3CD4D79C0E42F39800F37DC9 /* ViewerMain.m */,
+				3CD4D7600E42F19600F37DC9 /* Viewer.xib */,
+				3CD4D7460E42F08000F37DC9 /* Viewer-Info.plist */,
+				3CD4D7630E42F24200F37DC9 /* Built-in.tds */,
+			);
+			path = Viewer;
+			sourceTree = "<group>";
+		};
+		9B4A8F420E428E1D00777579 /* Runtime */ = {
+			isa = PBXGroup;
+			children = (
+				9B4A8ED70E428B8400777579 /* NSColor+Random.h */,
+				9B4A8ED60E428B8400777579 /* NSColor+Random.m */,
+				9B4A8ED50E428B8400777579 /* NSColor+String.h */,
+				9B4A8ED40E428B8400777579 /* NSColor+String.m */,
+				9B4A8ED30E428B8400777579 /* NSScreen+Convenience.h */,
+				9B4A8ED20E428B8400777579 /* NSScreen+Convenience.m */,
+				9B4A8EE80E428C7700777579 /* Color.h */,
+				9B4A8EE90E428C7700777579 /* Color.m */,
+				9B4A8EEA0E428C7700777579 /* Compositor.h */,
+				9B4A8EEB0E428C7700777579 /* Compositor.m */,
+				9B4A8EEC0E428C7700777579 /* Filter.h */,
+				9B4A8EED0E428C7700777579 /* Filter.m */,
+				9B4A8EEE0E428C7700777579 /* Gradient.h */,
+				9B4A8EEF0E428C7700777579 /* Gradient.m */,
+				9B4A8EF00E428C7700777579 /* GravityWell.h */,
+				9B4A8EF10E428C7700777579 /* GravityWell.m */,
+				9B4A8EF20E428C7700777579 /* Image.h */,
+				9B4A8EF30E428C7700777579 /* Image.m */,
+				9B4A8EF40E428C7700777579 /* Layer.h */,
+				9B4A8EF50E428C7700777579 /* Layer.m */,
+				9B4A8EF60E428C7700777579 /* Noise.h */,
+				9B4A8EF70E428C7700777579 /* Noise.m */,
+				9B4A8EF80E428C7700777579 /* Particles.h */,
+				9B4A8EF90E428C7700777579 /* Particles.m */,
+				9B4A8EFA0E428C7700777579 /* Plasma.h */,
+				9B4A8EFB0E428C7700777579 /* Plasma.m */,
+				9B4A8EFC0E428C7700777579 /* PointObject.h */,
+				9B4A8EFD0E428C7700777579 /* PointObject.m */,
+				9B4A8EFE0E428C7700777579 /* Randomizer.h */,
+				9B4A8EFF0E428C7700777579 /* Randomizer.m */,
+				9B4A8F000E428C7700777579 /* RectObject.h */,
+				9B4A8F010E428C7700777579 /* RectObject.m */,
+				9B4A8F030E428C7700777579 /* Runtime.h */,
+				9B4A8F040E428C7700777579 /* Runtime.m */,
+				9B4A8F050E428C7700777579 /* RuntimeObject.h */,
+				9B4A8F060E428C7700777579 /* RuntimeObject.m */,
+				9B4A8F070E428C7700777579 /* Simulator.h */,
+				9B4A8F080E428C7700777579 /* Simulator.m */,
+				9B296FAF0E43EC0F00D89930 /* SimulatorObject.h */,
+				9B296FB00E43EC0F00D89930 /* SimulatorObject.m */,
+				9B4A8F090E428C7700777579 /* Text.h */,
+				9B4A8F0A0E428C7700777579 /* Text.m */,
+			);
+			name = Runtime;
+			sourceTree = "<group>";
+		};
+		9B4A90200E4296F700777579 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				9B4A90220E42970000777579 /* TopDrawEditor.icns */,
+				9B4A90230E42970000777579 /* TopDrawDoc.icns */,
+				9B4A90240E42970000777579 /* TopDraw.icns */,
+			);
+			path = Icons;
+			sourceTree = "<group>";
+		};
+		9BE3C03F0E43703C00E3AA8A /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				9BE3C04B0E4370AC00E3AA8A /* TopDrawEditor.html */,
+				9BE3C04C0E4370AC00E3AA8A /* TopDraw.html */,
+				9B1163CF0E47B95A00C230D5 /* Top Draw.css */,
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3CD4D7430E42F08000F37DC9 /* Viewer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3CD4D7490E42F08100F37DC9 /* Build configuration list for PBXNativeTarget "Viewer" */;
+			buildPhases = (
+				3CD4D7400E42F08000F37DC9 /* Resources */,
+				3CD4D7410E42F08000F37DC9 /* Sources */,
+				3CD4D7420E42F08000F37DC9 /* Frameworks */,
+				3CD4D76C0E42F2FC00F37DC9 /* CopyFiles */,
+				3CD4D7BB0E42F69900F37DC9 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9B296DE60E437A6000D89930 /* PBXTargetDependency */,
+			);
+			name = Viewer;
+			productName = Viewer;
+			productReference = 3CD4D7440E42F08000F37DC9 /* Top Draw.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8D15AC270486D014006FF6A4 /* Editor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "Editor" */;
+			buildPhases = (
+				8D15AC2B0486D014006FF6A4 /* Resources */,
+				8D15AC300486D014006FF6A4 /* Sources */,
+				8D15AC330486D014006FF6A4 /* Frameworks */,
+				9B4A8FA10E428E9400777579 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3CD4D5D40E42DD1300F37DC9 /* PBXTargetDependency */,
+			);
+			name = Editor;
+			productInstallPath = "$(HOME)/Applications";
+			productName = TopDraw;
+			productReference = 8D15AC370486D014006FF6A4 /* Top Draw Editor.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9B4A8EDF0E428BAF00777579 /* Renderer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9B4A8EE40E428BCE00777579 /* Build configuration list for PBXNativeTarget "Renderer" */;
+			buildPhases = (
+				9B4A8EDD0E428BAF00777579 /* Sources */,
+				9B4A8EDE0E428BAF00777579 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Renderer;
+			productName = Renderer;
+			productReference = 9B4A8EE00E428BAF00777579 /* TopDrawRenderer */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "TopDraw" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* TopDraw */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D15AC270486D014006FF6A4 /* Editor */,
+				9B4A8EDF0E428BAF00777579 /* Renderer */,
+				3CD4D7430E42F08000F37DC9 /* Viewer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3CD4D7400E42F08000F37DC9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CD4D7610E42F19600F37DC9 /* Viewer.xib in Resources */,
+				3CD4D7EE0E42F9ED00F37DC9 /* TopDraw.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D15AC2B0486D014006FF6A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B4A90250E42970000777579 /* TopDrawEditor.icns in Resources */,
+				9B4A90260E42970000777579 /* TopDrawDoc.icns in Resources */,
+				3C4324FE0E42FEAD006C46D5 /* MainMenu.xib in Resources */,
+				3C4324FF0E42FEAD006C46D5 /* InfoPlist.strings in Resources */,
+				3C4325000E42FEAD006C46D5 /* DrawingDocument.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3CD4D7410E42F08000F37DC9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CD4D7500E42F12F00F37DC9 /* ViewerController.m in Sources */,
+				3CD4D7510E42F12F00F37DC9 /* StatusItemView.m in Sources */,
+				3CD4D7520E42F12F00F37DC9 /* PreferencesController.m in Sources */,
+				3CD4D7530E42F13500F37DC9 /* Installer.m in Sources */,
+				3CD4D7540E42F13600F37DC9 /* Exporter.m in Sources */,
+				3CD4D7840E42F34B00F37DC9 /* Renderer.m in Sources */,
+				3CD4D79D0E42F39800F37DC9 /* ViewerMain.m in Sources */,
+				9B1164000E47BCB100C230D5 /* NSColor+Adjustment.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D15AC300486D014006FF6A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D15AC320486D014006FF6A4 /* Editormain.m in Sources */,
+				9B4A8F240E428D7200777579 /* Exporter.m in Sources */,
+				9B4A8FA40E428EAF00777579 /* DrawingDocument.m in Sources */,
+				9B4A8FC00E428F2100777579 /* CGImageView.m in Sources */,
+				9B4A8FC10E428F2100777579 /* ColorizingTextView.m in Sources */,
+				9B4A8FC20E428F2100777579 /* Controller.m in Sources */,
+				9B4A8FC30E428F2100777579 /* Logging.m in Sources */,
+				9B4A8FC40E428F2100777579 /* Preview.m in Sources */,
+				9B4A8FC50E428F2100777579 /* Renderer.m in Sources */,
+				9B4A8FCC0E428F4E00777579 /* Installer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9B4A8EDD0E428BAF00777579 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B4A8EE50E428BF000777579 /* NSColor+Random.m in Sources */,
+				9B4A8EE60E428BF100777579 /* NSColor+String.m in Sources */,
+				9B4A8EE70E428BF200777579 /* NSScreen+Convenience.m in Sources */,
+				9B4A8F0B0E428C7700777579 /* Color.m in Sources */,
+				9B4A8F0C0E428C7700777579 /* Compositor.m in Sources */,
+				9B4A8F0D0E428C7700777579 /* Filter.m in Sources */,
+				9B4A8F0E0E428C7700777579 /* Gradient.m in Sources */,
+				9B4A8F0F0E428C7700777579 /* GravityWell.m in Sources */,
+				9B4A8F100E428C7700777579 /* Image.m in Sources */,
+				9B4A8F110E428C7700777579 /* Layer.m in Sources */,
+				9B4A8F120E428C7700777579 /* Noise.m in Sources */,
+				9B4A8F130E428C7700777579 /* Particles.m in Sources */,
+				9B4A8F140E428C7700777579 /* Plasma.m in Sources */,
+				9B4A8F150E428C7700777579 /* PointObject.m in Sources */,
+				9B4A8F160E428C7700777579 /* Randomizer.m in Sources */,
+				9B4A8F170E428C7700777579 /* RectObject.m in Sources */,
+				9B4A8F180E428C7700777579 /* RendererMain.m in Sources */,
+				9B4A8F190E428C7700777579 /* Runtime.m in Sources */,
+				9B4A8F1A0E428C7700777579 /* RuntimeObject.m in Sources */,
+				9B4A8F1B0E428C7700777579 /* Simulator.m in Sources */,
+				9B4A8F1C0E428C7700777579 /* Text.m in Sources */,
+				9B4A8F230E428D7200777579 /* Exporter.m in Sources */,
+				9B296FB10E43EC0F00D89930 /* SimulatorObject.m in Sources */,
+				9B1164010E47BCB100C230D5 /* NSColor+Adjustment.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3CD4D5D40E42DD1300F37DC9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9B4A8EDF0E428BAF00777579 /* Renderer */;
+			targetProxy = 3CD4D5D30E42DD1300F37DC9 /* PBXContainerItemProxy */;
+		};
+		9B296DE60E437A6000D89930 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9B4A8EDF0E428BAF00777579 /* Renderer */;
+			targetProxy = 9B296DE50E437A6000D89930 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		3C4324F80E42FEAD006C46D5 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C4324F90E42FEAD006C46D5 /* English */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		3C4324FA0E42FEAD006C46D5 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C4324FB0E42FEAD006C46D5 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3C4324FC0E42FEAD006C46D5 /* DrawingDocument.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C4324FD0E42FEAD006C46D5 /* English */,
+			);
+			name = DrawingDocument.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3CD4D7470E42F08000F37DC9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Common/TopDraw_Prefix.pch;
+				INFOPLIST_FILE = "Viewer/Viewer-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Top Draw";
+			};
+			name = Debug;
+		};
+		3CD4D7480E42F08000F37DC9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Common/TopDraw_Prefix.pch;
+				INFOPLIST_FILE = "Viewer/Viewer-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Top Draw";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		9B4A8EE20E428BB000777579 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Renderer/Renderer_Prefix.pch;
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = TopDrawRenderer;
+			};
+			name = Debug;
+		};
+		9B4A8EE30E428BB000777579 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Renderer/Renderer_Prefix.pch;
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = TopDrawRenderer;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		C05733C808A9546B00998B17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Common/TopDraw_Prefix.pch;
+				INFOPLIST_FILE = "Editor/Editor-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = "Top Draw Editor";
+			};
+			name = Debug;
+		};
+		C05733C908A9546B00998B17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Common/TopDraw_Prefix.pch;
+				INFOPLIST_FILE = "Editor/Editor-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = "Top Draw Editor";
+			};
+			name = Release;
+		};
+		C05733CC08A9546B00998B17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Debug;
+		};
+		C05733CD08A9546B00998B17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3CD4D7490E42F08100F37DC9 /* Build configuration list for PBXNativeTarget "Viewer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3CD4D7470E42F08000F37DC9 /* Debug */,
+				3CD4D7480E42F08000F37DC9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9B4A8EE40E428BCE00777579 /* Build configuration list for PBXNativeTarget "Renderer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9B4A8EE20E428BB000777579 /* Debug */,
+				9B4A8EE30E428BB000777579 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "Editor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C05733C808A9546B00998B17 /* Debug */,
+				C05733C908A9546B00998B17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "TopDraw" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C05733CC08A9546B00998B17 /* Debug */,
+				C05733CD08A9546B00998B17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+}
