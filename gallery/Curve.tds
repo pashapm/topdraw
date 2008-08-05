@@ -1,0 +1,63 @@
+// Fill with desktop with black
+var db = desktop.bounds;
+desktop.fillLayer(new Color("black"));
+
+// Draw some blue curves
+var curveColor = new Color(0, 0, 1, 0.2);
+desktop.strokeColor = curveColor;
+
+var rnd = new Randomizer(0, 1);
+var s = new Point(db.x, db.height / (1 + 9 * rnd.floatValue));
+var e = new Point(db.width, db.height / (1 + 9 * rnd.floatValue));
+var c = new Point(0, db.height);
+
+var curveXOffset = 150 * rnd.floatValue;
+var curveYOffset = 5 * rnd.floatValue;
+
+desktop.lineWidth = 5 + 10 * rnd.floatValue;
+
+for (x = 0; x < 20; ++x) {
+	desktop.beginPath();
+	curveColor.r += 0.03;
+	desktop.strokeColor = curveColor;
+	desktop.moveTo(s);
+	c.x = x * curveXOffset;
+	c.y += x * curveYOffset;
+	desktop.curveTo(c, e);
+	desktop.stroke();
+}
+
+// Draw some arcs
+curveColor = new Color(1, 1, 1, 0.2);
+desktop.strokeColor = curveColor;
+desktop.lineWidth = 3;
+desktop.fillColor = new Color(0, 0, 0, 0.3);
+
+var r = 100;
+var s = 0;
+var e = Math.PI;
+var count = 20;
+
+curveXOffset = 50 * rnd.floatValue;
+curveYOffset = 200 * rnd.floatValue;
+
+for (x = 0; x < count; ++x) {
+	desktop.beginPath();
+
+	c.x = 500 + x * (curveXOffset + x * 5);
+	c.y = 500 + Math.sin(3 * Math.PI * x / count) * curveYOffset;
+	s += 0.1;
+	e += 0.3;
+	r += 20 * Math.sin(e + Math.PI);
+	
+	if (e > Math.PI * 2)
+		e = Math.PI * 2;
+
+	desktop.arcTo(c, r, s, e, 0);
+	desktop.closePath();
+	desktop.fillStroke();
+	curveColor.g -= 0.02;
+	curveColor.b -= 0.05;
+	desktop.strokeColor = curveColor;
+}
+
