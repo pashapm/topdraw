@@ -1,12 +1,12 @@
-#summary One-sentence summary of this page.
+#summary Gallery and Scripts
 
 = Introduction =
 
 This is a gallery of Top Draw Scripts.
 
 = Factory Defaults scripts =
-
-  * [http://code.google.com/p/topdraw/Curves.tds Curves]
+== [http://code.google.com/p/topdraw/Curves.tds Curves] ==
  Interesting curves and stuff.
+
 
 = User Submitted scripts =
