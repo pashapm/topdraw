@@ -1,0 +1,35 @@
+body { 
+font-family: sans-serif;
+}
+
+h1 {
+  border: thin solid DarkBlue;
+  border-left: none;
+  border-right: none;
+  background-color: LightGray;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+}
+
+.MenuItem, .Menu {
+  padding: 1em;
+}
+
+.MenuItem {
+  font-weight: bold;
+}
+
+table.Menu {
+  border: thin solid black;
+  border-collapse: collapse;
+  border-spacing: 1em;
+  width: 50em;
+}
+
+th.Menu {
+  background-color: LightCyan;
+}
+
+
+
+

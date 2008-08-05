@@ -1,0 +1,10 @@
+// Render the menubar with a gradient
+var grad = new Gradient(new Color, new Color);
+menubar.fillLayer(grad);
+
+// Fill the desktop with a rectangle colored in each corner
+var a = new Color;
+var b = new Color;
+var c = new Color;
+var d = new Color;
+desktop.drawColoredRect(desktop.bounds, a, b, c, d);
