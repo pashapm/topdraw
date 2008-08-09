@@ -16,8 +16,8 @@ or icon in the dock.  Instead, there will be a colored shape in the menu bar to 
 current status (idle or rendering).  If you click on the item, it will display
 a menu similar to this menu:
 <p>
-<img src="menu.png"/>
-<p>
+<div>
+<img class="RightEdge" src="menu.png"/>
 
 <table class="Menu" border="1">
 <tr>
@@ -62,6 +62,8 @@ it will launch the editor with the currently active script.</td>
 </tr>
 
 </table>
+</div>
+
 <p>
 
 <h1>Preferences</h1>
@@ -69,22 +71,62 @@ Top Draw has several user configurable preferences to control the scripts to
 render, the rate of refresh, and the appearance of the Status Item.  The
 preferences window will look similar to this:
 <p>
-<img src="preferences.png"/>
+<div>
+<img class="RightEdge" src="preferences.png"/>
+
+<table class="Preferences" border="1">
+<tr>
+<th class="Preferences">Preference</th>
+<th class="Preferences">Description</th>
+</tr>
+
+<tr>
+<td class="PreferenceItem">Script&nbsp;Folder</td>
+<td class="Preferences">The location of the folder on your computer that contains the Top Draw Script (.tds) files 
+to be used by Top Draw when rendering Desktop images.  Only files ending in .tds will be read.  Top Draw will not read files from any folders in that directory.
+</td>
+</tr>
+
+<tr>
+<td class="PreferenceItem">Script</td>
+<td class="Preferences">The chosen script to render.  If you've selected the "Randomly chosen" checkbox, one of the scripts contained in your Script Folder will be chosen at random for each rendering.  Also, the Script menu will be disabled.
+</td>
+</tr>
+
+<tr>
+<td class="PreferenceItem">Refresh</td>
+<td class="Preferences">The desktop can be refreshed at a variety of intervals (seconds, minutes, hours).  Additionally, you
+can have it update when your computer starts up or even every time that you wake it from from sleeping.
+</td>
+</tr>
+
+<tr>
+<td class="PreferenceItem">Menu Indicator</td>
+<td class="Preferences">The appearance of the image drawing in the menubar can be customized.  You may choose the color to be drawn
+when idle or actively rendering a desktop.  You may also choose a pleasing geometric shape: rectangle, square, circle, or triangle.  It's up to you!
+</td>
+</tr>
+
+</table>
+</div>
+
+<h1>Top Draw Scripts</h1>
+Top Draw reads Top Draw Script (.tds) files and renders them into images which are installed on your desktop.  The distribution of Top Draw should contain a folder named "Top Draw Scripts" which contains example script files.
 <p>
+If you're not interested in programming, you can visit the Top Draw project <a href="http://code.google.com/p/topdraw/wiki/Gallery">Wiki Gallery</a> site and download new script files.  You can then copy those files into the Script Folder that you've configured Top Draw to use.  If you open the Preferences window, the new script(s) will be available for your selection.
+<p>
+The scripts use the JavaScript programming language, with enhancements, to provide the instructions to render.  If you'd like to learn more about these, please see the <a href="TopDrawEditor.html">Top Draw Editor</a> documentation.
 
-<h1>Scripts and Programming</h1>
+<h1>Requirements</h1>
+Top Draw requires a Macintosh computer running Mac OS X 10.5 (Leopard) or later.
 
-render, the rate of refresh, and the appearance of the Status Item.  The
-preferences window will look similar to this:
-
-<h1>Miscellaeous</h1>
+<h1>Miscellaneous</h1>
 Top Draw was written by <a href="maito:waylonis@gmail.com">Dan Waylonis</a> in 2008.
 <p>
 The most up-to-date versions can be found at Google's open source repository, as
 the <a href="http://code.google.com/p/topdraw">Top Draw</a> project.
 <p>
-The program is open source 
-
+The program is open source and written in Objective-C using Apple's Xcode IDE.  It uses the JavaScriptCore framework, Quartz, and CoreImage for rendering.
 
 </body>
 </html>

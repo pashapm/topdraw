@@ -6,6 +6,21 @@
 	objectVersion = 45;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		9B70DCF60E4D12DA00A609D9 /* All */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 9B70DD050E4D130500A609D9 /* Build configuration list for PBXAggregateTarget "All" */;
+			buildPhases = (
+			);
+			dependencies = (
+				9B70DCFA0E4D12DF00A609D9 /* PBXTargetDependency */,
+				9B70DCFC0E4D12E000A609D9 /* PBXTargetDependency */,
+			);
+			name = All;
+			productName = All;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		3C4324FE0E42FEAD006C46D5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C4324F80E42FEAD006C46D5 /* MainMenu.xib */; };
 		3C4324FF0E42FEAD006C46D5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C4324FA0E42FEAD006C46D5 /* InfoPlist.strings */; };
@@ -83,6 +98,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 9B4A8EDF0E428BAF00777579;
 			remoteInfo = Renderer;
+		};
+		9B70DCF90E4D12DF00A609D9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D15AC270486D014006FF6A4 /* Editor */;
+			remoteInfo = Editor;
+		};
+		9B70DCFB0E4D12E000A609D9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3CD4D7430E42F08000F37DC9 /* Viewer */;
+			remoteInfo = Viewer;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -495,9 +524,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				9B70DCF60E4D12DA00A609D9 /* All */,
 				8D15AC270486D014006FF6A4 /* Editor */,
-				9B4A8EDF0E428BAF00777579 /* Renderer */,
 				3CD4D7430E42F08000F37DC9 /* Viewer */,
+				9B4A8EDF0E428BAF00777579 /* Renderer */,
 			);
 		};
 /* End PBXProject section */
@@ -602,6 +632,16 @@
 			isa = PBXTargetDependency;
 			target = 9B4A8EDF0E428BAF00777579 /* Renderer */;
 			targetProxy = 9B296DE50E437A6000D89930 /* PBXContainerItemProxy */;
+		};
+		9B70DCFA0E4D12DF00A609D9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D15AC270486D014006FF6A4 /* Editor */;
+			targetProxy = 9B70DCF90E4D12DF00A609D9 /* PBXContainerItemProxy */;
+		};
+		9B70DCFC0E4D12E000A609D9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3CD4D7430E42F08000F37DC9 /* Viewer */;
+			targetProxy = 9B70DCFB0E4D12E000A609D9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -727,6 +767,27 @@
 			};
 			name = Release;
 		};
+		9B70DCF70E4D12DA00A609D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = All;
+			};
+			name = Debug;
+		};
+		9B70DCF80E4D12DA00A609D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = All;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		C05733C808A9546B00998B17 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -801,6 +862,15 @@
 			buildConfigurations = (
 				9B4A8EE20E428BB000777579 /* Debug */,
 				9B4A8EE30E428BB000777579 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9B70DD050E4D130500A609D9 /* Build configuration list for PBXAggregateTarget "All" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9B70DCF70E4D12DA00A609D9 /* Debug */,
+				9B70DCF80E4D12DA00A609D9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
