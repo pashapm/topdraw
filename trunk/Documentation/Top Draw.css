@@ -4,32 +4,46 @@ font-family: sans-serif;
 
 h1 {
   border: thin solid DarkBlue;
-  border-left: none;
   border-right: none;
-  background-color: LightGray;
+  border-left: none;
+  background-color: #F0F0F0;
   padding-top: 0.25em;
   padding-bottom: 0.25em;
 }
 
-.MenuItem, .Menu {
+h2 {
+  border: thin solid DarkBlue;
+  border-right: none;
+  border-left: none;
+  border-bottom: none;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+}
+
+.MenuItem, .Menu, .PreferenceItem, .Preferences {
   padding: 1em;
 }
 
-.MenuItem {
+.MenuItem, .PreferenceItem {
   font-weight: bold;
 }
 
-table.Menu {
+table.Menu, table.Preferences {
   border: thin solid black;
   border-collapse: collapse;
   border-spacing: 1em;
-  width: 50em;
 }
 
-th.Menu {
+th.Menu, th.Preferences {
   background-color: LightCyan;
 }
 
+img.LeftEdge {
+	float: left;
+}
 
+img.RightEdge {
+	float: right;
+}
 
 
