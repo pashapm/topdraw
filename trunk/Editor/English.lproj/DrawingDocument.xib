@@ -8,7 +8,7 @@
 		<string key="IBDocument.HIToolboxVersion">352.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="6"/>
+			<integer value="100025"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -73,15 +73,13 @@
 													<string>WebURLsWithTitlesPboardType</string>
 												</object>
 											</object>
-											<string key="NSFrameSize">{546, 84}</string>
+											<string key="NSFrameSize">{546, 14}</string>
 											<reference key="NSSuperview" ref="714311133"/>
 											<object class="NSTextContainer" key="NSTextContainer" id="213031204">
 												<object class="NSLayoutManager" key="NSLayoutManager">
 													<object class="NSTextStorage" key="NSTextStorage">
 														<object class="NSMutableString" key="NSString">
-															<bytes key="NS.bytes">Ly8gRmlsbCB3aXRoIGNvbG9yZWQgcmVjdGFuZ2xlCnZhciBhID0gbmV3IENvbG9yOwp2YXIgYiA9IG5l
-dyBDb2xvcjsKdmFyIGMgPSBuZXcgQ29sb3I7CnZhciBkID0gbmV3IENvbG9yOwpkZXNrdG9wLmRyYXdD
-b2xvcmVkUmVjdChkZXNrdG9wLmJvdW5kcywgYSwgYiwgYywgZCk7A</bytes>
+															<bytes key="NS.bytes">PHBsYWNlaG9sZGVyIHRvIGVuc3VyZSBwcm9wZXIgZm9udCBzZXR0aW5nPg</bytes>
 														</object>
 														<object class="NSDictionary" key="NSAttributes">
 															<bool key="EncodedWithXMLCoder">YES</bool>
@@ -546,9 +544,9 @@ b2xvcmVkUmVjdChkZXNrdG9wLmJvdW5kcywgYSwgYiwgYywgZCk7A</bytes>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{15, 770}, {546, 375}}</string>
+					<string>{{42, 763}, {546, 375}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{15, 770}, {546, 375}}</string>
+					<string>{{42, 763}, {546, 375}}</string>
 					<reference ref="9"/>
 					<string>{{201, 387}, {507, 413}}</string>
 					<reference ref="9"/>
@@ -599,11 +597,13 @@ b2xvcmVkUmVjdChkZXNrdG9wLmJvdW5kcywgYSwgYiwgYywgZCk7A</bytes>
 						<object class="NSMutableArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>cancelRender:</string>
+							<string>exportSample:</string>
 							<string>install:</string>
 							<string>render:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>

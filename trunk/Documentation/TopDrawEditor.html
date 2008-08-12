@@ -1,10 +1,346 @@
 <html>
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8">
-	<title>Top Draw Editor</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Top Draw Editor</title>
+<link rel="stylesheet" type="text/css" href="Top Draw.css" />
 </head>
 <body>
-Top Draw Editor allows you to create, edit, save, and run Top Draw Script (.tds) files
-for use with Top Draw.
+<h1>Introduction</h1>
+Top Draw Editor is the companion program to the <a href="TopDraw.html">Top Draw</a> viewer.  The editor allows you to create, open, edit, save, and render JavaScript based Top Draw Scripts (TDS, extension ".tds").  Multiple TDS files can be opened and their results can be viewed in a preview window within the application.  
+<p></p>
+Once a desktop image has been rendered, you can install it onto your desktop.  You can also create a sample image (1024 x 768) that represents your script, and then upload that image, along with the TDS file which created the image, to the <a href="http://code.google.com/p/topdraw">Top Draw website</a> so that others can enjoy your artistic creation!
+<p></p>
+If you've programmed using the JavaScript language, then there just a bit of new stuff to learn (See <a href="#Reference">Reference</a>).  If you've never programmed before, there are a number of example TDS files with informative comments that are included with this program that you can examine to see how it all works.  
+
+<h1>Getting Started</h1>
+When you launch the editor, any previously opened files will be automatically reopened (to prevent this, close the windows before quitting).  If no files were opened, a new, Untitled document will be created.  It should look like this:
+<p>
+<img src="Images/untitled.png"/>
+<p>
+Keywords for Javascript will be highlighted in blue and Top Draw script variables and classes will be highlighted in green.  The text in the lower left corner will indicate if the TDS is idle, rendering, or finished rendering.  If there were any errors in the file, the line with the problem will be highlighted in red.
+<p>
+The Preview window will also open.  If you choose the "Render" item from the Drawing menu, you'll see the preview window update to show a scaled representation of your desktop, something like this:
+<p>
+<img src="Images/preview.png"/>
+<p>
+If you like this image and want to install it on your desktop, you can choose the "Install onto Desktop" item from the Drawing menu.  The image file (or files if you have multiple displays) will be set as your desktop.  You can use System Preferences to set your desktop back to the original image if you change your mind.
+
+<h1>Menus</h1>
+
+
+<div>
+<img class="RightEdge" src="Images/file.png"/>
+
+<table class="Menu" border="1">
+<tr>
+<th class="Menu">File Menu</th>
+<th class="Menu">Description</th>
+</tr>
+
+<tr>
+<td class="MenuItem">New</td>
+<td class="Menu">Create a new TDS file with a few lines of code to generate an image.</td>
+</tr>
+
+<tr>
+<td class="MenuItem">Open...</td>
+<td class="Menu">Open a TDS file for editing, rendering, and saving.</td>
+</tr>
+
+<tr>
+<td class="MenuItem">Open Recent</td>
+<td class="Menu">A list of recently opened TDS files.</td>
+</tr>
+
+<tr>
+<td class="MenuItem">Close</td>
+<td class="Menu">Close the frontmost TDS file.</td>
+</tr>
+
+<tr>
+<td class="MenuItem">Save</td>
+<td class="Menu">Save the frontmost TDS file.</td>
+</tr>
+
+<tr>
+<td class="MenuItem">Save&nbsp;As...</td>
+<td class="Menu">Save the frontmost TDS file with a different name.</td>
+</tr>
+
+<tr>
+<td class="MenuItem">Revert&nbsp;to&nbsp;Saved</td>
+<td class="Menu">After a TDS file has been modified, this option will be enabled and if selected, it will replace the contents of the file with the last saved contents.</td>
+</tr>
+
+<tr>
+<td class="MenuItem">Export&nbsp;Sample...</td>
+<td class="Menu">Opens a Save panel prompting for the location to place a rendered JPEG file that is a small (1024 x 768 pixel) representation of the 
+
+After a TDS file has been modified, this option will be enabled and if selected, it will replace the contents of the file with the last saved contents.</td>
+</tr>
+
+</table>
+</div>
+<p></p>
+<div>
+<img class="RightEdge" src="Images/drawing.png"/>
+
+<table class="Menu" border="1">
+<tr>
+<th class="Menu">Drawing&nbsp;Menu</th>
+<th class="Menu">Description</th>
+</tr>
+
+<tr>
+<td class="MenuItem">Render</td>
+<td class="Menu">Render the frontmost TDS into an image.</td>
+</tr>
+
+<tr>
+<td class="MenuItem">Cancel Render</td>
+<td class="Menu">If you have a problem with a TDS rendering taking too long, you can choose this to cancel the rendering.</td>
+</tr>
+
+<tr>
+<td class="MenuItem">Install onto Desktop</td>
+<td class="Menu">The image rendered from the frontmost TDS will be set as your desktop image (or images if you have multiple displays).</td>
+</tr>
+
+</table>
+</div>
+<p></p>
+<div>
+<img class="RightEdge" src="Images/window.png"/>
+
+<table class="Menu" border="1">
+<tr>
+<th class="Menu">Window&nbsp;Menu</th>
+<th class="Menu">Description</th>
+</tr>
+
+<tr>
+<td class="MenuItem">Preview</td>
+<td class="Menu">Toggle the Preview window's visible state.  If a TDS has been rendered, its image will be in the Preview window.</td>
+</tr>
+
+<tr>
+<td class="MenuItem">Logging</td>
+<td class="Menu">Toggle the Logging window's visible state.  Information about the rendering of the TDS file is in the Logging window, along with any errors that may have occurred.</td>
+</tr>
+
+<tr>
+<td class="MenuItem">Install onto Desktop</td>
+<td class="Menu">The image rendered from the frontmost TDS will be set as your desktop image (or images if you have multiple displays).</td>
+</tr>
+
+</table>
+</div>
+
+<a name="Reference"></a>
+<h1>Reference</h1>
+Top Draw uses the JavaScript language as the basis for it's scripts.  It's recommended that you have some familiarity with JavaScript before tackling Top Draw scripting.  One source of training is the W3 School's <a href="http://www.w3schools.com/js/default.asp">JavaScript</a> site.
+<p></p>
+In order to create more interesting renderings, several classes of objects and global objects have been added.  This section will describe the various classes, their properties and functions, and some examples of how to use them.
+<p></p>
+<div class="Indented">
+<h2>Classes</h2>
+
+<div class="Indented">
+<h3>Color</h3>
+An RGB color with alpha.  The values of parameters should be floating point values between 0.0 and 1.0.  Alpha will default to 1.0 unless otherwise specified.
+
+<div class="ClassSection">Constructor</div>
+
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">(none)</td>
+<td class="ConstructorDetails">The red, green, and blue values will be randomly assigned.</td>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">color-name: string <span class="Optional">[, alpha-value]</span></td>
+<td class="ConstructorDetails">Lookup the name (e.g., "white" or "purple") from the list of HTML colors.  Optionally set the alpha to alpha-value.</td>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">gray-scale <span class="Optional">[, alpha-value]</span></td>
+<td class="ConstructorDetails">Set the red, green, and blue values to gray-scale.  Optionally set the alpha to alpha-value.</td>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">red-value, green-value, blue-value <span class="Optional">[, alpha-value]</span></td>
+<td class="ConstructorDetails">Set the red, green, and blue values.  Optionally set the alpha to alpha-value.</td>
+</tr>
+</table>
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">blend</td>
+<td class="FunctionDetails">src-color: Color <span class="Optional">[, blend-amount]</span></td>
+<td class="FunctionDetails">Create a new Color object that is blend-amount of src-color and (1.0 - blend-amount) of this color.  If not specified, blend-amount defaults to 0.5.</td>
+<td class="FunctionDetails">Color</td>
+</tr>
+
+<tr>
+<td class="Function">contrasting</td>
+<td class="FunctionDetails"><span class="Optional">[contrast-amount]</span></td>
+<td class="FunctionDetails">Create a new color based on the current color that is contrasting by contrast-amount.  The contrast is created by changing both the hue and the brightness.  If not specified, contrast-amount defaults to 0.2.</td>
+<td class="FunctionDetails">Color</td>
+</tr>
+
+<tr>
+<td class="Function">darker</td>
+<td class="FunctionDetails"><span class="Optional">[darker-amount]</span></td>
+<td class="FunctionDetails">Create a new color based on the current color with its brightness adjusted downwards by darker-amount.  If not specified, darker-amount defaults to 0.2.</td>
+<td class="FunctionDetails">Color</td>
+</tr>
+
+<tr>
+<td class="Function">lighter</td>
+<td class="FunctionDetails"><span class="Optional">[lighter-amount]</span></td>
+<td class="FunctionDetails">Create a new color based on the current color with its brightness adjusted upwards by lighter-amount.  If not specified, lighter-amount defaults to 0.2.</td>
+<td class="FunctionDetails">Color</td>
+</tr>
+
+<tr>
+<td class="Function">toString</td>
+<td class="FunctionDetails">(none)</td>
+<td class="FunctionDetails">Create a new String object that contains a formatted represenatation of the red, green, blue, and alpha channels.</td>
+<td class="FunctionDetails">String</td>
+</tr>
+
+<tr>
+<td class="Function">vary</td>
+<td class="FunctionDetails">red-value, green-value, blue-value <span class="Optional">[, alpha-value]</span></td>
+<td class="FunctionDetails">Create a new Color object based on the current color but vsaried by some random amount.  Specify the amount of variation for each channel.  If not specified, alpha-value is 0.0 (no variation).</td>
+<td class="FunctionDetails">Color</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">alpha / a</td>
+<td class="PropertyDetails">The alpha channel used for translucency / opacity.</td>
+<td class="PropertyDetails">float</td>
+<td class="FunctionDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">blue / b</td>
+<td class="PropertyDetails">The blue channel.</td>
+<td class="PropertyDetails">float</td>
+<td class="FunctionDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">brightness</td>
+<td class="PropertyDetails">The HSV brightness value.  Setting this value may result in the red, green, and/or blue values changing.</td>
+<td class="PropertyDetails">float</td>
+<td class="FunctionDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">green / g</td>
+<td class="PropertyDetails">The green channel.</td>
+<td class="PropertyDetails">float</td>
+<td class="FunctionDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">hue</td>
+<td class="PropertyDetails">The HSV hue value.  Setting this value may result in the red, green, and/or blue values changing.</td>
+<td class="PropertyDetails">float</td>
+<td class="FunctionDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">red / r</td>
+<td class="PropertyDetails">The red channel.</td>
+<td class="PropertyDetails">float</td>
+<td class="FunctionDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">saturation</td>
+<td class="PropertyDetails">The HSV saturation value.  Setting this value may result in the red, green, and/or blue values changing.</td>
+<td class="PropertyDetails">float</td>
+<td class="FunctionDetails">Read/Write</td>
+</tr>
+
+</table>
+
+<h3>Compositor</h3>
+<h3>Filter</h3>
+</div>
+
+<div class="Indented">
+<h2>Global Objects</h2>
+<table class="GlobalTable" border="1">
+<tr>
+<th class="Global">Name</th>
+<th class="Global">Description</th>
+<th class="Global">Class</th>
+<th class="Global">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Global">compositor</td>
+<td class="GlobalDetails">The Compositor object for all of the desktop.</td>
+<td class="GlobalDetails">Compositor</td>
+<td class="GlobalDetails">Read</td>
+</tr>
+
+<tr>
+<td class="Global">desktop</td>
+<td class="GlobalDetails">A Layer sized to covers all of the desktop.  If there are multiple displays and they are arranged in a non-rectangular pattern, the desktop will be sized to be the smallest rectangle that covers all of them.  The desktop is placed at the bottom of all other Layers in the global compositor.</td>
+<td class="GlobalDetails">Layer</td>
+<td class="GlobalDetails">Read</td>
+</tr>
+
+<tr>
+<td class="Global">menubar</td>
+<td class="GlobalDetails">A Layer sized and positioned to be underneath the menubar.  If nothing is drawn into this Layer, it will be transparent and will not affect the desktop image.  Otherwise, the menubar will be placed on top of all other Layers in the global compositor.  If your Desktop &amp; Screen Saver System Preferences are set to use a Translucent Menu Bar, the color in this layer will show through and look really cool.</td>
+<td class="GlobalDetails">Layer</td>
+<td class="GlobalDetails">Read</td>
+</tr>
+
+</table>
+</div>
+
+<h1>Requirements</h1>
+Top Draw requires a Macintosh computer running Mac OS X 10.5 (Leopard) or later.
+
+<h1>Miscellaneous</h1>
+Top Draw was written by <a href="maito:waylonis@gmail.com">Dan Waylonis</a> in 2008.
+<p>
+The most up-to-date versions can be found at Google's open source repository, as
+the <a href="http://code.google.com/p/topdraw">Top Draw</a> project.
+<p>
+The program is open source and written in Objective-C using Apple's Xcode IDE.  It uses the JavaScriptCore, Quartz, and CoreImage frameworks.
+
 </body>
 </html>

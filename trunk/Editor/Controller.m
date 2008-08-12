@@ -75,6 +75,9 @@ static NSString *kOpenedDocumentsKey = @"opened";
     if (error)
       NSLog(@"Error: %@", error);
   }
+  
+  // Always show the preview
+  [preview_ showPreview];
 }
 
 //------------------------------------------------------------------------------

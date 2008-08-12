@@ -23,7 +23,7 @@
 }
 
 + (NSSet *)methods {
-  return [NSSet setWithObjects:@"setColorAndLocation", @"toString", nil];
+  return [NSSet setWithObjects:@"addColorStop", @"toString", nil];
 }
 
 - (void)setColor:(Color *)color location:(CGFloat)location {
@@ -40,7 +40,7 @@
     [colors_ setObject:color forKey:[NSNumber numberWithFloat:location]];  
 }
 
-- (void)setColorAndLocation:(NSArray *)arguments {
+- (void)addColorStop:(NSArray *)arguments {
   if ([arguments count] == 2) {
     Color *color = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[Color class]];
     CGFloat loc = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:1]];

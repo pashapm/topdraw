@@ -31,10 +31,9 @@
 		3CD4D7530E42F13500F37DC9 /* Installer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8FCB0E428F4E00777579 /* Installer.m */; };
 		3CD4D7540E42F13600F37DC9 /* Exporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8F220E428D7200777579 /* Exporter.m */; };
 		3CD4D7610E42F19600F37DC9 /* Viewer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CD4D7600E42F19600F37DC9 /* Viewer.xib */; };
-		3CD4D7680E42F2D600F37DC9 /* Built-in.tds in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3CD4D7630E42F24200F37DC9 /* Built-in.tds */; };
 		3CD4D7840E42F34B00F37DC9 /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8FBF0E428F2100777579 /* Renderer.m */; };
 		3CD4D79D0E42F39800F37DC9 /* ViewerMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD4D79C0E42F39800F37DC9 /* ViewerMain.m */; };
-		3CD4D7B80E42F69000F37DC9 /* TopDrawRenderer in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9B4A8EE00E428BAF00777579 /* TopDrawRenderer */; };
+		3CD4D7B80E42F69000F37DC9 /* TopDrawRenderer in Copy renderer */ = {isa = PBXBuildFile; fileRef = 9B4A8EE00E428BAF00777579 /* TopDrawRenderer */; };
 		3CD4D7EE0E42F9ED00F37DC9 /* TopDraw.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9B4A90240E42970000777579 /* TopDraw.icns */; };
 		8D15AC320486D014006FF6A4 /* Editormain.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* Editormain.m */; settings = {ATTRIBUTES = (); }; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
@@ -71,7 +70,7 @@
 		9B4A8F2A0E428D9A00777579 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4A8EAB0E427E3B00777579 /* JavaScriptCore.framework */; };
 		9B4A8F2B0E428D9B00777579 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4A8EAC0E427E3B00777579 /* QuartzCore.framework */; };
 		9B4A8F2C0E428D9C00777579 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4A8EAA0E427E3B00777579 /* Accelerate.framework */; };
-		9B4A8F9B0E428E8D00777579 /* TopDrawRenderer in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9B4A8EE00E428BAF00777579 /* TopDrawRenderer */; };
+		9B4A8F9B0E428E8D00777579 /* TopDrawRenderer in Copy renderer */ = {isa = PBXBuildFile; fileRef = 9B4A8EE00E428BAF00777579 /* TopDrawRenderer */; };
 		9B4A8FA40E428EAF00777579 /* DrawingDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8FA20E428EAF00777579 /* DrawingDocument.m */; };
 		9B4A8FC00E428F2100777579 /* CGImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8FB50E428F2100777579 /* CGImageView.m */; };
 		9B4A8FC10E428F2100777579 /* ColorizingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8FB70E428F2100777579 /* ColorizingTextView.m */; };
@@ -82,6 +81,9 @@
 		9B4A8FCC0E428F4E00777579 /* Installer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8FCB0E428F4E00777579 /* Installer.m */; };
 		9B4A90250E42970000777579 /* TopDrawEditor.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9B4A90220E42970000777579 /* TopDrawEditor.icns */; };
 		9B4A90260E42970000777579 /* TopDrawDoc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9B4A90230E42970000777579 /* TopDrawDoc.icns */; };
+		9BE37FD90E510E570083B486 /* Built-in.tds in Resources */ = {isa = PBXBuildFile; fileRef = 3CD4D7630E42F24200F37DC9 /* Built-in.tds */; };
+		9BE380220E5112770083B486 /* Built-in.tds in Copy built-in file */ = {isa = PBXBuildFile; fileRef = 3CD4D7630E42F24200F37DC9 /* Built-in.tds */; };
+		9BE380230E5112810083B486 /* Built-in.tds in Copy built-in file */ = {isa = PBXBuildFile; fileRef = 3CD4D7630E42F24200F37DC9 /* Built-in.tds */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,47 +105,61 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D15AC270486D014006FF6A4 /* Editor */;
+			remoteGlobalIDString = 8D15AC270486D014006FF6A4;
 			remoteInfo = Editor;
 		};
 		9B70DCFB0E4D12E000A609D9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 3CD4D7430E42F08000F37DC9 /* Viewer */;
+			remoteGlobalIDString = 3CD4D7430E42F08000F37DC9;
 			remoteInfo = Viewer;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		3CD4D76C0E42F2FC00F37DC9 /* CopyFiles */ = {
+		3CD4D76C0E42F2FC00F37DC9 /* Copy built-in file */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
-				3CD4D7680E42F2D600F37DC9 /* Built-in.tds in CopyFiles */,
+				9BE380230E5112810083B486 /* Built-in.tds in Copy built-in file */,
 			);
+			name = "Copy built-in file";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3CD4D7BB0E42F69900F37DC9 /* CopyFiles */ = {
+		3CD4D7BB0E42F69900F37DC9 /* Copy renderer */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				3CD4D7B80E42F69000F37DC9 /* TopDrawRenderer in CopyFiles */,
+				3CD4D7B80E42F69000F37DC9 /* TopDrawRenderer in Copy renderer */,
 			);
+			name = "Copy renderer";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9B4A8FA10E428E9400777579 /* CopyFiles */ = {
+		9B4A8FA10E428E9400777579 /* Copy renderer */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				9B4A8F9B0E428E8D00777579 /* TopDrawRenderer in CopyFiles */,
+				9B4A8F9B0E428E8D00777579 /* TopDrawRenderer in Copy renderer */,
 			);
+			name = "Copy renderer";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9BE37FF00E510EB20083B486 /* Copy built-in file */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				9BE380220E5112770083B486 /* Built-in.tds in Copy built-in file */,
+			);
+			name = "Copy built-in file";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -166,7 +182,7 @@
 		3CD4D74E0E42F12F00F37DC9 /* PreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesController.m; sourceTree = "<group>"; };
 		3CD4D74F0E42F12F00F37DC9 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
 		3CD4D7600E42F19600F37DC9 /* Viewer.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Viewer.xib; sourceTree = "<group>"; };
-		3CD4D7630E42F24200F37DC9 /* Built-in.tds */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Built-in.tds"; sourceTree = "<group>"; };
+		3CD4D7630E42F24200F37DC9 /* Built-in.tds */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Built-in.tds"; path = "../Viewer/Built-in.tds"; sourceTree = "<group>"; };
 		3CD4D79C0E42F39800F37DC9 /* ViewerMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewerMain.m; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Editor-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Editor-Info.plist"; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Top Draw Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Top Draw Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -354,6 +370,7 @@
 		3CD4D6A90E42EBE400F37DC9 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				3CD4D7630E42F24200F37DC9 /* Built-in.tds */,
 				9B4A8F210E428D7200777579 /* Exporter.h */,
 				9B4A8F220E428D7200777579 /* Exporter.m */,
 				9B4A8FCA0E428F4E00777579 /* Installer.h */,
@@ -379,7 +396,6 @@
 				3CD4D79C0E42F39800F37DC9 /* ViewerMain.m */,
 				3CD4D7600E42F19600F37DC9 /* Viewer.xib */,
 				3CD4D7460E42F08000F37DC9 /* Viewer-Info.plist */,
-				3CD4D7630E42F24200F37DC9 /* Built-in.tds */,
 			);
 			path = Viewer;
 			sourceTree = "<group>";
@@ -463,8 +479,8 @@
 				3CD4D7400E42F08000F37DC9 /* Resources */,
 				3CD4D7410E42F08000F37DC9 /* Sources */,
 				3CD4D7420E42F08000F37DC9 /* Frameworks */,
-				3CD4D76C0E42F2FC00F37DC9 /* CopyFiles */,
-				3CD4D7BB0E42F69900F37DC9 /* CopyFiles */,
+				3CD4D7BB0E42F69900F37DC9 /* Copy renderer */,
+				3CD4D76C0E42F2FC00F37DC9 /* Copy built-in file */,
 			);
 			buildRules = (
 			);
@@ -483,7 +499,8 @@
 				8D15AC2B0486D014006FF6A4 /* Resources */,
 				8D15AC300486D014006FF6A4 /* Sources */,
 				8D15AC330486D014006FF6A4 /* Frameworks */,
-				9B4A8FA10E428E9400777579 /* CopyFiles */,
+				9B4A8FA10E428E9400777579 /* Copy renderer */,
+				9BE37FF00E510EB20083B486 /* Copy built-in file */,
 			);
 			buildRules = (
 			);
@@ -551,6 +568,7 @@
 				3C4324FE0E42FEAD006C46D5 /* MainMenu.xib in Resources */,
 				3C4324FF0E42FEAD006C46D5 /* InfoPlist.strings in Resources */,
 				3C4325000E42FEAD006C46D5 /* DrawingDocument.xib in Resources */,
+				9BE37FD90E510E570083B486 /* Built-in.tds in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
