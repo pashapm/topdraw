@@ -1,10 +1,13 @@
-// Render the menubar with a gradient
-var grad = new Gradient(new Color, new Color);
-menubar.fillLayer(grad);
+// Render the menubar Layer with a Gradient.
+// Creating a new Color object will fill the red, blue, and green channels with
+// a random value.  The alpha channel will be set to 1.0.
+var gradient = new Gradient(new Color, new Color);
+menubar.fillLayer(gradient);
 
-// Fill the desktop with a rectangle colored in each corner
-var a = new Color;
-var b = new Color;
-var c = new Color;
-var d = new Color;
-desktop.drawColoredRect(desktop.bounds, a, b, c, d);
+var bottomLeft = new Color;
+var topLeft = new Color;
+var topRight = new Color;
+var bottomRight = new Color;
+
+// Fill the desktop Layer with a rectangle colored in each corner.
+desktop.drawColoredRect(desktop.bounds, bottomLeft, topLeft, topRight, bottomRight);

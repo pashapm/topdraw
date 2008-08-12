@@ -164,12 +164,18 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
 
 //------------------------------------------------------------------------------
 - (void)windowControllerDidLoadNib:(NSWindowController *)controller {
-  // When loading from disk, we'll set the text contents here
-  if (source_) {
-    [text_ setString:source_];
-    [source_ release];
-    source_ = nil;
-  }
+  // If there's no source specified (e.g., Untitled), use our built-in file
+  // as the source.
+  if (!source_) {
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *builtInPath = [bundle pathForResource:@"Built-in" ofType:@"tds"];
+    source_ = [[NSString alloc] initWithContentsOfFile:builtInPath];
+  }  
+
+  // Set the data of the file
+  [text_ setString:source_];
+  [source_ release];
+  source_ = nil;
   
   // No spell checking
   [text_ setContinuousSpellCheckingEnabled:NO];

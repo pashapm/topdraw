@@ -15,20 +15,44 @@ h2 {
   border: thin solid DarkBlue;
   border-right: none;
   border-left: none;
-  border-bottom: none;
+  border-top: none;
   padding-top: 0.25em;
   padding-bottom: 0.25em;
 }
 
-.MenuItem, .Menu, .PreferenceItem, .Preferences {
+h3 {
+//  border: thin solid black;
+//  border-right: none;
+//  border-left: none;
+//  border-top: none;
+  padding: 0.25em;
+  padding-left: 0;
+  background-color: #F0F0F0;
+}
+
+.MenuItem, .Menu, 
+.PreferenceItem, .Preferences,
+.Constructor, .ConstructorDetails,
+.Function, .FunctionDetails,
+.Property, .PropertyDetails,
+.Global, .GlobalDetails {
   padding: 1em;
 }
 
-.MenuItem, .PreferenceItem {
+.MenuItem, 
+.PreferenceItem, 
+.Function, 
+.Property,
+.Global {
   font-weight: bold;
 }
 
-table.Menu, table.Preferences {
+table.Menu, 
+table.Preferences, 
+table.FunctionTable,
+table.ConstructorTable, 
+table.PropertyTable,
+table.GlobalTable {
   border: thin solid black;
   border-collapse: collapse;
   border-spacing: 1em;
@@ -36,6 +60,22 @@ table.Menu, table.Preferences {
 
 th.Menu, th.Preferences {
   background-color: LightCyan;
+}
+
+th.Function {
+  background-color: Lavender;
+}
+
+th.Constructor {
+  background-color: PaleGreen;
+}
+
+th.Property {
+  background-color: AliceBlue;
+}
+
+th.Global {
+	background-color: MistyRose;
 }
 
 img.LeftEdge {
@@ -46,4 +86,16 @@ img.RightEdge {
 	float: right;
 }
 
+div.Indented {
+	margin-left: 1em;
+}
+
+div.ClassSection {
+	margin-top: 1em;
+	font-weight: bold;
+}
+
+span.Optional {
+	font-style: italic;
+}
 
