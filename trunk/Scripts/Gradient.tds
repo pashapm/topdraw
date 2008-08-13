@@ -1,0 +1,42 @@
+// Menubar gradient
+var grad = new Gradient(new Color("white"), new Color("purple"));
+menubar.fillLayer(grad);
+
+// Desktop gradient
+var db = desktop.bounds;
+grad = new Gradient();
+grad.setColorAndLocation(new Color(0.5), 0);
+var base = new Color("purple");
+grad.setColorAndLocation(base.vary(0, 0.5, 0.2, 0), 0.5);
+base = new Color("blue");
+grad.setColorAndLocation(base.vary(0, 0.5, 0), 1);
+var s = new Point(0, db.height);
+var e = new Point(db.width, db.height);
+desktop.drawLinearGradient(grad, s, e);
+
+// Shadows
+var offset = new Point(8, -8);
+var blur = 10;
+var color = new Color("black", 0.5);
+desktop.setShadow(offset, blur, color);
+
+// Draw some redish things
+desktop.beginPath();
+var rnd = new Randomizer(0, 1);
+var rndSize = new Randomizer(50, 200);
+var rndRadius = new Randomizer(0, 30);
+var r = new Rect();
+var fc = new Color(0.5, 0, 0, 1);
+desktop.strokeColor = new Color("black");
+
+for (x = 0; x < 50; ++x) {
+	desktop.fillColor = fc.vary(0.3, 0, 0, 0);
+	r.width = rndSize.floatValue;
+	r.height = rndSize.floatValue;
+	r.x = rnd.floatValue * (db.width - r.width);
+	r.y = rnd.floatValue * (db.height - r.height);
+	desktop.beginPath();
+	desktop.roundedRect(r, rndRadius.floatValue);
+	desktop.fillStroke();
+}
+

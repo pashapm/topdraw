@@ -1,0 +1,34 @@
+var db = desktop.bounds;
+
+// Main
+DrawBackground();
+ColoredRect();
+
+function DrawBackground() {
+	// Fill with desktop with checkerboard
+	var f = new Filter("CICheckerboardGenerator");
+	var random = new Randomizer;
+	var s = random.floatValue * db.width / 10;
+	var c = new Color(0.5);
+	f.setValueForKey("inputColor0", c.vary(0.2, 0, 0, 0.5));
+	f.setValueForKey("inputColor1", c.vary(0, 0, 0.2, 0.5));
+	f.setValueForKey("inputCenter", s / 2, 0);
+	f.setValueForKey("inputWidth", s);
+
+	// Add a blur to soften
+	var b = new Filter("CIGaussianBlur");
+	b.setValueForKey("inputRadius", 10);
+	b.inputFilter = f;
+	desktop.applyFilter(b);
+}
+
+function ColoredRect() {
+	var bl = new Color;
+	var tl = new Color;
+	var tr = new Color;
+	var br = new Color;
+	
+	// Ensure light alpha overlay
+	bl.a = tl.a = tr.a = br.a = 0.3;
+	desktop.drawColoredRect(db, bl, tl, tr, br);
+}

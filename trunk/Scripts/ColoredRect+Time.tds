@@ -1,0 +1,43 @@
+// Gradient menubar from white to a random color
+menubar.fillLayer(new Gradient(new Color("white"), new Color));
+
+// Create three new colors and full alpha
+var a = new Color;
+var b = new Color;
+var c = new Color;
+a.a = b.a = c.a = 1.0;
+
+// Make b darker by 40% and a lighter by 30%
+b = b.darker(0.4);
+a = a.lighter(0.3);
+
+// Fill the desktop with unique colors, except that the top left and bottom right
+// share the same color.
+desktop.drawColoredRect(desktop.bounds, a, b, c, b);
+
+// Pick a random font for the clock
+var fontNames = new Array("Courier", "Helvetica", "Futura", 
+	"Hoefler Text", "Marker Felt", "Papyrus", "Skia", "Zapfino");
+var len = fontNames.length - 1;
+var fontRnd = new Randomizer(0, len);
+var fontIdx = fontRnd.integerValue;
+var fontName = fontNames[fontIdx];
+
+// Draw the time in the lower right corner.  This means that this script should run every
+// minute.  Otherwise, you'll be out of date!
+var now = new Date();
+var h = now.getHours();
+var m = now. getMinutes();
+var dateStr = new Text((h > 12 ? h - 12 : h) + ":" + (m < 10 ? "0" : "") + m); // Pad with 0's
+dateStr.fontSize = 72;
+dateStr.fontName = fontName;
+var dateRect = dateStr.bounds;
+dateRect.x = desktop.bounds.width - dateRect.width - 10;
+dateRect.y = 0;
+
+// Read the color from the corner and make it contrast
+var middle = new Point(dateRect.x + dateRect.width / 2, dateRect.y + dateRect.height / 2);
+var pixelColor = desktop.colorAtPoint(middle);
+pixelColor.a = 1.0;
+dateStr.foregroundColor = pixelColor.contrasting(0.6);
+desktop.drawTextInRect(dateStr, dateRect);

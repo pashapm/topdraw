@@ -1,0 +1,54 @@
+// Fill with desktop with black
+desktop.fillLayer(new Color("black"));
+
+// Draw some grid lines of changing thickness
+var c = new Color;
+c.a = 0.3;
+desktop.strokeColor = c;
+
+var db = desktop.bounds;
+var s = new Point(db.x, db.y);
+var e = new Point(db.x + db.width, db.y);
+var rnd = new Randomizer(4, 12);
+var steps = rnd.integerValue;
+var halfSteps = steps / 2;
+var inc = db.height / steps;
+
+// Horizontal Lines
+for (x = 0; x < steps; ++x) {
+	desktop.beginPath();
+	desktop.lineWidth = (x < halfSteps ? x : steps - x);
+	desktop.moveTo(s);
+	desktop.lineTo(e);
+	desktop.stroke();
+
+	s.y += inc;
+	e.y += inc;
+}
+
+// Vertical Lines
+steps *= db.width / db.height;
+halfSteps = steps / 2;
+inc = db.width / steps;
+s.x = db.x;
+s.y = db.y;
+e.x = db.x;
+e.y = db.height;
+for (x = 0; x < steps; ++x) {
+	desktop.beginPath();
+	desktop.lineWidth = (x < halfSteps ? x : steps - x);
+	desktop.moveTo(s);
+	desktop.lineTo(e);
+	desktop.stroke();
+
+	s.x += inc;
+	e.x += inc;
+}
+
+// Apply distortion filter
+var filterName = (rnd.floatValue > 8) ? "CIBumpDistortion" : "CIHoleDistortion";
+var f = new Filter(filterName);
+rnd = new Randomizer(0.25, 0.75);
+f.setValueForKey("inputCenter", rnd.floatValue * db.width, rnd.floatValue * db.height);
+f.setValueForKey("inputRadius", db.height / 2);
+//desktop.applyFilter(f);
