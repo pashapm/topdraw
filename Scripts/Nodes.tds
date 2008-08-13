@@ -1,0 +1,87 @@
+// Fill with desktop
+desktop.fillLayer(new Color("black"));
+
+// Gather information about each display
+var screenCount = compositor.screenCount;
+var screens = new Array;
+
+// If true, it will draw distinct collections on each display.
+// Otherwise, the colleciton will span displays
+var useMultipleScreens = true;
+
+if (useMultipleScreens) {
+	for (var i = 0; i < screenCount; ++i)
+		screens.push(compositor.boundsOfScreen(i));
+} else {
+	screenCount = 1;
+	screens.push(desktop.bounds);
+}
+
+// Create some nodes on each screen
+var screenNodes = new Array;
+var rnd = new Randomizer;
+
+function NodesForScreen(screenRect) {
+	var r = screenRect.inset(15, 15);
+	var nodes = new Array;
+	var count = 10 + rnd.floatValue * 75;
+	
+	for (var j = 0; j < count; ++j)
+		nodes.push(new Point(r.x + r.width * rnd.floatValue, r.y + r.height * rnd.floatValue));		
+	return nodes;
+}
+
+for (var i = 0; i < screenCount; ++i)
+	screenNodes.push(NodesForScreen(screens[i]));
+
+// Draw some random connections
+for (var i = 0; i < screenCount; ++i)
+	DrawNodes(screenNodes[i]);
+
+function DrawNodes(nodes) {
+	var count = 50 + rnd.floatValue * 400;
+	var rndIdx = new Randomizer(0, nodes.length - 1);
+	var counter = new Array;
+	
+	// Initialize the counter to keep track of connections per node
+	for (var i = 0; i < count; ++i)
+		counter[i] = 0;
+
+	var connectionColor = new Color;
+	connectionColor.a = 0.075; // Very light
+	desktop.lineWidth = 1;
+
+	// Setup the colors to vary, but just a little
+	var rVary = rnd.floatValue / 5;
+	var gVary = rnd.floatValue / 5;
+	var bVary = rnd.floatValue / 5;
+	
+	for (var i = 0; i < count; ++i) {
+		var startIdx = rndIdx.integerValue;
+		var endIdx = rndIdx.integerValue;
+		var start = nodes[startIdx];
+		var end = nodes[endIdx];
+
+		// Keep track of how many times start & end were used
+		counter[startIdx] += 1;
+		counter[endIdx] += 1;
+
+		// Stroke the connection with a varied color
+		desktop.beginPath();
+		desktop.strokeColor = connectionColor.vary(rVary, gVary, bVary, 0);
+		desktop.moveTo(start);
+		desktop.lineTo(end);
+		desktop.stroke();
+	}
+
+	// Circle the points with a radius that indicates the number of connections
+	desktop.fillColor = connectionColor;
+	
+	var box = new Rect;
+	for (var i = 0; i < count; ++i) {
+		var hits = counter[i];
+		desktop.beginPath();
+		desktop.circle(nodes[i], hits * 1.5);
+		desktop.fill();
+	}
+}

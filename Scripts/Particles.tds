@@ -1,0 +1,69 @@
+// Gradient menubar 
+menubar.fillLayer(new Gradient(new Color("white"), new Color));
+
+// Fill with desktop with Colored rect with same top left and bottom right colors 
+var db = desktop.bounds;
+var bltr = new Color;
+var tl = new Color(0.15);
+var br = new Color(0.4);
+// Coloring clockwise from bottom left
+desktop.drawColoredRect(db, bltr, tl, bltr, br);
+
+var rnd = new Randomizer(0.1, 1);
+
+// Green & blue Particles
+var p1 = new Particles;
+p1.velocityXRandomizer = new Randomizer(100, 300);
+p1.velocityYRandomizer = new Randomizer(50, 80);
+p1.accelerationXRandomizer = new Randomizer(-5, 5);
+p1.accelerationYRandomizer = new Randomizer(-5, 5);
+p1.maxParticles = 20;
+p1.location = new Point(0, db.height * rnd.floatValue);
+p1.gravity = new Point(0, -19);
+p1.alphaDelta = 0.01;
+p1.alphaDelay = 30;
+p1.maxAge = 90;
+p1.trailWidth = 4;
+
+var c1 = new Color(0, 1, 0, 0.0);
+var c2 = new Color(0.3, 0, 1, 0.0);
+p1.addColor(c1.vary(0, 0.3, 0.3, 0.0));
+p1.addColor(c2.vary(0.1, 0, 0.5, 0.0));
+
+// Red and orange
+var p2 = new Particles;
+p2.velocityXRandomizer = new Randomizer(-5, 25);
+p2.velocityYRandomizer = new Randomizer(20, 100);
+p2.accelerationXRandomizer = new Randomizer(-10, 10);
+p2.accelerationYRandomizer = new Randomizer(5, 10);
+p2.maxParticles = 90;
+p2.location = new Point(db.width * rnd.floatValue * 0.75, 0);
+p2.gravity = new Point(0, -9);
+p2.alphaDelta = -0.003;
+p2.trailWidth = 2;
+
+p2.addColor(new Color(1, 0, 0, 0.4));
+var orange = new Color("orange");
+orange.a = 0.3;
+p2.addColor(orange);
+
+// Gravity well
+var randomXLoc = new Randomizer(500, db.width);
+var randomYLoc = new Randomizer(200, db.height);
+var loc = new Point(randomXLoc.floatValue, randomYLoc.floatValue);
+var gw = new GravityWell();
+gw.location = loc;
+gw.gravity = -240;
+p1.addGravityWell(gw);
+p2.addGravityWell(gw);
+
+// Simulator
+var simulator = new Simulator(desktop);
+simulator.addSimulatorObject(p1);
+simulator.addSimulatorObject(p2);
+
+// The time step controls the "fine" detail or smoothness
+simulator.timeStep = 0.3;
+
+// The run parameter is the duration of the simulation
+simulator.run(70);

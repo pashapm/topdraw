@@ -1,0 +1,16 @@
+// Gradient menubar from white to a random color
+menubar.fillLayer(new Gradient(new Color("white"), new Color));
+
+// Create three new colors and full alpha
+var a = new Color;
+var b = new Color;
+var c = new Color;
+a.a = b.a = c.a = 1.0;
+
+// Make b darker by 40% and a lighter by 30%
+b = b.darker(0.4);
+a = a.lighter(0.3);
+
+// Fill the desktop with unique colors, except that the top left and bottom right
+// share the same color.
+desktop.drawColoredRect(desktop.bounds, a, b, c, b);

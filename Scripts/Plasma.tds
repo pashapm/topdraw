@@ -1,0 +1,31 @@
+// Menubar
+var grad = new Gradient(new Color("white"), new Color);
+menubar.fillLayer(grad);
+
+// Fill with desktop with black
+var db = desktop.bounds;
+desktop.fillLayer(new Color("black"));
+
+// Calculate the size for the plasma
+var r = new Rect(db);
+var scale = 4;	// use sub-scaling for speed
+r.width /= scale;
+r.height /= scale;
+
+// Create a plasma layer
+var plasmaLayer = new Layer(r);
+var plasma = new Plasma();
+
+plasma.variation = 0.5;
+plasma.grayscale = false;
+plasma.opaque = true;
+plasma.topLeft = new Color;
+plasma.topRight = new Color;
+plasma.bottomLeft = new Color;
+plasma.bottomRight = new Color;
+
+plasma.drawInLayer(plasmaLayer);
+
+// Create an image with the plasma layer and draw it into the desktop
+var img = new Image(plasmaLayer);
+desktop.drawImageInRect(img, db);

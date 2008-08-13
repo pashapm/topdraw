@@ -1,0 +1,53 @@
+var db = desktop.bounds;
+
+// Menubar and background
+var grad = new Gradient(new Color("white"), new Color);
+menubar.fillLayer(grad);
+desktop.fillLayer(new Color("black"));
+
+WhiteLines();
+//ColoredLines();
+
+function WhiteLines() {
+	var displacementRnd = new Randomizer(-150, 150);
+	var rs = new Randomizer(8, 40);
+	var gray = new Randomizer(0.1, 1);
+	var smoothRnd = new Randomizer(0.6, 1);
+	var height = db.height / 4;
+	var start = new Point(db.x, db.y + 3 * height);
+	var end = new Point(db.x + db.width, db.height / 2);
+	var lineWidthRnd = new Randomizer(5, 25);
+	var count = 45;
+	var heightOffset = 2 * height / count;
+	
+	for (x = 0; x < count; ++x) {
+		desktop.beginPath();
+		desktop.lineWidth = 5;
+		
+		if (x < (count / 1.5)) {
+			desktop.strokeColor = new Color(gray.floatValue, 0.3);
+		} else {
+			var sc = new Color;
+			sc.a = 0.3;
+			desktop.strokeColor = sc;
+		}
+
+		desktop.moveTo(start);
+		start.y -= heightOffset;
+		
+		var waveEnd = new Point(end);
+		waveEnd.x -= x * 20;
+		// end point, # segments, smoothness, displacement randomizer
+		desktop.wavyLineTo(waveEnd, rs.floatValue, smoothRnd.floatValue, displacementRnd);
+		desktop.lineWidth = lineWidthRnd.floatValue;
+		desktop.lineTo(end);
+		desktop.stroke();
+	}
+}
+
+// Add filter for some extra glow-i-ness
+var filter = new Filter("CIBloom");
+filter.setValueForKey("inputRadius", 80);
+filter.setValueForKey("inputIntensity", 2);
+desktop.applyFilter(filter);
+

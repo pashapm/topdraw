@@ -1,0 +1,62 @@
+// Fill with desktop with black
+desktop.fillLayer(new Color("black"));
+
+// Draw a grid in the corners of the desktop
+var c = new Color;
+c.a = 0.1;
+desktop.strokeColor = c;
+
+var rndWidth = new Randomizer(0.5, 3);
+desktop.lineWidth = rndWidth.floatValue;
+
+var db = desktop.bounds;
+var rnd = new Randomizer(10, 75);
+var steps = rnd.integerValue;
+var xinc = db.width / steps;
+var yinc = db.height / steps;
+
+function DrawCorner(startPt, endPt, deltax, deltay, drawingSteps) {
+	for (var i = 0; i < drawingSteps; ++i) {
+		desktop.beginPath();
+		desktop.moveTo(startPt);
+		desktop.lineTo(endPt);
+		desktop.stroke();
+		startPt.y += deltay;
+		endPt.x += deltax;
+	}
+}
+
+var s, e;
+
+// Choose one or more corners to draw
+var rndMask = new Randomizer(1, 24);
+var mask = rndMask.integerValue;
+
+// Lower Left corner
+if (mask & 0x01) {
+	s = new Point(db.x, db.height);
+	e = new Point(db.x, db.y);
+	DrawCorner(s, e, xinc, -yinc, steps);
+}
+
+// Upper Left corner
+if (mask & 0x02) {
+	s = new Point(db.x, db.y);
+	e = new Point(db.x, db.height);
+	DrawCorner(s, e, xinc, yinc, steps);
+}
+
+// Upper Right corner
+if (mask & 0x04) {
+	s = new Point(db.width, db.y);
+	e = new Point(db.width, db.height);
+	DrawCorner(s, e, -xinc, yinc, steps);
+}
+
+// Lower Right corner
+if (mask & 0x08) {
+	s = new Point(db.width, db.height);
+	e = new Point(db.width, db.y);
+	DrawCorner(s, e, -xinc, -yinc, steps);
+}
+
