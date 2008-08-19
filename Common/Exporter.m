@@ -54,10 +54,13 @@ static const int kMaxCachedDrawings = 10;
 + (NSArray *)partitionAndWriteImage:(CGImageRef)image path:(NSString *)path type:(NSString *)type {
   NSArray *screens = [NSScreen screens];
   NSMutableArray *result = [NSMutableArray array];
+  NSString *writtenPath;
   
   if ([screens count] == 1) {
-    if ([self exportImage:image path:path type:type quality:1.0])
-      [result addObject:path];
+    writtenPath = [self exportImage:image path:path type:type quality:1.0];
+    
+    if (writtenPath)
+      [result addObject:writtenPath];
   } else {
     NSEnumerator *e = [screens objectEnumerator];
     NSScreen *screen;
@@ -76,7 +79,7 @@ static const int kMaxCachedDrawings = 10;
         NSString *filePath = [baseDir stringByAppendingPathComponent:baseName];
         filePath = [filePath stringByAppendingFormat:@"-%d", idxNumber];
         
-        NSString *writtenPath = [self exportImage:subImage path:filePath type:type quality:1.0];
+        writtenPath = [self exportImage:subImage path:filePath type:type quality:1.0];
         
         if (writtenPath)
           [result addObject:writtenPath];
