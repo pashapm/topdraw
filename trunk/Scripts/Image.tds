@@ -6,7 +6,7 @@ desktop.fillLayer(new Color("black"));
 var db = desktop.bounds;
 
 // Create a layer with a frame and a rounded rectangle
-var r = new Rect(0, 0, 1000, 200);
+var r = new Rect(0, 0, 400, 200);
 var layer = new Layer(r);
 var rnd = new Randomizer(0.1, 1);
 

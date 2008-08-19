@@ -62,15 +62,6 @@
 - (void)setInputFilter:(Filter *)filter {
   [inputFilter_ release];
   inputFilter_ = [filter retain];
-  
-  // Hook the output of the input to our input
-  @try {
-    [filter_ setValue:[[filter ciFilter] valueForKey:@"outputImage"] forKey:@"inputImage"];
-  }
-  
-  @catch (NSException *e) {
-    NSLog(@"Filter Excption: %@", e);
-  }
 }
 
 //------------------------------------------------------------------------------

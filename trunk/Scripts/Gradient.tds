@@ -5,11 +5,11 @@ menubar.fillLayer(grad);
 // Desktop gradient
 var db = desktop.bounds;
 grad = new Gradient();
-grad.setColorAndLocation(new Color(0.5), 0);
+grad.addColorStop(new Color(0.5), 0);
 var base = new Color("purple");
-grad.setColorAndLocation(base.vary(0, 0.5, 0.2, 0), 0.5);
+grad.addColorStop(base.vary(0, 0.5, 0.2, 0), 0.5);
 base = new Color("blue");
-grad.setColorAndLocation(base.vary(0, 0.5, 0), 1);
+grad.addColorStop(base.vary(0, 0.5, 0), 1);
 var s = new Point(0, db.height);
 var e = new Point(db.width, db.height);
 desktop.drawLinearGradient(grad, s, e);

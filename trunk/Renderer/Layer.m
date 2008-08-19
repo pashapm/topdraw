@@ -610,12 +610,17 @@
                                                Y:CGRectGetMinY(bounds)
                                                Z:CGRectGetMaxX(bounds)
                                                W:CGRectGetMaxY(bounds)];
+    // Keep track of any filters that need chaining
+    NSMutableArray *filtersToChain = [NSMutableArray array];
     
     do {
       Filter *inputFilter = [firstFilter inputFilter];
 
       if (!inputFilter)
         break;
+      
+      // There's an input filter - save this one for chaining
+      [filtersToChain insertObject:firstFilter atIndex:0];
       
       firstFilter = [firstFilter inputFilter];
     } while (1);
@@ -632,6 +637,23 @@
     @catch (NSException *e) {
       // We don't care if there was an exception in setting the input image
       // because we'll assume that it was a generator
+    }
+    
+    // Chain the other filters, if any
+    NSEnumerator *e = [filtersToChain objectEnumerator];
+    Filter *previousFilter = firstFilter;
+    while ((filter = [e nextObject])) {
+      @try {
+        CIImage *input = [[previousFilter ciFilter] valueForKey:@"outputImage"];
+        [[filter ciFilter] setValue:input forKey:@"inputImage"];
+      }
+      
+      @catch (NSException *e) {
+        NSLog(@"Filter Chaining: %@", e);
+        // Something
+      }
+      
+      previousFilter = filter;
     }
 
     // Always crop the output
