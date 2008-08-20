@@ -46,15 +46,15 @@ for (x = 0; x < 200; ++x) {
 	desktop.beginPath();
 
 	if (randomFlip.integerValue > 0)
-		desktop.ellipseInRect(r);
+		desktop.ellipse(r);
 	else
 		desktop.rect(r);
 
-	desktop.fillColor = c;
+	desktop.fillStyle = c;
 	desktop.fillStroke();
 }
 
 // Create an image with the plasma layer and draw it into the desktop
 var img = new Image(plasmaLayer);
-desktop.drawImageInRect(img, db);
+desktop.drawImage(img, db);
 

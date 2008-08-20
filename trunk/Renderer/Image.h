@@ -24,11 +24,9 @@
   CGBlendMode blendMode_;
 }
 
-+ (CGBlendMode)blendModeFromString:(NSString *)blendModeStr;
-+ (NSString *)stringWithBlendMode:(CGBlendMode)blendMode;
 
 - (id)initWithCGImage:(CGImageRef)image;
-- (CGImageRef)image;
+- (CGImageRef)cgImage;
 
 - (void)setAlpha:(CGFloat)alpha;
 - (CGFloat)alpha;

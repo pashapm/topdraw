@@ -4,7 +4,7 @@ desktop.fillLayer(new Color("black"));
 // Draw a grid in the corners of the desktop
 var c = new Color;
 c.a = 0.1;
-desktop.strokeColor = c;
+desktop.strokeStyle = c;
 
 var rndWidth = new Randomizer(0.5, 3);
 desktop.lineWidth = rndWidth.floatValue;

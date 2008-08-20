@@ -12,26 +12,16 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-// An RGB linear gradient
+// A point source for gravity (attraction or repulsion) for use with the Simulator
+
 #import "RuntimeObject.h"
 
-@class PointObject;
-
-@interface Gradient : RuntimeObject {
+@interface GravityPoint : RuntimeObject {
  @protected
-  CGGradientRef gradient_;
-  NSMutableDictionary *colors_;
-  NSPoint start_;
-  NSPoint end_;
-  NSPoint radius_;
-  BOOL isRadial_;
+  CGPoint location_;
+  CGFloat gravity_;
 }
 
-- (CGGradientRef)cgGradient;
-
-- (PointObject *)start;
-- (PointObject *)end;
-- (PointObject *)radius;
-- (BOOL)isRadial;
+- (CGPoint)accelerationForPoint:(CGPoint)point;
 
 @end

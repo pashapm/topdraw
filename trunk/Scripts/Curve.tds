@@ -4,7 +4,7 @@ desktop.fillLayer(new Color("black"));
 
 // Draw some blue curves
 var curveColor = new Color(0, 0, 1, 0.2);
-desktop.strokeColor = curveColor;
+desktop.strokeStyle = curveColor;
 
 var rnd = new Randomizer(0, 1);
 var s = new Point(db.x, db.height / (1 + 9 * rnd.floatValue));
@@ -16,24 +16,25 @@ var curveYOffset = 5 * rnd.floatValue;
 
 desktop.lineWidth = 5 + 10 * rnd.floatValue;
 
-for (x = 0; x < 20; ++x) {
-	desktop.beginPath();
+for (i = 0; i < 20; ++i) {
+	c.x = i * curveXOffset;
+	c.y += i * curveYOffset;
 	curveColor.r += 0.03;
-	desktop.strokeColor = curveColor;
+
+	desktop.beginPath();
+	desktop.strokeStyle = curveColor;
 	desktop.moveTo(s);
-	c.x = x * curveXOffset;
-	c.y += x * curveYOffset;
 	desktop.curveTo(c, e);
 	desktop.stroke();
 }
 
 // Draw some arcs
 curveColor = new Color(1, 1, 1, 0.2);
-desktop.strokeColor = curveColor;
+desktop.strokeStyle = curveColor;
 desktop.lineWidth = 3;
-desktop.fillColor = new Color(0, 0, 0, 0.3);
+desktop.fillStyle = new Color(0, 0, 0, 0.3);
 
-var r = 100;
+var r = 50;
 var s = 0;
 var e = Math.PI;
 var count = 20;
@@ -53,11 +54,13 @@ for (x = 0; x < count; ++x) {
 	if (e > Math.PI * 2)
 		e = Math.PI * 2;
 
-	desktop.arcTo(c, r, s, e, 0);
+	desktop.arc(c, r, s, e, 0);
 	desktop.closePath();
 	desktop.fillStroke();
+	
+	// Adjust the color for the next one
 	curveColor.g -= 0.02;
 	curveColor.b -= 0.05;
-	desktop.strokeColor = curveColor;
+	desktop.strokeStyle = curveColor;
 }
 

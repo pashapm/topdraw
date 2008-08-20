@@ -13,4 +13,4 @@ a = a.lighter(0.3);
 
 // Fill the desktop with unique colors, except that the top left and bottom right
 // share the same color.
-desktop.drawColoredRect(desktop.bounds, a, b, c, b);
+desktop.coloredRect(desktop.bounds, a, b, c, b);

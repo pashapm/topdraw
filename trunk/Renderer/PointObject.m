@@ -31,11 +31,11 @@
   if ((self = [super initWithArguments:arguments])) {
     int count = [arguments count];
     
-    if (count == 1) {
-      PointObject *obj = [RuntimeObject coerceArray:arguments objectAtIndex:0 toClass:[PointObject class]];
+    PointObject *obj = [RuntimeObject coerceArray:arguments objectAtIndex:0 toClass:[PointObject class]];
+    if (obj) {
       pt_.x += [obj x];
       pt_.y += [obj y];
-    } else if (count == 2) {
+    } else if (count >= 2) {
       pt_.x = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:0]];
       pt_.y = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:1]];
     }

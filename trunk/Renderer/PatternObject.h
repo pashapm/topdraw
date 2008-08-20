@@ -12,16 +12,16 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-// A point source for gravity (attraction or repulsion) for use with the Simulator
+// Container for Pattern object for stroking and filling.
 
 #import "RuntimeObject.h"
 
-@interface GravityWell : RuntimeObject {
- @protected
-  CGPoint location_;
-  CGFloat gravity_;
+@interface PatternObject : RuntimeObject {
+  CGPatternRef pattern_;
+  CGImageRef image_;
+  NSSize offset_;
 }
 
-- (CGPoint)accelerationForPoint:(CGPoint)point;
+- (CGPatternRef)cgPattern;
 
 @end

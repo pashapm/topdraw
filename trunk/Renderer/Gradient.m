@@ -16,36 +16,29 @@
 #import "Gradient.h"
 #import "PointObject.h"
 
-@implementation Gradient
+@interface Gradient (PrivateMethods)
+- (void)setColor:(Color *)color location:(CGFloat)location;
+- (void)invalidateCGGradient;
+- (BOOL)setPoint:(NSPoint *)point withObject:(id)obj;
+@end
 
+@implementation Gradient
+//------------------------------------------------------------------------------
+#pragma mark -
+#pragma mark || Runtime ||
+//------------------------------------------------------------------------------
 + (NSString *)className {
   return @"Gradient";
 }
 
+//------------------------------------------------------------------------------
++ (NSSet *)properties {
+  return [NSSet setWithObjects:@"start", @"end", @"radius", nil];
+}
+
+//------------------------------------------------------------------------------
 + (NSSet *)methods {
   return [NSSet setWithObjects:@"addColorStop", @"toString", nil];
-}
-
-- (void)setColor:(Color *)color location:(CGFloat)location {
-  // Reset the gradient
-  CGGradientRelease(gradient_);
-  gradient_ = NULL;
-  
-  if (location < 0)
-    location = 0;
-  else if (location > 1)
-    location = 1;
-  
-  if (color)
-    [colors_ setObject:color forKey:[NSNumber numberWithFloat:location]];  
-}
-
-- (void)addColorStop:(NSArray *)arguments {
-  if ([arguments count] == 2) {
-    Color *color = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[Color class]];
-    CGFloat loc = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:1]];
-    [self setColor:color location:loc];
-  }
 }
 
 - (id)initWithArguments:(NSArray *)arguments {
@@ -76,12 +69,39 @@
   return self;
 }
 
+//------------------------------------------------------------------------------
 - (void)dealloc {
+  [self invalidateCGGradient];
   CGGradientRelease(gradient_);
   [colors_ release];
   [super dealloc];
 }
 
+//------------------------------------------------------------------------------
+- (void)setColor:(Color *)color location:(CGFloat)location {
+  [self invalidateCGGradient];
+  location = MAX(0, MIN(1, location));
+  
+  if (color)
+    [colors_ setObject:color forKey:[NSNumber numberWithFloat:location]];  
+}
+
+//------------------------------------------------------------------------------
+- (void)invalidateCGGradient {
+  CGGradientRelease(gradient_);
+  gradient_ = NULL;
+}
+
+//------------------------------------------------------------------------------
+- (void)addColorStop:(NSArray *)arguments {
+  if ([arguments count] == 2) {
+    Color *color = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[Color class]];
+    CGFloat loc = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:1]];
+    [self setColor:color location:loc];
+  }
+}
+
+//------------------------------------------------------------------------------
 - (CGGradientRef)cgGradient {
   if (!gradient_) {
     NSArray *colorLocations = [colors_ allKeys];
@@ -111,6 +131,54 @@
   return gradient_;
 }
 
+//------------------------------------------------------------------------------
+- (BOOL)setPoint:(NSPoint *)point withObject:(id)obj {
+  PointObject *pt = [RuntimeObject coerceObject:obj toClass:[PointObject class]];
+  
+  if (pt) {
+    [self invalidateCGGradient];
+    *point = [pt point];
+  }
+  
+  return pt ? YES : NO;
+}
+
+//------------------------------------------------------------------------------
+- (PointObject *)start {
+  return [[[PointObject alloc] initWithPoint:start_] autorelease];
+}
+
+//------------------------------------------------------------------------------
+- (void)setStart:(id)obj {
+  [self setPoint:&start_ withObject:obj];
+}
+
+//------------------------------------------------------------------------------
+- (PointObject *)end {
+  return [[[PointObject alloc] initWithPoint:end_] autorelease];
+}
+
+//------------------------------------------------------------------------------
+- (void)setEnd:(id)obj {
+  [self setPoint:&end_ withObject:obj];
+}
+
+//------------------------------------------------------------------------------
+- (PointObject *)radius {
+  return [[[PointObject alloc] initWithPoint:radius_] autorelease];
+}
+
+//------------------------------------------------------------------------------
+- (void)setRadius:(id)obj {
+  isRadial_ = [self setPoint:&radius_ withObject:obj];
+}
+
+//------------------------------------------------------------------------------
+- (BOOL)isRadial {
+  return isRadial_;
+}
+
+//------------------------------------------------------------------------------
 - (NSString *)toString {
   return [NSString stringWithFormat:@"Gradient: %d locations and colors",
           [colors_ count]];

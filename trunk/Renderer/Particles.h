@@ -46,8 +46,7 @@ typedef struct Particle {
   NSUInteger currentCount_;
   
   NSMutableArray *colors_;
-  NSMutableArray *gravityWells_;
+  NSMutableArray *gravityPoints_;
 }
-
 
 @end

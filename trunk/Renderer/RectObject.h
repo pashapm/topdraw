@@ -16,7 +16,7 @@
 
 #import "PointObject.h"
 
-@interface RectObject : PointObject {
+@interface RectObject : RuntimeObject {
   NSRect  rect_;
 }
 

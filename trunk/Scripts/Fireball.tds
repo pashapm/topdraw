@@ -1,0 +1,20 @@
+var a = new Color("yellow");
+var b = new Color("orange");
+var c = new Color("blue", 0.3);
+var gradient = new Gradient(a, b, c);
+
+var halfWidth = desktop.bounds.width / 2;
+var halfHeight = desktop.bounds.height / 2;
+
+gradient.start = new Point(halfWidth * 0.7, halfHeight);
+gradient.end = new Point(halfWidth * 0.3, halfHeight * 0.7);
+gradient.radius = new Point(halfHeight / 5, halfHeight * 1.7);
+
+desktop.fillLayer(new Gradient(new Color("red"), new Color("black")));
+
+desktop.fillStyle = gradient;
+desktop.beginPath();
+desktop.rect(desktop.bounds);
+desktop.fill();
+
+

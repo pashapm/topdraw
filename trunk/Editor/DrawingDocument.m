@@ -196,9 +196,9 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
   // Add our specific keywords
   [text_ addUserDefinedWords:[NSArray arrayWithObjects:
                               @"desktop", @"menubar", @"compositor",
-                              @"Color", @"Filter", @"Gradient", @"GravityWell", 
+                              @"Color", @"Filter", @"Gradient", @"GravityPoint", 
                               @"Image",
-                              @"Layer", @"Particles", @"Plasma", @"Point",
+                              @"Layer", @"Particles", @"Pattern", @"Plasma", @"Point",
                               @"Randomizer", @"Rect", @"Simulator", @"Text",
                               nil]];
   [text_ setUserDefinedColor:[NSColor colorWithCalibratedRed:0.25 green:0.55 blue:0.25 alpha:1]];

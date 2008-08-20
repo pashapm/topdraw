@@ -7,7 +7,7 @@ var bltr = new Color;
 var tl = new Color(0.15);
 var br = new Color(0.4);
 // Coloring clockwise from bottom left
-desktop.drawColoredRect(db, bltr, tl, bltr, br);
+desktop.coloredRect(db, bltr, tl, bltr, br);
 
 var rnd = new Randomizer(0.1, 1);
 
@@ -51,11 +51,11 @@ p2.addColor(orange);
 var randomXLoc = new Randomizer(500, db.width);
 var randomYLoc = new Randomizer(200, db.height);
 var loc = new Point(randomXLoc.floatValue, randomYLoc.floatValue);
-var gw = new GravityWell();
-gw.location = loc;
-gw.gravity = -240;
-p1.addGravityWell(gw);
-p2.addGravityWell(gw);
+var gp = new GravityPoint();
+gp.location = loc;
+gp.gravity = -240;
+p1.addGravityPoint(gp);
+p2.addGravityPoint(gp);
 
 // Simulator
 var simulator = new Simulator(desktop);
@@ -66,4 +66,4 @@ simulator.addSimulatorObject(p2);
 simulator.timeStep = 0.3;
 
 // The run parameter is the duration of the simulation
-simulator.run(70);
+simulator.run(150);

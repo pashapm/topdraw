@@ -15,41 +15,35 @@ var lb = layer.bounds;
 compositor.addLayer(layer);
 
 var g = new Gradient;
-g.setColorAndLocation(new Color("blue"), 0);
-g.setColorAndLocation(new Color, 1);
-var s = new Point(0, 0);
-var e = new Point(lb.width, lb.height);
-layer.drawLinearGradient(g, s, e);
+g.addColorStop(new Color("blue"), 0);
+g.addColorStop(new Color, 1);
+g.start = new Point(0, 0);
+g.end = new Point(lb.width, lb.height);
+layer.fillLayer(g);
 
-layer.strokeColor = new Color("red");
+layer.strokeStyle = new Color("red");
 layer.lineWidth = 3;
 layer.beginPath();
 layer.moveTo(0, 0);
 layer.lineTo(lb.width, lb.height / 1.5);
 layer.stroke();
 
-layer.strokeColor = new Color("green");
+layer.strokeStyle = new Color("green");
 layer.lineWidth = 3;
 layer.beginPath();
 layer.moveTo(0, lb.height);
 layer.lineTo(lb.width / 1.5, 0);
 layer.stroke();
 
-layer.strokeColor = new Color("black");
-layer.beginPath();
-layer.lineWidth = 15;
-layer.moveTo(0, lb.height / 2);
-layer.lineTo(lb.width, lb.height / 2);
-layer.stroke();
-
 var t = new Text("I ❤ Top Draw");
 t.fontSize = 120;
 t.fontName = "Helvetica";
+
 t.foregroundColor = new Color("black");
 var tr = t.boundsForRect(r);
 tr.x = (r.width - tr.width) / 2;
 tr.y = (r.height - tr.height) / 1.5;
-layer.drawTextInRect(t, tr);
+layer.drawText(t, tr);
 
-layer.mirror("top", 0.3);
+layer.reflect("top", 0.3);
 

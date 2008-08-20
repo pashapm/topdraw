@@ -1,36 +1,34 @@
-var db = desktop.bounds;
-
 // Menubar and background
 var grad = new Gradient(new Color("white"), new Color);
 menubar.fillLayer(grad);
 desktop.fillLayer(new Color("black"));
 
-WhiteLines();
-//ColoredLines();
+Lines();
 
-function WhiteLines() {
+function Lines() {
+	var db = desktop.bounds;
 	var displacementRnd = new Randomizer(-150, 150);
 	var rs = new Randomizer(8, 40);
 	var gray = new Randomizer(0.1, 1);
 	var smoothRnd = new Randomizer(0.6, 1);
 	var height = db.height / 4;
 	var start = new Point(db.x, db.y + 3 * height);
-	var end = new Point(db.x + db.width, db.height / 2);
-	var lineWidthRnd = new Randomizer(5, 25);
+	var end = new Point(db.x + db.width, db.height * gray.floatValue);
+	var lineWidthRnd = new Randomizer(5, 50);
 	var count = 25;
 	var heightOffset = 2 * height / count;
-	var shortening = db.width / (10 * count);
-	
+	var shortening = -10;//db.width / (10 * count);
+
 	for (x = 0; x < count; ++x) {
 		desktop.beginPath();
 		desktop.lineWidth = 5;
 		
 		if (x < (count / 1.5)) {
-			desktop.strokeColor = new Color(gray.floatValue, 0.3);
+			desktop.strokeStyle = new Color(gray.floatValue, 0.3);
 		} else {
 			var sc = new Color;
 			sc.a = 0.3;
-			desktop.strokeColor = sc;
+			desktop.strokeStyle = sc;
 		}
 
 		desktop.moveTo(start);

@@ -4,7 +4,7 @@ desktop.fillLayer(new Color("black"));
 // Draw some grid lines of changing thickness
 var c = new Color;
 c.a = 0.3;
-desktop.strokeColor = c;
+desktop.strokeStyle = c;
 
 var db = desktop.bounds;
 var s = new Point(db.x, db.y);
