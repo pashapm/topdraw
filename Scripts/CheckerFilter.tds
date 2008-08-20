@@ -30,5 +30,5 @@ function ColoredRect() {
 	
 	// Ensure light alpha overlay
 	bl.a = tl.a = tr.a = br.a = 0.3;
-	desktop.drawColoredRect(db, bl, tl, tr, br);
+	desktop.coloredRect(db, bl, tl, tr, br);
 }

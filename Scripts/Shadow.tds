@@ -20,7 +20,7 @@ var offset = new Point(10, -10);
 var blur = 5;
 var shadowColor = new Color("black");
 shadowColor.a = 0.3;
-desktop.setShadow(offset, blur, shadowColor);
+desktop.shadow(offset, blur, shadowColor);
 
 // Draw some opaque rects
 var db = desktop.bounds;
@@ -48,7 +48,7 @@ for (x = 0; x < 200; ++x) {
 
 	switch (randomFlip.integerValue) {
 		case 0:
-			desktop.ellipseInRect(r);
+			desktop.ellipse(r);
 			break;
 		case 1:
 			desktop.roundedRect(r, 20 * randomFlip.floatValue);
@@ -59,6 +59,6 @@ for (x = 0; x < 200; ++x) {
 	}
 
 	// Modify the green channel
-	desktop.fillColor = baseColor.vary(0, 0.2, 0, 0);
+	desktop.fillStyle = baseColor.vary(0, 0.2, 0, 0);
 	desktop.fill();
 }

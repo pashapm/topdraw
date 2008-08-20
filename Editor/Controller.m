@@ -56,7 +56,17 @@ static NSString *kOpenedDocumentsKey = @"opened";
   NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
   NSArray *openedDocuments = [ud objectForKey:kOpenedDocumentsKey];
   
-  return [openedDocuments count] ? NO : YES;
+  // Validate the documents
+  BOOL hasDocument = NO;
+  int i, count = [openedDocuments count];
+
+  for (i = 0; (i < count) && (!hasDocument); ++i) {
+    NSString *path = [openedDocuments objectAtIndex:i];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path])
+      hasDocument = YES;
+  }
+  
+  return !hasDocument;
 }
 
 //------------------------------------------------------------------------------
@@ -69,7 +79,12 @@ static NSString *kOpenedDocumentsKey = @"opened";
   NSError *error;
   
   for (i = 0; i < count; ++i) {
-    url = [NSURL fileURLWithPath:[openedDocuments objectAtIndex:i]];
+    // Ensure that it exists
+    NSString *path = [openedDocuments objectAtIndex:i];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path])
+      continue;
+    
+    url = [NSURL fileURLWithPath:path];
     error = nil;
     [dc openDocumentWithContentsOfURL:url display:YES error:&error];
     if (error)

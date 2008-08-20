@@ -20,6 +20,7 @@
 #import "Gradient.h"
 #import "Image.h"
 #import "Layer.h"
+#import "PatternObject.h"
 #import "PointObject.h"
 #import "Randomizer.h"
 #import "RectObject.h"
@@ -38,23 +39,39 @@
 
 + (NSSet *)properties {
   return [NSSet setWithObjects:@"frame", @"bounds",
-          @"fillColor", @"strokeColor", @"lineWidth",
+          @"fillStyle", @"strokeStyle", 
+          @"globalCompositeOperation", @"blendMode",
+          @"lineWidth", @"lineCap", @"lineJoin", 
+          @"miterLimit",
           nil];
 }
 
 + (NSSet *)methods {
-  return [NSSet setWithObjects:@"restore", @"rotate", @"save", @"scale", @"translate",
-          @"beginPath", @"clip", @"closePath", 
-          @"lineTo", @"moveTo", @"curveTo", @"wavyLineTo", @"arcTo",
-          @"rect", @"roundedRect", @"ellipseInRect", @"circle",
-          @"fill", @"stroke", @"fillStroke",
-          @"setShadow", 
-          @"drawLinearGradient", @"drawImageInRect", @"drawTextInRect",
-          @"drawColoredRect",
-          @"applyFilter", @"fillLayer", @"mirror",
-          @"colorAtPoint",
-          @"exportImage",
-          @"toString", nil];
+  return [NSSet setWithObjects:
+          // Canvas methods
+          @"arc", @"arcTo",
+          @"beginPath", @"bezierCurveTo",
+          @"clearRect", @"clip", @"closePath",
+          @"drawImage",
+          @"fill", @"fillRect",
+          @"lineTo", 
+          @"moveTo",
+          @"quadraticCurveTo",
+          @"rect", @"restore", @"rotate",
+          @"save", @"scale", @"stroke", @"strokeRect",
+          @"translate",
+          
+          // Extended
+          @"applyFilter", 
+          @"circle", @"coloredRect", @"colorAtPoint",
+          @"drawText",
+          @"ellipse", 
+          @"fillStroke", @"fillLayer",
+          @"reflect", @"roundedRect", 
+          @"shadow", 
+          @"toString", 
+          @"wavyLineTo", 
+          nil];
 }
 
 - (id)initWithArguments:(NSArray *)arguments {
@@ -71,6 +88,91 @@
   }
   
   return self;
+}
+
+//------------------------------------------------------------------------------
++ (CGBlendMode)blendModeFromString:(NSString *)blendModeStr {
+  static NSDictionary *sBlendMode = nil;
+  
+  @synchronized (sBlendMode) {
+    if (!sBlendMode) {
+      sBlendMode = [[NSDictionary dictionaryWithObjectsAndKeys:
+                     [NSNumber numberWithInt:kCGBlendModeNormal], @"normal",
+                     [NSNumber numberWithInt:kCGBlendModeMultiply], @"multiply",
+                     [NSNumber numberWithInt:kCGBlendModeOverlay], @"overlay",
+                     [NSNumber numberWithInt:kCGBlendModeDarken], @"darken",
+                     [NSNumber numberWithInt:kCGBlendModeLighten], @"lighten",
+                     [NSNumber numberWithInt:kCGBlendModeColorDodge], @"color-dodge",
+                     [NSNumber numberWithInt:kCGBlendModeColorBurn], @"color-burn",
+                     [NSNumber numberWithInt:kCGBlendModeSoftLight], @"soft-light",
+                     [NSNumber numberWithInt:kCGBlendModeHardLight], @"hard-light",
+                     [NSNumber numberWithInt:kCGBlendModeDifference], @"difference",
+                     [NSNumber numberWithInt:kCGBlendModeExclusion], @"exclusion",
+                     [NSNumber numberWithInt:kCGBlendModeHue], @"hue",
+                     [NSNumber numberWithInt:kCGBlendModeSaturation], @"saturation",
+                     [NSNumber numberWithInt:kCGBlendModeColor], @"color",
+                     [NSNumber numberWithInt:kCGBlendModeLuminosity], @"luminosity",
+
+                     [NSNumber numberWithInt:kCGBlendModeClear], @"clear",
+                     [NSNumber numberWithInt:kCGBlendModeCopy], @"copy",
+                     [NSNumber numberWithInt:kCGBlendModeSourceIn], @"source-in",
+                     [NSNumber numberWithInt:kCGBlendModeSourceOut], @"source-out",
+                     [NSNumber numberWithInt:kCGBlendModeSourceAtop], @"source-atop",
+                     [NSNumber numberWithInt:kCGBlendModeDestinationOver], @"destination-over",
+                     [NSNumber numberWithInt:kCGBlendModeDestinationIn], @"destination-in",
+                     [NSNumber numberWithInt:kCGBlendModeDestinationOut], @"destination-out",
+                     [NSNumber numberWithInt:kCGBlendModeDestinationAtop], @"destination-atop",
+                     [NSNumber numberWithInt:kCGBlendModeXOR], @"xor",
+                     [NSNumber numberWithInt:kCGBlendModePlusDarker], @"darker",
+                     [NSNumber numberWithInt:kCGBlendModePlusLighter], @"lighter",
+                     
+                     nil] retain];                     
+    }
+  }
+  
+  return [[sBlendMode objectForKey:[blendModeStr lowercaseString]] intValue];
+}
+
+//------------------------------------------------------------------------------
++ (NSString *)blendModeToString:(CGBlendMode)blendMode {
+  NSString *str = nil;
+  
+  switch (blendMode) {
+    case kCGBlendModeNormal: str = @"normal";  break;
+    case kCGBlendModeMultiply: str = @"multiply";  break;
+    case kCGBlendModeScreen: str = @"screen";  break;
+    case kCGBlendModeOverlay: str = @"overlay";  break;
+    case kCGBlendModeDarken: str = @"darken";  break;
+    case kCGBlendModeLighten: str = @"lighten";  break;
+    case kCGBlendModeColorDodge: str = @"color-dodge";  break;
+    case kCGBlendModeColorBurn: str = @"color-burn";  break;
+    case kCGBlendModeSoftLight: str = @"soft-light";  break;
+    case kCGBlendModeHardLight: str = @"hard-light";  break;
+    case kCGBlendModeDifference: str = @"difference";  break;
+    case kCGBlendModeExclusion: str = @"exclusion";  break;
+    case kCGBlendModeHue: str = @"hue";  break;
+    case kCGBlendModeSaturation: str = @"saturation";  break;
+    case kCGBlendModeColor: str = @"color";  break;
+    case kCGBlendModeLuminosity: str = @"luminosity";  break;
+   
+    case kCGBlendModeClear: str = @"clear";  break;
+    case kCGBlendModeCopy: str = @"copy";  break;
+    case kCGBlendModeSourceIn: str = @"source-in";  break;
+    case kCGBlendModeSourceOut: str = @"source-out";  break;
+    case kCGBlendModeSourceAtop: str = @"source-atop";  break;
+    case kCGBlendModeDestinationOver: str = @"destination-over";  break;
+    case kCGBlendModeDestinationIn: str = @"destination-in";  break;
+    case kCGBlendModeDestinationOut: str = @"destination-out";  break;
+    case kCGBlendModeDestinationAtop: str = @"destination-atop";  break;
+    case kCGBlendModeXOR: str = @"xor";  break;
+    case kCGBlendModePlusDarker: str = @"darker";  break;
+    case kCGBlendModePlusLighter: str = @"lighter";  break;
+
+    default:
+      str = @"unknown-blend-mode";
+  }
+  
+  return str;
 }
 
 - (id)initWithFrame:(NSRect)frame {
@@ -92,6 +194,8 @@
   backingStore_ = NULL;
   CGImageRelease(image_);
   image_ = NULL;  
+  [fillGradient_ release];
+  fillGradient_ = nil;
 }
 
 - (void)dealloc {
@@ -119,7 +223,7 @@
   [self resizeBackingStore];
 }
 
-- (CGImageRef)image {
+- (CGImageRef)cgImage {
   if (!image_)
     image_ = CGBitmapContextCreateImage(backingStore_);
   
@@ -140,31 +244,43 @@
   return backingStore_ ? YES : NO;
 }
 
-- (void)setFillColor:(id)obj {
-  Color *color = [[RuntimeObject coerceObject:obj toClass:[Color class]] retain];
-  
-  if (!color) {
-    NSArray *arguments = [RuntimeObject coerceObject:obj toClass:[NSArray class]];
-    color = [[Color alloc] initWithArguments:arguments];
+- (void)setFillStyle:(id)obj {
+  [fillGradient_ release];
+  fillGradient_ = nil;
+
+  // Color, Pattern, or Gradient
+  Color *color = [RuntimeObject coerceObject:obj toClass:[Color class]];
+  if (color) {
+    CGFloat c[4];
+    [color getComponents:c];
+    CGContextSetRGBFillColor(backingStore_, c[0], c[1], c[2], c[3]);
+    return;
   }
   
-  CGFloat c[4];
-  [color getComponents:c];
-  [color release];
-  CGContextSetRGBFillColor(backingStore_, c[0], c[1], c[2], c[3]);  
+  PatternObject *pattern = [RuntimeObject coerceObject:obj toClass:[PatternObject class]];
+  if (pattern) {
+    CGFloat c[4] = { 1, 1, 1, 1 };
+    // The fill for the pattern should be transparent
+    CGColorSpaceRef patternSpace = CGColorSpaceCreatePattern(NULL);
+    CGContextSetFillColorSpace(backingStore_, patternSpace);
+    CGContextSetFillPattern(backingStore_, [pattern cgPattern], c);
+    CGColorSpaceRelease(patternSpace);
+  }
+  
+  Gradient *gradient = [RuntimeObject coerceObject:obj toClass:[Gradient class]];
+  if (gradient) {
+    // TODO: This should probably copy so that subsequent changes to the gradient
+    // object will not be changed in the layer.
+    fillGradient_ = [gradient retain];
+  }
 }
 
-- (void)setStrokeColor:(id)obj {
-  Color *color = [[RuntimeObject coerceObject:obj toClass:[Color class]] retain];
-  
-  if (!color) {
-    NSArray *arguments = [RuntimeObject coerceObject:obj toClass:[NSArray class]];
-    color = [[Color alloc] initWithArguments:arguments];
-  }
+- (void)setStrokeStyle:(id)obj {
+  // Color or Pattern
+  Color *color = [RuntimeObject coerceObject:obj toClass:[Color class]];
   
   CGFloat c[4];  
   [color getComponents:c];
-  [color release];
   CGContextSetRGBStrokeColor(backingStore_, c[0], c[1], c[2], c[3]);  
 }
 
@@ -172,9 +288,46 @@
   CGContextSetLineWidth(backingStore_, width);
 }
 
+- (void)setLineCap:(NSString *)str {
+  str = [str lowercaseString];
+  CGLineCap cap = kCGLineCapButt;
+  
+  if ([str isEqualToString:@"round"])
+    cap = kCGLineCapRound;
+  else if ([str isEqualToString:@"square"])
+    cap = kCGLineCapSquare;
+
+  CGContextSetLineCap(backingStore_, cap);
+}
+
+- (void)setLineJoin:(NSString *)str {
+  str = [str lowercaseString];
+  CGLineJoin join = kCGLineJoinMiter;
+  
+  if ([str isEqualToString:@"round"])
+    join = kCGLineJoinRound;
+  else if ([str isEqualToString:@"bevel"])
+    join = kCGLineJoinBevel;
+
+  CGContextSetLineJoin(backingStore_, join);
+}
+
+- (void)setMiterLimit:(CGFloat)limit {
+  CGContextSetMiterLimit(backingStore_, limit);
+}
+
+- (void)setBlendMode:(NSString *)str {
+  CGBlendMode mode = [Layer blendModeFromString:str];
+  CGContextSetBlendMode(backingStore_, mode);
+}
+  
+- (void)setGlobalCompositeOperation:(NSString *)str {
+  [self setBlendMode:str];
+}
+
 - (CGFloat)lineWidth {
-  // ???
-  return 0;
+  // TODO: There should be a way to return the current line width
+  return 1;
 }
 
 - (void)save {
@@ -212,14 +365,25 @@
   CGContextMoveToPoint(backingStore_, point.x, point.y);
 }
 
-- (void)curveTo:(NSArray *)arguments {
+- (void)bezierCurveTo:(NSArray *)arguments {
+  // args: control pt1, controlPt2, end pt
+  if ([arguments count] == 3) {
+    PointObject *control1 = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[PointObject class]];
+    PointObject *control2 = [RuntimeObject coerceObject:[arguments objectAtIndex:1] toClass:[PointObject class]];
+    PointObject *end = [RuntimeObject coerceObject:[arguments objectAtIndex:2] toClass:[PointObject class]];
+    
+    CGContextAddCurveToPoint(backingStore_, [control1 x], [control1 y], [control2 x], [control2 y], [end x], [end y]);
+  }
+}
+
+- (void)quadraticCurveTo:(NSArray *)arguments {
   // args: control pt, end pt
   if ([arguments count] == 2) {
     PointObject *control = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[PointObject class]];
     PointObject *end = [RuntimeObject coerceObject:[arguments objectAtIndex:1] toClass:[PointObject class]];
     
     CGContextAddQuadCurveToPoint(backingStore_, [control x], [control y], [end x], [end y]);
-  }
+  }  
 }
 
 // Positive displacement will be in the clockwise direction, negative counter-clockwise.
@@ -380,7 +544,7 @@
   }
 }
 
-- (void)arcTo:(NSArray *)arguments {
+- (void)arc:(NSArray *)arguments {
   // args: center, radius, startAngle, endAngle, clockwise
   if ([arguments count] == 5) {
     PointObject *center = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[PointObject class]];
@@ -391,6 +555,22 @@
     
     CGContextAddArc(backingStore_, [center x], [center y], radius, start, end, clockwise);
   }
+}
+
+- (void)arcTo:(NSArray *)arguments {
+  // args: p1, p2, radius
+  if ([arguments count] >= 3) {
+    PointObject *p1 = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[PointObject class]];
+    PointObject *p2 = [RuntimeObject coerceObject:[arguments objectAtIndex:1] toClass:[PointObject class]];
+    CGFloat radius = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:2]];
+    CGContextAddArcToPoint(backingStore_, [p1 x], [p1 y], [p2 x], [p2 y], radius);
+  }
+}
+
+- (void)clearRect:(NSArray *)arguments {
+  RectObject *rectObject = [[RectObject alloc] initWithArguments:arguments];
+  CGContextClearRect(backingStore_, NSRectToCGRect([rectObject rect]));
+  [rectObject release];
 }
 
 - (void)rect:(NSArray *)arguments {
@@ -431,7 +611,7 @@
   [rectObject release];
 }
 
-- (void)ellipseInRect:(NSArray *)arguments {
+- (void)ellipse:(NSArray *)arguments {
   RectObject *rectObject = [[RectObject alloc] initWithArguments:arguments];
   CGContextAddEllipseInRect(backingStore_, NSRectToCGRect([rectObject rect]));
   [rectObject release];
@@ -456,7 +636,7 @@
     CGContextAddArc(backingStore_, [pt x], [pt y], radius, 0, M_PI * 2, 1);
 }
 
-- (void)drawColoredRect:(NSArray *)arguments {
+- (void)coloredRect:(NSArray *)arguments {
   // args: rect, bl, tl, tr, br colors
   if ([arguments count] == 5) {
     RectObject *rect = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[RectObject class]];
@@ -466,12 +646,10 @@
     Color *br = [RuntimeObject coerceObject:[arguments objectAtIndex:4] toClass:[Color class]];
     NSString *program =
     @"kernel vec4 coloredRect(__color topLeft, __color topRight, __color bottomLeft, __color bottomRight, vec2 size)"
-    "{"
-    "vec2 t = destCoord() / size;"
+    "{ vec2 t = destCoord() / size;"
     "vec4 leftCol = topLeft * t.y + bottomLeft * (1.0 - t.y);"
     "vec4 rightCol = topRight * t.y + bottomRight * (1.0 - t.y);"
-    "return clamp(rightCol * t.x + leftCol * (1.0 - t.x), 0.0, 1.0);"
-    "}";
+    "return clamp(rightCol * t.x + leftCol * (1.0 - t.x), 0.0, 1.0); }";
     NSArray *kernels = [CIKernel kernelsWithString:program];
     CIKernel *coloredKernel = [kernels objectAtIndex:0];
     CIFilter *crop = [CIFilter filterWithName:@"CICrop" keysAndValues:
@@ -503,14 +681,52 @@
 }
 
 - (void)fill {
-  CGContextDrawPath(backingStore_, kCGPathFill);
+  if (fillGradient_) {
+    CGPoint start = NSPointToCGPoint([[fillGradient_ start] point]);
+    CGPoint end = NSPointToCGPoint([[fillGradient_ end] point]);
+    CGGradientDrawingOptions options = kCGGradientDrawsBeforeStartLocation |
+      kCGGradientDrawsAfterEndLocation;
+    
+    // Save the clip
+    CGContextSaveGState(backingStore_);
+    CGContextClip(backingStore_);
+    
+    if (![fillGradient_ isRadial]) {
+      CGContextDrawLinearGradient(backingStore_, [fillGradient_ cgGradient], 
+                                  start, end, options);
+    } else {
+      CGPoint radius = NSPointToCGPoint([[fillGradient_ radius] point]);
+      CGContextDrawRadialGradient(backingStore_, [fillGradient_ cgGradient], 
+                                  start, radius.x, end, radius.y, options);
+    }
+    CGContextRestoreGState(backingStore_);
+  } else {
+    CGContextDrawPath(backingStore_, kCGPathFill);
+  }
+}
+
+- (void)fillRect:(NSArray *)arguments {
+  if ([arguments count]) {
+    RectObject *rect = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[RectObject class]];
+    CGContextFillRect(backingStore_, NSRectToCGRect([rect rect]));
+  }
+}
+
+- (void)strokeRect:(NSArray *)arguments {
+  if ([arguments count]) {
+    RectObject *rect = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[RectObject class]];
+    CGContextStrokeRect(backingStore_, NSRectToCGRect([rect rect]));
+  }
 }
 
 - (void)fillStroke {
+  // TODO: Use a separate CGPath so that we can properly draw gradients and
+  // patterns in the path as well as stroke it.
   CGContextDrawPath(backingStore_, kCGPathFillStroke);
 }
 
-- (void)setShadow:(NSArray *)arguments {
+- (void)shadow:(NSArray *)arguments {
+  // arguments: offset, size, color
   int count = [arguments count];
   CGSize size = CGSizeZero;
   CGFloat blur = 0;
@@ -529,37 +745,65 @@
   CGColorRelease(colorRef);
 }
 
-- (void)drawLinearGradient:(NSArray *)arguments {
-  if ([arguments count] == 3) {
-    Gradient *gradient = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[Gradient class]];
-    PointObject *startPt = [RuntimeObject coerceObject:[arguments objectAtIndex:1] toClass:[PointObject class]];
-    PointObject *endPt = [RuntimeObject coerceObject:[arguments objectAtIndex:2] toClass:[PointObject class]];
-    CGPoint start = NSPointToCGPoint([startPt point]);
-    CGPoint end = NSPointToCGPoint([endPt point]);
-    CGGradientDrawingOptions options = kCGGradientDrawsBeforeStartLocation | kCGGradientDrawsAfterEndLocation;
-    
-    CGContextDrawLinearGradient(backingStore_, [gradient cgGradient], start, end, options);
+- (void)drawImage:(NSArray *)arguments {
+  // args:  image, Point (dest)
+  //        image, Rect (dest)
+  //        image, Rect (src), Rect (dest)
+  int count = [arguments count];
+  
+  if (count < 2)
+    return;
+
+  Image *image = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[Image class]];
+  if (!image)
+    return;
+
+  CGRect dest = CGRectMake(0, 0, [image width], [image height]);
+  CGImageRef imageRef = [image cgImage];
+  CGImageRef srcImageRef = NULL;
+  
+  PointObject *destPt = [RuntimeObject coerceObject:[arguments objectAtIndex:1] toClass:[PointObject class]];
+  if (destPt) {
+    dest.origin = NSPointToCGPoint([destPt point]);
+  } else {
+    RectObject *destRect = [RuntimeObject coerceObject:[arguments objectAtIndex:1] toClass:[RectObject class]]; 
+    dest = NSRectToCGRect([destRect rect]);
   }
+
+  if (count >= 3) {
+    // Use the previously read dest
+    RectObject *destRect = [RuntimeObject coerceObject:[arguments objectAtIndex:2] toClass:[RectObject class]];
+    srcImageRef = CGImageCreateWithImageInRect(imageRef, dest);
+    imageRef = srcImageRef;
+    dest = NSRectToCGRect([destRect rect]);
+  }
+    
+  CGContextSaveGState(backingStore_);
+  CGContextSetBlendMode(backingStore_, [image cgBlendMode]);
+  CGContextSetAlpha(backingStore_, [image alpha]);
+  CGContextDrawImage(backingStore_, dest, imageRef);
+  CGContextRestoreGState(backingStore_);
+  
+  if (srcImageRef)
+    CGImageRelease(srcImageRef);
 }
 
-- (void)drawImageInRect:(NSArray *)arguments {
-  if ([arguments count] == 2) {
-    Image *image = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[Image class]];
-    RectObject *srcRect = [RuntimeObject coerceObject:[arguments objectAtIndex:1] toClass:[RectObject class]];
-    
-    CGContextSaveGState(backingStore_);
-    CGContextSetBlendMode(backingStore_, [image cgBlendMode]);
-    CGImageRef imageRef = [image image];
-    CGContextSetAlpha(backingStore_, [image alpha]);
-    CGContextDrawImage(backingStore_, NSRectToCGRect([srcRect rect]), imageRef);
-    CGContextRestoreGState(backingStore_);
-  }
-}
-
-- (void)drawTextInRect:(NSArray *)arguments {
+- (void)drawText:(NSArray *)arguments {
+  // arguments: Text, Rect | Point
   if ([arguments count] == 2) {
     Text *text = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[Text class]];
-    RectObject *srcRect = [RuntimeObject coerceObject:[arguments objectAtIndex:1] toClass:[RectObject class]];
+    NSRect srcRect = NSZeroRect;
+    RectObject *srcRectObj = [RuntimeObject coerceObject:[arguments objectAtIndex:1] toClass:[RectObject class]];
+    if (srcRectObj) {
+      srcRect = [srcRectObj rect];
+    } else {
+      PointObject *destPt = [RuntimeObject coerceObject:[arguments objectAtIndex:1] toClass:[PointObject class]];
+      
+      if (!destPt)
+        return;
+      
+      srcRect.origin = [destPt point];
+    }
     
     CGContextSaveGState(backingStore_);
     NSGraphicsContext *original = [NSGraphicsContext currentContext];
@@ -568,7 +812,10 @@
     NSAttributedString *str = [[NSAttributedString alloc] initWithString:[text string] attributes:[text attributes]];
     NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingDisableScreenFontSubstitution;
 
-    [str drawWithRect:[srcRect rect] options:options];
+    if (NSWidth(srcRect) == 0)
+      srcRect.size = [str size];
+    
+    [str drawWithRect:srcRect options:options];
     [str release];
 
     [NSGraphicsContext setCurrentContext:original];
@@ -670,35 +917,67 @@
 
 - (void)fillLayer:(NSArray *)arguments {
   if ([arguments count] == 1) {
-    // Either a color or a gradient
-    id arg = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[Gradient class]];
+    // args: color, pattern, gradient
+    Gradient *gradient = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[Gradient class]];
     CGRect bounds = [self cgRectFrame];
     bounds.origin.x = bounds.origin.y = 0;
-    
-    if (arg) {
-      // Centered left-to-right gradient
-      CGPoint start = CGPointMake(CGRectGetMinX(bounds), CGRectGetMidY(bounds));
-      CGPoint end = CGPointMake(CGRectGetMaxX(bounds), CGRectGetMidY(bounds));
+
+    CGContextSaveGState(backingStore_);
+
+    // Centered gradient
+    if (gradient) {
+      CGPoint start = NSPointToCGPoint([[gradient start] point]);
+      CGPoint end = NSPointToCGPoint([[gradient end] point]);
       CGGradientDrawingOptions options = kCGGradientDrawsBeforeStartLocation | kCGGradientDrawsAfterEndLocation;
-      CGContextDrawLinearGradient(backingStore_, [arg cgGradient], start, end, options);
-    } else {
-      arg = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[Color class]];
+      CGGradientRef gradientRef = [gradient cgGradient];
       
-      if (arg) {
-        CGFloat c[4];
-        [arg getComponents:c];
-        CGContextSetRGBFillColor(backingStore_, c[0], c[1], c[2], c[3]);
-        CGContextFillRect(backingStore_, bounds);
+      if ([gradient isRadial]) {
+        CGPoint radius = NSPointToCGPoint([[gradient radius] point]);
+
+        if (start.x == end.x && start.y == end.y)
+          start = end = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
+
+        CGContextDrawRadialGradient(backingStore_, gradientRef, start, radius.x, end, radius.y, options);
+      } else {
+        if (start.x == end.x && start.y == end.y) {
+          start = CGPointMake(CGRectGetMinX(bounds), CGRectGetMidY(bounds)); 
+          end = CGPointMake(CGRectGetMaxX(bounds), CGRectGetMidY(bounds));
+        }
+
+        CGContextDrawLinearGradient(backingStore_, gradientRef, start, end, options);
       }
     }
+    
+    // Pattern
+    PatternObject *pattern = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[PatternObject class]];
+    if (pattern) {
+      CGFloat c[4] = { 1, 1, 1, 1 };
+      // The fill for the pattern should be transparent
+      CGColorSpaceRef patternSpace = CGColorSpaceCreatePattern(NULL);
+      CGContextSetFillColorSpace(backingStore_, patternSpace);
+      CGContextSetFillPattern(backingStore_, [pattern cgPattern], c);
+      CGColorSpaceRelease(patternSpace);
+      CGContextFillRect(backingStore_, bounds);
+    }
+
+    // Solid color
+    Color *color = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[Color class]];
+    if (color) {
+      CGFloat c[4];
+      [color getComponents:c];
+      CGContextSetRGBFillColor(backingStore_, c[0], c[1], c[2], c[3]);
+      CGContextFillRect(backingStore_, bounds);
+    }
+    CGContextRestoreGState(backingStore_);
   } else if ([arguments count] == 4) {
+    // args: 4 colors
     NSMutableArray *newArguments = [NSMutableArray arrayWithArray:arguments];
     [newArguments insertObject:[self bounds] atIndex:0];
     [self drawColoredRect:newArguments];
   }
 }
 
-- (void)mirror:(NSArray *)arguments {
+- (void)reflect:(NSArray *)arguments {
   if ([arguments count] >= 1) {
     NSString *mode = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[NSString class]];
     CGFloat alpha = 1.0;
@@ -815,24 +1094,6 @@
   }
   
   return nil;
-}
-
-// layer.exportImage(String name [,String type])
-// Export the layer's image to ~/Application Support/
-- (void)exportImage:(NSArray *)arguments {
-  NSString *name = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[NSString class]];
-  NSString *type = @"jpeg";
-  
-  if ([arguments count] > 1)
-    type = [RuntimeObject coerceObject:[arguments objectAtIndex:1] toClass:[NSString class]];
-  
-  if ([name length]) {
-    NSString *safeName = [name lastPathComponent];
-    NSString *path = [[Exporter imageStorageDirectory] stringByAppendingPathComponent:safeName];
-    CGImageRef current = CGBitmapContextCreateImage(backingStore_);
-    [Exporter exportImage:current path:path type:type quality:1.0];
-    CGImageRelease(current);
-  }
 }
                     
 - (NSString *)toString {

@@ -13,7 +13,7 @@ a = a.lighter(0.3);
 
 // Fill the desktop with unique colors, except that the top left and bottom right
 // share the same color.
-desktop.drawColoredRect(desktop.bounds, a, b, c, b);
+desktop.coloredRect(desktop.bounds, a, b, c, b);
 
 // Pick a random font for the clock
 var fontNames = new Array("Courier", "Helvetica", "Futura", 
@@ -25,10 +25,7 @@ var fontName = fontNames[fontIdx];
 
 // Draw the time in the lower right corner.  This means that this script should run every
 // minute.  Otherwise, you'll be out of date!
-var now = new Date();
-var h = now.getHours();
-var m = now. getMinutes();
-var dateStr = new Text((h > 12 ? h - 12 : h) + ":" + (m < 10 ? "0" : "") + m); // Pad with 0's
+dateStr = new Text(DateStr().toString());
 dateStr.fontSize = 72;
 dateStr.fontName = fontName;
 var dateRect = dateStr.bounds;
@@ -40,4 +37,13 @@ var middle = new Point(dateRect.x + dateRect.width / 2, dateRect.y + dateRect.he
 var pixelColor = desktop.colorAtPoint(middle);
 pixelColor.a = 1.0;
 dateStr.foregroundColor = pixelColor.contrasting(0.6);
-desktop.drawTextInRect(dateStr, dateRect);
+desktop.drawText(dateStr, dateRect);
+
+function DateStr() {
+	var now = new Date();
+	var h = now.getHours();
+	var m = now. getMinutes();
+	var dateStr = new String((h > 12 ? h - 12 : h) + ":" + (m < 10 ? "0" : "") + m);
+	
+	return dateStr;
+}

@@ -15,14 +15,14 @@ function DrawCenteredApple() {
 	appleRect.x = (db.width - appleRect.width) / 2;
 	appleRect.y = (db.height - appleRect.height) / 2 - 70;
 	desktop.save();
-	desktop.setShadow(new Point(0, -10), 25, new Color("white"));
-	desktop.drawTextInRect(apple, appleRect);
+	desktop.shadow(new Point(0, -10), 25, new Color("white"));
+	desktop.drawText(apple, appleRect);
 	desktop.restore();
 }
 
 // Setup stroke and fill attributes
 var blue = new Color(0, 0, 1, 0.5);
-desktop.strokeColor = new Color(1, 1, 1, 0.5);  // translucent white
+desktop.strokeStyle = new Color(1, 1, 1, 0.5);  // translucent white
 desktop.lineWidth = 5;
 
 // Draw some rectangles
@@ -61,7 +61,7 @@ for (x = 0; x < count; ++x) {
 	textRect.x = pt.x;
 	textRect.y = pt.y;
 	text.foregroundColor = rectColor.vary(0, 0.5, 0, 0.1);
-	desktop.drawTextInRect(text, textRect);
+	desktop. drawText(text, textRect);
 
 	desktop.restore();
 }

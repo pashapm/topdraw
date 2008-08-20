@@ -20,6 +20,7 @@
 #import "RuntimeObject.h"
 
 @class Color;
+@class Gradient;
 @class RectObject;
 
 @interface Layer : RuntimeObject {
@@ -27,40 +28,22 @@
   NSRect frame_;
   CGContextRef backingStore_; // CGBitmapContext
   CGImageRef image_;
+  Gradient *fillGradient_;
   
   // Used in WavyLine drawing
   CGPoint *segments_;
   int segmentCount_;
 }
 
++ (CGBlendMode)blendModeFromString:(NSString *)blendModeStr;
++ (NSString *)blendModeToString:(CGBlendMode)blendMode;
+
 - (id)initWithFrame:(NSRect)frame;
 - (RectObject *)frame;
 - (RectObject *)bounds;
 - (CGRect)cgRectFrame;
 
-- (CGImageRef)image;
+- (CGImageRef)cgImage;
 - (CGContextRef)backingStore;
-
-- (void)save;
-- (void)restore;
-
-// Commands
-- (void)beginPath;
-- (void)closePath;
-
-- (void)lineTo:(NSArray *)arguments;
-- (void)moveTo:(NSArray *)arguments;
-- (void)rect:(NSArray *)arguments;
-- (void)roundedRect:(NSArray *)arguments;
-- (void)ellipseInRect:(NSArray *)arguments;
-
-- (void)stroke;
-- (void)fill;
-
-- (void)rotate:(NSArray *)arguments;
-- (void)scale:(NSArray *)arguments;
-- (void)translate:(NSArray *)arguments;
-
-- (void)wavyLineTo:(NSArray *)arguments;
 
 @end

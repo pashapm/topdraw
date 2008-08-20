@@ -43,7 +43,7 @@ for (i = 0; i < 30; ++i) {
 	r = str.bounds;
 	r.x = rnd.floatValue * (db.width - r.width);
 	r.y = rnd.floatValue * (db.height - r.height);
-	desktop.drawTextInRect(str, r);
+	desktop.drawText(str, r);
 }
 
 // Apply a filter to make it more interesting
@@ -60,13 +60,22 @@ if (rnd.floatValue > 0.5) {
 desktop.applyFilter(f);
 
 // The time
-var now = new Date();
-var h = now.getHours();
-var m = now. getMinutes();
-var dateStr = new Text(h + ":" + m);
+var dateStr = new Text(DateStr().toString());
 dateStr.fontSize = 72;
 dateStr.foregroundColor = new Color("white");
 var dateRect = dateStr.bounds;
 dateRect.x = db.width - dateRect.width - 10;
 dateRect.y = 0;
-desktop.drawTextInRect(dateStr, dateRect);
+var datePt = new Point(dateRect.x, dateRect.y);
+desktop.drawText(dateStr, datePt);
+
+function DateStr() {
+	var now = new Date();
+	var h = now.getHours();
+	var m = now. getMinutes();
+	var dateStr = new String((h > 12 ? h - 12 : h) + ":" + (m < 10 ? "0" : "") + m);
+	
+	return dateStr;
+}
+
+

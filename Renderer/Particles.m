@@ -13,7 +13,7 @@
 // the License.
 
 #import "Color.h"
-#import "GravityWell.h"
+#import "GravityPoint.h"
 #import "Particles.h"
 #import "PointObject.h"
 #import "Randomizer.h"
@@ -43,7 +43,7 @@
 }
 
 + (NSSet *)methods {
-  return [NSSet setWithObjects:@"addColor", @"addGravityWell", @"toString", nil];
+  return [NSSet setWithObjects:@"addColor", @"addGravityPoint", @"toString", nil];
 }
 
 - (id)initWithArguments:(NSArray *)arguments {
@@ -67,7 +67,7 @@
   [accelerationYRandomizer_ release];
   free(particles_);
   [colors_ release];
-  [gravityWells_ release];
+  [gravityPoints_ release];
   [super dealloc];
 }
 
@@ -186,15 +186,15 @@
   }
 }
 
-- (void)addGravityWell:(NSArray *)arguments {
+- (void)addGravityPoint:(NSArray *)arguments {
   if ([arguments count] == 1) {
-    GravityWell *gw = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[GravityWell class]];
+    GravityPoint *gp = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[GravityPoint class]];
 
-    if (gw) {
-      if (!gravityWells_)
-        gravityWells_ = [[NSMutableArray alloc] init];
+    if (gp) {
+      if (!gravityPoints_)
+        gravityPoints_ = [[NSMutableArray alloc] init];
 
-      [gravityWells_ addObject:gw];
+      [gravityPoints_ addObject:gp];
     }
   }
 }
@@ -250,13 +250,13 @@
     CGPoint last = p->location;
     
     // Add any contribution from the gravity wells
-    if (gravityWells_) {
-      NSUInteger wellCount = [gravityWells_ count];
-      for (NSUInteger wellIdx = 0; wellIdx < wellCount; ++wellIdx) {
-        GravityWell *gw = [gravityWells_ objectAtIndex:wellIdx];
-        CGPoint wellGravity = [gw accelerationForPoint:p->location];
-        p->acceleration.x += wellGravity.x;
-        p->acceleration.y += wellGravity.y;
+    if (gravityPoints_) {
+      NSUInteger gravityCount = [gravityPoints_ count];
+      for (NSUInteger gravityIdx = 0; gravityIdx < gravityCount; ++gravityIdx) {
+        GravityPoint *gp = [gravityPoints_ objectAtIndex:gravityIdx];
+        CGPoint gravityPointAccel = [gp accelerationForPoint:p->location];
+        p->acceleration.x += gravityPointAccel.x;
+        p->acceleration.y += gravityPointAccel.y;
       }
     }
     

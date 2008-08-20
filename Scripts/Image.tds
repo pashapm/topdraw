@@ -6,8 +6,8 @@ desktop.fillLayer(new Color("black"));
 var db = desktop.bounds;
 
 // Create a layer with a frame and a rounded rectangle
-var r = new Rect(0, 0, 400, 200);
-var layer = new Layer(r);
+var layerRect = new Rect(0, 0, 400, 200);
+var layer = new Layer(layerRect);
 var rnd = new Randomizer(0.1, 1);
 
 // Randomize the line width
@@ -16,46 +16,54 @@ layer.lineWidth = w;
 
 // Create a rounded rect inside the layer and fill it with a gradient
 layer.beginPath();
-layer.roundedRect(r, 20);
-var c = new Color;
-c.a = 0.5;
-layer.strokeColor = c;
-layer.save();
-layer.clip();
+layer.roundedRect(layerRect, 15);
 var color1 = new Color;
 var color2 = new Color;
-color1.a = color2.a = 0.3;
-layer.fillLayer(new Gradient(color1, color2));
-layer.restore();
-layer.fillStroke();
+color1.a = color2.a = 0.1;
+var grad = new Gradient(color1, color2);
+grad.start = new Point(0, 0);
+grad.end = new Point(layerRect.width, 0);
+layer.fillStyle = grad;
+layer.fill();
 
-// Draw a stroked rounded rectangle in the layer
+// Draw a circle in the layer
+c = new Color;
+c.a = 0.2;
+layer.fillStyle = c;
 c = new Color;
 c.a = 0.5;
-layer.fillColor = c;
-r.x = r.y = 10 + 40 * rnd.floatValue;
-r.width = 100 + 100 * rnd.floatValue;
-r.height = 50 + 50 * rnd.floatValue;
-var radius = 20 * rnd.floatValue;
+layer.strokeStyle = c;
+var r = new Rect;
+var xScale = layerRect.width / 4
+var yScale = layerRect.height / 4;
+var xRnd = new Randomizer(-xScale, xScale);
+var yRnd = new Randomizer(-yScale, yScale);
+r.x = xRnd.intValue;
+r.y = yRnd.intValue;
+xRnd = new Randomizer(5, layerRect.width);
+yRnd = new Randomizer(5, layerRect.height);
+r.width = xRnd.intValue;
+r.height = yRnd.intValue;
 layer.beginPath();
-layer.roundedRect(r, radius);
-layer.stroke();
+layer.ellipse(r);
+layer.fillStroke();
 
 // Draw some text
 
 // Create an image with that layer
 var i = new Image(layer);
-r.width = i.width;
-r.height = i.height;
 
 // Draw the image several times
 var inc = 50 * rnd.floatValue;
 var xScale = 100 * rnd.floatValue;
 var yOffset = (db.height - r.height) * rnd.floatValue;
+var pt = new Point;
+var src = new Rect(r);
+var adjustedSrc = 0;
 for (x = 50 * rnd.floatValue; x < (db.width - r.width); x += inc) {
-	r.x =  x * 8;
-	r.y = yOffset + Math.sin(x / xScale) * x;
-	desktop.drawImageInRect(i, r);
+	pt.x = x * 8;
+	pt.y = yOffset + Math.sin(x / xScale) * x;
+	desktop.drawImage(i, pt);
 }
 
 

@@ -12,37 +12,43 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-#import "GravityWell.h"
+#import "GravityPoint.h"
 #import "PointObject.h"
 
-@implementation GravityWell
-
+@implementation GravityPoint
+//------------------------------------------------------------------------------
 + (NSString *)className {
-  return @"GravityWell";
+  return @"GravityPoint";
 }
 
+//------------------------------------------------------------------------------
 + (NSSet *)properties {
   return [NSSet setWithObjects:@"location", @"gravity", nil];
 }
 
+//------------------------------------------------------------------------------
 + (NSSet *)methods {
   return [NSSet setWithObjects:@"toString", nil];
 }
 
+//------------------------------------------------------------------------------
 - (void)setLocation:(id)obj {
   PointObject *pt = [RuntimeObject coerceObject:obj toClass:[PointObject class]];
   location_ = NSPointToCGPoint([pt point]);
 }
 
+//------------------------------------------------------------------------------
 - (void)setGravity:(CGFloat)g {
   gravity_ = g;
 }
 
+//------------------------------------------------------------------------------
 - (NSString *)toString {
   return [NSString stringWithFormat:@"GravityWell: %@, g=%g", 
           NSStringFromPoint(NSPointFromCGPoint(location_)), gravity_];
 }
 
+//------------------------------------------------------------------------------
 - (CGPoint)accelerationForPoint:(CGPoint)point {
   CGPoint d;
   CGFloat mag;

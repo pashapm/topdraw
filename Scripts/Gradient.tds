@@ -10,15 +10,15 @@ var base = new Color("purple");
 grad.addColorStop(base.vary(0, 0.5, 0.2, 0), 0.5);
 base = new Color("blue");
 grad.addColorStop(base.vary(0, 0.5, 0), 1);
-var s = new Point(0, db.height);
-var e = new Point(db.width, db.height);
-desktop.drawLinearGradient(grad, s, e);
+grad.start = new Point(0, db.height);
+grad.end = new Point(db.width, db.height);
+desktop.fillLayer(grad);
 
 // Shadows
 var offset = new Point(8, -8);
 var blur = 10;
 var color = new Color("black", 0.5);
-desktop.setShadow(offset, blur, color);
+desktop.shadow(offset, blur, color);
 
 // Draw some redish things
 desktop.beginPath();
@@ -27,10 +27,10 @@ var rndSize = new Randomizer(50, 200);
 var rndRadius = new Randomizer(0, 30);
 var r = new Rect();
 var fc = new Color(0.5, 0, 0, 1);
-desktop.strokeColor = new Color("black");
+desktop.strokeStyle = new Color("black");
 
 for (x = 0; x < 50; ++x) {
-	desktop.fillColor = fc.vary(0.3, 0, 0, 0);
+	desktop.fillStyle = fc.vary(0.3, 0, 0, 0);
 	r.width = rndSize.floatValue;
 	r.height = rndSize.floatValue;
 	r.x = rnd.floatValue * (db.width - r.width);

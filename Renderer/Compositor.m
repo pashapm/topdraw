@@ -18,11 +18,12 @@
 #import "Compositor.h"
 #import "Filter.h"
 #import "Gradient.h"
-#import "GravityWell.h"
+#import "GravityPoint.h"
 #import "Image.h"
 #import "Layer.h"
 #import "Noise.h"
 #import "Particles.h"
+#import "PatternObject.h"
 #import "Plasma.h"
 #import "PointObject.h"
 #import "Randomizer.h"
@@ -38,6 +39,9 @@ static inline BOOL IsEmptySize(NSSize size) {
 }
 
 @implementation Compositor
+//------------------------------------------------------------------------------
+#pragma mark -
+#pragma mark || Runtime ||
 //------------------------------------------------------------------------------
 + (NSString *)className {
   return @"Compositor";
@@ -105,10 +109,11 @@ static inline BOOL IsEmptySize(NSSize size) {
   [rt registerClass:[Color class]];
   [rt registerClass:[Filter class]];
   [rt registerClass:[Gradient class]];
-  [rt registerClass:[GravityWell class]];
+  [rt registerClass:[GravityPoint class]];
   [rt registerClass:[Image class]];
   [rt registerClass:[Noise class]];
   [rt registerClass:[Particles class]];
+  [rt registerClass:[PatternObject class]];
   [rt registerClass:[Plasma class]];
   [rt registerClass:[PointObject class]];
   [rt registerClass:[RectObject class]];
@@ -162,16 +167,16 @@ static inline BOOL IsEmptySize(NSSize size) {
   for (int i = 0; i < count; ++i) {
     Layer *layer = [layers_ objectAtIndex:i];
     CGContextSaveGState(dest);
-    CGBlendMode blendMode = [Image blendModeFromString:[blendModes_ objectAtIndex:i]];
+    CGBlendMode blendMode = [Layer blendModeFromString:[blendModes_ objectAtIndex:i]];
     CGContextSetBlendMode(dest, blendMode);
-    CGContextDrawImage(dest, [self convertFrameToDesktop:[layer cgRectFrame]], [layer image]);
+    CGContextDrawImage(dest, [self convertFrameToDesktop:[layer cgRectFrame]], [layer cgImage]);
     CGContextRestoreGState(dest);
   }
   
   // Draw the menubar
-  CGContextDrawImage(dest, [self convertFrameToDesktop:[menubar_ cgRectFrame]], [menubar_ image]);
+  CGContextDrawImage(dest, [self convertFrameToDesktop:[menubar_ cgRectFrame]], [menubar_ cgImage]);
     
-  return [desktop_ image];
+  return [desktop_ cgImage];
 }
 
 //------------------------------------------------------------------------------
@@ -222,13 +227,13 @@ static inline BOOL IsEmptySize(NSSize size) {
   
   Layer *layer = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[Layer class]];
   [layers_ addObject:layer];
-  NSString *compositingMode = [Image stringWithBlendMode:kCGBlendModeNormal];
+  NSString *compositingMode = [Layer blendModeToString:kCGBlendModeNormal];
   
   if (count == 2) {
     // Normalize the string
     NSString *modeStr = [RuntimeObject coerceObject:[arguments objectAtIndex:1] toClass:[NSString class]];
-    CGBlendMode mode = [Image blendModeFromString:modeStr];
-    compositingMode = [Image stringWithBlendMode:mode];
+    CGBlendMode mode = [Layer blendModeFromString:modeStr];
+    compositingMode = [Layer blendModeToString:mode];
   }
   
   [blendModes_ addObject:compositingMode];

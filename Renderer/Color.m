@@ -20,10 +20,14 @@
 static const CGFloat kInvalidHue = 99;
 static const int kInvalidColorIndex = -1;
 
+@interface Color (PrivateMethods)
+- (Color *)adjustColorBrightness:(CGFloat)amount;
+@end
+
 @implementation Color
 //------------------------------------------------------------------------------
 #pragma mark -
-#pragma mark || Runtime Object Methods ||
+#pragma mark || Runtime ||
 //------------------------------------------------------------------------------
 + (NSString *)className {
   return @"Color";
@@ -193,6 +197,9 @@ static int HSBPropertyToIndex(NSString *property) {
 }
 
 //------------------------------------------------------------------------------
+#pragma mark -
+#pragma mark || Properties ||
+//------------------------------------------------------------------------------
 - (id)valueForKey:(NSString *)key {
   int colorIdx = RGBPropertyToIndex(key);
 
@@ -231,6 +238,9 @@ static int HSBPropertyToIndex(NSString *property) {
   }
 }
 
+//------------------------------------------------------------------------------
+#pragma mark -
+#pragma mark || Methods ||
 //------------------------------------------------------------------------------
 - (Color *)blend:(NSArray *)arguments {
   Color *result = nil;
@@ -277,15 +287,6 @@ static int HSBPropertyToIndex(NSString *property) {
 }
 
 //------------------------------------------------------------------------------
-- (Color *)adjustColorBrightness:(CGFloat)amount {
-  NSColor *color = [self color];
-  NSColor *adjusted = [color colorByAdjustingBrightness:amount];
-  Color *result = [[[Color alloc] init] autorelease];
-  [result setColor:adjusted];
-  return result;
-}
-
-//------------------------------------------------------------------------------
 - (Color *)darker:(NSArray *)arguments {
   CGFloat amount = 0.2;
   
@@ -323,6 +324,18 @@ static int HSBPropertyToIndex(NSString *property) {
 - (NSString *)toString {
   return [NSString stringWithFormat:@"(%g, %g, %g, %g)",
           color_[0], color_[1], color_[2], color_[3]];
+}
+
+//------------------------------------------------------------------------------
+#pragma mark -
+#pragma mark || Private ||
+//------------------------------------------------------------------------------
+- (Color *)adjustColorBrightness:(CGFloat)amount {
+  NSColor *color = [self color];
+  NSColor *adjusted = [color colorByAdjustingBrightness:amount];
+  Color *result = [[[Color alloc] init] autorelease];
+  [result setColor:adjusted];
+  return result;
 }
 
 @end

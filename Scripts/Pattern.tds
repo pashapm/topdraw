@@ -1,0 +1,25 @@
+var size = 64;
+var r = new Rect(0, 0, size, size);
+var l = new Layer(r);
+
+l.strokeStyle = new Color("blue", 0.3);
+l.fillStyle = new Color("white", 0.1);
+l.clearRect(r);
+l.beginPath();
+var ellipseRect = r.inset(2);
+l.ellipse(ellipseRect);
+l.fillStroke();
+
+var image = new Image(l);
+var pattern = new Pattern(image);
+
+var rnd = new Randomizer(5, size * 2);
+pattern.offset = new Point(rnd.intValue, rnd.intValue);
+
+desktop.fillLayer(new Gradient(new Color("black"), 
+	new Color("white")));
+
+desktop.fillStyle = pattern;
+desktop.beginPath();
+desktop.rect(desktop.bounds);
+desktop.fill();

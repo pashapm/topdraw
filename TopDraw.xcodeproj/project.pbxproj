@@ -50,7 +50,7 @@
 		9B4A8F0C0E428C7700777579 /* Compositor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8EEB0E428C7700777579 /* Compositor.m */; };
 		9B4A8F0D0E428C7700777579 /* Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8EED0E428C7700777579 /* Filter.m */; };
 		9B4A8F0E0E428C7700777579 /* Gradient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8EEF0E428C7700777579 /* Gradient.m */; };
-		9B4A8F0F0E428C7700777579 /* GravityWell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8EF10E428C7700777579 /* GravityWell.m */; };
+		9B4A8F0F0E428C7700777579 /* GravityPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8EF10E428C7700777579 /* GravityPoint.m */; };
 		9B4A8F100E428C7700777579 /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8EF30E428C7700777579 /* Image.m */; };
 		9B4A8F110E428C7700777579 /* Layer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8EF50E428C7700777579 /* Layer.m */; };
 		9B4A8F120E428C7700777579 /* Noise.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8EF70E428C7700777579 /* Noise.m */; };
@@ -81,8 +81,8 @@
 		9B4A8FCC0E428F4E00777579 /* Installer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8FCB0E428F4E00777579 /* Installer.m */; };
 		9B4A90250E42970000777579 /* TopDrawEditor.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9B4A90220E42970000777579 /* TopDrawEditor.icns */; };
 		9B4A90260E42970000777579 /* TopDrawDoc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9B4A90230E42970000777579 /* TopDrawDoc.icns */; };
+		9BB539BB0E5B6E70008ED3AA /* PatternObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB539BA0E5B6E70008ED3AA /* PatternObject.m */; };
 		9BE37FD90E510E570083B486 /* Built-in.tds in Resources */ = {isa = PBXBuildFile; fileRef = 3CD4D7630E42F24200F37DC9 /* Built-in.tds */; };
-		9BE380220E5112770083B486 /* Built-in.tds in Copy built-in file */ = {isa = PBXBuildFile; fileRef = 3CD4D7630E42F24200F37DC9 /* Built-in.tds */; };
 		9BE380230E5112810083B486 /* Built-in.tds in Copy built-in file */ = {isa = PBXBuildFile; fileRef = 3CD4D7630E42F24200F37DC9 /* Built-in.tds */; };
 /* End PBXBuildFile section */
 
@@ -151,17 +151,6 @@
 			name = "Copy renderer";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9BE37FF00E510EB20083B486 /* Copy built-in file */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 7;
-			files = (
-				9BE380220E5112770083B486 /* Built-in.tds in Copy built-in file */,
-			);
-			name = "Copy built-in file";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -209,8 +198,8 @@
 		9B4A8EED0E428C7700777579 /* Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Filter.m; sourceTree = "<group>"; };
 		9B4A8EEE0E428C7700777579 /* Gradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gradient.h; sourceTree = "<group>"; };
 		9B4A8EEF0E428C7700777579 /* Gradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Gradient.m; sourceTree = "<group>"; };
-		9B4A8EF00E428C7700777579 /* GravityWell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GravityWell.h; sourceTree = "<group>"; };
-		9B4A8EF10E428C7700777579 /* GravityWell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GravityWell.m; sourceTree = "<group>"; };
+		9B4A8EF00E428C7700777579 /* GravityPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GravityPoint.h; sourceTree = "<group>"; };
+		9B4A8EF10E428C7700777579 /* GravityPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GravityPoint.m; sourceTree = "<group>"; };
 		9B4A8EF20E428C7700777579 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
 		9B4A8EF30E428C7700777579 /* Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Image.m; sourceTree = "<group>"; };
 		9B4A8EF40E428C7700777579 /* Layer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layer.h; sourceTree = "<group>"; };
@@ -258,6 +247,8 @@
 		9B4A90220E42970000777579 /* TopDrawEditor.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = TopDrawEditor.icns; sourceTree = "<group>"; };
 		9B4A90230E42970000777579 /* TopDrawDoc.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = TopDrawDoc.icns; sourceTree = "<group>"; };
 		9B4A90240E42970000777579 /* TopDraw.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = TopDraw.icns; sourceTree = "<group>"; };
+		9BB539B90E5B6E70008ED3AA /* PatternObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatternObject.h; sourceTree = "<group>"; };
+		9BB539BA0E5B6E70008ED3AA /* PatternObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PatternObject.m; sourceTree = "<group>"; };
 		9BE3C04B0E4370AC00E3AA8A /* TopDrawEditor.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html.documentation; name = TopDrawEditor.html; path = Documentation/TopDrawEditor.html; sourceTree = "<group>"; };
 		9BE3C04C0E4370AC00E3AA8A /* TopDraw.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html.documentation; name = TopDraw.html; path = Documentation/TopDraw.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -403,12 +394,6 @@
 		9B4A8F420E428E1D00777579 /* Runtime */ = {
 			isa = PBXGroup;
 			children = (
-				9B4A8ED70E428B8400777579 /* NSColor+Random.h */,
-				9B4A8ED60E428B8400777579 /* NSColor+Random.m */,
-				9B4A8ED50E428B8400777579 /* NSColor+String.h */,
-				9B4A8ED40E428B8400777579 /* NSColor+String.m */,
-				9B4A8ED30E428B8400777579 /* NSScreen+Convenience.h */,
-				9B4A8ED20E428B8400777579 /* NSScreen+Convenience.m */,
 				9B4A8EE80E428C7700777579 /* Color.h */,
 				9B4A8EE90E428C7700777579 /* Color.m */,
 				9B4A8EEA0E428C7700777579 /* Compositor.h */,
@@ -417,16 +402,24 @@
 				9B4A8EED0E428C7700777579 /* Filter.m */,
 				9B4A8EEE0E428C7700777579 /* Gradient.h */,
 				9B4A8EEF0E428C7700777579 /* Gradient.m */,
-				9B4A8EF00E428C7700777579 /* GravityWell.h */,
-				9B4A8EF10E428C7700777579 /* GravityWell.m */,
+				9B4A8EF00E428C7700777579 /* GravityPoint.h */,
+				9B4A8EF10E428C7700777579 /* GravityPoint.m */,
 				9B4A8EF20E428C7700777579 /* Image.h */,
 				9B4A8EF30E428C7700777579 /* Image.m */,
 				9B4A8EF40E428C7700777579 /* Layer.h */,
 				9B4A8EF50E428C7700777579 /* Layer.m */,
 				9B4A8EF60E428C7700777579 /* Noise.h */,
 				9B4A8EF70E428C7700777579 /* Noise.m */,
+				9B4A8ED70E428B8400777579 /* NSColor+Random.h */,
+				9B4A8ED60E428B8400777579 /* NSColor+Random.m */,
+				9B4A8ED50E428B8400777579 /* NSColor+String.h */,
+				9B4A8ED40E428B8400777579 /* NSColor+String.m */,
+				9B4A8ED30E428B8400777579 /* NSScreen+Convenience.h */,
+				9B4A8ED20E428B8400777579 /* NSScreen+Convenience.m */,
 				9B4A8EF80E428C7700777579 /* Particles.h */,
 				9B4A8EF90E428C7700777579 /* Particles.m */,
+				9BB539B90E5B6E70008ED3AA /* PatternObject.h */,
+				9BB539BA0E5B6E70008ED3AA /* PatternObject.m */,
 				9B4A8EFA0E428C7700777579 /* Plasma.h */,
 				9B4A8EFB0E428C7700777579 /* Plasma.m */,
 				9B4A8EFC0E428C7700777579 /* PointObject.h */,
@@ -500,7 +493,6 @@
 				8D15AC300486D014006FF6A4 /* Sources */,
 				8D15AC330486D014006FF6A4 /* Frameworks */,
 				9B4A8FA10E428E9400777579 /* Copy renderer */,
-				9BE37FF00E510EB20083B486 /* Copy built-in file */,
 			);
 			buildRules = (
 			);
@@ -618,7 +610,7 @@
 				9B4A8F0C0E428C7700777579 /* Compositor.m in Sources */,
 				9B4A8F0D0E428C7700777579 /* Filter.m in Sources */,
 				9B4A8F0E0E428C7700777579 /* Gradient.m in Sources */,
-				9B4A8F0F0E428C7700777579 /* GravityWell.m in Sources */,
+				9B4A8F0F0E428C7700777579 /* GravityPoint.m in Sources */,
 				9B4A8F100E428C7700777579 /* Image.m in Sources */,
 				9B4A8F110E428C7700777579 /* Layer.m in Sources */,
 				9B4A8F120E428C7700777579 /* Noise.m in Sources */,
@@ -635,6 +627,7 @@
 				9B4A8F230E428D7200777579 /* Exporter.m in Sources */,
 				9B296FB10E43EC0F00D89930 /* SimulatorObject.m in Sources */,
 				9B1164010E47BCB100C230D5 /* NSColor+Adjustment.m in Sources */,
+				9BB539BB0E5B6E70008ED3AA /* PatternObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

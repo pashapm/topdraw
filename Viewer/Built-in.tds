@@ -4,10 +4,11 @@
 var gradient = new Gradient(new Color, new Color);
 menubar.fillLayer(gradient);
 
+// Choose 4 random colors
 var bottomLeft = new Color;
 var topLeft = new Color;
 var topRight = new Color;
 var bottomRight = new Color;
 
-// Fill the desktop Layer with a rectangle colored in each corner.
-desktop.drawColoredRect(desktop.bounds, bottomLeft, topLeft, topRight, bottomRight);
+// Fill the desktop Layer with a rectangle colored in each corner
+desktop.coloredRect(desktop.bounds, bottomLeft, topLeft, topRight, bottomRight);
