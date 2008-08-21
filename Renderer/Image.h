@@ -31,8 +31,8 @@
 - (void)setAlpha:(CGFloat)alpha;
 - (CGFloat)alpha;
 
-- (void)setBlendMode:(NSString *)blendMode;
-- (NSString *)blendMode;
+- (void)setCompositingMode:(NSString *)blendMode;
+- (NSString *)compositingMode;
 - (CGBlendMode)cgBlendMode;
 
 - (NSUInteger)width;

@@ -26,8 +26,9 @@ h3 {
 //  border-left: none;
 //  border-top: none;
   padding: 0.25em;
-  padding-left: 0;
-  background-color: #F0F0F0;
+
+  background-color: #C0C0C0;
+  
 }
 
 .MenuItem, .Menu, 
@@ -56,6 +57,11 @@ table.GlobalTable {
   border: thin solid black;
   border-collapse: collapse;
   border-spacing: 1em;
+  width: 100%;
+}
+
+table.Menu {
+	width: auto;
 }
 
 th.Menu, th.Preferences {

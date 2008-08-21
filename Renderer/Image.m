@@ -24,7 +24,7 @@
 
 //------------------------------------------------------------------------------
 + (NSSet *)properties {
-  return [NSSet setWithObjects:@"alpha", @"blendMode", @"width", @"height", nil];
+  return [NSSet setWithObjects:@"alpha", @"compositingMode", @"width", @"height", nil];
 }
 
 //------------------------------------------------------------------------------
@@ -101,12 +101,12 @@
 }
 
 //------------------------------------------------------------------------------
-- (void)setBlendMode:(NSString *)blendMode {
+- (void)setCompositingMode:(NSString *)blendMode {
   blendMode_ = [[self class] blendModeFromString:blendMode];
 }
 
 //------------------------------------------------------------------------------
-- (NSString *)blendMode {
+- (NSString *)compositingMode {
   return [[self class] blendModeToString:blendMode_];
 }
 
