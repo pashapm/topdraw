@@ -144,9 +144,27 @@ In order to create more interesting renderings, several classes of objects and g
 <p></p>
 <div class="Indented">
 <h2>Classes</h2>
+<p></p>
+<a href="#Color">Color</a>, 
+<a href="#Compositor">Compositor</a>, 
+<a href="#Filter">Filter</a>, 
+<a href="#Gradient">Gradient</a>, 
+<a href="#GravityPoint">GravityPoint</a>, 
+<a href="#Image">Image</a>, 
+<a href="#Noise">Noise</a>, 
+<a href="#Particles">Particles</a>, 
+<a href="#Pattern">Pattern</a>, 
+<a href="#Point">Point</a>, 
+<a href="#Randomizer">Randomizer</a>, 
+<a href="#Rect">Rect</a>, 
+<a href="#Simulator">Simulator</a>, 
+<a href="#Text">Text</a>
 
 <div class="Indented">
+
+<a name="Color"></a>
 <h3>Color</h3>
+<div class="Indented">
 An RGB color with alpha.  The values of parameters should be floating point values between 0.0 and 1.0.  Alpha will default to 1.0 unless otherwise specified.
 
 <div class="ClassSection">Constructor</div>
@@ -164,17 +182,17 @@ An RGB color with alpha.  The values of parameters should be floating point valu
 </tr>
 
 <tr>
-<td class="ConstructorDetails">color-name: string <span class="Optional">[, alpha-value]</span></td>
+<td class="ConstructorDetails">color-name: String <span class="Optional">[, alpha-value: float]</span></td>
 <td class="ConstructorDetails">Lookup the name (e.g., "white" or "purple") from the list of HTML colors.  Optionally set the alpha to alpha-value.</td>
 </tr>
 
 <tr>
-<td class="ConstructorDetails">gray-scale <span class="Optional">[, alpha-value]</span></td>
+<td class="ConstructorDetails">gray-scale: float <span class="Optional">[, alpha-value: float]</span></td>
 <td class="ConstructorDetails">Set the red, green, and blue values to gray-scale.  Optionally set the alpha to alpha-value.</td>
 </tr>
 
 <tr>
-<td class="ConstructorDetails">red-value, green-value, blue-value <span class="Optional">[, alpha-value]</span></td>
+<td class="ConstructorDetails">red-value, green-value, blue-value: float <span class="Optional">[, alpha-value: float]</span></td>
 <td class="ConstructorDetails">Set the red, green, and blue values.  Optionally set the alpha to alpha-value.</td>
 </tr>
 </table>
@@ -190,42 +208,35 @@ An RGB color with alpha.  The values of parameters should be floating point valu
 
 <tr>
 <td class="Function">blend</td>
-<td class="FunctionDetails">src-color: Color <span class="Optional">[, blend-amount]</span></td>
+<td class="FunctionDetails">src-color: Color <span class="Optional">[, blend-amount: float]</span></td>
 <td class="FunctionDetails">Create a new Color object that is blend-amount of src-color and (1.0 - blend-amount) of this color.  If not specified, blend-amount defaults to 0.5.</td>
 <td class="FunctionDetails">Color</td>
 </tr>
 
 <tr>
 <td class="Function">contrasting</td>
-<td class="FunctionDetails"><span class="Optional">[contrast-amount]</span></td>
+<td class="FunctionDetails"><span class="Optional">[contrast-amount: float]</span></td>
 <td class="FunctionDetails">Create a new color based on the current color that is contrasting by contrast-amount.  The contrast is created by changing both the hue and the brightness.  If not specified, contrast-amount defaults to 0.2.</td>
 <td class="FunctionDetails">Color</td>
 </tr>
 
 <tr>
 <td class="Function">darker</td>
-<td class="FunctionDetails"><span class="Optional">[darker-amount]</span></td>
+<td class="FunctionDetails"><span class="Optional">[darker-amount: float]</span></td>
 <td class="FunctionDetails">Create a new color based on the current color with its brightness adjusted downwards by darker-amount.  If not specified, darker-amount defaults to 0.2.</td>
 <td class="FunctionDetails">Color</td>
 </tr>
 
 <tr>
 <td class="Function">lighter</td>
-<td class="FunctionDetails"><span class="Optional">[lighter-amount]</span></td>
+<td class="FunctionDetails"><span class="Optional">[lighter-amount: float]</span></td>
 <td class="FunctionDetails">Create a new color based on the current color with its brightness adjusted upwards by lighter-amount.  If not specified, lighter-amount defaults to 0.2.</td>
 <td class="FunctionDetails">Color</td>
 </tr>
 
 <tr>
-<td class="Function">toString</td>
-<td class="FunctionDetails">(none)</td>
-<td class="FunctionDetails">Create a new String object that contains a formatted represenatation of the red, green, blue, and alpha channels.</td>
-<td class="FunctionDetails">String</td>
-</tr>
-
-<tr>
 <td class="Function">vary</td>
-<td class="FunctionDetails">red-value, green-value, blue-value <span class="Optional">[, alpha-value]</span></td>
+<td class="FunctionDetails">red-value, green-value, blue-value: float <span class="Optional">[, alpha-value: float]</span></td>
 <td class="FunctionDetails">Create a new Color object based on the current color but vsaried by some random amount.  Specify the amount of variation for each channel.  If not specified, alpha-value is 0.0 (no variation).</td>
 <td class="FunctionDetails">Color</td>
 </tr>
@@ -292,9 +303,931 @@ An RGB color with alpha.  The values of parameters should be floating point valu
 </tr>
 
 </table>
+</div>
 
+<a name="Compositor"></a>
 <h3>Compositor</h3>
+<div class="Indented">
+The compositor (global object) will render layers to create the final image.  New layers can be created and added to the compositor.  The desktop and menubar layers are always present in the compositor.
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">addLayer</td>
+<td class="FunctionDetails">layer: Layer <span class="Optional">[, compositing-mode: String]</span></td>
+<td class="FunctionDetails">Layers are ordered from back to front as they are added.<br>The compositing-mode is one of:
+normal (default), multiply, screen, overlay, darken, lighten, color-dodge, color-burn, soft-light,
+hard-light, difference, exclusion, hue, saturation, color, luminosity, clear, copy, source-in,
+source-out, source-atop, destination-over, destination-in, destination-out, destination-atop, xor, darker, lighter.  Please see Apple's <a href="http://developer.apple.com/documentation/GraphicsImaging/Reference/CGContext/Reference/reference.html#//apple_ref/c/tdef/CGBlendMode">documentation</a> on blend modes for more details.</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">boundsOfScreen</td>
+<td class="FunctionDetails">index: integer</td>
+<td class="FunctionDetails">Return a Rect object that is the bounds of the screen specified by zero-based index.
+<td class="FunctionDetails">Rect</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">randomSeed</td>
+<td class="PropertyDetails">The "seed" value for any of the randomization.  If you set this value to a fixed value,
+the random values will be repeatable between executions of the script.</td>
+<td class="PropertyDetails">integer</td>
+<td class="FunctionDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">screenCount</td>
+<td class="PropertyDetails">The number of screeens (displays) on the current system.</td>
+<td class="PropertyDetails">integer</td>
+<td class="FunctionDetails">Read-only</td>
+</tr>
+
+</table>
+</div>
+
+<a name="Filter"></a>
 <h3>Filter</h3>
+<div class="Indented">
+This class encapsulates Core Image filters.  Filters can be chained together to produce complex effects.  See Apple's <a href="http://developer.apple.com/documentation/GraphicsImaging/Reference/CoreImageFilterReference/Reference/reference.html">documentation</a> for a list of recognized filters.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">name: String</td>
+<td class="ConstructorDetails">Specify the name of the filter (e.g., "CIGaussianBlur")</td>
+</tr>
+</table>
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">setValueForKey</td>
+<td class="FunctionDetails">key: String, value: [Number | Color | Array]</td>
+<td class="FunctionDetails">Specify a key/value pair.  The value can be a Number, Color, or Array when needing to specify a NSNumber, CIColor, or CIVector for the filter parameter.</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">inputFilter</td>
+<td class="PropertyDetails">The output of another Filter can be specified as the input to this filter.  This allows
+complex and efficient renderings.  The filter should be of a type that expects an <i>inputImage</i> key.</td>
+<td class="PropertyDetails">Filter</td>
+<td class="FunctionDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">name</td>
+<td class="PropertyDetails">The name of the filter</td>
+<td class="PropertyDetails">integer</td>
+<td class="FunctionDetails">Read-only</td>
+</tr>
+
+</table>
+</div>
+
+<a name="Gradient"></a>
+<h3>Gradient</h3>
+<div class="Indented">
+A linear or radial gradient.  If the radius property is specified, the gradient will be drawn as a radial gradient.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">(none)</td>
+<td class="ConstructorDetails">Empty gradient.  Use the addColorStop() function to add colors and locations.</td>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">color1, color2: Color <span class="Optional">[, ... colorN: Color]</span></td>
+<td class="ConstructorDetails">Specify two or more colors for the gradient.  The spacing will be evenly spaced
+based on the number of colors specified.</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">addColorStop</td>
+<td class="FunctionDetails">color: Color, location: Number</td>
+<td class="FunctionDetails">Specify a color and location.  The location should be in the range (0, 1).  The color at
+location (if any) will be replaced.</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">end</td>
+<td class="PropertyDetails">The end point of the gradient in pixel space.  If the object using the gradient extends past this value, the gradient will continue to output the color at the last location.</td> 
+<td class="PropertyDetails">Point</td>
+<td class="FunctionDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">radius</td>
+<td class="PropertyDetails">The size of the radius to be used at the start (use the "x" property of the Point) and 
+at the end (use the "y" property of the Point).  If this value is specified, the gradient will be drawn as a radial gradient.  Otherwise, if this value is null or zero, the gradient will be drawn as a linear gradient.</td>
+<td class="PropertyDetails">Point</td>
+<td class="FunctionDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">start</td>
+<td class="PropertyDetails">The start point of the gradient in pixel space.  If the object using the gradient extends before this value, the gradient will continue to output the color at the first location.</td> 
+<td class="PropertyDetails">Point</td>
+<td class="FunctionDetails">Read/Write</td>
+</tr>
+
+</table>
+</div>
+
+<a name="GravityPoint"></a>
+<h3>GravityPoint</h3>
+<div class="Indented">
+A source of gravity for the Simulator object.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">(none)</td>
+<td class="ConstructorDetails">Empty gravity point.  Use the location and gravity properties to modify the behavior.</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">gravity</td>
+<td class="PropertyDetails">The spherical gravitational field scalar.  The value will be divided by the square of the distance from this point and the object in the simulator.</td>
+<td class="PropertyDetails">Point</td>
+<td class="FunctionDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">location</td>
+<td class="PropertyDetails">The location in pixel space of the GravityPoint.</td>
+<td class="PropertyDetails">Point</td>
+<td class="FunctionDetails">Read/Write</td>
+</tr>
+
+</table>
+</div>
+
+<a name="Image"></a>
+<h3>Image</h3>
+<div class="Indented">
+A raster Image object which can be constructed from an existing Layer or from the source of an image URL.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">layer: Layer</td>
+<td class="ConstructorDetails">Create an image with the dimensions of layer.</td>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">url: String</td>
+<td class="ConstructorDetails">Create an image with the contents of the image file at url</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">exportImage</td>
+<td class="FunctionDetails">name: String <span class="Optional">[, type: String]</span></td>
+<td class="FunctionDetails">Create a file with the contents of this image.  The name can contain an extension which
+will define the output file type.  If specified, the type will control the output file type.  Supported formats / extensions are "png", "jpeg", and "tiff".  The image file will saved to the folder: <pre>~/Library/Application Support/Google/TopDrawDrawings/</pre></td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">alpha</td>
+<td class="PropertyDetails">The alpha compositing value in the range (0, 1) to be used when drawing the image. The default is 1.0.</td>
+<td class="PropertyDetails">float</td>
+<td class="FunctionDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">compositingMode</td>
+<td class="PropertyDetails">The mode to use when compositing the image.  See the discussion of the compositing mode for the <a href="#Compositor">Compositor</a> object for more details.  The default is "normal".</td>
+<td class="PropertyDetails">String</td>
+<td class="FunctionDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">height</td>
+<td class="PropertyDetails">Height (in pixels) of the image</td>
+<td class="PropertyDetails">integer</td>
+<td class="FunctionDetails">Read-only</td>
+</tr>
+
+<tr>
+<td class="Property">width</td>
+<td class="PropertyDetails">Width (in pixels) of the image</td>
+<td class="PropertyDetails">integer</td>
+<td class="FunctionDetails">Read-only</td>
+</tr>
+
+</table>
+</div>
+
+<a name="Layer"></a>
+<h3>Layer</h3>
+<div class="Indented">
+All drawing in TopDraw takes place in a Layer.  Multiple Layer objects can be created and composited.  Layer
+objects can be created, but not composited, so that they can be used as a source for an Image.  The properties and
+functions are very similar to the HTML Canvas object, but with some enhancements.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">width, height: integer</td>
+<td class="ConstructorDetails">Create a Layer of width and height dimensions.</td>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">bounds: Rect</td>
+<td class="ConstructorDetails">Create a Layer of bounds dimensions.</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">applyFilter</td>
+<td class="FunctionDetails">filter: Filter</td>
+<td class="FunctionDetails">Apply filter to the layer, replacing the contents of the layer with the output of the filter.  The filter output will always be cropped to the dimensions of the Layer.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">arc</td>
+<td class="FunctionDetails">center: Point, radius, startAngle, endAngle: float</td>
+<td class="FunctionDetails">Specify the center point, radius, start and end Angles (in Radians).  The arc is added to the current path in a clock-wise direction from startAngle to endAngle.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">arcTo</td>
+<td class="FunctionDetails">p1, p2: Point, radius: float</td>
+<td class="FunctionDetails">Specify the two tangent points and a radius.  The arc is added to the current path.</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">beginPath</td>
+<td class="FunctionDetails">(none)</td>
+<td class="FunctionDetails">Reset the Layer's path in preparation for adding drawing operations.</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">bezierCurveTo</td>
+<td class="FunctionDetails">c1, c2: Point, endPt: Point</td>
+<td class="FunctionDetails">Add a cubic Bézier curve to the current path using the two control points and the end point.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">circle</td>
+<td class="FunctionDetails">[x, y: float] | center: Point, radius: float</td>
+<td class="FunctionDetails">Add a closed circle to the current path using the specified arguments.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">clearRect</td>
+<td class="FunctionDetails">rect: Rect</td>
+<td class="FunctionDetails">Clear the contents of the Layer bounded by rect.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">clip</td>
+<td class="FunctionDetails">(none)</td>
+<td class="FunctionDetails">Use the contents of the current path to clip any subsequent drawing operations.  A common usage would use the save() and restore() functions around calls to clip().
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">closePath</td>
+<td class="FunctionDetails">(none)</td>
+<td class="FunctionDetails">Close the current path before filling or stroking.  This is often implicitly done before a fill or stroke.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">coloredRect</td>
+<td class="FunctionDetails">rect: Rect, bottom-left, top-left, top-right, bottom-right: Color</td>
+<td class="FunctionDetails">Specify the rectangle and four colors which will be smoothly interpolated over the area of the rectangle.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">colorAtPoint</td>
+<td class="FunctionDetails">[x, y: float] | point: Point</td>
+<td class="FunctionDetails">Return the Color that is at the point specified by the arguments.
+</td>
+<td class="FunctionDetails">Color</td>
+</tr>
+
+<tr>
+<td class="Function">drawImage</td>
+<td class="FunctionDetails">
+image: Image [, point: Point | destination: Rect | source, destination: Rect
+</td>
+<td class="FunctionDetails">There are three ways to draw an image into a Layer:
+<ol>
+<li>Specify a Point and the entire image will be drawn with the lower left corner of the image at that point</li>
+<li>Specify a destination Rect for the image.  If the dimensions of the image differ from the destination Rect, the image
+will be scaled to fit.</li>
+<li>Specify source and destination Rects for the image.  If the source Rect is smaller than the image, a sub-image will be created with those dimensions.  If the destination Rect differs from the source Rect, the image will be scaled to fit.</li>
+</ol>
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">drawText</td>
+<td class="FunctionDetails">text: Text, pt: Point | bounds: Rect</td>
+<td class="FunctionDetails">Depending on the second argument, either draw the text object at pt without any clipping or wrapping, or draw the text object so that it is contained by bounds.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">ellipse</td>
+<td class="FunctionDetails">rect: Rect</td>
+<td class="FunctionDetails">Add an ellipse bounded by rect to the current path.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">fill</td>
+<td class="FunctionDetails">(none)</td>
+<td class="FunctionDetails">Fill the current path using the object set as the fillStyle property.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">fillLayer</td>
+<td class="FunctionDetails">color: Color | gradient: Gradient | pattern: Pattern</td>
+<td class="FunctionDetails">Fill the layer with the object specified in the arguments.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">fillRect</td>
+<td class="FunctionDetails">rect: Rect</td>
+<td class="FunctionDetails">Fill rect using the object set as the fillStyle property.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">fillStroke</td>
+<td class="FunctionDetails">(none)</td>
+<td class="FunctionDetails">Fill and stroke the current path based on the fillStyle and strokeStyle properties.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">lineTo</td>
+<td class="FunctionDetails">[x, y: float] | pt: Point</td>
+<td class="FunctionDetails">Add a line from the current path position to the point specified by the arguments.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">moveTo</td>
+<td class="FunctionDetails">[x, y: float] | pt: Point</td>
+<td class="FunctionDetails">Move the position of the current path to the point specified by the arguments.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">quadraticCurveTo</td>
+<td class="FunctionDetails">control, end: Point</td>
+<td class="FunctionDetails">Add a quadratic Bézier curve to the current path, specifying the control and end points.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">rect</td>
+<td class="FunctionDetails">[x, y, width, height: float] | rect: Rect</td>
+<td class="FunctionDetails">Add a rectangle to the current path as specified by the arguments.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">reflect</td>
+<td class="FunctionDetails">location: String [, alpha: float]</td>
+<td class="FunctionDetails">Reflect the contents of the layer specified by location (valid values: "top", "left", "right", and "bottom") over the contents in the opposite portion, using alpha (value: 1.0 if unspecified).
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">restore</td>
+<td class="FunctionDetails">(none)</td>
+<td class="FunctionDetails">Restore the graphics state from a previous save() command.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">rotate</td>
+<td class="FunctionDetails">angle: float</td>
+<td class="FunctionDetails">Rotate the current graphics transform by angle radians, clockwise if positive, counter-clockwise if negative.  Typically, this call is bracketed by save() and restore() calls.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">roundedRect</td>
+<td class="FunctionDetails">[x, y, width, height: float] | rect: Rect, radius: float</td>
+<td class="FunctionDetails">Add a rectangle with rounded corners to the current path.  The radius may be adjusted so that the rectangle doesn't intersect itself.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">save</td>
+<td class="FunctionDetails">(none)</td>
+<td class="FunctionDetails">Save the graphics state (all the properties, any rotations or scaling, and the current clipping).
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">scale</td>
+<td class="FunctionDetails">[x, y: float] | point: Point</td>
+<td class="FunctionDetails">Scale the current graphics transform by the specified arguments.  Negative values will flip drawing coordinates.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">shadow</td>
+<td class="FunctionDetails">offset: Point, blur-radius: float, color: Color | (none)</td>
+<td class="FunctionDetails">Specify the offset, blur radius, and color for shadows.  The shadow parameters will be applied to subsequent drawing operations.  Pass no arguments to disable shadow drawing.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">stroke</td>
+<td class="FunctionDetails">(none)</td>
+<td class="FunctionDetails">Stroke the current path using the object set as the strokeStyle property.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">strokeRect</td>
+<td class="FunctionDetails">rect: Rect</td>
+<td class="FunctionDetails">Stroke rect using the object set as the strokeStyle property.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">translate</td>
+<td class="FunctionDetails">[x, y: float] | point: Point</td>
+<td class="FunctionDetails">Translate the current graphics transform by the specified arguments.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">wavyLineTo</td>
+<td class="FunctionDetails">end: Point, smoothness: float, randomizer: Randomizer</td>
+<td class="FunctionDetails">Add a line from the current drawing position to end, randomly displacing points perpendicularly from their expected position. A small smoothness value (closer to 0) will create a chaotic line, whereas larger values (approaching 1) will create a very smooth line.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">bounds</td>
+<td class="PropertyDetails">The dimensions of the layer without any positioning details.  Setting this value will clear the contents of the Layer.
+<td class="PropertyDetails">Rect</td>
+<td class="FunctionDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">compositingMode</td>
+<td class="PropertyDetails">The mode to use when compositing to the Layer.  See the discussion of the compositing mode for the <a href="#Compositor">Compositor</a> object for more details.  The default is "normal".</td>
+<td class="PropertyDetails">String</td>
+<td class="FunctionDetails">Write-only</td>
+</tr>
+
+<tr>
+<td class="Property">fillStyle</td>
+<td class="PropertyDetails">Specify the object to be used when filling a path in the Layer.</td>
+<td class="PropertyDetails">Color, Pattern, or Gradient</td>
+<td class="FunctionDetails">Write-only</td>
+</tr>
+
+<tr>
+<td class="Property">frame</td>
+<td class="PropertyDetails">The location and dimensions of the layer.  Setting this value will clear the contents of the Layer.</td>
+<td class="PropertyDetails">Rect</td>
+<td class="FunctionDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">lineCap</td>
+<td class="PropertyDetails">Specifies how line ends are rendered.  Valid values are: "butt" (default), "round", and "square".
+<td class="PropertyDetails">String</td>
+<td class="FunctionDetails">Write-only</td>
+</tr>
+
+<tr>
+<td class="Property">lineJoin</td>
+<td class="PropertyDetails">Specifies how connected line segments are joined.  Valid values are: "miter" (default), "bevel", and "round".</td>
+<td class="PropertyDetails">String</td>
+<td class="FunctionDetails">Write-only</td>
+</tr>
+
+<tr>
+<td class="Property">lineWidth</td>
+<td class="PropertyDetails">The rendered width of the line (in pixels).
+<td class="PropertyDetails">float</td>
+<td class="FunctionDetails">Write-only</td>
+</tr>
+
+<tr>
+<td class="Property">miterLimit</td>
+<td class="PropertyDetails">The maximum ratio between miter length and the line width when lineJoin is set to "miter".  The default is 10.
+<td class="PropertyDetails">float</td>
+<td class="FunctionDetails">Write-only</td>
+</tr>
+
+<tr>
+<td class="Property">strokeStyle</td>
+<td class="PropertyDetails">The color to be used when stroking a path.</td>
+<td class="PropertyDetails">Color</td>
+<td class="FunctionDetails">Write-only</td>
+</tr>
+
+</table>
+</div>
+
+<a name="Noise"></a>
+<h3>Noise</h3>
+<div class="Indented">
+Generates a block of random values that can be used to create an image.  It will be completely random and a very large 
+sized noise may take an appreciable amount of time to create.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">width, height: float <span class="Optional">[, alpha: float [, grayscale: boolean]</span></td>
+<td class="ConstructorDetails">Specify the width and height of the noise.  An optional uniform alpha can be applied and the noise can also be constructed to only have grayscale values.</td>
+</tr>
+</table>
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">drawInLayer</td>
+<td class="FunctionDetails">layer: Layer</td>
+<td class="FunctionDetails">Draw this noise into the specified layer.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">alpha</td>
+<td class="PropertyDetails">The uniform alpha.</td>
+<td class="PropertyDetails">float</td>
+<td class="FunctionDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">grayscale</td>
+<td class="PropertyDetails">If true, the image will be grayscale.  Otherwise, colored</td>
+<td class="PropertyDetails">boolean</td>
+<td class="FunctionDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">height</td>
+<td class="PropertyDetails">The height of the noise.</td>
+<td class="PropertyDetails">integer</td>
+<td class="FunctionDetails">Read-only</td>
+</tr>
+
+<tr>
+<td class="Property">image</td>
+<td class="PropertyDetails">An image that contains the noise.</td>
+<td class="PropertyDetails">Image</td>
+<td class="FunctionDetails">Read-only</td>
+</tr>
+
+<tr>
+<td class="Property">width</td>
+<td class="PropertyDetails">The width of the noise.</td>
+<td class="PropertyDetails">integer</td>
+<td class="FunctionDetails">Read-only</td>
+</tr>
+
+</table>
+
+</div>
+
+<a name="Particles"></a>
+<h3>Particles</h3>
+<div class="Indented">
+A particle emitter to be used by the Simulator object.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">(none)</td>
+<td class="ConstructorDetails">Creates an empty Particles object.  Particle colors and GravityPoints can be added.
+</td>
+</tr>
+</table>
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">addColor</td>
+<td class="FunctionDetails">color: Color</td>
+<td class="FunctionDetails">Add a color to be used when new particles are created.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">addGravityPoint</td>
+<td class="FunctionDetails">gravityPoint: GravityPoint</td>
+<td class="FunctionDetails">Add a GravityPoint object that will influence the motion of the particles.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">alphaDelay</td>
+<td class="PropertyDetails">Specifies the delay (in steps) before the alphaDelta property will be applied to particles.</td>
+<td class="PropertyDetails">float</td>
+<td class="FunctionDetails">Read/Write</td>
+</tr>
+
+
+
+</table>
+
+</div>
+
+<a name="Pattern"></a>
+<h3>Pattern</h3>
+<div class="Indented">
+
+</div>
+
+<a name="Plasma"></a>
+<h3>Plasma</h3>
+<div class="Indented">
+
+</div>
+
+<a name="Point"></a>
+<h3>Point</h3>
+<div class="Indented">
+
+</div>
+
+<a name="Randomizer"></a>
+<h3>Randomizer</h3>
+<div class="Indented">
+
+</div>
+
+<a name="Rect"></a>
+<h3>Rect</h3>
+<div class="Indented">
+
+</div>
+
+<a name="Simulator"></a>
+<h3>Simulator</h3>
+<div class="Indented">
+
+</div>
+
+<a name="Text"></a>
+<h3>Text</h3>
+<div class="Indented">
+
+</div>
+
+<!-- Class indention -->
 </div>
 
 <div class="Indented">

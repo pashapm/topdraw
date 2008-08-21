@@ -7,10 +7,13 @@ desktop.fillLayer(new Color("black"));
 
 // Scale the noise so that we will make the background look "chunky"
 // Larger scale = more chunky
-var scale = 4;
+var scale = 3;
 var r = new Rect(0, 0, db.width / scale, db.height / scale);
-var noise = new Noise(r.width, r.height, .5, false);
-desktop.drawImageInRect(noise.image, db);
+var noise = new Noise(r.width, r.height);
+
+noise.grayscale = false;
+noise.alpha = 0.1;
+desktop.drawImage(noise.image, db);
 
 // Blur it
 var f = new Filter("CIGaussianBlur");

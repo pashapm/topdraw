@@ -3,14 +3,15 @@ var grad = new Gradient(new Color("white"), new Color);
 menubar.fillLayer(grad);
 desktop.fillLayer(new Color("black"));
 
+desktop.lineJoin = "round";
+
 Lines();
 
 function Lines() {
 	var db = desktop.bounds;
 	var displacementRnd = new Randomizer(-150, 150);
-	var rs = new Randomizer(8, 40);
 	var gray = new Randomizer(0.1, 1);
-	var smoothRnd = new Randomizer(0.6, 1);
+	var smoothRnd = new Randomizer(0.4, 1);
 	var height = db.height / 4;
 	var start = new Point(db.x, db.y + 3 * height);
 	var end = new Point(db.x + db.width, db.height * gray.floatValue);
@@ -36,8 +37,8 @@ function Lines() {
 		
 		var waveEnd = new Point(end);
 		waveEnd.x -= x * shortening;
-		// end point, # segments, smoothness, displacement randomizer
-		desktop.wavyLineTo(waveEnd, rs.floatValue, smoothRnd.floatValue, displacementRnd);
+		// end point, smoothness, displacement randomizer
+		desktop.wavyLineTo(waveEnd, smoothRnd.floatValue, displacementRnd);
 		desktop.lineWidth = lineWidthRnd.floatValue;
 		desktop.lineTo(end);
 		desktop.stroke();

@@ -7,7 +7,8 @@ var bltr = new Color;
 var tl = new Color(0.15);
 var br = new Color(0.4);
 // Coloring clockwise from bottom left
-desktop.coloredRect(db, bltr, tl, bltr, br);
+//desktop.coloredRect(db, bltr, tl, bltr, br);
+desktop.fillLayer(new Color("black"));
 
 var rnd = new Randomizer(0.1, 1);
 
@@ -57,8 +58,11 @@ gp.gravity = -240;
 p1.addGravityPoint(gp);
 p2.addGravityPoint(gp);
 
-// Simulator
-var simulator = new Simulator(desktop);
+// Simulator gets drawn in its own layer
+var simulatorLayer = new Layer(desktop.bounds);
+var simulator = new Simulator(simulatorLayer);
+compositor.addLayer(simulatorLayer);
+
 simulator.addSimulatorObject(p1);
 simulator.addSimulatorObject(p2);
 
@@ -67,3 +71,17 @@ simulator.timeStep = 0.3;
 
 // The run parameter is the duration of the simulation
 simulator.run(150);
+
+// Bloom
+var bloom = new Filter("CIBloom");
+bloom.setValueForKey("inputRadius", 80);
+bloom.setValueForKey("inputIntensity", 3);
+
+// Blur
+var blur = new Filter("CIBoxBlur");
+blur.setValueForKey("inputRadius", 16);
+blur.inputFilter = bloom;
+simulatorLayer.applyFilter(blur);
+
+
+

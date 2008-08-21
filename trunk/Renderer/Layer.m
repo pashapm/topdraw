@@ -38,11 +38,13 @@
 }
 
 + (NSSet *)properties {
-  return [NSSet setWithObjects:@"frame", @"bounds",
-          @"fillStyle", @"strokeStyle", 
-          @"globalCompositeOperation", @"blendMode",
-          @"lineWidth", @"lineCap", @"lineJoin", 
+  return [NSSet setWithObjects:
+          @"bounds", 
+          @"compositingMode",
+          @"fillStyle", @"frame", 
+          @"lineCap", @"lineJoin", @"lineWidth", 
           @"miterLimit",
+          @"strokeStyle", 
           nil];
 }
 
@@ -66,7 +68,7 @@
           @"circle", @"coloredRect", @"colorAtPoint",
           @"drawText",
           @"ellipse", 
-          @"fillStroke", @"fillLayer",
+          @"fillLayer", @"fillStroke",
           @"reflect", @"roundedRect", 
           @"shadow", 
           @"toString", 
@@ -316,18 +318,9 @@
   CGContextSetMiterLimit(backingStore_, limit);
 }
 
-- (void)setBlendMode:(NSString *)str {
+- (void)setCompositingMode:(NSString *)str {
   CGBlendMode mode = [Layer blendModeFromString:str];
   CGContextSetBlendMode(backingStore_, mode);
-}
-  
-- (void)setGlobalCompositeOperation:(NSString *)str {
-  [self setBlendMode:str];
-}
-
-- (CGFloat)lineWidth {
-  // TODO: There should be a way to return the current line width
-  return 1;
 }
 
 - (void)save {
@@ -499,18 +492,21 @@
 }
 
 - (void)wavyLineTo:(NSArray *)arguments {
-  // args: end point, segments to "wave", smoothness, displacement randomizer 
-  if ([arguments count] == 4) {
+  // args: end point, smoothness, displacement randomizer 
+  if ([arguments count] == 3) {
     PointObject *end = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[PointObject class]];
-    CGFloat steps = floor([RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:1]]);
-    CGFloat smoothness = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:2]];
-    Randomizer *displacementRnd = [RuntimeObject coerceObject:[arguments objectAtIndex:3] toClass:[Randomizer class]];
+    CGFloat smoothness = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:1]];
+    Randomizer *displacementRnd = [RuntimeObject coerceObject:[arguments objectAtIndex:2] toClass:[Randomizer class]];
     
     CGPoint startPt = CGContextGetPathCurrentPoint(backingStore_);
     CGPoint endPt = NSPointToCGPoint([end point]);
+    CGFloat steps = sqrt(pow(endPt.x - startPt.x, 2) + pow(endPt.y - startPt.y, 2)) / 50;
+    
+    if (steps < 2)
+      steps = 2;
     
     // Create our segments
-    segmentCount_ = (int)steps;
+    segmentCount_ = (int)rint(steps);
     segments_ = (CGPoint *)malloc(sizeof(CGPoint) * (segmentCount_ + 1));
     
     segments_[0] = startPt;
@@ -533,7 +529,6 @@
     
     [self addWavyBezier:backingStore_ smoothness:(int)(smoothness * steps)];
     
-    
     // Cleanup
     free(segments_);
     segments_ = nil;
@@ -545,15 +540,14 @@
 }
 
 - (void)arc:(NSArray *)arguments {
-  // args: center, radius, startAngle, endAngle, clockwise
-  if ([arguments count] == 5) {
+  // args: center, radius, startAngle, endAngle
+  if ([arguments count] == 4) {
     PointObject *center = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[PointObject class]];
     CGFloat radius = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:1]];
     CGFloat start = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:2]];
     CGFloat end = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:3]];
-    CGFloat clockwise = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:4]];
     
-    CGContextAddArc(backingStore_, [center x], [center y], radius, start, end, clockwise);
+    CGContextAddArc(backingStore_, [center x], [center y], radius, start, end, 1);
   }
 }
 
