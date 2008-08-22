@@ -27,6 +27,7 @@ typedef unsigned long RGBAPixel;
 }
 
 - (id)initWithColorName:(NSString *)name;
+- (id)initWithArguments:(NSArray *)arguments;
 
 - (NSColor *)color;
 - (void)setColor:(NSColor *)color;

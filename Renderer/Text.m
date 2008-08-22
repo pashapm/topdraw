@@ -23,7 +23,8 @@
 }
 
 + (NSSet *)properties {
-  return [NSSet setWithObjects:@"string", @"fontName", @"fontSize", @"bounds",
+  return [NSSet setWithObjects:@"string", @"bounds",
+          @"fontName", @"fontSize", @"fontStyle", 
           @"foregroundColor", @"backgroundColor", nil];
 }
 
@@ -47,6 +48,7 @@
     int count = [arguments count];
     attributes_ = [[NSMutableDictionary alloc] initWithDictionary:[[self class] defaultAttributes]];
     string_ = @"";
+    descriptor_ = [[NSFontDescriptor fontDescriptorWithName:@"Lucida Grande" size:64] retain];
     
     // Can initialize with a string
     if (count == 1) {
@@ -66,6 +68,7 @@
 - (void)dealloc {
   [string_ release];
   [attributes_ release];
+  [descriptor_ release];
   [super dealloc];
 }
 
@@ -81,6 +84,31 @@
 }
 
 - (NSDictionary *)attributes {
+  if (![attributes_ objectForKey:NSFontAttributeName]) {
+    NSSet *keys = [NSSet setWithObjects:NSFontFamilyAttribute, NSFontSizeAttribute, nil];
+    NSArray *match = [descriptor_ matchingFontDescriptorsWithMandatoryKeys:keys];
+    NSFontSymbolicTraits searchTraits = [descriptor_ symbolicTraits];
+    CGFloat pointSize = [descriptor_ pointSize];
+    int count = [match count];
+    NSFontDescriptor *matchDescriptor = nil;
+    
+    for (int i = 0; (i < count) && (!matchDescriptor); ++i) {
+      if (([[match objectAtIndex:i] symbolicTraits] & searchTraits) == searchTraits) {
+        matchDescriptor = [match objectAtIndex:i];
+      }
+    }
+    
+    if (!matchDescriptor && count)
+      matchDescriptor = [match objectAtIndex:0];
+    
+    if (matchDescriptor) {
+      NSFont *font = [NSFont fontWithDescriptor:matchDescriptor size:pointSize];
+
+      if (font)
+        [attributes_ setObject:font forKey:NSFontAttributeName];
+    }
+  }
+  
   return attributes_;
 }
 
@@ -93,37 +121,38 @@
   int count = [arguments count];
   RectObject *rect = count ? [RuntimeObject coerceArray:arguments objectAtIndex:0 toClass:[RectObject class]] : nil;
   NSRect constraint = rect ? [rect rect] : NSMakeRect(0, 0, 65000, 65000);
-  NSAttributedString *str = [[NSAttributedString alloc] initWithString:string_ attributes:attributes_];
+  NSDictionary *attributes = [self attributes];
+  NSAttributedString *str = [[NSAttributedString alloc] initWithString:string_ attributes:attributes];
   NSRect optimalRect = [str boundingRectWithSize:constraint.size options:options];
   [str release];
   
   return [[[RectObject alloc] initWithRect:optimalRect] autorelease];
 }
 
+- (void)setFontDescriptor:(NSFontDescriptor *)descriptor {
+  if (descriptor != descriptor_) {
+    [descriptor_ release];
+    descriptor_ = [descriptor retain];
+    
+    // Invalidate font
+    [attributes_ removeObjectForKey:NSFontAttributeName];
+  }
+}
+
 - (void)setFontName:(NSString *)name {
-  CGFloat size = [self fontSize];
-  NSFont *font = [NSFont fontWithName:name size:size];
-  
-  if (font)
-    [attributes_ setObject:font forKey:NSFontAttributeName];
+  [self setFontDescriptor:[descriptor_ fontDescriptorWithFamily:name]];
 }
 
 - (NSString *)fontName {
-  return [attributes_ objectForKey:NSFontAttributeName];
+  return [descriptor_ objectForKey:NSFontFamilyAttribute];
 }
 
 - (void)setFontSize:(CGFloat)size {
-  NSFont *font = [attributes_ objectForKey:NSFontAttributeName];
-  font = [NSFont fontWithName:[font familyName] size:size];
-  
-  if (font)
-    [attributes_ setObject:font forKey:NSFontAttributeName];
+  [self setFontDescriptor:[descriptor_ fontDescriptorWithSize:size]];
 }
 
 - (CGFloat)fontSize {
-  NSFont *font = [attributes_ objectForKey:NSFontAttributeName];
-  
-  return [font pointSize];
+  return [descriptor_ pointSize];
 }
 
 - (void)setForegroundColor:(Color *)color {
@@ -150,8 +179,25 @@
   return color;  
 }
 
-- (void)replaceWithRandomWord {
+- (void)setFontStyle:(NSString *)stylesStr {
+  NSArray *styles = [[stylesStr lowercaseString] componentsSeparatedByString:@","];
+  NSEnumerator *e = [styles objectEnumerator];
+  NSString *style;
+  NSFontSymbolicTraits traits = 0;
   
+  while ((style = [e nextObject])) {
+    NSString *trimmed = [style stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if ([trimmed isEqualToString:@"bold"])
+      traits |= NSFontBoldTrait;
+    else if ([trimmed isEqualToString:@"italic"])
+      traits |= NSFontItalicTrait;
+    else if ([trimmed isEqualToString:@"expanded"])
+      traits |= NSFontExpandedTrait;
+    else if ([trimmed isEqualToString:@"condensed"])
+      traits |= NSFontCondensedTrait;
+  }
+  
+  [self setFontDescriptor:[descriptor_ fontDescriptorWithSymbolicTraits:traits]];
 }
 
 @end

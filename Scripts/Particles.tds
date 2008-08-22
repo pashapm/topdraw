@@ -60,17 +60,17 @@ p2.addGravityPoint(gp);
 
 // Simulator gets drawn in its own layer
 var simulatorLayer = new Layer(desktop.bounds);
-var simulator = new Simulator(simulatorLayer);
+var simulator = new Simulator;
 compositor.addLayer(simulatorLayer);
 
 simulator.addSimulatorObject(p1);
 simulator.addSimulatorObject(p2);
 
 // The time step controls the "fine" detail or smoothness
-simulator.timeStep = 0.3;
+simulator.timeStep = 0.2;
 
 // The run parameter is the duration of the simulation
-simulator.run(150);
+simulator.runInLayer(simulatorLayer, 150);
 
 // Bloom
 var bloom = new Filter("CIBloom");

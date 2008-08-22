@@ -96,7 +96,7 @@ static void Process(Options *options) {
     
     Log(@"Seed: %d", [c randomSeed]);
   } else {
-    Log(@"Error:%s", [errorStr UTF8String]);
+    Log(@"Error: %s", [errorStr UTF8String]);
     
     // Strangely, if we return too quickly from the task, not all of the output
     // seems to go out.  If we have an error, sleep for a small amount of time.
