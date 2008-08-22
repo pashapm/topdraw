@@ -355,12 +355,14 @@ static void *PlasmaRectThread(void *context) {
   if ((self = [super initWithArguments:arguments])) {
     colors_ = [[NSMutableDictionary alloc] init];
     variation_ = 0.5;
+    grayscale_ = NO;
+    opaque_ = NO;
     
-    // Add some colors
-    [colors_ setObject:[[[Color alloc] initWithColorName:@"red"] autorelease] forKey:@"topLeft"];
-    [colors_ setObject:[[[Color alloc] initWithColorName:@"blue"] autorelease] forKey:@"topRight"];
-    [colors_ setObject:[[[Color alloc] initWithColorName:@"green"] autorelease] forKey:@"bottomLeft"];
-    [colors_ setObject:[[[Color alloc] initWithColorName:@"white"] autorelease] forKey:@"bottomRight"];
+    // Add some random colors
+    [colors_ setObject:[[[Color alloc] initWithArguments:nil] autorelease] forKey:@"topLeft"];
+    [colors_ setObject:[[[Color alloc] initWithArguments:nil] autorelease] forKey:@"topRight"];
+    [colors_ setObject:[[[Color alloc] initWithArguments:nil] autorelease] forKey:@"bottomLeft"];
+    [colors_ setObject:[[[Color alloc] initWithArguments:nil] autorelease] forKey:@"bottomRight"];
   }
   
   return self;

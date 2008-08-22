@@ -24,7 +24,7 @@
 }
 
 + (NSSet *)methods {
-  return [NSSet setWithObjects:@"add", @"length", @"toString", nil];
+  return [NSSet setWithObjects:@"add", @"distance", @"toString", nil];
 }
 
 - (id)initWithArguments:(NSArray *)arguments {
@@ -76,21 +76,22 @@
   return pt_.y;
 }
 
-- (void)add:(NSArray *)arguments {
-  int count = [arguments count];
+- (PointObject *)add:(NSArray *)arguments {
+  PointObject *pt = [[[PointObject alloc] initWithArguments:arguments] autorelease];
   
-  if (count == 1) {
-    id obj = [RuntimeObject coerceArray:arguments objectAtIndex:0 toClass:[PointObject class]];
-    pt_.x += [obj x];
-    pt_.y += [obj y];
-  } else if (count == 2) {
-    pt_.x = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:0]];
-    pt_.y = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:1]];
-  }
+  [pt setX:[pt x] + pt_.x];
+  [pt setY:[pt y] + pt_.y];
+  
+  return pt;
 }
 
-- (CGFloat)length {
-  return sqrt(pt_.x * pt_.x + pt_.y * pt_.y);
+- (CGFloat)distance:(NSArray *)arguments {
+  PointObject *pt = [[[PointObject alloc] initWithArguments:arguments] autorelease];
+  
+  CGFloat x = [pt x] - pt_.x;
+  CGFloat y = [pt y] - pt_.y;
+  
+  return sqrt(x * x + y * y);
 }
 
 - (NSString *)toString {

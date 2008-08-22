@@ -655,16 +655,6 @@
     CIVector *size = [CIVector vectorWithX:[rect width] Y:[rect height]];
     CIImage *result = [crop apply:coloredKernel, topLeft, topRight, bottomLeft, bottomRight, size, nil];
     
-    // Add some noise into the image to reduce banding
-#if 0
-    CIFilter *f = [CIFilter filterWithName:@"CIRandomGenerator"];
-    CIFilter *blend = [CIFilter filterWithName:@"CISourceOverCompositing"];
-    [blend setValue:[f valueForKey:@"outputImage"] forKey:@"inputBackgroundImage"];
-    [blend setValue:result forKey:@"inputImage"];
-    [crop setValue:[blend valueForKey:@"outputImage"] forKey:@"inputImage"];
-    result = [crop valueForKey:@"outputImage"];
-#endif
-    
     CIContext *context = [CIContext contextWithCGContext:backingStore_ options:nil];
     [context drawImage:result atPoint:CGPointMake([rect x], [rect y]) fromRect:CGRectMake(0, 0, [rect width], [rect height])];
   }
@@ -883,8 +873,19 @@
     // Chain the other filters, if any
     NSEnumerator *e = [filtersToChain objectEnumerator];
     Filter *previousFilter = firstFilter;
+    CIVector *outputSize = [CIVector vectorWithX:CGRectGetWidth(bounds) Y:CGRectGetHeight(bounds)];
+    
     while ((filter = [e nextObject])) {
       @try {
+        // Set our special outputSize on the previous fit
+        @try {
+          [[previousFilter ciFilter] setValue:outputSize forKey:@"outputSize"];
+        }
+        
+        @catch (NSException *e) {
+          // Not a problem if it doesn't respond
+        }
+        
         CIImage *input = [[previousFilter ciFilter] valueForKey:@"outputImage"];
         [[filter ciFilter] setValue:input forKey:@"inputImage"];
       }
@@ -895,6 +896,15 @@
       }
       
       previousFilter = filter;
+    }
+    
+    // Set our special outputSize on the filter
+    @try {
+      [ciFilter setValue:outputSize forKey:@"outputSize"];
+    }
+    
+    @catch (NSException *e) {
+      // Not a problem if it doesn't respond
     }
 
     // Always crop the output

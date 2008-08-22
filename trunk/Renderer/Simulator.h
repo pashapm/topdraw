@@ -20,7 +20,6 @@
 
 @interface Simulator : RuntimeObject {
  @protected
-  Layer *layer_;
   NSMutableArray *objects_;
   CGFloat timeStep_;
 }

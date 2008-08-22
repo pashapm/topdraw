@@ -30,7 +30,7 @@
 - (void)setY:(CGFloat)y;
 - (CGFloat)y;
 
-- (void)add:(NSArray *)arguments;
-- (CGFloat)length;
+- (PointObject *)add:(NSArray *)arguments;
+- (CGFloat)distance:(NSArray *)arguments;
   
 @end

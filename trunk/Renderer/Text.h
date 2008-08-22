@@ -22,6 +22,7 @@
 @interface Text : RuntimeObject {
   NSString *string_;
   NSMutableDictionary *attributes_;
+  NSFontDescriptor *descriptor_;
 }
 
 - (id)initWithString:(NSString *)string;
