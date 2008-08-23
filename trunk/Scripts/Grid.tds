@@ -51,4 +51,4 @@ var f = new Filter(filterName);
 rnd = new Randomizer(0.25, 0.75);
 f.setValueForKey("inputCenter", rnd.floatValue * db.width, rnd.floatValue * db.height);
 f.setValueForKey("inputRadius", db.height / 2);
-//desktop.applyFilter(f);
+desktop.applyFilter(f);
