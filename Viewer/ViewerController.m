@@ -256,7 +256,7 @@ static NSString *kScriptExtension = @"tds";
     NSData *data = [NSData dataWithContentsOfFile:scriptPath];
     NSString *source = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSString *dest = [[Exporter imageStorageDirectory] stringByAppendingPathComponent:[Exporter nextBaseName]];
-    [renderer_ setSource:source seed:seed];
+    [renderer_ setSource:source name:scriptName seed:seed];
     [source release];
     [renderer_ setShouldSplitImages:YES];
     [renderer_ setType:@"jpeg"];

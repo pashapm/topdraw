@@ -46,6 +46,7 @@
 - (BOOL)setObject:(NSObject <RuntimeObject> *)obj withName:(NSString *)name;
 
 - (BOOL)evaluateScript:(NSString *)script exception:(NSException **)exception;
+- (id)callAsFunction:(NSString *)str;
 
 @end
 

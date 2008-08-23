@@ -200,10 +200,12 @@ static NSString *kRendererName = @"TopDrawRenderer";
 }
 
 //------------------------------------------------------------------------------
-- (void)setSource:(NSString *)source seed:(unsigned long)seed {
+- (void)setSource:(NSString *)source name:(NSString *)name seed:(unsigned long)seed {
   if (source_ != source) {
     [source_ release];
     source_ = [source copy];
+    [name_ release];
+    name_ = [name copy];
   }
   
   seed_ = seed;
@@ -270,6 +272,9 @@ static NSString *kRendererName = @"TopDrawRenderer";
   [arguments addObject:[NSString stringWithFormat:@"-o %@", outputPath_]];
   [arguments addObject:[NSString stringWithFormat:@"-t %@", type_]];
   [arguments addObject:[NSString stringWithFormat:@"-q %f", quality]];
+  
+  if ([name_ length])
+    [arguments addObject:[NSString stringWithFormat:@"-n \"%@\"", name_]];
   
   if (size_.width > 0 && size_.height > 0) {
     NSUInteger width = floor(size_.width);

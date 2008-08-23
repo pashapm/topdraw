@@ -20,6 +20,7 @@
 #import "Exporter.h"
 
 typedef struct {
+  NSString *name;
   NSString *sourcePath;
   NSString *destPath;
   NSString *type;
@@ -64,7 +65,7 @@ static NSString *Preprocess(Options *options, NSString *path) {
 //------------------------------------------------------------------------------
 static void Process(Options *options) {
   NSString *source = Preprocess(options, options->sourcePath);
-  Compositor *c = [[Compositor alloc] initWithSource:source];
+  Compositor *c = [[Compositor alloc] initWithSource:source name:options->name];
   NSString *errorStr = nil;
   [c setLoggingCallback:Logging context:options];
   [c setMaximumSize:options->size];
@@ -114,7 +115,7 @@ static void Usage(int argc, const char *argv[], int errorCode) {
   NSString *path = [NSString stringWithUTF8String:argv[0]];
   const char *exe = [[path lastPathComponent] fileSystemRepresentation];
   fprintf(stderr, "Render a Top Draw Document into an output image\n"); 
-  fprintf(stderr, "Usage: %s [-r randomSeed][-t type][-q quality][-s][-o output-image][-m WxH] source-file\n", exe);
+  fprintf(stderr, "Usage: %s [-r randomSeed][-t type][-q quality][-s][-o output-image][-m WxH][-n name] source-file\n", exe);
   fprintf(stderr, "\tsource-file: a Top Draw Document\n");
   fprintf(stderr, "\t-r: Specify the random seed to use\n");
   fprintf(stderr, "\t-f: Specify the type (default: jpeg; allowed: jpeg, png, tiff)\n");
@@ -122,6 +123,7 @@ static void Usage(int argc, const char *argv[], int errorCode) {
   fprintf(stderr, "\t-s: Split the image based on the number of screens.  Output filename will be sequentially numbered starting with 0.\n");
   fprintf(stderr, "\t-o: Output filename (default: source-file base + type)\n");
   fprintf(stderr, "\t-m: Specify maximum width and height (default: actual desktop)\n");
+  fprintf(stderr, "\t-n: Name of the script (default: Untitled)\n");
   fprintf(stderr, "\t-h: Usage\n");
   fprintf(stderr, "\t-?: Usage\n");
   exit(errorCode);
@@ -137,12 +139,13 @@ static void SetupOptions(int argc, const char *argv[], Options *options) {
   
   // Initialize
   bzero(options, sizeof(Options));
+  options->name = @"Untitled";
   options->seed = 42;
   options->quality = 1.0;
   options->type = @"jpeg";
   options->shouldSplit = NO;
 
-  while ((ch = getopt(argc, (char * const *)argv, "m:sq:t:r:o:h?")) != -1) {
+  while ((ch = getopt(argc, (char * const *)argv, "n:m:sq:t:r:o:h?")) != -1) {
     switch (ch) {
       case 's':
         options->shouldSplit = YES;
@@ -193,6 +196,11 @@ static void SetupOptions(int argc, const char *argv[], Options *options) {
         if (width > 0 && height > 0)
           options->size = NSMakeSize(width, height);
         
+        break;
+      }
+        
+      case 'n': {
+        options->name = [[NSString stringWithUTF8String:optarg] retain];
         break;
       }
         

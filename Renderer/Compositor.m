@@ -38,6 +38,8 @@ static inline BOOL IsEmptySize(NSSize size) {
   return (size.width > 0 && size.height > 0) ? NO : YES;
 }
 
+static int kCurrentVersion = 1;
+
 @implementation Compositor
 //------------------------------------------------------------------------------
 #pragma mark -
@@ -49,12 +51,13 @@ static inline BOOL IsEmptySize(NSSize size) {
 
 //------------------------------------------------------------------------------
 + (NSSet *)properties {
-  return [NSSet setWithObjects:@"randomSeed", @"screenCount", nil];
+  return [NSSet setWithObjects:@"randomSeed", @"screenCount", @"name",
+          @"requiredVersion", @"currentVersion", nil];
 }
 
 //------------------------------------------------------------------------------
 + (NSSet *)readOnlyProperties {
-  return [NSSet setWithObjects:@"screenCount", nil];
+  return [NSSet setWithObjects:@"screenCount", @"currentVersion", @"name", nil];
 }
 
 //------------------------------------------------------------------------------
@@ -63,9 +66,11 @@ static inline BOOL IsEmptySize(NSSize size) {
 }
 
 //------------------------------------------------------------------------------
-- (id)initWithSource:(NSString *)source {
+- (id)initWithSource:(NSString *)source name:(NSString *)name {
   if ((self = [super init])) {
     source_ = [source copy];
+    name_ = [name copy];
+    requiredVersion_ = kCurrentVersion;
   }
   
   return self;
@@ -74,6 +79,7 @@ static inline BOOL IsEmptySize(NSSize size) {
 //------------------------------------------------------------------------------
 - (void)dealloc {
   [source_ release];
+  [name_ release];
   [desktop_ release];
   [menubar_ release];
   [layers_ release];
@@ -99,9 +105,37 @@ static inline BOOL IsEmptySize(NSSize size) {
 }
 
 //------------------------------------------------------------------------------
+- (NSString *)checkVersion:(NSString *)source {
+  NSScanner *scanner = [NSScanner scannerWithString:source];
+  
+  // Check the required version.  If we can't run, substitute a helpful
+  // script that prints the name, required, current version.
+  if ([scanner scanUpToString:@".requiredVersion" intoString:nil]) {
+    [scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:nil];
+    int version;
+    [scanner scanInt:&version];
+    
+    if (version > kCurrentVersion) {
+      source = [NSString stringWithFormat:
+                @"var t = new Text(compositor.name + \" Requires Top Draw Version: %d "
+      "(Current version: \" + compositor.currentVersion + \")\");"
+      "t.fontSize = 72;"
+      "var db = desktop.bounds;"
+      "var textBounds = t.bounds;"
+      "var pt = new Point(db.midX - textBounds.width / 2, db.midY - textBounds.height / 2);"
+                "desktop.drawText(t, pt);", version];
+      
+    }
+  }
+  
+  return source;
+}
+
+//------------------------------------------------------------------------------
 - (NSString *)evaluateWithSeed:(NSUInteger)seed {
   Runtime *rt = [[Runtime alloc] initWithName:@"Drawing"];
   
+  activeRuntime_ = rt;
   [rt setDelegate:self];
   [self setRandomSeed:seed];
   
@@ -129,8 +163,11 @@ static inline BOOL IsEmptySize(NSSize size) {
   NSException *e = NULL;
   NSString *errorStr = nil;
   
-  if ([source_ length]) {
-    [rt evaluateScript:source_ exception:&e];
+  // Check for the version.  If we can't render, put up a message
+  NSString *source = [self checkVersion:source_];
+  
+  if ([source length]) {
+    [rt evaluateScript:source exception:&e];
     
     if (e)
       errorStr = [NSString stringWithFormat:@"%@ - %@", 
@@ -256,11 +293,31 @@ static inline BOOL IsEmptySize(NSSize size) {
 }
 
 //------------------------------------------------------------------------------
+- (void)setRequiredVersion:(int)version {
+  requiredVersion_ = version;
+}
+
+//------------------------------------------------------------------------------
+- (int)requiredVersion {
+  return requiredVersion_;
+}
+
+//------------------------------------------------------------------------------
+- (int)currentVersion {
+  return kCurrentVersion;
+}
+
+//------------------------------------------------------------------------------
 - (NSUInteger)screenCount {
   if (!IsEmptySize(size_))
     return 1;
   
   return [[NSScreen screens] count];
+}
+
+//------------------------------------------------------------------------------
+- (NSString *)name {
+  return name_;
 }
 
 //------------------------------------------------------------------------------

@@ -1,0 +1,52 @@
+desktop.fillLayer(new Color("black"));
+
+var widthRnd = new Randomizer(1, 20);
+
+function rings(pt, r, count, spacing) {
+	var halfSpacing = spacing / 2;
+	var arcLength = 2 * Math.PI / count;
+	var s = -halfSpacing;
+	var e;
+		
+	for (i = 0; i < count; ++i) {
+		e = s - arcLength + spacing;
+
+		desktop.beginPath();
+		desktop.lineWidth = widthRnd.floatValue;
+		desktop.arc(pt, r, s, e);
+		desktop.stroke();
+		
+		s = e - spacing;
+	}
+}
+
+function marker(pt, r, segs) {
+	var c = new Color;
+	var variation = 0.3;
+	var currentR = 20;
+	for (var i = 0; i < 20; ++i) {
+		desktop.strokeStyle = c.vary(0, variation, variation, 0);
+		
+		if (currentR > r)
+			break;
+			
+		rings(pt, currentR, segs, 0);
+		currentR += 20;
+	}
+}
+
+var db = desktop.bounds;
+var radiusRnd = new Randomizer(50, db.height / 2);
+var rnd = new Randomizer;
+var segsRnd = new Randomizer(1, 8);
+
+for (var x = 0; x < 10; ++x) {
+	var pt = new Point(db.width * rnd.floatValue, db.height * rnd.floatValue);
+	marker(pt, radiusRnd.intValue, segsRnd.intValue);
+}
+
+
+
+
+
+
