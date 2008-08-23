@@ -655,7 +655,30 @@ static void CopyStringToCString(NSString *str, char **cStr) {
     *exception = [NSException exceptionWithName:name reason:reason userInfo:exceptionDict];
   }
   
-  return result;  
+  return result;
 }
+
+- (id)callAsFunction:(NSString *)fnStr {
+  JSStringRef fnStrRef = JSStringCreateWithCFString((CFStringRef)fnStr);
+  JSValueRef fnValue = JSValueMakeString(globalContext_, fnStrRef);
+  JSValueRef jsException = NULL;
+  JSObjectRef fnObj = JSValueToObject(globalContext_, fnValue, &jsException);
+  JSStringRelease(fnStrRef);
+  JSValueRef protoVal = JSObjectGetPrototype(globalContext_, fnObj);
+  JSObjectRef protoObj = JSValueToObject(globalContext_, protoVal, NULL);
+  bool isObj = JSObjectIsFunction(globalContext_, protoObj);
+  NSLog(@"isObj: %d", isObj);
+/*  
+  jsException = NULL;
+  JSValueRef result = JSObjectCallAsFunction(globalContext_, fnObj, NULL, 0, NULL, &jsException);
+*/
+  id resultObj = nil;
+ 
+//  if (result)
+//    resultObj = [self convertJSValue:result exception:NULL context:globalContext_];
+
+  return resultObj;
+}
+
 
 @end

@@ -29,6 +29,7 @@ extern NSString *RendererSeedKey;       // NSNumber of the seed used for randomi
 @interface Renderer : NSObject {
   void *reference_;  // Weak reference -- only using pointer value
   NSString *source_;
+  NSString *name_;
   NSString *destination_;
   NSString *type_;
   unsigned long seed_;
@@ -51,7 +52,7 @@ extern NSString *RendererSeedKey;       // NSNumber of the seed used for randomi
 
 - (id)initWithReference:(void *)reference;
 
-- (void)setSource:(NSString *)source seed:(unsigned long)seed;
+- (void)setSource:(NSString *)source name:(NSString *)name seed:(unsigned long)seed;
 - (void)setMaximumSize:(NSSize)size;
 
 // Output type: jpeg, png, or tiff

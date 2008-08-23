@@ -17,12 +17,14 @@
 #import "RuntimeObject.h"
 
 @class Layer;
+@class Runtime;
 
 typedef void (*LoggingCB)(const char *msg, void *context);
 
 @interface Compositor : RuntimeObject {
  @protected
   NSString *source_;
+  NSString *name_;
   Layer *desktop_;
   Layer *menubar_;
   NSMutableArray *layers_;
@@ -31,9 +33,11 @@ typedef void (*LoggingCB)(const char *msg, void *context);
   LoggingCB loggingCallback_;
   void *loggingCallbackContext_;
   NSSize size_;
+  int requiredVersion_;
+  Runtime *activeRuntime_;  // Weak
 }
 
-- (id)initWithSource:(NSString *)source;
+- (id)initWithSource:(NSString *)source name:(NSString *)name;
 
 // Specify the maximum size for the drawing
 - (void)setMaximumSize:(NSSize)size;

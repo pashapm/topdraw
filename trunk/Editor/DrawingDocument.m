@@ -138,6 +138,13 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
 }
 
 //------------------------------------------------------------------------------
+- (NSString *)name {
+  NSString *pathName = [[[self fileURL] path] lastPathComponent];
+  
+  return [pathName length] ? pathName : @"Untitled";
+}
+
+//------------------------------------------------------------------------------
 #pragma mark -
 #pragma mark || NSDocument ||
 //------------------------------------------------------------------------------
@@ -281,7 +288,7 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
                                                  name:RendererDidFinish object:renderer_];
   }
   
-  [renderer_ setSource:[text_ string] seed:seed];
+  [renderer_ setSource:[text_ string] name:[self name] seed:seed];
   [renderer_ setType:@"jpeg"];
   [renderer_ setDestination:nil];
   [renderer_ setMaximumSize:NSZeroSize];
@@ -322,7 +329,7 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
   }
   
   NSSize size = NSMakeSize(1024, 768);
-  [renderer_ setSource:[text_ string] seed:seed];
+  [renderer_ setSource:[text_ string] name:[self name] seed:seed];
   [renderer_ setDestination:[panel filename]];
   [renderer_ setMaximumSize:size];
   [renderer_ renderInBackgroundAndNotify];
