@@ -1,0 +1,70 @@
+desktop.fillLayer(new Color("black"));
+desktop.strokeStyle = new Color("black", 0.5);
+var db = desktop.bounds;
+var xRnd = new Randomizer(0, db.width);
+var yRnd = new Randomizer(0, db.height);
+
+for (var i = 0; i < 5; ++i) {
+	Seeker(new Color, new Color);
+}
+
+function Seeker(c1, c2) {
+	var start = new Point(xRnd.intValue, yRnd.intValue);
+	var end = new Point(xRnd.intValue, yRnd.intValue);
+	var speedRnd = new Randomizer(1, 10);
+	var current = new Point(start);
+	var r = speedRnd.floatValue * 20;
+	var minR = speedRnd.floatValue * 5;
+	var rDelta = speedRnd.floatValue / 5;
+	var maxIterations = 1000;
+	var iteration = 0;
+	var speed = new Point(speedRnd.floatValue, speedRnd.floatValue);
+	var accel = new Point;
+	var accelDelta = speedRnd.floatValue / 10;
+	var moveRnd = new Randomizer(1, 4);
+	var maxSpeed = speedRnd.floatValue * 2;
+	
+	while (++iteration < maxIterations) {
+		var distance = current.distance(end);
+		var t = iteration / maxIterations;
+		
+		if (distance <= 2)
+			break;
+			
+		desktop.beginPath();
+		desktop.circle(current, r);
+		desktop.fillStyle = c1.blend(c2, t);
+		desktop.fillStroke();
+		
+		r -= rDelta;
+		if (r < minR)
+			r = minR;
+			
+		// Calculate a new acceleration
+		if (current.x < end.x)
+			accel.x = accelDelta;
+		else if (current.x > end.x)
+			accel.x = -accelDelta;
+
+		if (current.y < end.y)
+			accel.y = accelDelta;
+		else if (current.y > end.y)
+			accel.y = -accelDelta;
+		
+		// Update position and speed
+		current = current.add(speed);
+		speed = speed.add(accel);
+		
+		// Cap the speed
+		if (speed.x > maxSpeed)
+			speed.x = maxSpeed;
+		else if (speed.x < -maxSpeed)
+			speed.x = -maxSpeed;
+	
+		if (speed.y > maxSpeed)
+			speed.y = maxSpeed;
+		else if (speed.y < -maxSpeed)
+			speed.y = -maxSpeed;
+	}
+}
+	
