@@ -221,7 +221,7 @@ static int HSBPropertyToIndex(NSString *property) {
 //------------------------------------------------------------------------------
 - (void)setValue:(id)value forKey:(NSString *)key {
   int colorIdx = RGBPropertyToIndex(key);
-  CGFloat floatValue = [RuntimeObject coerceObjectToDouble:value];
+  CGFloat floatValue = MAX(0, MIN(1, [RuntimeObject coerceObjectToDouble:value]));
   
   if (colorIdx != kInvalidColorIndex) {
     color_[colorIdx] = floatValue;
@@ -252,7 +252,7 @@ static int HSBPropertyToIndex(NSString *property) {
       CGFloat fraction = 0.5;
       
       if ([arguments count] == 2)
-        fraction = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:1]];
+        fraction = MAX(0, MIN(1, [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:1]]));
       
       NSColor *blend = [[self color] blendedColorWithFraction:fraction ofColor:[blendColor color]];
       result = [[[Color alloc] init] autorelease];
