@@ -1,24 +1,53 @@
-var size = 64;
+var sizeRnd = new Randomizer(16, 128);
+var size = sizeRnd.intValue;
+
+// Even sized
+if (size % 2)
+	size += 1;
+	
 var r = new Rect(0, 0, size, size);
 var l = new Layer(r);
 
-l.strokeStyle = new Color("blue", 0.3);
-l.fillStyle = new Color("white", 0.1);
+// Create the image
+var strokeColor = new Color;
+strokeColor.a = 0.3;
+l.strokeStyle = strokeColor;
+
+var variation = 0.1;
+var fillColor = strokeColor.vary(variation, variation, variation, 0);
+fillColor.a = 0.1;
+l.fillStyle = fillColor;
+
+// Draw an ellipse
+var widthRnd = new Randomizer(1, 4);
+var lineWidth = widthRnd.intValue;
+l.lineWidth = widthRnd.intValue;
 l.clearRect(r);
 l.beginPath();
-var ellipseRect = r.inset(2);
+
+// Take into account the line width.  The ellipse needs to be smaller than
+// the size of the image layer so that the stroke isn't clipped.
+var rectRnd = new Randomizer(lineWidth * 2, size / 4);
+var ellipseRect = r.inset(rectRnd.intValue, rectRnd.intValue);
+var minDimension = ellipseRect.width > ellipseRect.height ? 
+	ellipseRect.height : ellipseRect.width;
+
 l.ellipse(ellipseRect);
 l.fillStroke();
 
 var image = new Image(l);
 var pattern = new Pattern(image);
 
-var rnd = new Randomizer(5, size * 2);
-pattern.offset = new Point(rnd.intValue, rnd.intValue);
+// Overlap up to a quarter and 2 times spacing
+var rnd = new Randomizer(minDimension / 4, size * 2);
+var offset = new Point(rnd.intValue, rnd.intValue);
+pattern.offset = offset;
 
-desktop.fillLayer(new Gradient(new Color("black"), 
-	new Color("white")));
+// Fill the desktop with gradient
+fillColor.a = 1.0;
+desktop.fillLayer(new Gradient(new Color("black"), fillColor));
 
+// Fill the desktop with pattern
 desktop.fillStyle = pattern;
 desktop.beginPath();
 desktop.rect(desktop.bounds);

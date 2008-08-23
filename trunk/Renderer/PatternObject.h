@@ -20,8 +20,10 @@
   CGPatternRef pattern_;
   CGImageRef image_;
   NSSize offset_;
+  NSSize phase_;
 }
 
 - (CGPatternRef)cgPattern;
+- (NSSize)phase;
 
 @end

@@ -38,7 +38,7 @@ static void DrawPattern(void *info, CGContextRef context) {
 
 //------------------------------------------------------------------------------
 + (NSSet *)properties {
-  return [NSSet setWithObjects:@"image", @"offset", nil];
+  return [NSSet setWithObjects:@"image", @"offset", @"phase", nil];
 }
 
 //------------------------------------------------------------------------------
@@ -113,6 +113,18 @@ static void DrawPattern(void *info, CGContextRef context) {
   PointObject *offset = [RuntimeObject coerceObject:offsetObj toClass:[PointObject class]];
   
   offset_ = NSMakeSize([offset x], [offset y]);
+}
+
+//------------------------------------------------------------------------------
+- (NSSize)phase {
+  return phase_;
+}
+
+//------------------------------------------------------------------------------
+- (void)setPhase:(id)offsetObj {
+  PointObject *offset = [RuntimeObject coerceObject:offsetObj toClass:[PointObject class]];
+  
+  phase_ = NSMakeSize([offset x], [offset y]);
 }
 
 @end
