@@ -267,6 +267,7 @@
     CGContextSetFillColorSpace(backingStore_, patternSpace);
     CGContextSetFillPattern(backingStore_, [pattern cgPattern], c);
     CGColorSpaceRelease(patternSpace);
+    CGContextSetPatternPhase(backingStore_, NSSizeToCGSize([pattern phase]));
   }
   
   Gradient *gradient = [RuntimeObject coerceObject:obj toClass:[Gradient class]];

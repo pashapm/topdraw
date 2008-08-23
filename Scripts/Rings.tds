@@ -1,6 +1,16 @@
 desktop.fillLayer(new Color("black"));
 
-var widthRnd = new Randomizer(1, 20);
+var db = desktop.bounds;
+var radiusRnd = new Randomizer(50, db.height / 2);
+var rnd = new Randomizer;
+var segsRnd = new Randomizer(1, 8);
+var widthRnd = new Randomizer(1, 10);
+var variationRnd = new Randomizer(0.0, 0.3);
+
+for (var x = 0; x < 10; ++x) {
+	var pt = new Point(db.width * rnd.floatValue, db.height * rnd.floatValue);
+	marker(pt, radiusRnd.intValue, segsRnd.intValue);
+}
 
 function rings(pt, r, count, spacing) {
 	var halfSpacing = spacing / 2;
@@ -22,10 +32,11 @@ function rings(pt, r, count, spacing) {
 
 function marker(pt, r, segs) {
 	var c = new Color;
-	var variation = 0.3;
-	var currentR = 20;
+	c.a = 0.3;
+	var variation = variationRnd.floatValue;
+	var currentR = radiusRnd.intValue / 5;
 	for (var i = 0; i < 20; ++i) {
-		desktop.strokeStyle = c.vary(0, variation, variation, 0);
+		desktop.strokeStyle = c.vary(variation, 0, 0, 0);
 		
 		if (currentR > r)
 			break;
@@ -34,19 +45,3 @@ function marker(pt, r, segs) {
 		currentR += 20;
 	}
 }
-
-var db = desktop.bounds;
-var radiusRnd = new Randomizer(50, db.height / 2);
-var rnd = new Randomizer;
-var segsRnd = new Randomizer(1, 8);
-
-for (var x = 0; x < 10; ++x) {
-	var pt = new Point(db.width * rnd.floatValue, db.height * rnd.floatValue);
-	marker(pt, radiusRnd.intValue, segsRnd.intValue);
-}
-
-
-
-
-
-
