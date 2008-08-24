@@ -10,7 +10,7 @@ var rndWidth = new Randomizer(0.5, 3);
 desktop.lineWidth = rndWidth.floatValue;
 
 var db = desktop.bounds;
-var rnd = new Randomizer(10, 75);
+var rnd = new Randomizer(20, 75);
 var steps = rnd.integerValue;
 var xinc = db.width / steps;
 var yinc = db.height / steps;
@@ -26,11 +26,10 @@ function DrawCorner(startPt, endPt, deltax, deltay, drawingSteps) {
 	}
 }
 
-var s, e;
-
 // Choose one or more corners to draw
-var rndMask = new Randomizer(1, 24);
+var rndMask = new Randomizer(1, 15);
 var mask = rndMask.integerValue;
+var s, e;
 
 // Lower Left corner
 if (mask & 0x01) {
