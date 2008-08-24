@@ -1,42 +1,63 @@
 // Menubar gradient
-var grad = new Gradient(new Color("white"), new Color("purple"));
-menubar.fillLayer(grad);
+menubar.fillLayer(new Gradient(new Color, new Color));
 
 // Desktop gradient
 var db = desktop.bounds;
-grad = new Gradient();
-grad.addColorStop(new Color(0.5), 0);
-var base = new Color("purple");
-grad.addColorStop(base.vary(0, 0.5, 0.2, 0), 0.5);
-base = new Color("blue");
-grad.addColorStop(base.vary(0, 0.5, 0), 1);
-grad.start = new Point(0, db.height);
-grad.end = new Point(db.width, db.height);
-desktop.fillLayer(grad);
+var xRnd = new Randomizer(0, db.width);
+var yRnd = new Randomizer(0, db.height);
+var radiusRnd = new Randomizer(32, db.height/3);
 
-// Shadows
-var offset = new Point(8, -8);
-var blur = 10;
-var color = new Color("black", 0.5);
-desktop.shadow(offset, blur, color);
+// Draw background with black, and then vary alpha on rainbow gradient background
+desktop.fillLayer(new Color("black"));
+Rainbow();
 
-// Draw some redish things
-desktop.beginPath();
-var rnd = new Randomizer(0, 1);
-var rndSize = new Randomizer(50, 200);
-var rndRadius = new Randomizer(0, 30);
-var r = new Rect();
-var fc = new Color(0.5, 0, 0, 1);
-desktop.strokeStyle = new Color("black");
+// Draw "3D" spheres with light
+var brightnessRnd = new Randomizer(0.75, 1);
+var globalLight = new Color(brightnessRnd.floatValue);
+var offsetRnd = new Randomizer(0.1, 0.75);
+var offsetScale = offsetRnd.floatValue;
 
-for (x = 0; x < 50; ++x) {
-	desktop.fillStyle = fc.vary(0.3, 0, 0, 0);
-	r.width = rndSize.floatValue;
-	r.height = rndSize.floatValue;
-	r.x = rnd.floatValue * (db.width - r.width);
-	r.y = rnd.floatValue * (db.height - r.height);
-	desktop.beginPath();
-	desktop.roundedRect(r, rndRadius.floatValue);
-	desktop.fillStroke();
+for (var i = 0; i < 10; ++i) {
+	var pt = new Point(xRnd.intValue, yRnd.intValue);
+	var r = radiusRnd.intValue;
+	Sphere(pt, r, offsetScale);
 }
+
+function Rainbow() {
+	var	grad = new Gradient();
+	var colorNames = new Array("red", "orange", "yellow", "green", 
+		"blue", "indigo", "violet"); // Roy G. Biv
+
+	for (var i = 0; i < colorNames.length; ++i) {
+		var c = new Color(colorNames[i]);
+		var v = c.vary(0.1, 0.1, 0.1, 0.9);
+		var t = i / (colorNames.length - 1);
+		grad.addColorStop(v, t);
+	}
+	
+	grad.start = new Point(0, 0);
+	grad.end = new Point(db.width, 0);
+	desktop.fillLayer(grad);
+}
+
+function Sphere(pt, r, offsetScale) {
+	var c = new Color;
+	c = c.darker(0.3);
+	var radial = new Gradient(globalLight, c);
+	var offset = r * offsetScale;
+	
+	// Put the global light as a highlight 
+	radial.start = new Point(pt.x - offset, pt.y + offset);
+	radial.end = new Point(pt.x - offset, pt.y + offset);
+	radial.radius = new Point(5, r);
+		
+	desktop.fillStyle = radial;
+	desktop.beginPath();
+	desktop.circle(pt, r);
+	desktop.fill();
+}
+
+
+
+
 
