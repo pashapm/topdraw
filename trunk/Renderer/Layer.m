@@ -42,7 +42,7 @@
           @"bounds", 
           @"compositingMode",
           @"fillStyle", @"frame", 
-          @"lineCap", @"lineJoin", @"lineWidth", 
+          @"lineCap", @"lineJoin", @"lineWidth", @"lineDash",
           @"miterLimit",
           @"strokeStyle", 
           nil];
@@ -490,6 +490,23 @@
 		
     CGContextAddCurveToPoint(context, p1.x, p1.y, p2.x, p2.y, q3.x, q3.y);
 	}
+}
+
+- (void)setLineDash:(NSArray *)arg {
+  NSArray *points = [RuntimeObject coerceObject:arg toClass:[NSArray class]];
+  size_t count = [points count];
+  
+  if (count) {
+    CGFloat *lengths = (CGFloat *)malloc(count * sizeof(CGFloat) + 10);
+    
+    for (int i = 0; i < count; ++i)
+      lengths[i] = [[points objectAtIndex:i] floatValue];
+    
+    CGContextSetLineDash(backingStore_, 0, lengths, count);
+    free(lengths);
+  } else {
+    CGContextSetLineDash(backingStore_, 0, NULL, 0);
+  }
 }
 
 - (void)wavyLineTo:(NSArray *)arguments {
