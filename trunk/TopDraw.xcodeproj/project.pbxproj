@@ -719,6 +719,7 @@
 		};
 		3CD4D7480E42F08000F37DC9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9BC8E7B80E63A20800780CB6 /* Version.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
@@ -828,6 +829,7 @@
 		};
 		C05733C908A9546B00998B17 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9BC8E7B80E63A20800780CB6 /* Version.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
