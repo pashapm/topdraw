@@ -182,15 +182,6 @@ static int kCurrentVersion = 1;
 }
 
 //------------------------------------------------------------------------------
-- (CGRect)convertFrameToDesktop:(CGRect)frame {
-  CGRect desktop = [desktop_ cgRectFrame];
-  frame.origin.x -= desktop.origin.x;
-  frame.origin.y -= desktop.origin.y;
-  
-  return frame;
-}
-
-//------------------------------------------------------------------------------
 - (CGImageRef)image {
   int count = [layers_ count];
   CGContextRef dest = [desktop_ backingStore];
@@ -206,12 +197,12 @@ static int kCurrentVersion = 1;
     CGContextSaveGState(dest);
     CGBlendMode blendMode = [Layer blendModeFromString:[blendModes_ objectAtIndex:i]];
     CGContextSetBlendMode(dest, blendMode);
-    CGContextDrawImage(dest, [self convertFrameToDesktop:[layer cgRectFrame]], [layer cgImage]);
+    CGContextDrawImage(dest, [layer cgRectFrame], [layer cgImage]);
     CGContextRestoreGState(dest);
   }
   
   // Draw the menubar
-  CGContextDrawImage(dest, [self convertFrameToDesktop:[menubar_ cgRectFrame]], [menubar_ cgImage]);
+  CGContextDrawImage(dest, [menubar_ cgRectFrame], [menubar_ cgImage]);
     
   return [desktop_ cgImage];
 }
@@ -221,12 +212,12 @@ static int kCurrentVersion = 1;
   if (!desktop_) {
     NSRect frame = [NSScreen desktopFrame];
     
-    // Override the size of the desktop
     if (!IsEmptySize(size_)) {
-      frame.origin = NSZeroPoint;
       frame.size = size_;
     }
     
+    // The desktop is always at the origin
+    frame.origin = NSZeroPoint;
     desktop_ = [[Layer alloc] initWithFrame:frame];
   }
   
@@ -243,6 +234,10 @@ static int kCurrentVersion = 1;
       frame.origin.x = 0;
       frame.origin.y = size_.height - NSHeight(frame);
       frame.size.width = size_.width;
+    } else {
+      // Set the menubar relative to the desktop
+      NSRect desktop = [NSScreen desktopFrame];
+      frame.origin.x -= NSMinX(desktop);
     }
 
     menubar_ = [[Layer alloc] initWithFrame:frame];

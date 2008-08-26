@@ -4,10 +4,12 @@ var db = desktop.bounds;
 var radiusRnd = new Randomizer(50, db.height / 2);
 var rnd = new Randomizer;
 var segsRnd = new Randomizer(1, 8);
-var widthRnd = new Randomizer(1, 10);
+var widthRnd = new Randomizer(1, 20);
 var variationRnd = new Randomizer(0.0, 0.3);
+var spacingRnd = new Randomizer(5, 40);
+var count = 7 * compositor.screenCount;
 
-for (var x = 0; x < 10; ++x) {
+for (var x = 0; x < count; ++x) {
 	var pt = new Point(db.width * rnd.floatValue, db.height * rnd.floatValue);
 	marker(pt, radiusRnd.intValue, segsRnd.intValue);
 }
@@ -35,6 +37,8 @@ function marker(pt, r, segs) {
 	c.a = 0.3;
 	var variation = variationRnd.floatValue;
 	var currentR = radiusRnd.intValue / 5;
+	var spacing = spacingRnd.intValue;
+	
 	for (var i = 0; i < 20; ++i) {
 		desktop.strokeStyle = c.vary(variation, 0, 0, 0);
 		
@@ -42,6 +46,6 @@ function marker(pt, r, segs) {
 			break;
 			
 		rings(pt, currentR, segs, 0);
-		currentR += 20;
+		currentR += spacing;
 	}
 }

@@ -241,6 +241,9 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
   [text_ setAllowsUndo:YES];
   [self setStatus:@"Idle."];
   [super windowControllerDidLoadNib:controller];
+  
+  // Render it immediately
+  [self render:nil];
 }
 
 //------------------------------------------------------------------------------

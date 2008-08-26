@@ -13,6 +13,7 @@
 // the License.
 
 #import "Exporter.h"
+#import "NSScreen+Convenience.h"
 
 static const int kMaxCachedDrawings = 10;
 
@@ -64,7 +65,8 @@ static const int kMaxCachedDrawings = 10;
   } else {
     NSEnumerator *e = [screens objectEnumerator];
     NSScreen *screen;
-    NSRect imageRect = NSMakeRect(0, 0, CGImageGetWidth(image), CGImageGetHeight(image));
+    NSRect desktop = [NSScreen desktopFrame];
+    NSRect imageRect = NSMakeRect(NSMinX(desktop), NSMinY(desktop), CGImageGetWidth(image), CGImageGetHeight(image));
     NSString *baseName = [[path lastPathComponent] stringByDeletingPathExtension];
     NSString *baseDir = [path stringByDeletingLastPathComponent];
     int idxNumber = 0;
@@ -75,7 +77,11 @@ static const int kMaxCachedDrawings = 10;
       // If the frame of this screen intersects with the image, partition off
       // the image, and save the file
       if (NSIntersectsRect(frame, imageRect)) {
-        CGImageRef subImage = CGImageCreateWithImageInRect(image, NSRectToCGRect(frame));
+        // The subimage bounds are (0,0) - (width, height)
+        NSRect subImageRect = frame;
+        subImageRect.origin.x -= NSMinX(desktop);
+        subImageRect.origin.y -= NSMinY(desktop);
+        CGImageRef subImage = CGImageCreateWithImageInRect(image, NSRectToCGRect(subImageRect));
         NSString *filePath = [baseDir stringByAppendingPathComponent:baseName];
         filePath = [filePath stringByAppendingFormat:@"-%d", idxNumber];
         

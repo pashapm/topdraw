@@ -49,5 +49,7 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+  <key>CFBundleShortVersionString</key>
+  <string>${TOP_DRAW_VERSION}</string>
 </dict>
 </plist>

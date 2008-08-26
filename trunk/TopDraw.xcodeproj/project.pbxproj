@@ -82,6 +82,9 @@
 		9B4A90250E42970000777579 /* TopDrawEditor.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9B4A90220E42970000777579 /* TopDrawEditor.icns */; };
 		9B4A90260E42970000777579 /* TopDrawDoc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9B4A90230E42970000777579 /* TopDrawDoc.icns */; };
 		9BB539BB0E5B6E70008ED3AA /* PatternObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB539BA0E5B6E70008ED3AA /* PatternObject.m */; };
+		9BC8E7480E638D7100780CB6 /* NSScreen+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8ED20E428B8400777579 /* NSScreen+Convenience.m */; };
+		9BC8E7B90E63A20800780CB6 /* Version.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9BC8E7B80E63A20800780CB6 /* Version.xcconfig */; };
+		9BC8E7BA0E63A20800780CB6 /* Version.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9BC8E7B80E63A20800780CB6 /* Version.xcconfig */; };
 		9BE37FD90E510E570083B486 /* Built-in.tds in Resources */ = {isa = PBXBuildFile; fileRef = 3CD4D7630E42F24200F37DC9 /* Built-in.tds */; };
 		9BE380230E5112810083B486 /* Built-in.tds in Copy built-in file */ = {isa = PBXBuildFile; fileRef = 3CD4D7630E42F24200F37DC9 /* Built-in.tds */; };
 /* End PBXBuildFile section */
@@ -183,8 +186,8 @@
 		9B4A8EAA0E427E3B00777579 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
 		9B4A8EAB0E427E3B00777579 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = /System/Library/Frameworks/JavaScriptCore.framework; sourceTree = "<absolute>"; };
 		9B4A8EAC0E427E3B00777579 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
-		9B4A8ED20E428B8400777579 /* NSScreen+Convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSScreen+Convenience.m"; sourceTree = "<group>"; };
-		9B4A8ED30E428B8400777579 /* NSScreen+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSScreen+Convenience.h"; sourceTree = "<group>"; };
+		9B4A8ED20E428B8400777579 /* NSScreen+Convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSScreen+Convenience.m"; path = "../Renderer/NSScreen+Convenience.m"; sourceTree = "<group>"; };
+		9B4A8ED30E428B8400777579 /* NSScreen+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSScreen+Convenience.h"; path = "../Renderer/NSScreen+Convenience.h"; sourceTree = "<group>"; };
 		9B4A8ED40E428B8400777579 /* NSColor+String.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+String.m"; sourceTree = "<group>"; };
 		9B4A8ED50E428B8400777579 /* NSColor+String.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+String.h"; sourceTree = "<group>"; };
 		9B4A8ED60E428B8400777579 /* NSColor+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Random.m"; sourceTree = "<group>"; };
@@ -249,6 +252,7 @@
 		9B4A90240E42970000777579 /* TopDraw.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = TopDraw.icns; sourceTree = "<group>"; };
 		9BB539B90E5B6E70008ED3AA /* PatternObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatternObject.h; sourceTree = "<group>"; };
 		9BB539BA0E5B6E70008ED3AA /* PatternObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PatternObject.m; sourceTree = "<group>"; };
+		9BC8E7B80E63A20800780CB6 /* Version.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 		9BE3C04B0E4370AC00E3AA8A /* TopDrawEditor.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html.documentation; name = TopDrawEditor.html; path = Documentation/TopDrawEditor.html; sourceTree = "<group>"; };
 		9BE3C04C0E4370AC00E3AA8A /* TopDraw.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html.documentation; name = TopDraw.html; path = Documentation/TopDraw.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -299,6 +303,7 @@
 		2A37F4AAFDCFA73011CA2CEA /* TopDraw */ = {
 			isa = PBXGroup;
 			children = (
+				9BC8E7B80E63A20800780CB6 /* Version.xcconfig */,
 				9BE3C03F0E43703C00E3AA8A /* Documentation */,
 				3CD4D6A90E42EBE400F37DC9 /* Common */,
 				2A37F4ABFDCFA73011CA2CEA /* Editor */,
@@ -368,6 +373,8 @@
 				9B4A8FCB0E428F4E00777579 /* Installer.m */,
 				9B1163FE0E47BCB100C230D5 /* NSColor+Adjustment.h */,
 				9B1163FF0E47BCB100C230D5 /* NSColor+Adjustment.m */,
+				9B4A8ED30E428B8400777579 /* NSScreen+Convenience.h */,
+				9B4A8ED20E428B8400777579 /* NSScreen+Convenience.m */,
 				9B4A8FBE0E428F2100777579 /* Renderer.h */,
 				9B4A8FBF0E428F2100777579 /* Renderer.m */,
 				32DBCF750370BD2300C91783 /* TopDraw_Prefix.pch */,
@@ -414,8 +421,6 @@
 				9B4A8ED60E428B8400777579 /* NSColor+Random.m */,
 				9B4A8ED50E428B8400777579 /* NSColor+String.h */,
 				9B4A8ED40E428B8400777579 /* NSColor+String.m */,
-				9B4A8ED30E428B8400777579 /* NSScreen+Convenience.h */,
-				9B4A8ED20E428B8400777579 /* NSScreen+Convenience.m */,
 				9B4A8EF80E428C7700777579 /* Particles.h */,
 				9B4A8EF90E428C7700777579 /* Particles.m */,
 				9BB539B90E5B6E70008ED3AA /* PatternObject.h */,
@@ -548,6 +553,7 @@
 			files = (
 				3CD4D7610E42F19600F37DC9 /* Viewer.xib in Resources */,
 				3CD4D7EE0E42F9ED00F37DC9 /* TopDraw.icns in Resources */,
+				9BC8E7BA0E63A20800780CB6 /* Version.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -561,6 +567,7 @@
 				3C4324FF0E42FEAD006C46D5 /* InfoPlist.strings in Resources */,
 				3C4325000E42FEAD006C46D5 /* DrawingDocument.xib in Resources */,
 				9BE37FD90E510E570083B486 /* Built-in.tds in Resources */,
+				9BC8E7B90E63A20800780CB6 /* Version.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -596,6 +603,7 @@
 				9B4A8FC40E428F2100777579 /* Preview.m in Sources */,
 				9B4A8FC50E428F2100777579 /* Renderer.m in Sources */,
 				9B4A8FCC0E428F4E00777579 /* Installer.m in Sources */,
+				9BC8E7480E638D7100780CB6 /* NSScreen+Convenience.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -686,6 +694,7 @@
 /* Begin XCBuildConfiguration section */
 		3CD4D7470E42F08000F37DC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9BC8E7B80E63A20800780CB6 /* Version.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
@@ -801,6 +810,7 @@
 		};
 		C05733C808A9546B00998B17 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9BC8E7B80E63A20800780CB6 /* Version.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
