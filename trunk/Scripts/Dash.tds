@@ -1,0 +1,49 @@
+var patternRnd = new Randomizer(2, 20);
+var db = desktop.bounds;
+var xRnd = new Randomizer(0, db.width);
+var yRnd = new Randomizer(0, db.height);
+var widthRnd = new Randomizer(1, 10);
+var dashRnd = new Randomizer(0, 40);
+var count = 30 * compositor.screenCount;
+
+// Fill to black
+desktop.fillLayer(new Color("black"));
+
+// Draw a bunch of dashed circles
+for (var i = 0; i < count; ++i) {
+	desktop.lineWidth = widthRnd.intValue;
+
+	var s = new Point(xRnd.intValue, yRnd.intValue);
+	var e = new Point(xRnd.intValue, yRnd.intValue);
+	
+	UpdateDash();
+	Dashed(s, e);
+}
+
+// Blur it out
+var f = new Filter("CIGaussianBlur");
+var r = new Randomizer(2, 20);
+f.setValueForKey("inputRadius", r.intValue);
+desktop.applyFilter(f);
+
+function UpdateDash() {
+	var pat = new Array();
+	var dashLen = dashRnd.intValue;
+	while (--dashLen > 0)
+		pat.push(patternRnd.intValue);
+	
+	desktop.lineDash = pat;
+}
+
+function Dashed(s, e) {
+	var r = s.distance(e) / 2;
+	var c = new Color;
+	c.a = 0.2;
+
+	desktop.strokeStyle = c;
+	desktop.beginPath();
+	desktop.circle(e, r);
+	desktop.stroke();
+}
+
+
