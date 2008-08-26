@@ -1,12 +1,12 @@
 // Menubar
 var grad = new Gradient(new Color("white"), new Color);
-menubar.fillLayer(grad);
+//menubar.fillLayer(grad);
 
 var db = desktop.bounds;
 
 // Calculate the size for the plasma
 var r = new Rect(db);
-var scale = 4;	// use sub-scaling for speed
+var scale = 2 * compositor.screenCount;  // use sub-scaling for speed
 r.width /= scale;
 r.height /= scale;
 

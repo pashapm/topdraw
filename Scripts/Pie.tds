@@ -15,10 +15,11 @@ var c = new Color;
 c = c.darker();
 c.a = 0.3;
 var variation = 0.1;
+var count = 150 * compositor.screenCount;
 
 desktop.lineJoin = "round";
 
-for (var x = 0; x < 300; ++x) {
+for (var x = 0; x < count; ++x) {
 	var pt = new Point(db.width * percentRnd.floatValue, 
 		db.height * percentRnd.floatValue);
 	desktop.fillStyle = c.vary(variation, variation, variation, 0);

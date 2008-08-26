@@ -1,57 +1,34 @@
-// Menubar 
-var c = new Color;
-c.a = 1.0;
-menubar.fillLayer(c);
-
 // Fill with desktop with dark color
-c = new Color;
-var darker = 0.3;
-c.r *= darker;
-c.g *= darker;
-c.b *= darker;
-c.a = 1.0;
-desktop.fillLayer(c);
-desktop.rect(db);
-desktop.closePath();
-desktop.fill();
+var backColor = new Color;
+backColor = backColor.darker(0.5);
+desktop.fillLayer(backColor);
 
 // Shadows
 var offset = new Point(10, -10);
 var blur = 5;
-var shadowColor = new Color("black");
-shadowColor.a = 0.3;
+var shadowColor = new Color("black", 0.3);
 desktop.shadow(offset, blur, shadowColor);
 
 // Draw some opaque rects
 var db = desktop.bounds;
-var minSize = 50;
-var maxSize = 200;
-var randomX = new Randomizer(0, db.width);
-var randomY = new Randomizer(0, db.height);
-var randomSize = new Randomizer(50, maxSize);
-var randomFlip = new Randomizer(0, 3);
-var r = new Rect();
-var baseColor = new Color(c);
-var lighter = 1.5;
-baseColor.r *= lighter;
-baseColor.g *= lighter;
-baseColor.b *= lighter;
-baseColor.a = 1.0;
+var xRnd = new Randomizer(0, db.width);
+var yRnd = new Randomizer(0, db.height);
+var sizeRnd = new Randomizer(50, 200);
+var shapeRnd = new Randomizer(0, 3);
+var baseColor = backColor.lighter(0.5);
+var count = 100 * compositor.screenCount;
 
-for (x = 0; x < 200; ++x) {
-	r.x = randomX.floatValue;
-	r.y = randomY.floatValue;
-	r.width = randomSize.floatValue;
-	r.height = randomSize.floatValue;
+for (x = 0; x < count; ++x) {
+	var r = new Rect(xRnd.intValue, yRnd.intValue, sizeRnd.intValue, sizeRnd.intValue);
 
 	desktop.beginPath();
 
-	switch (randomFlip.integerValue) {
+	switch (shapeRnd.integerValue) {
 		case 0:
 			desktop.ellipse(r);
 			break;
 		case 1:
-			desktop.roundedRect(r, 20 * randomFlip.floatValue);
+			desktop.roundedRect(r, 20 * shapeRnd.floatValue);
 			break;
 		default:
 			desktop.rect(r);

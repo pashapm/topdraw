@@ -1,4 +1,4 @@
-// Blue menubar
+// Fill menubar
 menubar.fillLayer(new Color);
 
 // Fill with desktop with black and a gray apple
@@ -21,14 +21,14 @@ function DrawCenteredApple() {
 }
 
 // Setup stroke and fill attributes
-var blue = new Color(0, 0, 1, 0.5);
-desktop.strokeStyle = new Color(1, 1, 1, 0.5);  // translucent white
+var blue = new Color("blue", 0.5);
+desktop.strokeStyle = new Color("white", 0.5);
 desktop.lineWidth = 5;
 
 // Draw some rectangles
 desktop.beginPath();
 
-var count = 20;
+var count = 10 * compositor.screenCount;
 var angle = 0;
 var angleInc = Math.PI / (count - 1) * 2;
 var rectColor = new Color;
