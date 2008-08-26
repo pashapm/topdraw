@@ -1,14 +1,17 @@
-// Menubar
-var grad = new Gradient(new Color("white"), new Color);
-menubar.fillLayer(grad);
-
 // Fill with desktop with black
 desktop.fillLayer(new Color("black"));
+
 var db = desktop.bounds;
+var baseColor = new Color;
+var strokeColor = baseColor.darker();
+var count = 50 * compositor.screenCount;
+
+// Draw some background rects
+DrawRects(count);
 
 // Calculate the size for the plasma
 var r = new Rect(db);
-var scale = 2;	// use sub-scaling for speed
+var scale = 3;	// use sub-scaling for speed
 r.width /= scale;
 r.height /= scale;
 
@@ -26,35 +29,39 @@ plasma.bottomRight = new Color;
 
 plasma.drawInLayer(plasmaLayer);
 
-// Draw some rects
-var minSize = 50;
-var maxSize = 200;
-var randomX = new Randomizer(0, db.width);
-var randomY = new Randomizer(0, db.height);
-var randomSize = new Randomizer(50, maxSize);
-var randomFlip = new Randomizer(0, 1);
-var r = new Rect();
-var baseColor = new Color(0, 0.2, 0, 1);
-
-for (x = 0; x < 200; ++x) {
-	r.x = randomX.floatValue;
-	r.y = randomY.floatValue;
-	r.width = randomSize.floatValue;
-	r.height = randomSize.floatValue;
-	var c = new Color(baseColor);
-	c.vary(0.1, 0, 0.1, 0);
-	desktop.beginPath();
-
-	if (randomFlip.integerValue > 0)
-		desktop.ellipse(r);
-	else
-		desktop.rect(r);
-
-	desktop.fillStyle = c;
-	desktop.fillStroke();
+function DrawRects(count) {
+	// Draw some rects
+	var minSize = 50;
+	var maxSize = 200;
+	var randomX = new Randomizer(0, db.width);
+	var randomY = new Randomizer(0, db.height);
+	var randomSize = new Randomizer(50, maxSize);
+	var randomFlip = new Randomizer(0, 1);
+	var r = new Rect();
+	
+	desktop.strokeStyle = strokeColor;
+	
+	for (x = 0; x < count; ++x) {
+		r.x = randomX.floatValue;
+		r.y = randomY.floatValue;
+		r.width = randomSize.floatValue;
+		r.height = randomSize.floatValue;
+		desktop.beginPath();
+	
+		if (randomFlip.integerValue > 0)
+			desktop.ellipse(r);
+		else
+			desktop.rect(r);
+	
+		desktop.fillStyle = baseColor.vary(0.1, 0, 0.1, 0);
+		desktop.fillStroke();
+	}
 }
 
 // Create an image with the plasma layer and draw it into the desktop
 var img = new Image(plasmaLayer);
 desktop.drawImage(img, db);
 
+// Draw some foreground rects
+baseColor.a = 0.5;
+DrawRects(count / 10);

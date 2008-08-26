@@ -237,7 +237,7 @@
 
 - (void)step {
   CGContextRef context = [layer_ backingStore];
-  CGRect bounds = [layer_ cgRectFrame];
+  CGRect frame = [layer_ cgRectFrame];
 
   CGContextSetLineWidth(context, trailWidth_);
 
@@ -301,7 +301,7 @@
     CGContextStrokePath(context);
 
     // If we've now drawn our line outside of the bounds, we're done
-    if (!CGRectContainsPoint(bounds, p->location))
+    if (!CGRectContainsPoint(frame, p->location))
       [self reset:p];
   }
 }

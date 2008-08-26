@@ -7,8 +7,7 @@ var bltr = new Color;
 var tl = new Color(0.15);
 var br = new Color(0.4);
 // Coloring clockwise from bottom left
-//desktop.coloredRect(db, bltr, tl, bltr, br);
-desktop.fillLayer(new Color("black"));
+desktop.coloredRect(db, bltr, tl, bltr, br);
 
 var rnd = new Randomizer(0.1, 1);
 
@@ -81,7 +80,7 @@ bloom.setValueForKey("inputIntensity", 3);
 var blur = new Filter("CIBoxBlur");
 blur.setValueForKey("inputRadius", 16);
 blur.inputFilter = bloom;
-simulatorLayer.applyFilter(blur);
+//simulatorLayer.applyFilter(blur);
 
 
 
