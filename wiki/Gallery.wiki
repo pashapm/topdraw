@@ -9,24 +9,38 @@ This is a gallery of Top Draw Scripts.
 == [http://topdraw.googlecode.com/svn/trunk/Scripts/Apple.tds Apple.tds] ==
 http://topdraw.googlecode.com/svn/trunk/Gallery/Apple1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Apple2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Apple3.jpeg
 
-Apple logo with drop shadow and some rotating apples.
+Apple logo with drop shadow and some rotating apples.  Shows text (apples are unicode characters) and rotations.
 
 == [http://topdraw.googlecode.com/svn/trunk/Scripts/CheckerFilter.tds CheckerFilter.tds] ==
 http://topdraw.googlecode.com/svn/trunk/Gallery/CheckerFilter1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/CheckerFilter2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/CheckerFilter3.jpeg
 
-A blurry checkerboard of varying square size and colors.
+A blurry checkerboard of varying square size and colors.  Shows how to chain Core Image filters.
 
 == [http://topdraw.googlecode.com/svn/trunk/Scripts/ColoredRect.tds ColoredRect.tds] ==
 http://topdraw.googlecode.com/svn/trunk/Gallery/ColoredRect1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/ColoredRect2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/ColoredRect3.jpeg
 
-Smooth interpolation across all four corners.
+Smooth interpolation across all four corners.  Very simple.
 
 == [http://topdraw.googlecode.com/svn/trunk/Scripts/ColoredRect+Time.tds ColoredRect+Time.tds] ==
 http://topdraw.googlecode.com/svn/trunk/Gallery/ColoredRect+Time1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/ColoredRect+Time2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/ColoredRect+Time3.jpeg
 
-Smooth interpolation across all four corners and the time displayed in the lower right corner.
+Smooth interpolation across all four corners and the time displayed in the lower right corner.  The time drawing can be copied and pasted into any script.
 
 == [http://topdraw.googlecode.com/svn/trunk/Scripts/Curve.tds Curve.tds] ==
 http://topdraw.googlecode.com/svn/trunk/Gallery/Curve1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Curve2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Curve2.jpeg
 
-Offset curves and some filled arcs.
+Offset curves and some filled arcs.  Shows bezier curve drawing.
+
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/Dash.tds Dash.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/Dash1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Dash2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Dash3.jpeg
+
+Shows dashed lines and Core Image filter use.
+
+
+
+
+
+
+
+
+
