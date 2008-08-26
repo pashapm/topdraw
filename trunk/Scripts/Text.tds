@@ -1,81 +1,55 @@
 // Colored menubar
-menubar.fillLayer(new Color("blue"));
+menubar.fillLayer(new Color);
 
 // Fill with desktop with black
 var db = desktop.bounds;
 desktop.fillLayer(new Color("black"));
 
-// Draw some text
-var str = new Text("");
-var r = new Rect(100, 100, 600, 300);
-var c = new Color("yellow");
-str.fontSize = 72;
-str.fontName = "Papyrus";
-str.foregroundColor = c;
+var symbols = new Array(	0xf8ff, // Apple
+	0x21e5, // Tab forward
+	0x21e4, // Tab back
+	0x21ea, // Caps lock
+	0x2325, // Option 	0x2318, // Commad
+	0x23ce, // Return
+	0x232b, // Delete back
+	0x2326, // Delete forward
+	0x23cf, // Eject
+	0x233d, // Power
+	0x238b, // Power (alt)
+	0x2603, // Snowman
+	0x2615, // Hot beverage
+	0x263a  // Smiley
+);
 
-var rnd = new Randomizer(0, 1);
-var rs = new Randomizer(48, 300);
+var text = new Text("");
+var xRnd = new Randomizer(0, db.width);
+var yRnd = new Randomizer(0, db.height);
+var sizeRnd = new Randomizer(32, 512);
+var count = 15 * compositor.screenCount;
+var symbolRnd = new Randomizer(0, symbols.length - 1);
+var variation = 0.5;
+var fontColor = new Color;
+fontColor.a = 0.2;
 
-var appleChars = new Array(
-	"\uf8ff", // Apple
-	"\u21e5", // Tab forward
-	"\u21e4", // Tab back
-	"\u21ea", // Caps lock
-	"\u2325", // Option 	"\u2318", // Commad
-	"\u23ce", // Return
-	"\u232b", // Delete back
-	"\u2326", // Delete forward
-	"\u23cf", // Eject
-	"\u233d", // Power
-	"\u238b" // Power (alt)
-	);
-
-function RandomAppleChar() {
-	var idx = Math.floor(Math.random() * (appleChars.length));
-	return appleChars[idx];
-}
-
-for (i = 0; i < 30; ++i) {
-	str.string =  RandomAppleChar();
-	str.foregroundColor = c.vary(1, 1, 1, 1);
-	str.fontSize = rs.floatValue;
-
-	r = str.bounds;
-	r.x = rnd.floatValue * (db.width - r.width);
-	r.y = rnd.floatValue * (db.height - r.height);
-	desktop.drawText(str, r);
+// Draw 
+for (var i = 0; i < count; ++i) {
+	text.string = String.fromCharCode(symbols[symbolRnd.intValue]);
+	text.foregroundColor = fontColor.vary(variation, variation, variation, 0);
+	text.fontSize = sizeRnd.intValue;
+	desktop.drawText(text, new Point(xRnd.intValue, yRnd.intValue));
 }
 
 // Apply a filter to make it more interesting
 var f;
-if (rnd.floatValue > 0.5) {
+var filterRnd = new Randomizer;
+if (filterRnd.booleanValue) {
 	f = new Filter("CIGaussianBlur"); 
-	f.setValueForKey("inputRadius", 10);
+	f.setValueForKey("inputRadius", (2 + filterRnd.floatValue * 10));
 } else {
 	f = new Filter("CIMotionBlur"); 
 	f.setValueForKey("inputRadius", 20);
-	f.setValueForKey("inputAngle", Math.PI * (1 - rnd.floatValue * 2));
+	f.setValueForKey("inputAngle", Math.PI * (1 - filterRnd.floatValue * 2));
 }
 
 desktop.applyFilter(f);
-
-// The time
-var dateStr = new Text(DateStr().toString());
-dateStr.fontSize = 72;
-dateStr.foregroundColor = new Color("white");
-var dateRect = dateStr.bounds;
-dateRect.x = db.width - dateRect.width - 10;
-dateRect.y = 0;
-var datePt = new Point(dateRect.x, dateRect.y);
-desktop.drawText(dateStr, datePt);
-
-function DateStr() {
-	var now = new Date();
-	var h = now.getHours();
-	var m = now. getMinutes();
-	var dateStr = new String((h > 12 ? h - 12 : h) + ":" + (m < 10 ? "0" : "") + m);
-	
-	return dateStr;
-}
-
 
