@@ -14,4 +14,10 @@ Apple logo with drop shadow and some rotating apples.
 == [http://topdraw.googlecode.com/svn/trunk/Scripts/CheckerFilter.tds CheckerFilter.tds] ==
 http://topdraw.googlecode.com/svn/trunk/Gallery/CheckerFilter1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/CheckerFilter2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/CheckerFilter3.jpeg
 
-A checkerboard of varying square size and colors.
+A blurry checkerboard of varying square size and colors.
+
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/ColoredRect+Time.tds ColoredRect+Time.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/ColoredRect+Time1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/ColoredRect+Time2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/ColoredRect+Time3.jpeg
+
+Smooth interpolation across all four corners and the time displayed in the lower right corner.
+
