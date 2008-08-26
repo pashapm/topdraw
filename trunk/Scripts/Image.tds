@@ -6,7 +6,7 @@ desktop.fillLayer(new Color("black"));
 var db = desktop.bounds;
 
 // Create a layer with a frame and a rounded rectangle
-var layerRect = new Rect(0, 0, 400, 200);
+var layerRect = new Rect(0, 0, db.width / 10, db.height / 10);
 var layer = new Layer(layerRect);
 var rnd = new Randomizer(0.1, 1);
 
@@ -61,7 +61,7 @@ var pt = new Point;
 var src = new Rect(r);
 var adjustedSrc = 0;
 for (x = 50 * rnd.floatValue; x < (db.width - r.width); x += inc) {
-	pt.x = x * 8;
+	pt.x = x * 4;
 	pt.y = yOffset + Math.sin(x / xScale) * x;
 	desktop.drawImage(i, pt);
 }

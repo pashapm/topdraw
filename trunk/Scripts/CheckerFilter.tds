@@ -7,8 +7,8 @@ ColoredRect();
 function DrawBackground() {
 	// Fill with desktop with checkerboard
 	var f = new Filter("CICheckerboardGenerator");
-	var random = new Randomizer;
-	var s = random.floatValue * db.width / 10;
+	var rnd = new Randomizer;
+	var s = rnd.floatValue * db.width / 10;
 	var c = new Color(0.5);
 	f.setValueForKey("inputColor0", c.vary(0.2, 0, 0, 0.5));
 	f.setValueForKey("inputColor1", c.vary(0, 0, 0.2, 0.5));
@@ -17,7 +17,7 @@ function DrawBackground() {
 
 	// Add a blur to soften
 	var b = new Filter("CIGaussianBlur");
-	b.setValueForKey("inputRadius", 10);
+	b.setValueForKey("inputRadius", 3 + rnd.intValue * 8);
 	b.inputFilter = f;
 	desktop.applyFilter(b);
 }
