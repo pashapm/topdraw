@@ -5,7 +5,7 @@
 This is a gallery of Top Draw Scripts.
 
 = Factory Defaults scripts =
-== [http://topdraw.googlecode.com/svn/trunk/gallery/Curves.tds Curves] ==
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/Curves.tds Curves] ==
  Interesting curves and stuff.
 http://topdraw.googlecode.com/svn/trunk/gallery/Curve.jpeg
 
