@@ -25,3 +25,8 @@ Smooth interpolation across all four corners.
 http://topdraw.googlecode.com/svn/trunk/Gallery/ColoredRect+Time1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/ColoredRect+Time2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/ColoredRect+Time3.jpeg
 
 Smooth interpolation across all four corners and the time displayed in the lower right corner.
+
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/Curve.tds Curve.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/Curve1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Curve2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Curve2.jpeg
+
+Offset curves and some filled arcs.
