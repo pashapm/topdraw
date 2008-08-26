@@ -6,9 +6,6 @@ This is a gallery of Top Draw Scripts.
 
 = Factory Defaults scripts =
 == [http://topdraw.googlecode.com/svn/trunk/Scripts/Apple.tds Apple.tds] ==
-Apple logo with drop shadow and some rotating apples
-http://topdraw.googlecode.com/svn/trunk/Gallery/Apple1.jpeg
-http://topdraw.googlecode.com/svn/trunk/Gallery/Apple2.jpeg
-http://topdraw.googlecode.com/svn/trunk/Gallery/Apple3.jpeg
+http://topdraw.googlecode.com/svn/trunk/Gallery/Apple1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Apple2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Apple3.jpeg
 
-= User Submitted scripts =
+Apple logo with drop shadow and some rotating apples
