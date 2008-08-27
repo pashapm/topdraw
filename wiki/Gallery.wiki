@@ -36,6 +36,19 @@ http://topdraw.googlecode.com/svn/trunk/Gallery/Dash1.jpeg http://topdraw.google
 
 Shows dashed lines and Core Image filter use.
 
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/GlowBall.tds GlowBall.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/GlowBall1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/GlowBall2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/GlowBall3.jpeg
+
+Linear and radial gradients are used to create a glowing ball of different colors.
+
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/Gradient.tds Gradient.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/Gradient1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Gradient2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Gradient3.jpeg
+
+Linear and radial gradients are used to create 3-d looking spheres on a rainbow background.
+
+
+
+
 
 
 
