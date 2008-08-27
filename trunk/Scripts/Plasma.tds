@@ -1,21 +1,18 @@
-// Menubar
-var grad = new Gradient(new Color("white"), new Color);
-//menubar.fillLayer(grad);
-
 var db = desktop.bounds;
 
-// Calculate the size for the plasma
+// Calculate the size for the plasma.  Use a subset of the screen size for faster drawing.
 var r = new Rect(db);
-var scale = 2 * compositor.screenCount;  // use sub-scaling for speed
+var scale = 2 * compositor.screenCount;
 r.width /= scale;
 r.height /= scale;
 
 // Create a plasma layer
 var plasmaLayer = new Layer(r);
 var plasma = new Plasma();
+var appearanceRnd = new Randomizer(0.2, 0.9);
 
-plasma.variation = 0.5;
-plasma.grayscale = false;
+plasma.variation = appearanceRnd.floatValue;
+plasma.grayscale = appearanceRnd.booleanValue;
 plasma.opaque = true;
 plasma.topLeft = new Color("white");
 plasma.topRight = new Color;

@@ -73,13 +73,13 @@
 													<string>WebURLsWithTitlesPboardType</string>
 												</object>
 											</object>
-											<string key="NSFrameSize">{546, 14}</string>
+											<string key="NSFrameSize">{546, 28}</string>
 											<reference key="NSSuperview" ref="714311133"/>
 											<object class="NSTextContainer" key="NSTextContainer" id="213031204">
 												<object class="NSLayoutManager" key="NSLayoutManager">
 													<object class="NSTextStorage" key="NSTextStorage">
 														<object class="NSMutableString" key="NSString">
-															<bytes key="NS.bytes">PHBsYWNlaG9sZGVyIHRvIGVuc3VyZSBwcm9wZXIgZm9udCBzZXR0aW5nPg</bytes>
+															<bytes key="NS.bytes">PHBsYWNlaG9sZGVyIHRvIGVuc3VyZSBwcm9wZXIgZm9udCBzZXR0aW5nPgogA</bytes>
 														</object>
 														<object class="NSDictionary" key="NSAttributes">
 															<bool key="EncodedWithXMLCoder">YES</bool>

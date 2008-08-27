@@ -73,6 +73,7 @@ static NSString *ColorizerTemporaryRangeHighlightAttr = @"ColorizerTemporaryRang
   NSTextStorage *ts = [self textStorage];
   unsigned int tsLen = [ts length];
   NSString *str = [ts string];
+  NSRange newRange = range;
 
   // If the most recent change was a newline, we need to extend the range on 
   // either side of the current insertion point
@@ -80,27 +81,32 @@ static NSString *ColorizerTemporaryRangeHighlightAttr = @"ColorizerTemporaryRang
     unsigned int lineStart, lineEnd;
 
 //    NSMethodLog("before: %@ (ts: %d)", NSStringFromRange(range), tsLen);
-    [str getLineStart:&lineStart end:&lineEnd contentsEnd:nil forRange:NSMakeRange(range.location, 0)];
+    [str getLineStart:&lineStart end:&lineEnd contentsEnd:nil forRange:NSMakeRange(newRange.location, 0)];
     
     if (lineStart > 0) {
-      range.length += range.location - lineStart + 1;
-      range.location = lineStart - 1;
+      newRange.length += newRange.location - lineStart + 1;
+      newRange.location = lineStart - 1;
     }
     
     // Find the next line start and add one character
     if (lineEnd < tsLen) {
       [str getLineStart:&lineStart end:nil contentsEnd:nil forRange:NSMakeRange(lineEnd + 1, 0)];
-      range.length = lineStart - (range.location - 1) + 1;
+      newRange.length = lineStart - (newRange.location - 1) + 1;
     }
     
     // Ensure we're less than tsLen
-    if (NSMaxRange(range) > tsLen)
-      range.length -= NSMaxRange(range) - tsLen;
+    if (NSMaxRange(newRange) > tsLen)
+      newRange.length -= NSMaxRange(newRange) - tsLen;
     
 //    NSMethodLog("after: %@", NSStringFromRange(range));
+    
+    // Also, we shouldn't be smaller than the original range
+    if ((range.location < newRange.location) ||
+        (NSMaxRange(range) > NSMaxRange(newRange)))
+      newRange = range;
   }
   
-  return range;
+  return newRange;
 }
 
 //------------------------------------------------------------------------------
@@ -195,6 +201,10 @@ static NSString *ColorizerTemporaryRangeHighlightAttr = @"ColorizerTemporaryRang
     [self removeColorizerAttribute:ColorizerBlockCommentAttr range:commentRange];
     NSLog(@"Removing comment: %@", NSStringFromRange(commentRange));
     [self flashBackgroundForRange:[NSValue valueWithRange:commentRange]];
+    
+    // We need to be sure to colorize the range of what we removed, but outside
+    // of this current run
+    [self performSelector:@selector(colorize) withObject:nil afterDelay:0];
   }
 }
 
@@ -383,7 +393,7 @@ static NSString *ColorizerTemporaryRangeHighlightAttr = @"ColorizerTemporaryRang
       if (lineEnd > 2) {
         if ([str characterAtIndex:lineEnd - 2] == '{')
           braceIndentation = 1;
-        if ([str characterAtIndex:NSMaxRange(indentRange)] == '}') {
+        if ([str characterAtIndex:NSMaxRange(indentRange)] == '}' && (NSMaxRange(indentRange) - (lineEnd - 2) > 2)) {
           // If we're not indented from the above line, remove a char
           int previousIndentation = [self indentationForLineAtRange:NSMakeRange(lineStart - 1, 0)];
           
@@ -565,7 +575,7 @@ static NSString *ColorizerTemporaryRangeHighlightAttr = @"ColorizerTemporaryRang
   range = [self extendRangeIfNecessary:range];
   
   isColoring_ = YES;
-  // TODO:Block comments need work...
+  // TODO: Block comment colorizing is not working
 //  [self colorizeBlockComment:range];
   [self colorizeLineComment:range];
   [self colorizeReserved:range];
@@ -622,6 +632,9 @@ static NSString *ColorizerTemporaryRangeHighlightAttr = @"ColorizerTemporaryRang
 - (void)insertNewline:(id)sender {
   insertedNewLine_ = YES;
   [super insertNewline:sender];
+  
+  // Just in case we're all hosed up, try to recolorize after a short delay
+//  [self performSelector:@selector(colorize) withObject:nil afterDelay:1.0];
 }
 
 //------------------------------------------------------------------------------

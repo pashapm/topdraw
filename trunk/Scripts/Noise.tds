@@ -1,21 +1,15 @@
-// Blue menubar
-menubar.fillLayer(new Color);
-
 // Fill with desktop with black
 var db = desktop.bounds;
 desktop.fillLayer(new Color("black"));
 
 // Scale the noise so that we will make the background look "chunky"
 // Larger scale = more chunky
-var scale = 3;
+var scaleRnd = new Randomizer(2, 6);
+var scale = scaleRnd.intValue;
 var r = new Rect(0, 0, db.width / scale, db.height / scale);
 var noise = new Noise(r.width, r.height);
 
-noise.grayscale = false;
-noise.alpha = 0.1;
+var appearanceRnd = new Randomizer(0.1, 0.4);
+noise.grayscale = appearanceRnd.booleanValue;
+noise.alpha = appearanceRnd.floatValue;
 desktop.drawImage(noise.image, db);
-
-// Blur it
-var f = new Filter("CIGaussianBlur");
-//desktop.applyFilter(f);
-

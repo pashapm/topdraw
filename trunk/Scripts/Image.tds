@@ -48,19 +48,18 @@ layer.beginPath();
 layer.ellipse(r);
 layer.fillStroke();
 
-// Draw some text
-
 // Create an image with that layer
 var i = new Image(layer);
 
 // Draw the image several times
-var inc = 50 * rnd.floatValue;
-var xScale = 100 * rnd.floatValue;
+var offset = 25 * compositor.screenCount;
+var inc = offset * rnd.floatValue;
+var xScale = 2 * offset * rnd.floatValue;
 var yOffset = (db.height - r.height) * rnd.floatValue;
 var pt = new Point;
 var src = new Rect(r);
 var adjustedSrc = 0;
-for (x = 50 * rnd.floatValue; x < (db.width - r.width); x += inc) {
+for (x = offset * rnd.floatValue; x < (db.width - r.width); x += inc) {
 	pt.x = x * 4;
 	pt.y = yOffset + Math.sin(x / xScale) * x;
 	desktop.drawImage(i, pt);
