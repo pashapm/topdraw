@@ -76,10 +76,65 @@ http://topdraw.googlecode.com/svn/trunk/Gallery/Nodes1.jpeg http://topdraw.googl
 
 Draw randomly colored connections between points.  Scale the circle drawn at the point to indicate the number of connections.  Shows how to support drawing different images on different displays.
 
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/Noise.tds Noise.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/Noise1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Noise2.jpeg 
 
+Demonstrate usage of the noise class.
 
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/Particles.tds Particles.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/Particles1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Particles2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Particles3.jpeg
 
+Create a red-orange vertical particle emitter and a different style blue-green emitter.  Add a Gravity Point and Simulate the whole thing.
 
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/Pattern.tds Pattern.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/Pattern1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Pattern2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Pattern3.jpeg
+
+Create a colored, stroked ellipse in a pattern.  Fill the background with a linear gradient and then the pattern.
+
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/Pie.tds Pie.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/Pie1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Pie2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Pie3.jpeg
+
+Pick a random color and fill the background with a bunch of pie-chart-like objects.
+
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/Plasma+Rects.tds Plasma+Rects.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/Plasma+Rects1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Plasma+Rects2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Plasma+Rects3.jpeg
+
+Draw some rectangles, rounded rectangles, and ellipses behind a plasma cloud.
+
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/Plasma.tds Plasma.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/Plasma1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Plasma2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Plasma3.jpeg
+
+Draw a plasma cloud.  Vary the color and variation of the cloud.
+
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/Rings.tds Rings.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/Rings1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Rings2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Rings3.jpeg
+
+Draw different colored markers that are made up of varied sized ring segments.
+
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/Seeking.tds Seeking.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/Seeking1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Seeking2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Seeking3.jpeg
+
+Create objects made of the trails of a point moving from one point to another on the screen.  The size and color of the trail changes over time.
+
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/Shadow.tds Shadow.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/Shadow1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Shadow2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Shadow3.jpeg
+
+Demonstrate drop shadows and subtle color variation.
+
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/Spiral.tds Spiral.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/Spiral1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Spiral2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Spiral3.jpeg
+
+Draw spiral shapes of varying a randomly chosen color.
+
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/Text.tds Text.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/Text1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Text2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Text3.jpeg
+
+Demonstrates the Text object by drawing randomly chosen interesting characters from the Unicode palette.  Also, the text is blurred using a randomly chosen Core Image filter.
+
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/WavyGlow.tds WavyGlow.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/WavyGlow1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/WavyGlow2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/WavyGlow3.jpeg
+
+Draw some wavy lines of varying colors and apply a Core Image filter.  Looks like an oil slick.
 
 
 
