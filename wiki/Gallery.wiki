@@ -46,6 +46,45 @@ http://topdraw.googlecode.com/svn/trunk/Gallery/Gradient1.jpeg http://topdraw.go
 
 Linear and radial gradients are used to create 3-d looking spheres on a rainbow background.
 
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/Grid.tds Grid.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/Grid1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Grid2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Grid3.jpeg
+
+Draw a grid of random color and use one of two Core Image filters to distort the grid.
+
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/GridCorners.tds GridCorners.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/GridCorners1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/GridCorners2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/GridCorners3.jpeg
+
+Draw a grid of random color in one or more of the corners.
+
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/Image.tds Image.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/Image1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Image2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Image3.jpeg
+
+Draw into a layer.  Create an image of the layer and draw that image in an interesting way on the desktop.
+
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/Koosh.tds Koosh.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/Koosh1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Koosh2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Koosh3.jpeg
+
+Create randomly colored and varied Koosh balls.  Apply a Core Image gaussian blur to soften the image.
+
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/Layer.tds Layer.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/Layer.jpeg 
+
+Demonstrate layering and mirroring as well as text drawing.
+
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/Nodes.tds Nodes.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/Nodes1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Nodes2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Nodes3.jpeg
+
+Draw randomly colored connections between points.  Scale the circle drawn at the point to indicate the number of connections.  Shows how to support drawing different images on different displays.
+
+
+
+
+
+
+
+
+
+
 
 
 
