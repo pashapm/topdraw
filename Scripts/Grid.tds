@@ -2,51 +2,41 @@
 desktop.fillLayer(new Color("black"));
 
 // Draw some grid lines of changing thickness
+var db = desktop.bounds;
+var stepsRnd = new Randomizer(4, 12);
 var c = new Color;
 c.a = 0.3;
 desktop.strokeStyle = c;
 
-var db = desktop.bounds;
+// Horizontal Lines
 var s = new Point(db.x, db.y);
 var e = new Point(db.x + db.width, db.y);
-var rnd = new Randomizer(4, 12);
-var steps = rnd.integerValue;
-var halfSteps = steps / 2;
-var inc = db.height / steps;
-
-// Horizontal Lines
-for (x = 0; x < steps; ++x) {
-	desktop.beginPath();
-	desktop.lineWidth = (x < halfSteps ? x : steps - x);
-	desktop.moveTo(s);
-	desktop.lineTo(e);
-	desktop.stroke();
-
-	s.y += inc;
-	e.y += inc;
-}
+var steps = stepsRnd.integerValue;
+var inc = new Point(0, db.height / steps);
+DrawLine(steps, inc, s, e);
 
 // Vertical Lines
+s = new Point(db.x, db.y);
+e = new Point(db.x, db.height);
 steps *= db.width / db.height;
-halfSteps = steps / 2;
-inc = db.width / steps;
-s.x = db.x;
-s.y = db.y;
-e.x = db.x;
-e.y = db.height;
-for (x = 0; x < steps; ++x) {
-	desktop.beginPath();
-	desktop.lineWidth = (x < halfSteps ? x : steps - x);
-	desktop.moveTo(s);
-	desktop.lineTo(e);
-	desktop.stroke();
+inc = new Point(db.width / steps, 0);
+DrawLine(steps, inc, s, e);
 
-	s.x += inc;
-	e.x += inc;
+function DrawLine(steps, inc, s, e) {
+	halfSteps = steps / 2;
+	for (i = 0; i < steps; ++i) {
+		desktop.beginPath();
+		desktop.lineWidth = (i < halfSteps ? i : steps - i);
+		desktop.moveTo(s);
+		desktop.lineTo(e);
+		desktop.stroke();
+		s = s.add(inc);
+		e = e.add(inc);
+	}
 }
 
 // Apply distortion filter
-var filterName = (rnd.floatValue > 8) ? "CIBumpDistortion" : "CIHoleDistortion";
+var filterName = (stepsRnd.booleanValue) ? "CIBumpDistortion" : "CIHoleDistortion";
 var f = new Filter(filterName);
 rnd = new Randomizer(0.25, 0.75);
 f.setValueForKey("inputCenter", rnd.floatValue * db.width, rnd.floatValue * db.height);

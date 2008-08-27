@@ -235,7 +235,7 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
   [text_ setDefaultParagraphStyle:style];
   NSDictionary *attrs = [NSDictionary dictionaryWithObject:style forKey:NSParagraphStyleAttributeName];
   [storage addAttributes:attrs range:NSMakeRange(0, textLength)];
-  [text_ setTypingAttributes:attrs];
+  [text_ setTypingAttributes:currentAttributes];
   [style release];
 
   [text_ setAllowsUndo:YES];
