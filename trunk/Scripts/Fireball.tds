@@ -1,16 +1,33 @@
-var a = new Color("yellow");
-var b = new Color("orange");
-var c = new Color("blue", 0.3);
+
+var colorSets = new Array();
+colorSets.push(new Array("yellow", "orange", "blue", "red", "black"));
+colorSets.push(new Array("white", "blue", "white", "white", "blue"));
+colorSets.push(new Array("black", "blue", "cyan", "green", "black"));
+colorSets.push(new Array("pink", "red", "white", "magenta", "black"));
+
+var colorSetRnd = new Randomizer(0, colorSets.length - 1);
+var colorSetIdx = colorSetRnd.intValue;
+var colorSet = colorSets[colorSetIdx];
+
+var a = new Color(colorSet[0]);
+var b = new Color(colorSet[1]);
+var c = new Color(colorSet[2], 0.3);
 var gradient = new Gradient(a, b, c);
 
-var halfWidth = desktop.bounds.width / 2;
-var halfHeight = desktop.bounds.height / 2;
+var width = desktop.bounds.width;
+var height = desktop.bounds.height / 2;
 
-gradient.start = new Point(halfWidth * 0.7, halfHeight);
-gradient.end = new Point(halfWidth * 0.3, halfHeight * 0.7);
-gradient.radius = new Point(halfHeight / 5, halfHeight * 1.7);
+var widthRnd = new Randomizer(0.1, 0.8);
+var heightRnd = new Randomizer(0.3, 0.5);
+var firstHeight = height * heightRnd.floatValue;
+var firstWidth = width * widthRnd.floatValue;
 
-desktop.fillLayer(new Gradient(new Color("red"), new Color("black")));
+gradient.start = new Point(firstWidth, firstHeight);
+gradient.end = new Point(firstWidth * 0.8, firstHeight * 0.3);
+gradient.radius = new Point(height / 5, height * 1.7);
+
+var background = new Gradient(new Color(colorSet[3]), new Color(colorSet[4]));
+desktop.fillLayer(background);
 
 desktop.fillStyle = gradient;
 desktop.beginPath();
