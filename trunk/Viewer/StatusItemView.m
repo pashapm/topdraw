@@ -24,13 +24,7 @@ const CGFloat kPadding = 4.0;
 #pragma mark || Private ||
 //------------------------------------------------------------------------------
 - (void)menuClick {
-  isHighlighted_ = YES;
-  [self setNeedsDisplay:YES];
-  
   [target_ performSelector:action_];
-  
-  isHighlighted_ = NO;
-  [self setNeedsDisplay:YES];
 }
 
 //------------------------------------------------------------------------------
@@ -130,6 +124,21 @@ const CGFloat kPadding = 4.0;
 //------------------------------------------------------------------------------
 - (void)rightMouseDown:(NSEvent *)event {
   [self menuClick];
+}
+
+//------------------------------------------------------------------------------
+#pragma mark -
+#pragma mark || NSMenu (delegate) ||
+//------------------------------------------------------------------------------
+- (void)menuWillOpen:(NSMenu *)menu {
+  isHighlighted_ = YES;
+  [self setNeedsDisplay:YES];  
+}
+
+//------------------------------------------------------------------------------
+- (void)menuDidClose:(NSMenu *)menu {
+  isHighlighted_ = NO;
+  [self setNeedsDisplay:YES];  
 }
 
 @end

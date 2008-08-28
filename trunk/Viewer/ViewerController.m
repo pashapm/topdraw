@@ -370,11 +370,8 @@ static NSString *kScriptExtension = @"tds";
 //------------------------------------------------------------------------------
 - (IBAction)launchEditor:(id)sender {
   // Launch the editor with the source to the current script
-  
-//  [[NSWorkspace sharedWorkspace] launchApplication:editorPath_];
-    NSString *scriptPath = [scripts_ objectForKey:selectedScript_];
-
-    [[NSWorkspace sharedWorkspace] openFile:scriptPath];
+  NSString *scriptPath = [scripts_ objectForKey:selectedScript_];
+  [[NSWorkspace sharedWorkspace] openFile:scriptPath withApplication:editorPath_];
 }
 
 //------------------------------------------------------------------------------
@@ -396,6 +393,7 @@ static NSString *kScriptExtension = @"tds";
   [statusItemView_ setStatusItem:statusItem_];
   [statusItemView_ setTarget:self];
   [statusItemView_ setAction:@selector(statusClicked:)];
+  [menu_ setDelegate:statusItemView_];
 
   [statusItem_ setView:statusItemView_];
   [statusItem_ setEnabled:YES];

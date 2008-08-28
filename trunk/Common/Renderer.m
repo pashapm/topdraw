@@ -47,7 +47,7 @@ static NSString *kRendererName = @"TopDrawRenderer";
   while ((data = [[[task_ standardOutput] fileHandleForReading] availableData]) && [data length]) {
     [taskResponse_ appendData:data];
   }
-    
+
   // There may be multiple Log and a single Error message from the renderer.
   NSString *errorStr = @"";
   NSMutableString *logStr = [NSMutableString string];
@@ -61,7 +61,7 @@ static NSString *kRendererName = @"TopDrawRenderer";
     NSCharacterSet *ws = [NSCharacterSet characterSetWithCharactersInString:@" \n\r\t"];
     NSCharacterSet *alphaNum = [NSCharacterSet alphanumericCharacterSet];
     NSString *temp = nil;
-    
+
     [scanner setCharactersToBeSkipped:ws];
     
     NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
@@ -114,7 +114,12 @@ static NSString *kRendererName = @"TopDrawRenderer";
         [outputPath appendFormat:@"%@%@", outputSeparator, path];
         outputSeparator = @",";
         foundValidInput = YES;
-     }
+      }
+      
+      if ([scanner scanString:@"Preamble:" intoString:nil]) {
+        [scanner scanUpToString:@"\n" intoString:&temp];
+        foundValidInput = YES;
+      }
       
       if (!foundValidInput) {
         [logStr appendFormat:@"Unknown: %@\n", renderOutput];
@@ -151,9 +156,8 @@ static NSString *kRendererName = @"TopDrawRenderer";
 - (void)renderData:(NSNotification *)note {
   NSData *data = [[note userInfo] objectForKey:NSFileHandleNotificationDataItem];
   
-  if ([data length]) {
+  if ([data length])
     [taskResponse_ appendData:data];
-  }
   
   // Continue reading
   [[note object] readInBackgroundAndNotify];  
