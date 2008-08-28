@@ -30,9 +30,9 @@ function Rainbow() {
 
 	for (var i = 0; i < colorNames.length; ++i) {
 		var c = new Color(colorNames[i]);
-		var v = c.vary(0.1, 0.1, 0.1, 0.9);
+		var v = c.vary(0.1, 0.1, 0.1, 1);
 		var t = i / (colorNames.length - 1);
-		grad.addColorStop(v, t);
+		grad.addColorStop(v.darker(0.7), t);
 	}
 	
 	grad.start = new Point(0, 0);
