@@ -182,7 +182,7 @@ static NSString *kScriptExtension = @"tds";
 
   if ([defaults integerForKey:@"refreshMode"] == kRefreshModeEvery) {
     NSTimeInterval seconds = [[updateTimer_ fireDate] timeIntervalSinceNow];
-    NSTimeInterval minutes = floor(seconds / 60);
+    NSTimeInterval minutes = ceil(seconds / 60);
     NSTimeInterval hours = floor(minutes / 60);
     int time = seconds;
     NSString *unit = @"second(s)";
