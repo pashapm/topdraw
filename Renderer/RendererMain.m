@@ -81,6 +81,9 @@ static void Process(Options *options) {
   if (!errorStr) {
     CGImageRef image = [c image];
     
+    // Add a preamble because sometimes the first output string gets skipped
+    Log(@"Preamble: Top Draw Renderer v 1.0");
+    
     if (options->shouldSplit) {
       NSArray *imagePaths = [Exporter partitionAndWriteImage:image path:options->destPath type:options->type];
       for (int i = 0; i < [imagePaths count]; ++i)

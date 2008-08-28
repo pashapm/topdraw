@@ -1,27 +1,35 @@
 var db = desktop.bounds;
 
-// Fill with desktop with checkerboard
-var f = new Filter("CICheckerboardGenerator");
-var rnd = new Randomizer;
-var s = rnd.floatValue * db.width / 10;
-var c = new Color(0.5);
-f.setValueForKey("inputColor0", c.vary(0.2, 0, 0, 0.5));
-f.setValueForKey("inputColor1", c.vary(0, 0, 0.2, 0.5));
-f.setValueForKey("inputCenter", s / 2, 0);
-f.setValueForKey("inputWidth", s);
+Checkerboard();
+Overlay();
 
-// Add a blur to soften
-var b = new Filter("CIGaussianBlur");
-b.setValueForKey("inputRadius", 3 + rnd.intValue * 8);
-b.inputFilter = f;
-desktop.applyFilter(b);
+function Checkerboard() {
+	// Fill with desktop with checkerboard
+	var f = new Filter("CICheckerboardGenerator");
+	var rnd = new Randomizer;
+	var s = rnd.floatValue * db.width / 10;
+	var c = new Color;
+	c = c.darker(0.5);
+	f.setValueForKey("inputColor0", c.vary(0.2, 0, 0, 0.0));
+	f.setValueForKey("inputColor1", c.vary(0, 0, 0.2, 0.0));
+	f.setValueForKey("inputCenter", s / 2, 0);
+	f.setValueForKey("inputWidth", s);
+	
+	// Add a blur to soften
+	var b = new Filter("CIGaussianBlur");
+	b.setValueForKey("inputRadius", 3 + rnd.intValue * 8);
+	b.inputFilter = f;
+	desktop.applyFilter(b);
+}
 
-// Overlay a colored rect
-var bl = new Color;
-var tl = new Color;
-var tr = new Color;
-var br = new Color;
-
-// Ensure light alpha overlay
-bl.a = tl.a = tr.a = br.a = 0.3;
-desktop.coloredRect(db, bl, tl, tr, br);
+function Overlay() {
+	// Overlay a colored rect
+	var bl = new Color;
+	var tl = new Color;
+	var tr = new Color;
+	var br = new Color;
+	
+	// Ensure light alpha overlay
+	bl.a = tl.a = tr.a = br.a = 0.3;
+	desktop.coloredRect(db, bl, tl, tr, br);
+}
