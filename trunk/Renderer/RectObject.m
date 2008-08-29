@@ -22,11 +22,11 @@
 
 + (NSSet *)properties {
   return [NSSet setWithObjects:@"x", @"y", @"width", @"height", 
-          @"midX", @"midY", @"isEmpty", nil];
+          @"midX", @"midY", @"maxX", @"maxY", @"isEmpty", nil];
 }
 
 + (NSSet *)readOnlyProperties {
-  return [NSSet setWithObjects:@"midX", @"midY", @"isEmpty", nil];
+  return [NSSet setWithObjects:@"midX", @"midY", @"maxX", @"maxY", @"isEmpty", nil];
 }
 
 + (NSSet *)methods {
@@ -111,6 +111,14 @@
 
 - (CGFloat)midY {
   return NSMidY(rect_);
+}
+
+- (CGFloat)maxX {
+  return NSMaxX(rect_);
+}
+
+- (CGFloat)maxY {
+  return NSMaxY(rect_);
 }
 
 - (BOOL)isEmpty {
