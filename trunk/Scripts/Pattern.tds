@@ -1,54 +1,74 @@
 var sizeRnd = new Randomizer(16, 128);
 var size = sizeRnd.intValue;
+var minDimension;
 
 // Even sized
 if (size % 2)
 	size += 1;
 	
-var r = new Rect(0, 0, size, size);
-var l = new Layer(r);
-
 // Create the image
+var layerRect = new Rect(0, 0, size, size);
+var layer = new Layer(layerRect);
+layer.clearRect(layerRect);
+
+// Setup stroke and fill
 var strokeColor = new Color;
 strokeColor.a = 0.3;
-l.strokeStyle = strokeColor;
-
+layer.strokeStyle = strokeColor;
 var variation = 0.1;
 var fillColor = strokeColor.vary(variation, variation, variation, 0);
 fillColor.a = 0.1;
-l.fillStyle = fillColor;
+layer.fillStyle = fillColor;
 
-// Draw an ellipse
-var widthRnd = new Randomizer(1, 4);
-var lineWidth = widthRnd.intValue;
-l.lineWidth = widthRnd.intValue;
-l.clearRect(r);
-l.beginPath();
+// Draw one or more similarly colored ellipses into the layer
+var countRnd = new Randomizer(1, 4);
+for (var i = 0; i < countRnd.intValue; ++i)
+	DrawEllipseInLayer(layer);
 
-// Take into account the line width.  The ellipse needs to be smaller than
-// the size of the image layer so that the stroke isn't clipped.
-var rectRnd = new Randomizer(lineWidth * 2, size / 4);
-var ellipseRect = r.inset(rectRnd.intValue, rectRnd.intValue);
-var minDimension = ellipseRect.width > ellipseRect.height ? 
-	ellipseRect.height : ellipseRect.width;
+FillDesktopWithLayer(layer);
 
-l.ellipse(ellipseRect);
-l.fillStroke();
+function DrawEllipseInLayer(l) {
+	var widthRnd = new Randomizer(1, 4);
+	var lineWidth = widthRnd.intValue;
+	l.lineWidth = widthRnd.intValue;
+	l.beginPath();
+	
+	// Take into account the line width.  The ellipse needs to be smaller than
+	// the size of the image layer so that the stroke isn't clipped.
+	var sizeRnd = new Randomizer(lineWidth * 2, size / 2);
+	var posRnd = new Randomizer(0, size);
+	var ellipseRect = new Rect(posRnd.intValue, posRnd.intValue,
+		sizeRnd.intValue, sizeRnd.intValue);
+	var maxX = layerRect.maxX - lineWidth;
+	var maxY = layerRect.maxY - lineWidth;
+	
+	// Ensure that we fit in the rect
+	if (ellipseRect.maxX > maxX)
+		ellipseRect.x = maxX - ellipseRect.width;
 
-var image = new Image(l);
-var pattern = new Pattern(image);
+	if (ellipseRect.maxY > maxY)
+		ellipseRect.y = maxY - ellipseRect.height;
+	
+	l.ellipse(ellipseRect);
+	l.fillStroke();
+}
 
-// Overlap up to a quarter and 2 times spacing
-var rnd = new Randomizer(minDimension / 4, size * 2);
-var offset = new Point(rnd.intValue, rnd.intValue);
-pattern.offset = offset;
-
-// Fill the desktop with gradient
-fillColor.a = 1.0;
-desktop.fillLayer(new Gradient(new Color("black"), fillColor));
-
-// Fill the desktop with pattern
-desktop.fillStyle = pattern;
-desktop.beginPath();
-desktop.rect(desktop.bounds);
-desktop.fill();
+function FillDesktopWithLayer(l) {
+	var image = new Image(l);
+	var pattern = new Pattern(image);
+	
+	// Overlap up to a quarter and 2 times spacing
+	var rnd = new Randomizer(size / 4, size * 2);
+	var offset = new Point(rnd.intValue, rnd.intValue);
+	pattern.offset = offset;
+	
+	// Fill the desktop with gradient from black to the global fill color
+	fillColor.a = 1.0;
+	desktop.fillLayer(new Gradient(new Color("black"), fillColor));
+	
+	// Fill the desktop with pattern
+	desktop.fillStyle = pattern;
+	desktop.beginPath();
+	desktop.rect(desktop.bounds);
+	desktop.fill();
+}
