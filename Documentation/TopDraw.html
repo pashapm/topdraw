@@ -6,116 +6,1907 @@
 </head>
 <body>
 <h1>Introduction</h1>
-Top Draw is a program that will run a JavaScript based script to create an image
-that can be set as the Desktop Picture.  Scripts can be downloaded or created and placed
-in a common folder on your computer.  Several example scripts are included with
-the application disk image.
+Top Draw is the companion program to the <a href="TopDrawViewer.html">Top Draw Viewer</a>.  The editor allows you to create, open, edit, save, and render JavaScript based Top Draw Scripts (TDS, extension ".tds").  Multiple TDS files can be opened and their results can be viewed in a preview window within the application.  
+<p></p>
+Once a desktop image has been rendered, you can install it onto your desktop.  You can also create a sample image (1024 x 768) that represents your script, and then upload that image, along with the TDS file which created the image, to the <a href="http://code.google.com/p/topdraw">Top Draw website</a> so that others can enjoy your artistic creation!
+<p></p>
+If you've programmed using the JavaScript language, then there just a bit of new stuff to learn (See <a href="#Reference">Reference</a>).  If you've never programmed before, there are a number of example TDS files with informative comments that are included with this program that you can examine to see how it all works.  
+
+<h1>Getting Started</h1>
+When you launch the editor, any previously opened files will be automatically reopened (to prevent this, close the windows before quitting).  If no files were opened, a new, Untitled document will be created.  It should look like this:
 <p>
-The application runs as a Status Item, which means that there is no front window
-or icon in the dock.  Instead, there will be a colored shape in the menu bar to indicate the
-current status (idle or rendering).  If you click on the item, it will display
-a menu similar to this menu:
+<img src="Images/untitled.png"/>
 <p>
+Keywords for Javascript will be highlighted in blue and Top Draw script variables and classes will be highlighted in green.  The text in the lower left corner will indicate if the TDS is idle, rendering, or finished rendering.  If there were any errors in the file, the line with the problem will be highlighted in red.
+<p>
+The Preview window will also open.  If you choose the "Render" item from the Drawing menu, you'll see the preview window update to show a scaled representation of your desktop, something like this:
+<p>
+<img src="Images/preview.png"/>
+<p>
+If you like this image and want to install it on your desktop, you can choose the "Install onto Desktop" item from the Drawing menu.  The image file (or files if you have multiple displays) will be set as your desktop.  You can use System Preferences to set your desktop back to the original image if you change your mind.
+
+<h1>Menus</h1>
+
+
 <div>
-<img class="RightEdge" src="Images/menu.png"/>
+<img class="RightEdge" src="Images/file.png"/>
 
 <table class="Menu" border="1">
 <tr>
-<th class="Menu">Menu Item</th>
+<th class="Menu">File Menu</th>
 <th class="Menu">Description</th>
 </tr>
 
 <tr>
-<td class="MenuItem">About...</td>
-<td class="Menu">Version and other details</td>
+<td class="MenuItem">New</td>
+<td class="Menu">Create a new TDS file with a few lines of code to generate an image.</td>
+</tr>
+
+<tr>
+<td class="MenuItem">Open...</td>
+<td class="Menu">Open a TDS file for editing, rendering, and saving.</td>
+</tr>
+
+<tr>
+<td class="MenuItem">Open Recent</td>
+<td class="Menu">A list of recently opened TDS files.</td>
+</tr>
+
+<tr>
+<td class="MenuItem">Close</td>
+<td class="Menu">Close the frontmost TDS file.</td>
+</tr>
+
+<tr>
+<td class="MenuItem">Save</td>
+<td class="Menu">Save the frontmost TDS file.</td>
+</tr>
+
+<tr>
+<td class="MenuItem">Save&nbsp;As...</td>
+<td class="Menu">Save the frontmost TDS file with a different name.</td>
+</tr>
+
+<tr>
+<td class="MenuItem">Revert&nbsp;to&nbsp;Saved</td>
+<td class="Menu">After a TDS file has been modified, this option will be enabled and if selected, it will replace the contents of the file with the last saved contents.</td>
+</tr>
+
+<tr>
+<td class="MenuItem">Export&nbsp;Sample...</td>
+<td class="Menu">Opens a Save panel prompting for the location to place a rendered JPEG file that is a small (1024 x 768 pixel) representation of the 
+
+After a TDS file has been modified, this option will be enabled and if selected, it will replace the contents of the file with the last saved contents.</td>
+</tr>
+
+</table>
+</div>
+<p></p>
+<div>
+<img class="RightEdge" src="Images/drawing.png"/>
+
+<table class="Menu" border="1">
+<tr>
+<th class="Menu">Drawing&nbsp;Menu</th>
+<th class="Menu">Description</th>
 </tr>
 
 <tr>
 <td class="MenuItem">Render</td>
-<td class="Menu"> If you select just the menu item, it will
-render the currently active script (as shown below this item).  Otherwise, you can
-choose another item from the popup menu list.</td>
+<td class="Menu">Render the frontmost TDS into an image.</td>
 </tr>
 
 <tr>
-<td class="MenuItem" style="color: gray;">Render...</td>
-<td class="Menu"> The name of the currently
-active script and the remaining time until it is rendered is listed.  In this example,
-the Top Draw Script "Nodes" will be rendered and installed as your desktop in about 4 minutes.</td>
+<td class="MenuItem">Cancel Render</td>
+<td class="Menu">If you have a problem with a TDS rendering taking too long, you can choose this to cancel the rendering.</td>
 </tr>
 
 <tr>
-<td class="MenuItem">Preferences...</td>
-<td class="Menu"> Set the script, update interval, etc. as described below.</td>
-</tr>
-
-<tr>
-<td class="MenuItem">Launch&nbsp;Editor</td>
-<td class="Menu"> If you've installed the 
-<a href="TopDrawEditor.html">Top Draw Editor</a>, this menu item will be shown.  When chosen,
-it will launch the editor with the currently active script.</td>
-</tr>
-
-<tr>
-<td class="MenuItem">Quit</td>
-<td class="Menu">Quit Top Draw.</td>
+<td class="MenuItem">Install onto Desktop</td>
+<td class="Menu">The image rendered from the frontmost TDS will be set as your desktop image (or images if you have multiple displays).</td>
 </tr>
 
 </table>
 </div>
-
-<p>
-
-<h1>Preferences</h1>
-Top Draw has several user configurable preferences to control the scripts to 
-render, the rate of refresh, and the appearance of the Status Item.  The
-preferences window will look similar to this:
-<p>
+<p></p>
 <div>
-<img class="RightEdge" src="Images/preferences.png"/>
+<img class="RightEdge" src="Images/window.png"/>
 
-<table class="Preferences" border="1">
+<table class="Menu" border="1">
 <tr>
-<th class="Preferences">Preference</th>
-<th class="Preferences">Description</th>
+<th class="Menu">Window&nbsp;Menu</th>
+<th class="Menu">Description</th>
 </tr>
 
 <tr>
-<td class="PreferenceItem">Script&nbsp;Folder</td>
-<td class="Preferences">The location of the folder on your computer that contains the Top Draw Script (TDS, extension ".tds") files 
-to be used by Top Draw when rendering Desktop images.  Only files ending in .tds will be read.  Top Draw will not read files from any folders in that directory.
-</td>
+<td class="MenuItem">Preview</td>
+<td class="Menu">Toggle the Preview window's visible state.  If a TDS has been rendered, its image will be in the Preview window.</td>
 </tr>
 
 <tr>
-<td class="PreferenceItem">Script</td>
-<td class="Preferences">The chosen script to render.  If you've selected the "Randomly chosen" checkbox, one of the scripts contained in your Script Folder will be chosen at random for each rendering.  Also, the Script menu will be disabled.
-</td>
+<td class="MenuItem">Logging</td>
+<td class="Menu">Toggle the Logging window's visible state.  Information about the rendering of the TDS file is in the Logging window, along with any errors that may have occurred.</td>
 </tr>
 
 <tr>
-<td class="PreferenceItem">Refresh</td>
-<td class="Preferences">The desktop can be refreshed at a variety of intervals (seconds, minutes, hours).  Additionally, you
-can have it update when your computer starts up or even every time that you wake it from from sleeping.
-</td>
-</tr>
-
-<tr>
-<td class="PreferenceItem">Menu Indicator</td>
-<td class="Preferences">The appearance of the image drawing in the menubar can be customized.  You may choose the color to be drawn
-when idle or actively rendering a desktop.  You may also choose a pleasing geometric shape: rectangle, square, circle, or triangle.  It's up to you!
-</td>
+<td class="MenuItem">Install onto Desktop</td>
+<td class="Menu">The image rendered from the frontmost TDS will be set as your desktop image (or images if you have multiple displays).</td>
 </tr>
 
 </table>
 </div>
 
-<h1>Top Draw Scripts</h1>
-Top Draw reads Top Draw Script (.tds) files and renders them into images which are installed on your desktop.  The distribution of Top Draw should contain a folder named "Top Draw Scripts" which contains example script files.
-<p>
-If you're not interested in programming, you can visit the Top Draw project <a href="http://code.google.com/p/topdraw/wiki/Gallery">Wiki Gallery</a> site and download new script files.  You can then copy those files into the Script Folder that you've configured Top Draw to use.  If you open the Preferences window, the new script(s) will be available for your selection.
-<p>
-The scripts use the JavaScript programming language, with enhancements, to provide the instructions to render.  If you'd like to learn more about these, please see the <a href="TopDrawEditor.html">Top Draw Editor</a> documentation.
+<a name="Reference"></a>
+<h1>Reference</h1>
+Top Draw uses the JavaScript language as the basis for it's scripts.  It's recommended that you have some familiarity with JavaScript before tackling Top Draw scripting.  One source of training is the W3 School's <a href="http://www.w3schools.com/js/default.asp">JavaScript</a> site.
+<p></p>
+In order to create more interesting renderings, several classes of objects and global objects have been added.  This section will describe the various classes, their properties and functions, and some examples of how to use them.
+<p></p>
+<div class="Indented">
+<h2>Classes</h2>
+<p></p>
+<a href="#Color">Color</a>, 
+<a href="#Compositor">Compositor</a>, 
+<a href="#Filter">Filter</a>, 
+<a href="#Gradient">Gradient</a>, 
+<a href="#GravityPoint">GravityPoint</a>, 
+<a href="#Image">Image</a>, 
+<a href="#Layer">Layer</a>, 
+<a href="#Noise">Noise</a>, 
+<a href="#Particles">Particles</a>, 
+<a href="#Pattern">Pattern</a>, 
+<a href="#Point">Point</a>, 
+<a href="#Randomizer">Randomizer</a>, 
+<a href="#Rect">Rect</a>, 
+<a href="#Simulator">Simulator</a>, 
+<a href="#Text">Text</a>
+
+<div class="Indented">
+
+<a name="Color"></a>
+<h3>Color</h3>
+<div class="Indented">
+An RGB color with alpha.  The values of parameters should be floating point values between 0.0 and 1.0.  Alpha will default to 1.0 unless otherwise specified.
+
+<div class="ClassSection">Constructor</div>
+
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">(none)</td>
+<td class="ConstructorDetails">The red, green, and blue values will be randomly assigned.</td>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">color-name: String <span class="Optional">[, alpha-value: float]</span></td>
+<td class="ConstructorDetails">Lookup the name (e.g., "white" or "purple") from the list of HTML colors.  Optionally set the alpha to alpha-value.</td>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">gray-scale: float <span class="Optional">[, alpha-value: float]</span></td>
+<td class="ConstructorDetails">Set the red, green, and blue values to gray-scale.  Optionally set the alpha to alpha-value.</td>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">red-value, green-value, blue-value: float <span class="Optional">[, alpha-value: float]</span></td>
+<td class="ConstructorDetails">Set the red, green, and blue values.  Optionally set the alpha to alpha-value.</td>
+</tr>
+</table>
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">blend</td>
+<td class="FunctionDetails">src-color: Color <span class="Optional">[, blend-amount: float]</span></td>
+<td class="FunctionDetails">Create a new Color object that is blend-amount of src-color and (1.0 - blend-amount) of this color.  If not specified, blend-amount defaults to 0.5.</td>
+<td class="FunctionDetails">Color</td>
+</tr>
+
+<tr>
+<td class="Function">contrasting</td>
+<td class="FunctionDetails"><span class="Optional">[contrast-amount: float]</span></td>
+<td class="FunctionDetails">Create a new color based on the current color that is contrasting by contrast-amount.  The contrast is created by changing both the hue and the brightness.  If not specified, contrast-amount defaults to 0.2.</td>
+<td class="FunctionDetails">Color</td>
+</tr>
+
+<tr>
+<td class="Function">darker</td>
+<td class="FunctionDetails"><span class="Optional">[darker-amount: float]</span></td>
+<td class="FunctionDetails">Create a new color based on the current color with its brightness adjusted downwards by darker-amount.  If not specified, darker-amount defaults to 0.2.</td>
+<td class="FunctionDetails">Color</td>
+</tr>
+
+<tr>
+<td class="Function">lighter</td>
+<td class="FunctionDetails"><span class="Optional">[lighter-amount: float]</span></td>
+<td class="FunctionDetails">Create a new color based on the current color with its brightness adjusted upwards by lighter-amount.  If not specified, lighter-amount defaults to 0.2.</td>
+<td class="FunctionDetails">Color</td>
+</tr>
+
+<tr>
+<td class="Function">vary</td>
+<td class="FunctionDetails">red-value, green-value, blue-value: float <span class="Optional">[, alpha-value: float]</span></td>
+<td class="FunctionDetails">Create a new Color object based on the current color but vsaried by some random amount.  Specify the amount of variation for each channel.  If not specified, alpha-value is 0.0 (no variation).</td>
+<td class="FunctionDetails">Color</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">alpha / a</td>
+<td class="PropertyDetails">The alpha channel used for translucency / opacity.</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">blue / b</td>
+<td class="PropertyDetails">The blue channel.</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">brightness</td>
+<td class="PropertyDetails">The HSV brightness value.  Setting this value may result in the red, green, and/or blue values changing.</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">green / g</td>
+<td class="PropertyDetails">The green channel.</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">hue</td>
+<td class="PropertyDetails">The HSV hue value.  Setting this value may result in the red, green, and/or blue values changing.</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">red / r</td>
+<td class="PropertyDetails">The red channel.</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">saturation</td>
+<td class="PropertyDetails">The HSV saturation value.  Setting this value may result in the red, green, and/or blue values changing.</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+</table>
+</div>
+
+<a name="Compositor"></a>
+<h3>Compositor</h3>
+<div class="Indented">
+The compositor (global object) will render layers to create the final image.  New layers can be created and added to the compositor.  The desktop and menubar layers are always present in the compositor.
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">addLayer</td>
+<td class="FunctionDetails">layer: Layer <span class="Optional">[, compositing-mode: String]</span></td>
+<td class="FunctionDetails">Layers are ordered from back to front as they are added.<br>The compositing-mode is one of:
+normal (default), multiply, screen, overlay, darken, lighten, color-dodge, color-burn, soft-light,
+hard-light, difference, exclusion, hue, saturation, color, luminosity, clear, copy, source-in,
+source-out, source-atop, destination-over, destination-in, destination-out, destination-atop, xor, darker, lighter.  Please see Apple's <a href="http://developer.apple.com/documentation/GraphicsImaging/Reference/CGContext/Reference/reference.html#//apple_ref/c/tdef/CGBlendMode">documentation</a> on blend modes for more details.</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">boundsOfScreen</td>
+<td class="FunctionDetails">index: integer</td>
+<td class="FunctionDetails">Return a Rect object that is the bounds of the screen specified by zero-based index.
+<td class="FunctionDetails">Rect</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">randomSeed</td>
+<td class="PropertyDetails">The "seed" value for any of the randomization.  If you set this value to a fixed value,
+the random values will be repeatable between executions of the script for any code that occurs after setting the seed.  The random seed for each rendering is 
+printed out in the logging window.</td>
+<td class="PropertyDetails">integer</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">screenCount</td>
+<td class="PropertyDetails">The number of screeens (displays) on the current system.</td>
+<td class="PropertyDetails">integer</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
+</table>
+</div>
+
+<a name="Filter"></a>
+<h3>Filter</h3>
+<div class="Indented">
+This class encapsulates Core Image filters.  Filters can be chained together to produce complex effects.  See Apple's <a href="http://developer.apple.com/documentation/GraphicsImaging/Reference/CoreImageFilterReference/Reference/reference.html">documentation</a> for a list of recognized filters.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">(none)</td>
+<td class="ConstructorDetails">Creates a dynamic filter that can use provided GLSL source.</td>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">name: String</td>
+<td class="ConstructorDetails">Specify the name of the filter (e.g., "CIGaussianBlur")</td>
+</tr>
+</table>
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">setValueForKey</td>
+<td class="FunctionDetails">key: String, value: Number | Color | [Number <span class="Optional">[, ... Number]</span></td>
+<td class="FunctionDetails">Specify a key/value pair.  The value can be a Number, Color, or comma separated list of numbers when needing to specify a NSNumber, CIColor, or CIVector for the filter parameter respectively.</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">inputFilter</td>
+<td class="PropertyDetails">The output of another Filter can be specified as the input to this filter.  This allows
+complex and efficient renderings.  The filter should be of a type that expects an <i>inputImage</i> key.</td>
+<td class="PropertyDetails">Filter</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">kernelSource</td>
+<td class="PropertyDetails">Specifies the source for the kernel when using a dynamic filter. See the 
+<a href="http://developer.apple.com/documentation/GraphicsImaging/Reference/CIKernelLangRef/Introduction/chapter_1_section_1.html">Core Image Kernel language reference </a> for details.</td>
+<td class="PropertyDetails">String</td>
+<td class="PropertyDetails">Write-only</td>
+</tr>
+
+<tr>
+<td class="Property">name</td>
+<td class="PropertyDetails">The name of the filter</td>
+<td class="PropertyDetails">integer</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
+</table>
+</div>
+
+<a name="Gradient"></a>
+<h3>Gradient</h3>
+<div class="Indented">
+A linear or radial gradient.  If the radius property is specified, the gradient will be drawn as a radial gradient.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">(none)</td>
+<td class="ConstructorDetails">Empty gradient.  Use the addColorStop() function to add colors and locations.</td>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">color1, color2: Color <span class="Optional">[, ... colorN: Color]</span></td>
+<td class="ConstructorDetails">Specify two or more colors for the gradient.  The spacing will be evenly spaced
+based on the number of colors specified.</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">addColorStop</td>
+<td class="FunctionDetails">color: Color, location: Number</td>
+<td class="FunctionDetails">Specify a color and location.  The location should be in the range (0, 1).  The color at
+location (if any) will be replaced.</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">end</td>
+<td class="PropertyDetails">The end point of the gradient in pixel space.  If the object using the gradient extends past this value, the gradient will continue to output the color at the last location.</td> 
+<td class="PropertyDetails">Point</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">radius</td>
+<td class="PropertyDetails">The size of the radius to be used at the start (use the "x" property of the Point) and 
+at the end (use the "y" property of the Point).  If this value is specified, the gradient will be drawn as a radial gradient.  Otherwise, if this value is null or zero, the gradient will be drawn as a linear gradient.</td>
+<td class="PropertyDetails">Point</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">start</td>
+<td class="PropertyDetails">The start point of the gradient in pixel space.  If the object using the gradient extends before this value, the gradient will continue to output the color at the first location.</td> 
+<td class="PropertyDetails">Point</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+</table>
+</div>
+
+<a name="GravityPoint"></a>
+<h3>GravityPoint</h3>
+<div class="Indented">
+A source of gravity for the Simulator object.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">(none)</td>
+<td class="ConstructorDetails">Empty gravity point.  Use the location and gravity properties to modify the behavior.</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">gravity</td>
+<td class="PropertyDetails">The spherical gravitational field scalar.  The value will be divided by the square of the distance from this point and the object in the simulator.</td>
+<td class="PropertyDetails">Point</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">location</td>
+<td class="PropertyDetails">The location in pixel space of the GravityPoint.</td>
+<td class="PropertyDetails">Point</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+</table>
+</div>
+
+<a name="Image"></a>
+<h3>Image</h3>
+<div class="Indented">
+A raster Image object which can be constructed from an existing Layer or from the source of an image URL.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">layer: Layer</td>
+<td class="ConstructorDetails">Create an image with the dimensions of layer.</td>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">url: String</td>
+<td class="ConstructorDetails">Create an image with the contents of the image file at url</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">exportImage</td>
+<td class="FunctionDetails">name: String <span class="Optional">[, type: String]</span></td>
+<td class="FunctionDetails">Create a file with the contents of this image.  The name can contain an extension which
+will define the output file type.  If specified, the type will control the output file type.  Supported formats / extensions are "png", "jpeg", and "tiff".  The image file will saved to the folder: <pre>~/Library/Application Support/Google/TopDrawDrawings/</pre></td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">alpha</td>
+<td class="PropertyDetails">The alpha compositing value in the range (0, 1) to be used when drawing the image. The default is 1.0.</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">compositingMode</td>
+<td class="PropertyDetails">The mode to use when compositing the image.  See the discussion of the compositing mode for the <a href="#Compositor">Compositor</a> object for more details.  The default is "normal".</td>
+<td class="PropertyDetails">String</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">height</td>
+<td class="PropertyDetails">Height (in pixels) of the image</td>
+<td class="PropertyDetails">integer</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
+<tr>
+<td class="Property">width</td>
+<td class="PropertyDetails">Width (in pixels) of the image</td>
+<td class="PropertyDetails">integer</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
+</table>
+</div>
+
+<a name="Layer"></a>
+<h3>Layer</h3>
+<div class="Indented">
+All drawing in TopDraw takes place in a Layer.  Multiple Layer objects can be created and composited.  Layer
+objects can be created, but not composited, so that they can be used as a source for an Image.  The properties and
+functions are very similar to the HTML Canvas object, but with some enhancements.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">width, height: integer</td>
+<td class="ConstructorDetails">Create a Layer of width and height dimensions.</td>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">bounds: Rect</td>
+<td class="ConstructorDetails">Create a Layer of bounds dimensions.</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">applyFilter</td>
+<td class="FunctionDetails">filter: Filter</td>
+<td class="FunctionDetails">Apply filter to the layer, replacing the contents of the layer with the output of the filter.  The filter output will always be cropped to the dimensions of the Layer.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">arc</td>
+<td class="FunctionDetails">center: Point, radius, startAngle, endAngle: float</td>
+<td class="FunctionDetails">Specify the center point, radius, start and end Angles (in Radians).  The arc is added to the current path in a clock-wise direction from startAngle to endAngle.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">arcTo</td>
+<td class="FunctionDetails">p1, p2: Point, radius: float</td>
+<td class="FunctionDetails">Specify the two tangent points and a radius.  The arc is added to the current path.</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">beginPath</td>
+<td class="FunctionDetails">(none)</td>
+<td class="FunctionDetails">Reset the Layer's path in preparation for adding drawing operations.</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">bezierCurveTo</td>
+<td class="FunctionDetails">c1, c2: Point, endPt: Point</td>
+<td class="FunctionDetails">Add a cubic Bézier curve to the current path using the two control points and the end point.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">circle</td>
+<td class="FunctionDetails">[x, y: float] | center: Point, radius: float</td>
+<td class="FunctionDetails">Add a closed circle to the current path using the specified arguments.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">clearRect</td>
+<td class="FunctionDetails">rect: Rect</td>
+<td class="FunctionDetails">Clear the contents of the Layer bounded by rect.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">clip</td>
+<td class="FunctionDetails">(none)</td>
+<td class="FunctionDetails">Use the contents of the current path to clip any subsequent drawing operations.  A common usage would use the save() and restore() functions around calls to clip().
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">closePath</td>
+<td class="FunctionDetails">(none)</td>
+<td class="FunctionDetails">Close the current path before filling or stroking.  This is often implicitly done before a fill or stroke.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">coloredRect</td>
+<td class="FunctionDetails">rect: Rect, bottom-left, top-left, top-right, bottom-right: Color</td>
+<td class="FunctionDetails">Specify the rectangle and four colors which will be smoothly interpolated over the area of the rectangle.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">colorAtPoint</td>
+<td class="FunctionDetails">[x, y: float] | point: Point</td>
+<td class="FunctionDetails">Return the Color that is at the point specified by the arguments.
+</td>
+<td class="FunctionDetails">Color</td>
+</tr>
+
+<tr>
+<td class="Function">drawImage</td>
+<td class="FunctionDetails">
+image: Image [, point: Point | destination: Rect | source, destination: Rect
+</td>
+<td class="FunctionDetails">There are three ways to draw an image into a Layer:
+<ol>
+<li>Specify a Point and the entire image will be drawn with the lower left corner of the image at that point</li>
+<li>Specify a destination Rect for the image.  If the dimensions of the image differ from the destination Rect, the image
+will be scaled to fit.</li>
+<li>Specify source and destination Rects for the image.  If the source Rect is smaller than the image, a sub-image will be created with those dimensions.  If the destination Rect differs from the source Rect, the image will be scaled to fit.</li>
+</ol>
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">drawText</td>
+<td class="FunctionDetails">text: Text, pt: Point | bounds: Rect</td>
+<td class="FunctionDetails">Depending on the second argument, either draw the text object at pt without any clipping or wrapping, or draw the text object so that it is contained by bounds.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">ellipse</td>
+<td class="FunctionDetails">rect: Rect</td>
+<td class="FunctionDetails">Add an ellipse bounded by rect to the current path.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">fill</td>
+<td class="FunctionDetails">(none)</td>
+<td class="FunctionDetails">Fill the current path using the object set as the fillStyle property.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">fillLayer</td>
+<td class="FunctionDetails">color: Color | gradient: Gradient | pattern: Pattern</td>
+<td class="FunctionDetails">Fill the layer with the object specified in the arguments.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">fillRect</td>
+<td class="FunctionDetails">rect: Rect</td>
+<td class="FunctionDetails">Fill rect using the object set as the fillStyle property.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">fillStroke</td>
+<td class="FunctionDetails">(none)</td>
+<td class="FunctionDetails">Fill and stroke the current path based on the fillStyle and strokeStyle properties.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">lineTo</td>
+<td class="FunctionDetails">[x, y: float] | pt: Point</td>
+<td class="FunctionDetails">Add a line from the current path position to the point specified by the arguments.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">moveTo</td>
+<td class="FunctionDetails">[x, y: float] | pt: Point</td>
+<td class="FunctionDetails">Move the position of the current path to the point specified by the arguments.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">quadraticCurveTo</td>
+<td class="FunctionDetails">control, end: Point</td>
+<td class="FunctionDetails">Add a quadratic Bézier curve to the current path, specifying the control and end points.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">rect</td>
+<td class="FunctionDetails">[x, y, width, height: float] | rect: Rect</td>
+<td class="FunctionDetails">Add a rectangle to the current path as specified by the arguments.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">reflect</td>
+<td class="FunctionDetails">location: String [, alpha: float]</td>
+<td class="FunctionDetails">Reflect the contents of the layer specified by location (valid values: "top", "left", "right", and "bottom") over the contents in the opposite portion, using alpha (value: 1.0 if unspecified).
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">restore</td>
+<td class="FunctionDetails">(none)</td>
+<td class="FunctionDetails">Restore the graphics state from a previous save() command.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">rotate</td>
+<td class="FunctionDetails">angle: float</td>
+<td class="FunctionDetails">Rotate the current graphics transform by angle radians, clockwise if positive, counter-clockwise if negative.  Typically, this call is bracketed by save() and restore() calls.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">roundedRect</td>
+<td class="FunctionDetails">[x, y, width, height: float] | rect: Rect, radius: float</td>
+<td class="FunctionDetails">Add a rectangle with rounded corners to the current path.  The radius may be adjusted so that the rectangle doesn't intersect itself.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">save</td>
+<td class="FunctionDetails">(none)</td>
+<td class="FunctionDetails">Save the graphics state (all the properties, any rotations or scaling, and the current clipping).
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">scale</td>
+<td class="FunctionDetails">[x, y: float] | point: Point</td>
+<td class="FunctionDetails">Scale the current graphics transform by the specified arguments.  Negative values will flip drawing coordinates.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">shadow</td>
+<td class="FunctionDetails">offset: Point, blur-radius: float, color: Color | (none)</td>
+<td class="FunctionDetails">Specify the offset, blur radius, and color for shadows.  The shadow parameters will be applied to subsequent drawing operations.  Pass no arguments to disable shadow drawing.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">stroke</td>
+<td class="FunctionDetails">(none)</td>
+<td class="FunctionDetails">Stroke the current path using the object set as the strokeStyle property.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">strokeRect</td>
+<td class="FunctionDetails">rect: Rect</td>
+<td class="FunctionDetails">Stroke rect using the object set as the strokeStyle property.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">translate</td>
+<td class="FunctionDetails">[x, y: float] | point: Point</td>
+<td class="FunctionDetails">Translate the current graphics transform by the specified arguments.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">wavyLineTo</td>
+<td class="FunctionDetails">end: Point, smoothness: float, randomizer: Randomizer</td>
+<td class="FunctionDetails">Add a line from the current drawing position to end, randomly displacing points perpendicularly from their expected position. A small smoothness value (closer to 0) will create a chaotic line, whereas larger values (approaching 1) will create a very smooth line.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">bounds</td>
+<td class="PropertyDetails">The dimensions of the layer without any positioning details.  Setting this value will clear the contents of the Layer.
+<td class="PropertyDetails">Rect</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">compositingMode</td>
+<td class="PropertyDetails">The mode to use when compositing to the Layer.  See the discussion of the compositing mode for the <a href="#Compositor">Compositor</a> object for more details.  The default is "normal".</td>
+<td class="PropertyDetails">String</td>
+<td class="PropertyDetails">Write-only</td>
+</tr>
+
+<tr>
+<td class="Property">fillStyle</td>
+<td class="PropertyDetails">Specify the object to be used when filling a path in the Layer.</td>
+<td class="PropertyDetails">Color, Pattern, or Gradient</td>
+<td class="PropertyDetails">Write-only</td>
+</tr>
+
+<tr>
+<td class="Property">frame</td>
+<td class="PropertyDetails">The location and dimensions of the layer.  Setting this value will clear the contents of the Layer.</td>
+<td class="PropertyDetails">Rect</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">lineCap</td>
+<td class="PropertyDetails">Specifies how line ends are rendered.  Valid values are: "butt" (default), "round", and "square".
+<td class="PropertyDetails">String</td>
+<td class="PropertyDetails">Write-only</td>
+</tr>
+
+<tr>
+<td class="Property">lineDash</td>
+<td class="PropertyDetails">Specify an array of pairs of integer numbers representing On and Off drawing</td>
+<td class="PropertyDetails">Array</td>
+<td class="PropertyDetails">Write-only</td>
+</tr>
+
+<tr>
+<td class="Property">lineJoin</td>
+<td class="PropertyDetails">Specifies how connected line segments are joined.  Valid values are: "miter" (default), "bevel", and "round".</td>
+<td class="PropertyDetails">String</td>
+<td class="PropertyDetails">Write-only</td>
+</tr>
+
+<tr>
+<td class="Property">lineWidth</td>
+<td class="PropertyDetails">The rendered width of the line (in pixels).
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Write-only</td>
+</tr>
+
+<tr>
+<td class="Property">miterLimit</td>
+<td class="PropertyDetails">The maximum ratio between miter length and the line width when lineJoin is set to "miter".  The default is 10.
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Write-only</td>
+</tr>
+
+<tr>
+<td class="Property">strokeStyle</td>
+<td class="PropertyDetails">The color to be used when stroking a path.</td>
+<td class="PropertyDetails">Color</td>
+<td class="PropertyDetails">Write-only</td>
+</tr>
+
+</table>
+</div>
+
+<a name="Noise"></a>
+<h3>Noise</h3>
+<div class="Indented">
+Generates a block of random values that can be used to create an image.  It will be completely random and a very large 
+sized noise may take an appreciable amount of time to create.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">width, height: float <span class="Optional">[, alpha: float [, grayscale: boolean]</span></td>
+<td class="ConstructorDetails">Specify the width and height of the noise.  An optional uniform alpha can be applied and the noise can also be constructed to only have grayscale values.</td>
+</tr>
+</table>
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">drawInLayer</td>
+<td class="FunctionDetails">layer: Layer</td>
+<td class="FunctionDetails">Draw this noise into the specified layer.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">alpha</td>
+<td class="PropertyDetails">The uniform alpha.</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">grayscale</td>
+<td class="PropertyDetails">If true, the image will be grayscale.  Otherwise, colored</td>
+<td class="PropertyDetails">boolean</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">height</td>
+<td class="PropertyDetails">The height of the noise.</td>
+<td class="PropertyDetails">integer</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
+<tr>
+<td class="Property">image</td>
+<td class="PropertyDetails">An image that contains the noise.</td>
+<td class="PropertyDetails">Image</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
+<tr>
+<td class="Property">width</td>
+<td class="PropertyDetails">The width of the noise.</td>
+<td class="PropertyDetails">integer</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
+</table>
+
+</div>
+
+<a name="Particles"></a>
+<h3>Particles</h3>
+<div class="Indented">
+A SimulatorObject which emits particles. Each step of the Simulator will update the particles location,
+appearances, creation, and destruction.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">(none)</td>
+<td class="ConstructorDetails">Creates an empty Particles object.  Particle colors and GravityPoints can be added.
+</td>
+</tr>
+</table>
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">addColor</td>
+<td class="FunctionDetails">color: Color</td>
+<td class="FunctionDetails">Add a color to be used when new particles are created.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">addGravityPoint</td>
+<td class="FunctionDetails">gravityPoint: GravityPoint</td>
+<td class="FunctionDetails">Add a GravityPoint object that will influence the motion of the particles.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">alphaDelay</td>
+<td class="PropertyDetails">Specifies the delay (in steps) before the alphaDelta property will be applied to particles.</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">alphaDelta</td>
+<td class="PropertyDetails">Specifies the change in alpha value for each step.</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">accelerationXRandomizer</td>
+<td class="PropertyDetails">Specifies the Randomizer to be used for the x coordinate when creating new particles.</td>
+<td class="PropertyDetails">Randomizer</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">accelerationYRandomizer</td>
+<td class="PropertyDetails">Specifies the Randomizer to be used for the y coordinate when creating new particles.</td>
+<td class="PropertyDetails">Randomizer</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">gravity</td>
+<td class="PropertyDetails">Specifies the components of the gravity to apply to particles on each step.</td>
+<td class="PropertyDetails">Point</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">location</td>
+<td class="PropertyDetails">Specifies the location of the Particle emissions.</td>
+<td class="PropertyDetails">Point</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">maxAge</td>
+<td class="PropertyDetails">The maximum age (in steps) of a particle before its destruction.</td>
+<td class="PropertyDetails">integer</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">maxParticles</td>
+<td class="PropertyDetails">The maximum number of active particles.</td>
+<td class="PropertyDetails">integer</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">trailWidth</td>
+<td class="PropertyDetails">The width (in pixels) of the trail created by an active particle.</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">velocityXRandomizer</td>
+<td class="PropertyDetails">Specifies the Randomizer to be used for the x velocity component when creating new particles.</td>
+<td class="PropertyDetails">Randomizer</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">velocityYRandomizer</td>
+<td class="PropertyDetails">Specifies the Randomizer to be used for the y velocity component when creating new particles.</td>
+<td class="PropertyDetails">Randomizer</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+</table>
+
+</div>
+
+<a name="Pattern"></a>
+<h3>Pattern</h3>
+<div class="Indented">
+A pattern created with an image that can be used to fill the current path.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">image: Image</td>
+<td class="ConstructorDetails">Creates a pattern with image.
+</td>
+</tr>
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">image</td>
+<td class="PropertyDetails">The image used in the pattern.</td>
+<td class="PropertyDetails">Image</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">offset</td>
+<td class="PropertyDetails">Specifies the offset between the image.  The default value is the size of the image.  Values less than that will cause overlap, and greater values will leave spacing between the images.</td>
+<td class="PropertyDetails">Point</td>
+<td class="PropertyDetails">Write-only</td>
+</tr>
+</table>
+
+</div>
+
+<a name="Plasma"></a>
+<h3>Plasma</h3>
+<div class="Indented">
+An etherial plasma cloud.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">(none)</td>
+<td class="ConstructorDetails">Creates a Plasma object.  The default is colored, non-opqaue, and with a variation
+of 0.5.
+</td>
+</tr>
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">bottomLeft</td>
+<td class="PropertyDetails">The starting color used in the bottom left corner of the Plasma.</td>
+<td class="PropertyDetails">Color</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">bottomRight</td>
+<td class="PropertyDetails">The starting color used in the bottom right corner of the Plasma.</td>
+<td class="PropertyDetails">Color</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">grayscale</td>
+<td class="PropertyDetails">If true, the plasma will be grayscale rather than colored.</td>
+<td class="PropertyDetails">boolean</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">opaque</td>
+<td class="PropertyDetails">If true, the plasma will be opaque rather than translucent.</td>
+<td class="PropertyDetails">boolean</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">topLeft</td>
+<td class="PropertyDetails">The starting color used in the top left corner of the Plasma.</td>
+<td class="PropertyDetails">Color</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">topRight</td>
+<td class="PropertyDetails">The starting color used in the top right corner of the Plasma.</td>
+<td class="PropertyDetails">Color</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">topRight</td>
+<td class="PropertyDetails">Specifies the amount of variation from the starting corner colors.  The range
+is (0, 1), with 0 being no variation, and 1 being a boatload of variation.  The default is 0.5.</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+</table>
+
+</div>
+
+<a name="Point"></a>
+<h3>Point</h3>
+<div class="Indented">
+A 2-d Point.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">(none)</td>
+<td class="ConstructorDetails">A point with the coordinate value (0, 0).
+</td>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">x, y: float</td>
+<td class="ConstructorDetails">A point with the coordinate value (x, y).
+</td>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">pt: Point</td>
+<td class="ConstructorDetails">A point with the coordinate value (pt.x, pt.y).
+</td>
+</tr>
+</table>
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">add</td>
+<td class="FunctionDetails">pt: Point</td>
+<td class="FunctionDetails">Create a new Point with the summed coordinate values of the current point and
+pt.
+</td>
+<td class="FunctionDetails">Point</td>
+</tr>
+
+<tr>
+<td class="Function">distance</td>
+<td class="FunctionDetails">pt: Point</td>
+<td class="FunctionDetails">The scalar distance between the current point and pt.
+</td>
+<td class="FunctionDetails">float</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">x</td>
+<td class="PropertyDetails">The x axis coorinate value</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">y</td>
+<td class="PropertyDetails">The y axis coorinate value</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+</table>
+
+</div>
+
+<a name="Randomizer"></a>
+<h3>Randomizer</h3>
+<div class="Indented">
+A random value generator.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">(none)</td>
+<td class="ConstructorDetails">A randomizer that will return values in the range of (0, 1).
+</td>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">min, max: float</td>
+<td class="ConstructorDetails">A randomizer that will return values in the range of (min, max).
+</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">boolValue / booleanValue</td>
+<td class="PropertyDetails">A random boolean value.</td>
+<td class="PropertyDetails">boolean</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
+<tr>
+<td class="Property">floatValue</td>
+<td class="PropertyDetails">A random floating point value</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
+<tr>
+<td class="Property">intValue / integerValue</td>
+<td class="PropertyDetails">A random integer value based on the rounded floating point value.</td>
+<td class="PropertyDetails">integer</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
+</table>
+
+</div>
+
+<a name="Rect"></a>
+<h3>Rect</h3>
+<div class="Indented">
+A 2-d rectangle.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">(none)</td>
+<td class="ConstructorDetails">A rectangle with the coordinate value (0, 0) and dimension (0, 0).
+</td>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">x, y, width, height: float</td>
+<td class="ConstructorDetails">A rectangle with the coordinate value (x, y) and dimension (width, height).
+</td>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">rect: Rect</td>
+<td class="ConstructorDetails">A rectangle with the same coordinate and dimension as rect.
+</td>
+</tr>
+</table>
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">inset</td>
+<td class="FunctionDetails">x-or-uniform: float <span class="Optional">[, y: float]</span></td>
+<td class="FunctionDetails">Create a new rectangle with the coorinates and dimensions either uniformly
+inset or inset by different amounts in the x and y axes.
+pt.
+</td>
+<td class="FunctionDetails">Rect</td>
+</tr>
+
+<tr>
+<td class="Function">intersect</td>
+<td class="FunctionDetails">rect: Rect</td>
+<td class="FunctionDetails">Create a new rectangle defined by the intersection of the current rectangle
+and rect.
+</td>
+<td class="FunctionDetails">Rect</td>
+</tr>
+
+<tr>
+<td class="Function">union</td>
+<td class="FunctionDetails">rect: Rect</td>
+<td class="FunctionDetails">Create a new rectangle defined by the union of the current rectangle
+with rect.
+</td>
+<td class="FunctionDetails">Rect</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">height</td>
+<td class="PropertyDetails">The height of the rectangle</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">isEmpty</td>
+<td class="PropertyDetails">Returns true if the size of the rect is (0, 0)</td>
+<td class="PropertyDetails">boolean</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
+<tr>
+<td class="Property">midX</td>
+<td class="PropertyDetails">The midpoint of the x axis side of the rectangle.</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
+<tr>
+<td class="Property">midY</td>
+<td class="PropertyDetails">The midpoint of the y axis side of the rectangle.</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
+<tr>
+<td class="Property">width</td>
+<td class="PropertyDetails">The width of the rectangle</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">x</td>
+<td class="PropertyDetails">The x axis coordinate value</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">y</td>
+<td class="PropertyDetails">The y axis coordinate value</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+</table>
+
+</div>
+
+<a name="Simulator"></a>
+<h3>Simulator</h3>
+<div class="Indented">
+Simulate physically-based drawing with different SimulatorObjects.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">(none)</td>
+<td class="ConstructorDetails">An empty Simulator object.  Add SimulatorObjects (e.g., Particles) using the
+addSimulatorObject() function.
+</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">addSimulatorObject</td>
+<td class="FunctionDetails">obj: SimulatorObject</td>
+<td class="FunctionDetails">Add a SimulatorObject to the simulator.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">runInLayer</td>
+<td class="FunctionDetails">layer: Layer, step-count: integer</td>
+<td class="FunctionDetails">Run the Simulator for step-count steps, rendering the output to layer.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">timeStep</td>
+<td class="PropertyDetails">The amount of simulator time to pass with each step.  The default value is 0.166.  Large values may produce un-smooth results in the rendering</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+</table>
+
+</div>
+
+<a name="Text"></a>
+<h3>Text</h3>
+<div class="Indented">
+The Text object contains a string and appearance information (e.g., color, font).
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">(none)</td>
+<td class="ConstructorDetails">An empty Text object.
+</td>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">string: String</td>
+<td class="ConstructorDetails">A Text object with the inital string value set.
+</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">boundsForRect</td>
+<td class="FunctionDetails">rect: Rect</td>
+<td class="FunctionDetails">Given rect, return the bounds of the rendered string that will fit the
+width of rect, but (potentially) overflow out the bottom.
+</td>
+<td class="FunctionDetails">Rect</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">backgroundColor</td>
+<td class="PropertyDetails">The color to use for the text background.</td>
+<td class="PropertyDetails">Color</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">bounds</td>
+<td class="PropertyDetails">The bounds of the string when rendered.
+<td class="PropertyDetails">Rect</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
+<tr>
+<td class="Property">fontName</td>
+<td class="PropertyDetails">The name of the font. This is typically also known as the "family" name (e.g., Helvetica, Courier).  To use a styled varient (e.g., bold), use the fontStyle property.
+<td class="PropertyDetails">String</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">fontSize</td>
+<td class="PropertyDetails">The point size of the font.</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">fontStyle</td>
+<td class="PropertyDetails">The style of the font.  Allowed values are: bold, italic, condensed, expanded.  The values can be combined.  If the font specified in the fontName does not exist with this style, the unstyled variant will be chosen</td>
+<td class="PropertyDetails">String</td>
+<td class="PropertyDetails">Write-only</td>
+</tr>
+
+<tr>
+<td class="Property">foregroundColor</td>
+<td class="PropertyDetails">The color to use for the text foreground.</td>
+<td class="PropertyDetails">Color</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+</table>
+
+</div>
+
+<!-- Class indention -->
+</div>
+
+<div class="Indented">
+<h2>Global Objects</h2>
+<table class="GlobalTable" border="1">
+<tr>
+<th class="Global">Name</th>
+<th class="Global">Description</th>
+<th class="Global">Class</th>
+<th class="Global">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Global">compositor</td>
+<td class="GlobalDetails">The Compositor object for all of the desktop.</td>
+<td class="GlobalDetails">Compositor</td>
+<td class="GlobalDetails">Read-only</td>
+</tr>
+
+<tr>
+<td class="Global">desktop</td>
+<td class="GlobalDetails">A Layer sized to covers all of the desktop.  If there are multiple displays and they are arranged in a non-rectangular pattern, the desktop will be sized to be the smallest rectangle that covers all of them.  The desktop is placed at the bottom of all other Layers in the global compositor.</td>
+<td class="GlobalDetails">Layer</td>
+<td class="GlobalDetails">Read-only</td>
+</tr>
+
+<tr>
+<td class="Global">log(str:String)</td>
+<td class="GlobalDetails">Display str in the Logging window
+<td class="GlobalDetails">Function</td>
+<td class="GlobalDetails">n/a</td>
+</tr>
+
+<tr>
+<td class="Global">menubar</td>
+<td class="GlobalDetails">A Layer sized and positioned to be underneath the menubar.  If nothing is drawn into this Layer, it will be transparent and will not affect the desktop image.  Otherwise, the menubar will be placed on top of all other Layers in the global compositor.  If your Desktop &amp; Screen Saver System Preferences are set to use a Translucent Menu Bar, the color in this layer will show through and look really cool.</td>
+<td class="GlobalDetails">Layer</td>
+<td class="GlobalDetails">Read-only</td>
+</tr>
+
+</table>
+</div>
 
 <h1>Requirements</h1>
 Top Draw requires a Macintosh computer running Mac OS X 10.5 (Leopard) or later.

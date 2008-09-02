@@ -32,9 +32,9 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
-	<string>TopDrawEditor</string>
+	<string>TopDraw</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.google.TopDrawEditor</string>
+	<string>com.google.TopDraw</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -49,7 +49,7 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-  <key>CFBundleShortVersionString</key>
-  <string>${TOP_DRAW_VERSION}</string>
+	<key>CFBundleShortVersionString</key>
+	<string>${TOP_DRAW_VERSION}</string>
 </dict>
 </plist>
