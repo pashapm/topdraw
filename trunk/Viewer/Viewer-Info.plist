@@ -9,7 +9,7 @@
 	<key>CFBundleIconFile</key>
 	<string>TopDraw</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.google.TopDraw</string>
+	<string>com.google.TopDrawViewer</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
@@ -24,7 +24,7 @@
 	<string>Viewer</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-  <key>CFBundleShortVersionString</key>
-  <string>${TOP_DRAW_VERSION}</string>
+	<key>CFBundleShortVersionString</key>
+	<string>${TOP_DRAW_VERSION}</string>
 </dict>
 </plist>
