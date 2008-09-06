@@ -1,14 +1,25 @@
-
+// Define some colors that look interesting together
+// The colors will be used in order:
+// Ball Center
+// Ball Shell
+// Ball Glow (alpha 0.3)
+// Background gradient left 
+// Background gradient right
 var colorSets = new Array();
-colorSets.push(new Array("yellow", "orange", "blue", "red", "black"));
+colorSets.push(new Array("yellow", "orange", "red", "blue", "black"));
 colorSets.push(new Array("white", "blue", "white", "white", "blue"));
 colorSets.push(new Array("black", "blue", "cyan", "green", "black"));
 colorSets.push(new Array("pink", "red", "white", "magenta", "black"));
 
+// If you want a totally random one, uncomment this next line
+colorSets.push(new Array("", "", "", "", ""));
+
+// Select the color set
 var colorSetRnd = new Randomizer(0, colorSets.length - 1);
 var colorSetIdx = colorSetRnd.intValue;
 var colorSet = colorSets[colorSetIdx];
 
+// Setup the ball gradient
 var a = new Color(colorSet[0]);
 var b = new Color(colorSet[1]);
 var c = new Color(colorSet[2], 0.3);
@@ -26,9 +37,11 @@ gradient.start = new Point(firstWidth, firstHeight);
 gradient.end = new Point(firstWidth * 0.8, firstHeight * 0.3);
 gradient.radius = new Point(height / 5, height * 1.7);
 
+// Draw the background gradient
 var background = new Gradient(new Color(colorSet[3]), new Color(colorSet[4]));
 desktop.fillLayer(background);
 
+// Draw the ball
 desktop.fillStyle = gradient;
 desktop.beginPath();
 desktop.rect(desktop.bounds);
