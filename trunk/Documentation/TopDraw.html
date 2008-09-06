@@ -6,9 +6,11 @@
 </head>
 <body>
 <h1>Introduction</h1>
-Top Draw is the companion program to the <a href="TopDrawViewer.html">Top Draw Viewer</a>.  The editor allows you to create, open, edit, save, and render JavaScript based Top Draw Scripts (TDS, extension ".tds").  Multiple TDS files can be opened and their results can be viewed in a preview window within the application.  
+Top Draw is a program that renders JavaScript code and creates images that can be installed as your desktop images.  The program allows you to create, open, edit, save, and render JavaScript based Top Draw Scripts (TDS, extension ".tds").  Multiple TDS files can be opened and their results can be viewed in a preview window within the application.
 <p></p>
 Once a desktop image has been rendered, you can install it onto your desktop.  You can also create a sample image (1024 x 768) that represents your script, and then upload that image, along with the TDS file which created the image, to the <a href="http://code.google.com/p/topdraw">Top Draw website</a> so that others can enjoy your artistic creation!
+<p></p>
+There is a companion program, <a href="TopDrawViewer.html">Top Draw Viewer</a>, that runs in the menubar periodically to update your desktop images.
 <p></p>
 If you've programmed using the JavaScript language, then there just a bit of new stuff to learn (See <a href="#Reference">Reference</a>).  If you've never programmed before, there are a number of example TDS files with informative comments that are included with this program that you can examine to see how it all works.  
 
@@ -17,16 +19,16 @@ When you launch the editor, any previously opened files will be automatically re
 <p>
 <img src="Images/untitled.png"/>
 <p>
-Keywords for Javascript will be highlighted in blue and Top Draw script variables and classes will be highlighted in green.  The text in the lower left corner will indicate if the TDS is idle, rendering, or finished rendering.  If there were any errors in the file, the line with the problem will be highlighted in red.
+Keywords for Javascript will be highlighted in blue and TDS variables and classes will be highlighted in green.  The text in the lower left corner will indicate if the TDS is idle, rendering, or finished rendering.  If there were any errors in the file, the line with the problem will be highlighted in red.  Correct the change and re-render.
 <p>
 The Preview window will also open.  If you choose the "Render" item from the Drawing menu, you'll see the preview window update to show a scaled representation of your desktop, something like this:
 <p>
 <img src="Images/preview.png"/>
 <p>
 If you like this image and want to install it on your desktop, you can choose the "Install onto Desktop" item from the Drawing menu.  The image file (or files if you have multiple displays) will be set as your desktop.  You can use System Preferences to set your desktop back to the original image if you change your mind.
+The most recent 10 images will be saved in ~/Library/Application Support/Google/TopDraw.
 
 <h1>Menus</h1>
-
 
 <div>
 <img class="RightEdge" src="Images/file.png"/>
@@ -108,6 +110,32 @@ After a TDS file has been modified, this option will be enabled and if selected,
 
 </table>
 </div>
+
+<p></p>
+<div>
+<img class="RightEdge" src="Images/viewer.png"/>
+
+<table class="Menu" border="1">
+<tr>
+<th class="Menu">Viewer&nbsp;Menu</th>
+<th class="Menu">Description</th>
+</tr>
+
+<tr>
+<td class="MenuItem">Launch</td>
+<td class="Menu">Launch the Top Draw Viewer application or active it, if it's already running.</td>
+</tr>
+
+<tr>
+<td class="MenuItem">Launch at Startup</td>
+<td class="Menu">Control the launching of the Top Draw Viewer as a Login Item.  This item will be checked to indicate if
+the viewer will be automatically launched at login.  You can also control this from the System Preferences > Accounts > Login Items tab.
+</td>
+</tr>
+
+</table>
+</div>
+
 <p></p>
 <div>
 <img class="RightEdge" src="Images/window.png"/>
@@ -135,6 +163,7 @@ After a TDS file has been modified, this option will be enabled and if selected,
 
 </table>
 </div>
+
 
 <a name="Reference"></a>
 <h1>Reference</h1>
@@ -333,7 +362,8 @@ source-out, source-atop, destination-over, destination-in, destination-out, dest
 <tr>
 <td class="Function">boundsOfScreen</td>
 <td class="FunctionDetails">index: integer</td>
-<td class="FunctionDetails">Return a Rect object that is the bounds of the screen specified by zero-based index.
+<td class="FunctionDetails">Return a Rect object that is the bounds of the screen specified by zero-based index.  The number of screens
+can be determined by the screenCount property.
 <td class="FunctionDetails">Rect</td>
 </tr>
 
@@ -383,7 +413,8 @@ This class encapsulates Core Image filters.  Filters can be chained together to 
 
 <tr>
 <td class="ConstructorDetails">(none)</td>
-<td class="ConstructorDetails">Creates a dynamic filter that can use provided GLSL source.</td>
+<td class="ConstructorDetails">Creates a dynamic filter that will use the contents of the kernelSource property for rendering. 
+</td>
 </tr>
 
 <tr>

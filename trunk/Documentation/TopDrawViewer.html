@@ -1,15 +1,17 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<title>Top Draw</title>
+<title>Top Draw Viewer</title>
 <link rel="stylesheet" type="text/css" href="Top Draw.css" />
 </head>
 <body>
 <h1>Introduction</h1>
-Top Draw is a program that will run a JavaScript based script to create an image
+Top Draw Viewer is the companion program to the <a href="TopDraw.html">Top Draw</a>.
+Both programs will evaluate a JavaScript based script to create an image
 that can be set as the Desktop Picture.  Scripts can be downloaded or created and placed
-in a common folder on your computer.  Several example scripts are included with
-the application disk image.
+in a common folder on your computer (typically ~/Library/Application Support/Google/TopDraw).
+Several example scripts are included with the application and automatically installed
+into that folder.
 <p>
 The application runs as a Status Item, which means that there is no front window
 or icon in the dock.  Instead, there will be a colored shape in the menu bar to indicate the
@@ -41,19 +43,12 @@ choose another item from the popup menu list.</td>
 <td class="MenuItem" style="color: gray;">Render...</td>
 <td class="Menu"> The name of the currently
 active script and the remaining time until it is rendered is listed.  In this example,
-the Top Draw Script "Nodes" will be rendered and installed as your desktop in about 4 minutes.</td>
+the script "Particles" will be rendered and installed as your desktop in about 2 minutes and 49 seconds.</td>
 </tr>
 
 <tr>
 <td class="MenuItem">Preferences...</td>
 <td class="Menu"> Set the script, update interval, etc. as described below.</td>
-</tr>
-
-<tr>
-<td class="MenuItem">Launch&nbsp;Editor</td>
-<td class="Menu"> If you've installed the 
-<a href="TopDrawEditor.html">Top Draw Editor</a>, this menu item will be shown.  When chosen,
-it will launch the editor with the currently active script.</td>
 </tr>
 
 <tr>
@@ -111,11 +106,13 @@ when idle or actively rendering a desktop.  You may also choose a pleasing geome
 </div>
 
 <h1>Top Draw Scripts</h1>
-Top Draw reads Top Draw Script (.tds) files and renders them into images which are installed on your desktop.  The distribution of Top Draw should contain a folder named "Top Draw Scripts" which contains example script files.
+Top Draw reads Top Draw Script (.tds) files and renders them into images which are installed on your desktop.  The Top Draw application
+contains a ZIP archive of several example script files.  When the program is first launched, it will extract and copy the scripts
+into ~/Library/Application Support/Google/TopDraw/Scripts.
 <p>
 If you're not interested in programming, you can visit the Top Draw project <a href="http://code.google.com/p/topdraw/wiki/Gallery">Wiki Gallery</a> site and download new script files.  You can then copy those files into the Script Folder that you've configured Top Draw to use.  If you open the Preferences window, the new script(s) will be available for your selection.
 <p>
-The scripts use the JavaScript programming language, with enhancements, to provide the instructions to render.  If you'd like to learn more about these, please see the <a href="TopDrawEditor.html">Top Draw Editor</a> documentation.
+The scripts use the JavaScript programming language, with enhancements, to provide the instructions to render.  If you'd like to learn more about these, please see the <a href="TopDraw.html">Top Draw</a> documentation.
 
 <h1>Requirements</h1>
 Top Draw requires a Macintosh computer running Mac OS X 10.5 (Leopard) or later.
