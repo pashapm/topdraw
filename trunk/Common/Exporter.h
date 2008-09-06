@@ -20,6 +20,7 @@
 @interface Exporter : NSObject
 
 + (NSString *)imageStorageDirectory;
++ (NSString *)scriptStorageDirectory;
 + (NSString *)nextBaseName;
 
 // Breaks up |image| (if necessary, for the screens) and saves the resulting images to the 

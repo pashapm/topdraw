@@ -177,6 +177,7 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
     NSBundle *bundle = [NSBundle mainBundle];
     NSString *builtInPath = [bundle pathForResource:@"Built-in" ofType:@"tds"];
     source_ = [[NSString alloc] initWithContentsOfFile:builtInPath];
+    [self setFileType:@"tds"];
   }  
 
   // Set the data of the file
@@ -268,6 +269,15 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
 //------------------------------------------------------------------------------
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)note {
   return [self undoManager];
+}
+
+//------------------------------------------------------------------------------
+- (void)prepareSavePanel:(NSSavePanel *)panel {
+  // Suggest that we save in the Application support directory
+  [panel setDirectory:[Exporter scriptStorageDirectory]];
+  [panel setExtensionHidden:NO];
+  [panel setCanSelectHiddenExtension:NO];
+  [panel setAllowedFileTypes:[NSArray arrayWithObject:@"tds"]];
 }
 
 //------------------------------------------------------------------------------

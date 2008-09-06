@@ -7,6 +7,8 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
+			<key>LSIsAppleDefaultForType</key>
+			<string>YES</string>
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>tds</string>

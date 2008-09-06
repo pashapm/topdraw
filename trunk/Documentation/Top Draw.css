@@ -60,7 +60,8 @@ table.GlobalTable {
   width: 100%;
 }
 
-table.Menu {
+table.Menu,
+table.Preferences {
 	width: auto;
 }
 

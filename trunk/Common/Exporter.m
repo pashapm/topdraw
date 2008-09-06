@@ -17,25 +17,50 @@
 
 static const int kMaxCachedDrawings = 10;
 
+
 @implementation Exporter
 //------------------------------------------------------------------------------
-+ (NSString *)imageStorageDirectory {
++ (NSString *)baseStorageDirectory {
   NSString *result = nil;
   NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory,
                                                        NSUserDomainMask, YES);
   
   if ([paths count]) {
     NSString *dir = [paths objectAtIndex:0];
-    result = [dir stringByAppendingPathComponent:@"Google/TopDrawDrawings"];
+    result = [dir stringByAppendingPathComponent:@"Google/TopDraw"];
     NSError *error = nil;
-
-    if (![[NSFileManager defaultManager] createDirectoryAtPath:result withIntermediateDirectories:YES attributes:nil error:&error]) {
+    
+    if (![[NSFileManager defaultManager] createDirectoryAtPath:result withIntermediateDirectories:YES 
+                                                    attributes:nil error:&error]) {
       MethodLog("Unable to create %@: %@", result, [error localizedDescription]);
       return nil;
     }
   }
   
   return result;
+}
+
+//------------------------------------------------------------------------------
++ (NSString *)imageStorageDirectory {
+  NSString *base = [self baseStorageDirectory];
+
+  // We'll store the images in the base
+  return base;
+}
+
+//------------------------------------------------------------------------------
++ (NSString *)scriptStorageDirectory {
+  NSString *base = [self baseStorageDirectory];
+  NSString *path = [base stringByAppendingPathComponent:@"Scripts"];
+  NSError *error = nil;
+  
+  if (![[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES 
+                                                  attributes:nil error:&error]) {
+    MethodLog("Unable to create %@: %@", path, [error localizedDescription]);
+    path = nil;
+  }
+    
+  return path;
 }
 
 //------------------------------------------------------------------------------

@@ -14,19 +14,51 @@
 
 #import "Controller.h"
 #import "DrawingDocument.h"
+#import "Exporter.h"
 #import "Preview.h"
 
 static Controller *sController = nil;
 
 static NSString *kOpenedDocumentsKey = @"opened";
+static NSString *kInstalledScriptsKey = @"installed";
+
+@interface Controller (PrivateMethods)
+- (void)installScripts;
+@end
 
 @implementation Controller
+//------------------------------------------------------------------------------
+#pragma mark -
+#pragma mark || Private ||
+//------------------------------------------------------------------------------
+- (void)installScripts {
+  NSString *scriptsArchivePath = [[NSBundle mainBundle] pathForResource:@"Scripts" ofType:@"zip"];
+  
+  // If we don't have any scripts, just bail
+  if (![[NSFileManager defaultManager] fileExistsAtPath:scriptsArchivePath])
+    return;
+  
+  // Launch a task to unzip
+  NSString *destinationPath = [Exporter scriptStorageDirectory];
+  NSTask *unzipTask = [[NSTask alloc] init];
+  [unzipTask setLaunchPath:@"/usr/bin/unzip"];
+  NSArray *args = [NSArray arrayWithObjects:
+                   @"-uq",
+                   scriptsArchivePath,
+                   nil];
+  [unzipTask setArguments:args];
+  [unzipTask setCurrentDirectoryPath:destinationPath];
+  [unzipTask launch];
+  [unzipTask waitUntilExit];
+  
+  [unzipTask release];
+}
+
 //------------------------------------------------------------------------------
 #pragma mark -
 #pragma mark || Public ||
 //------------------------------------------------------------------------------
 + (Controller *)sharedController {
-  MethodLog();
   return sController;
 }
 
@@ -42,10 +74,45 @@ static NSString *kOpenedDocumentsKey = @"opened";
 
 //------------------------------------------------------------------------------
 #pragma mark -
+#pragma mark || Actions ||
+//------------------------------------------------------------------------------
+- (IBAction)showDocumentation:(id)sender {
+  NSString *helpFileName = @"TopDraw.html";
+  
+  if ([sender tag])
+    helpFileName = @"TopDrawViewer.html";
+  
+  NSString *documentFolder = @"Documentation";
+  NSString *resources = [[NSBundle mainBundle] resourcePath];
+  NSString *documentFolderPath = [resources stringByAppendingPathComponent:documentFolder];
+  NSString *documentPath = [documentFolderPath stringByAppendingPathComponent:helpFileName];
+
+  [[NSWorkspace sharedWorkspace] openFile:documentPath];
+}
+
+//------------------------------------------------------------------------------
+- (IBAction)launchViewer:(id)sender {
+  
+}
+
+//------------------------------------------------------------------------------
+- (IBAction)launchViewerOnStartup:(id)sender {
+  
+}
+
+//------------------------------------------------------------------------------
+#pragma mark -
 #pragma mark || NSObject ||
 //------------------------------------------------------------------------------
 - (void)awakeFromNib {
   sController = self;
+  
+  // Install our scripts if we're launching the first time
+  NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+  if (![ud boolForKey:kInstalledScriptsKey]) {
+    [self installScripts];
+    [ud setBool:YES forKey:kInstalledScriptsKey];
+  }
 }
 
 //------------------------------------------------------------------------------
