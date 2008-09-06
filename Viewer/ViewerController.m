@@ -50,16 +50,14 @@ static NSString *kScriptExtension = @"tds";
 //------------------------------------------------------------------------------
 + (void)initialize {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
-  NSString *parentPath = [bundlePath stringByDeletingLastPathComponent];
-  NSString *dirStr = [parentPath stringByAppendingPathComponent:@"Top Draw Scripts"];
+  NSString *scriptPath = [Exporter scriptStorageDirectory];
   NSColor *activeColor = [NSColor colorWithCalibratedRed:0 green:0.8 blue:0 alpha:0.3];
   NSColor *idleColor = [NSColor colorWithCalibratedRed:0 green:0.5 blue:0.5 alpha:0.2];
   NSData *activeData = [NSArchiver archivedDataWithRootObject:activeColor];
   NSData *idleData = [NSArchiver archivedDataWithRootObject:idleColor];
   NSDictionary *factoryValues = 
   [NSDictionary dictionaryWithObjectsAndKeys:
-   dirStr, @"scriptDirectory",
+   scriptPath, @"scriptDirectory",
    kDefaultScriptName, @"selectedScript",
    [NSNumber numberWithBool:YES], @"randomlyChosen",
    [NSNumber numberWithInt:kRefreshModeEvery], @"refreshMode",
@@ -313,38 +311,6 @@ static NSString *kScriptExtension = @"tds";
 }
 
 //------------------------------------------------------------------------------
-- (void)setupEditor {
-  // Check if we've got the editor around
-  NSString *editorID = @"com.google.TopDrawEditor";
-  NSURL *url = nil;
-  OSStatus err = LSFindApplicationForInfo(kLSUnknownCreator,
-                                          (CFStringRef)editorID,
-                                          NULL, // name
-                                          NULL, // FSRef
-                                          (CFURLRef *)&url);
-  if (err == noErr) {
-    editorPath_ = [[url path] retain];
-    
-    // The documentation says that the URL is retained by the call
-    [url release];
-    
-    // Add a menu item to open the editor.  Walk backwards from the end to the
-    // first entry before a separator.
-    NSMenuItem *item;
-    int count = [menu_ numberOfItems];
-    for (int i = count - 1; i > 0; --i) {
-      item = [menu_ itemAtIndex:i];
-      if ([item isSeparatorItem]) {
-        item = [menu_ insertItemWithTitle:@"Launch Editor" action:@selector(launchEditor:) 
-                            keyEquivalent:@"" atIndex:i];
-        [item setTarget:self];
-        break;
-      }
-    }
-  }
-}
-
-//------------------------------------------------------------------------------
 #pragma mark -
 #pragma mark || Actions ||
 //------------------------------------------------------------------------------
@@ -369,13 +335,6 @@ static NSString *kScriptExtension = @"tds";
 //------------------------------------------------------------------------------
 - (IBAction)preferences:(id)sender {
   [preferences_ show];
-}
-
-//------------------------------------------------------------------------------
-- (IBAction)launchEditor:(id)sender {
-  // Launch the editor with the source to the current script
-  NSString *scriptPath = [scripts_ objectForKey:selectedScript_];
-  [[NSWorkspace sharedWorkspace] openFile:scriptPath withApplication:editorPath_];
 }
 
 //------------------------------------------------------------------------------
@@ -408,7 +367,6 @@ static NSString *kScriptExtension = @"tds";
                                                name:PreferencesControllerDidUpdate 
                                              object:nil];
   [self updateSettingsForUserDefaults];
-  [self setupEditor];
 }
 
 //------------------------------------------------------------------------------
@@ -416,7 +374,6 @@ static NSString *kScriptExtension = @"tds";
   [renderer_ release];
   [statusItem_ release];
   [scripts_ release];
-  [editorPath_ release];
   [super dealloc];
 }
 

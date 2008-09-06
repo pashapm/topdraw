@@ -169,10 +169,11 @@ static NSString *kRendererName = @"TopDrawRenderer";
   // Depending on the packaging, the renderer might be in the executable portion
   // of the bundle, or it might be at the top level
   NSString *path = [[NSBundle mainBundle] pathForAuxiliaryExecutable:kRendererName];
-  if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+  if (![[NSFileManager defaultManager] isExecutableFileAtPath:path]) {
     path = [[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent];
+    path = [path stringByAppendingPathComponent:kRendererName];
     
-    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+    if (![[NSFileManager defaultManager] isExecutableFileAtPath:path]) {
       NSLog(@"Unable to locate: %@", kRendererName);
       path = nil;
     }

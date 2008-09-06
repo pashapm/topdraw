@@ -10,6 +10,8 @@
 		3C4324FE0E42FEAD006C46D5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C4324F80E42FEAD006C46D5 /* MainMenu.xib */; };
 		3C4324FF0E42FEAD006C46D5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C4324FA0E42FEAD006C46D5 /* InfoPlist.strings */; };
 		3C4325000E42FEAD006C46D5 /* DrawingDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C4324FC0E42FEAD006C46D5 /* DrawingDocument.xib */; };
+		3C9E51EB0E725B03009417F8 /* DocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9E51EA0E725B03009417F8 /* DocumentController.m */; };
+		3C9E51EC0E725B03009417F8 /* DocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9E51EA0E725B03009417F8 /* DocumentController.m */; };
 		3CBA06D30E6C97E00039D5EA /* TopDraw.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9B4A90240E42970000777579 /* TopDraw.icns */; };
 		3CD4D7500E42F12F00F37DC9 /* ViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD4D74A0E42F12F00F37DC9 /* ViewerController.m */; };
 		3CD4D7510E42F12F00F37DC9 /* StatusItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD4D74C0E42F12F00F37DC9 /* StatusItemView.m */; };
@@ -171,6 +173,8 @@
 		3C4324F90E42FEAD006C46D5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		3C4324FB0E42FEAD006C46D5 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C4324FD0E42FEAD006C46D5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/DrawingDocument.xib; sourceTree = "<group>"; };
+		3C9E51E90E725B03009417F8 /* DocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocumentController.h; sourceTree = "<group>"; };
+		3C9E51EA0E725B03009417F8 /* DocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocumentController.m; sourceTree = "<group>"; };
 		3CD4D7440E42F08000F37DC9 /* TopDrawViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TopDrawViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CD4D7460E42F08000F37DC9 /* Viewer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Viewer-Info.plist"; sourceTree = "<group>"; };
 		3CD4D74A0E42F12F00F37DC9 /* ViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewerController.m; sourceTree = "<group>"; };
@@ -343,6 +347,8 @@
 				9B4A8FB70E428F2100777579 /* ColorizingTextView.m */,
 				9B4A8FB80E428F2100777579 /* Controller.h */,
 				9B4A8FB90E428F2100777579 /* Controller.m */,
+				3C9E51E90E725B03009417F8 /* DocumentController.h */,
+				3C9E51EA0E725B03009417F8 /* DocumentController.m */,
 				9B4A8FA30E428EAF00777579 /* DrawingDocument.h */,
 				9B4A8FA20E428EAF00777579 /* DrawingDocument.m */,
 				9B4A8FBA0E428F2100777579 /* Logging.h */,
@@ -686,6 +692,7 @@
 				9B4A8FC50E428F2100777579 /* Renderer.m in Sources */,
 				9B4A8FCC0E428F4E00777579 /* Installer.m in Sources */,
 				9BC8E7480E638D7100780CB6 /* NSScreen+Convenience.m in Sources */,
+				3C9E51EC0E725B03009417F8 /* DocumentController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -736,6 +743,7 @@
 				9BF798DF0E7208A900181888 /* Renderer.m in Sources */,
 				9BF798E00E7208A900181888 /* Installer.m in Sources */,
 				9BF798E10E7208A900181888 /* NSScreen+Convenience.m in Sources */,
+				3C9E51EB0E725B03009417F8 /* DocumentController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,7 +17,6 @@
 
 static const int kMaxCachedDrawings = 10;
 
-
 @implementation Exporter
 //------------------------------------------------------------------------------
 + (NSString *)baseStorageDirectory {

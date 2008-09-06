@@ -187,7 +187,6 @@ static NSComparisonResult CompareBaseNames(id a, id b, void *context) {
   [window_ orderFrontRegardless];
   [window_ setDelegate:self];
   [window_ orderFront:nil];
-  [window_ setLevel:kCGStatusWindowLevelKey];
   [window_ makeKeyWindow];
 }
 

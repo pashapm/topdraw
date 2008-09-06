@@ -68,6 +68,10 @@ static const int kInvalidColorIndex = -1;
         NSString *name = [RuntimeObject coerceArray:arguments objectAtIndex:0 toClass:[NSString class]];
         temp = [NSColor colorWithString:name];
         
+        // If we have a string, but can't find a color
+        if (name && !temp)
+          temp = [NSColor randomColor];
+        
         if (temp) {
           NSColor *rgb = [temp colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];
           [rgb getComponents:color_];
