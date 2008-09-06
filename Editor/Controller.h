@@ -33,4 +33,12 @@
 - (Preview *)preview;
 - (Logging *)logging;
 
+//------------------------------------------------------------------------------
+// Actions
+//------------------------------------------------------------------------------
+- (IBAction)showDocumentation:(id)sender;
+
+- (IBAction)launchViewer:(id)sender;
+- (IBAction)launchViewerOnStartup:(id)sender;
+
 @end

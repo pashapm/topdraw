@@ -182,21 +182,25 @@ static NSString *kScriptExtension = @"tds";
 
   if ([defaults integerForKey:@"refreshMode"] == kRefreshModeEvery) {
     NSTimeInterval seconds = [[updateTimer_ fireDate] timeIntervalSinceNow];
-    NSTimeInterval minutes = ceil(seconds / 60);
+    NSTimeInterval minutes = floor(seconds / 60);
     NSTimeInterval hours = floor(minutes / 60);
-    int time = seconds;
-    NSString *unit = @"second(s)";
+    NSMutableString *timeStr = [NSMutableString string];
+    NSString *separatorStr = @"";
     
     if (hours > 0) {
-      unit = @"hour(s)";
-      time = hours;
-    } else if (minutes > 0) {
-      unit = @"minute(s)";
-      time = minutes;
+      [timeStr appendFormat:@"%dh", (int)hours];
+      separatorStr = @" ";
     }
-
-    title = [NSString stringWithFormat:@"Render %@ in %d %@", 
-             selectedScript_, time, unit];
+    
+    if (minutes > 0) {
+      [timeStr appendFormat:@"%@%dm", separatorStr, (int)minutes];
+      separatorStr = @" ";
+    }
+    
+    seconds = fmod(seconds, 60);
+    [timeStr appendFormat:@"%@%ds", separatorStr, (int)seconds];
+    title = [NSString stringWithFormat:@"Render %@ in %@",
+             selectedScript_, timeStr];
   } else {
     if ([defaults integerForKey:@"refreshAction"] == kRefreshActionWake)
       title = @"Render on wake";

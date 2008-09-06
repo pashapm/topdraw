@@ -28,6 +28,7 @@ static NSString *kRendererName = @"TopDrawRenderer";
 @interface Renderer(PrivateMethods)
 - (void)renderData:(NSNotification *)note;
 - (void)renderFinished:(NSNotification *)note;
+- (NSString *)rendererExecutablePath;
 @end
 
 @implementation Renderer
@@ -164,6 +165,23 @@ static NSString *kRendererName = @"TopDrawRenderer";
 }
 
 //------------------------------------------------------------------------------
+- (NSString *)rendererExecutablePath {
+  // Depending on the packaging, the renderer might be in the executable portion
+  // of the bundle, or it might be at the top level
+  NSString *path = [[NSBundle mainBundle] pathForAuxiliaryExecutable:kRendererName];
+  if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+    path = [[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+      NSLog(@"Unable to locate: %@", kRendererName);
+      path = nil;
+    }
+  }
+  
+  return path;
+}
+
+//------------------------------------------------------------------------------
 #pragma mark -
 #pragma mark || Public ||
 //------------------------------------------------------------------------------
@@ -291,7 +309,7 @@ static NSString *kRendererName = @"TopDrawRenderer";
 
   [arguments addObject:sourcePath];
   
-  NSString *executablePath = [[NSBundle mainBundle] pathForAuxiliaryExecutable:kRendererName];
+  NSString *executablePath = [self rendererExecutablePath];
   task_ = [[NSTask alloc] init];
   [task_ setLaunchPath:executablePath];
   [task_ setArguments:arguments];
