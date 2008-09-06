@@ -27,6 +27,7 @@ var yRnd = new Randomizer(0, db.height);
 var sizeRnd = new Randomizer(32, 512);
 var count = 15 * compositor.screenCount;
 var symbolRnd = new Randomizer(0, symbols.length - 1);
+var rotateRnd = new Randomizer(0, 2 * Math.PI);
 var variation = 0.5;
 var fontColor = new Color;
 fontColor.a = 0.2;
@@ -36,7 +37,15 @@ for (var i = 0; i < count; ++i) {
 	text.string = String.fromCharCode(symbols[symbolRnd.intValue]);
 	text.foregroundColor = fontColor.vary(variation, variation, variation, 0);
 	text.fontSize = sizeRnd.intValue;
-	desktop.drawText(text, new Point(xRnd.intValue, yRnd.intValue));
+	
+	// Rotate randomly
+	var pt = new Point(xRnd.intValue, yRnd.intValue);
+	desktop.save();
+	desktop.translate(pt.x, pt.y);
+	desktop.rotate(rotateRnd.floatValue);
+	desktop.translate(-pt.x, -pt.y);
+	desktop.drawText(text, pt);
+	desktop.restore();
 }
 
 // Apply a filter to make it more interesting

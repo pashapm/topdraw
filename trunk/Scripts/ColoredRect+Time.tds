@@ -43,7 +43,14 @@ function DateStr() {
 	var now = new Date();
 	var h = now.getHours();
 	var m = now. getMinutes();
-	var dateStr = new String((h > 12 ? h - 12 : h) + ":" + (m < 10 ? "0" : "") + m);
+	
+	// Adjust hours and minutes
+	if (h > 12)
+		h -= 12
+	else if (h == 0)
+		h = 12;
+		
+	var dateStr = new String(h + ":" + (m < 10 ? "0" : "") + m);
 	
 	return dateStr;
 }
