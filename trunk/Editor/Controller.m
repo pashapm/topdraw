@@ -24,6 +24,8 @@ static NSString *kInstalledScriptsKey = @"installed";
 
 @interface Controller (PrivateMethods)
 - (void)installScripts;
+- (NSString *)viewerPath;
+- (LSSharedFileListItemRef)viewerStartupItemRef;
 @end
 
 @implementation Controller
@@ -52,6 +54,40 @@ static NSString *kInstalledScriptsKey = @"installed";
   [unzipTask waitUntilExit];
   
   [unzipTask release];
+}
+
+//------------------------------------------------------------------------------
+- (NSString *)viewerPath {
+  return [[NSBundle mainBundle] pathForAuxiliaryExecutable:@"TopDrawViewer.app"];
+}
+
+//------------------------------------------------------------------------------
+- (LSSharedFileListItemRef)viewerStartupItemRef {
+  LSSharedFileListRef startupList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
+  NSURL *url = [NSURL fileURLWithPath:[self viewerPath]];
+  
+  // Make a snapshot
+  NSArray *startupItems = (NSArray *)LSSharedFileListCopySnapshot(startupList, NULL);
+  NSEnumerator *e = [startupItems objectEnumerator];
+  id item;
+  NSURL *searchURL;
+  LSSharedFileListItemRef foundItem = NULL;
+  while ((item = [e nextObject]) && !foundItem) {
+    LSSharedFileListItemResolve((LSSharedFileListItemRef)item,
+                                0, (CFURLRef *)&searchURL, NULL);
+    
+    if ([searchURL isEqual:url])
+      foundItem = (LSSharedFileListItemRef)item;
+
+    [searchURL release];
+  }
+
+  [startupItems release];
+  
+  if (startupList)
+    CFRelease(startupList);
+  
+  return foundItem;
 }
 
 //------------------------------------------------------------------------------
@@ -92,12 +128,26 @@ static NSString *kInstalledScriptsKey = @"installed";
 
 //------------------------------------------------------------------------------
 - (IBAction)launchViewer:(id)sender {
-  
+  [[NSWorkspace sharedWorkspace] launchApplication:[self viewerPath]];
 }
 
 //------------------------------------------------------------------------------
 - (IBAction)launchViewerOnStartup:(id)sender {
+  int state = [sender state];
+  LSSharedFileListRef startupList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
+  NSURL *url = [NSURL fileURLWithPath:[self viewerPath]];
   
+  // Add or remove
+  if (state == NSOffState) {
+    LSSharedFileListInsertItemURL(startupList, kLSSharedFileListItemLast, NULL, NULL, 
+                                  (CFURLRef)url, NULL, NULL);
+  } else {
+    LSSharedFileListItemRef found = [self viewerStartupItemRef];
+    LSSharedFileListItemRemove(startupList, found);
+  }
+  
+  if (startupList)
+    CFRelease(startupList);
 }
 
 //------------------------------------------------------------------------------
@@ -178,6 +228,23 @@ static NSString *kInstalledScriptsKey = @"installed";
   
   NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
   [ud setObject:paths forKey:kOpenedDocumentsKey];
+}
+
+//------------------------------------------------------------------------------
+#pragma mark -
+#pragma mark || NSUserInterfaceValidations ||
+//------------------------------------------------------------------------------
+- (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)item {
+  SEL action = [item action];
+  BOOL result = YES;
+  
+  if (action == @selector(launchViewerOnStartup:)) {
+    BOOL found = ([self viewerStartupItemRef] ? YES : NO);
+    
+    [(NSMenuItem *)item setState:found ? NSOnState : NSOffState];
+  }
+  
+  return result;
 }
 
 @end

@@ -38,8 +38,6 @@
   NSTimeInterval updateInterval_;
   NSTimer *menuTimer_;
   int renderCount_;
-  
-  NSString *editorPath_;
 }
 
 + (NSDictionary *)scriptsOfDirectoryAtPath:(NSString *)path;
@@ -47,7 +45,6 @@
 - (IBAction)about:(id)sender;
 - (IBAction)renderImmediately:(id)sender;
 - (IBAction)preferences:(id)sender;
-- (IBAction)launchEditor:(id)sender;
 - (IBAction)quit:(id)sender;
 
 @end
