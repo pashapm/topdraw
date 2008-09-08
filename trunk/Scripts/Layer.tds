@@ -1,49 +1,83 @@
-// Fill menubar
-menubar.fillLayer(new Color);
-
-// Fill with desktop with black
-var db = desktop.bounds;
+// Fill menubar with gradient and desktop with black
+menubar.fillLayer(new Gradient(new Color, new Color));
 desktop.fillLayer(new Color("black"));
 
-// Layer
-var r = new Rect(20, 20, 1500, 800);
-r.x += (db.width - r.width) / 2;
-r.y += (db.height - r.height) / 2;
+// Setup the randomization
+var db = desktop.bounds;
+var xRnd = new Randomizer(0, db.width);
+var yRnd = new Randomizer(0, db.height);
+var countRnd = new Randomizer(3, 32);
+var count = countRnd.intValue;
+var rotationRnd = new Randomizer(0, Math.PI * 2);
+var base = new Color;
+base.a = 0.2;
+var widthRnd = new Randomizer(1, 10);
 
-var layer = new Layer(r);
-var lb = layer.bounds;
-compositor.addLayer(layer);
+for (var i = 0; i < count; ++i) {
+	var blobImage = Blob(base.vary(0.2, 0.2, 0.2, 0));
+	var pt = new Point(xRnd.intValue, yRnd.intValue);
 
-var g = new Gradient;
-g.addColorStop(new Color("blue"), 0);
-g.addColorStop(new Color, 1);
-g.start = new Point(0, 0);
-g.end = new Point(lb.width, lb.height);
-layer.fillLayer(g);
+	desktop.save();
+	desktop.translate(pt.x, pt.y)
+	desktop.rotate(rotationRnd.floatValue);
+	desktop.translate(-pt.x, -pt.y);
+	desktop.drawImage(blobImage, pt);
+	desktop.restore();
+}
 
-layer.strokeStyle = new Color("red");
-layer.lineWidth = 3;
-layer.beginPath();
-layer.moveTo(0, 0);
-layer.lineTo(lb.width, lb.height / 1.5);
-layer.stroke();
+function Blob(color) {
+	var sizeRnd = new Randomizer(200, 1000);
+	var width = sizeRnd.intValue;
+	var height = sizeRnd.intValue;
+	
+	// Ensure width/height are even
+	if (width % 2)
+		width += 1;
+		
+	if (height % 2)
+		height += 1;
+		
+	var layerRect = new Rect(xRnd.intValue, yRnd.intValue, width, height);
+	var layer = new Layer(layerRect);
+	var isVertical = (layerRect.width < layerRect.height) ? true : false;
+	
+	layerRect.x = layerRect.y = 0;
+	layer.strokeStyle = color;
+	var fill = color.darker();
+	fill.a = 0.3;
+	layer.fillStyle = fill;
+	var lineWidth = widthRnd.intValue;
+	layer.lineWidth = lineWidth;
+	layer.lineCap = "round";
+	layerRect = layerRect.inset(lineWidth, lineWidth);
+	
+	var wavyRnd;
+	var smoothness = 0.4;
+	var reflection;
+	var endPoint;
 
-layer.strokeStyle = new Color("green");
-layer.lineWidth = 3;
-layer.beginPath();
-layer.moveTo(0, lb.height);
-layer.lineTo(lb.width / 1.5, 0);
-layer.stroke();
-
-var t = new Text("I ❤ Top Draw");
-t.fontSize = 120;
-t.fontName = "Helvetica";
-
-t.foregroundColor = new Color("black");
-var tr = t.boundsForRect(r);
-tr.x = (r.width - tr.width) / 2;
-tr.y = (r.height - tr.height) / 1.5;
-layer.drawText(t, tr);
-
-layer.reflect("top", 0.3);
-
+	// Setup for the orientation
+	layer.beginPath();
+	layer.beginPath();
+		
+	// Body
+	if (isVertical) {
+		reflection = "left";
+		wavyRnd = new Randomizer(0, layerRect.width * 0.4);
+		layer.moveTo(layerRect.midX, layerRect.height);
+		endPoint = new Point(layerRect.midX, layerRect.y);
+	} else {
+		reflection = "top";
+		wavyRnd = new Randomizer(-layerRect.height * 0.4, 0);
+		layer.moveTo(layerRect.x, layerRect.midY);
+		endPoint = new Point(layerRect.width, layerRect.midY);
+	}
+	
+	layer.wavyLineTo(endPoint, smoothness, wavyRnd);
+	layer.fillStroke();
+	
+	// Reflect 'cause we're symmetric
+	layer.reflect(reflection, 1.0);
+	
+	return new Image(layer);
+}
