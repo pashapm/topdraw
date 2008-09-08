@@ -1,0 +1,54 @@
+// Fill background with black
+desktop.fillLayer(new Color("black"));
+
+// Setup randomizations and base color
+var db = desktop.bounds;
+var xRnd = new Randomizer(0, db.width);
+var yRnd = new Randomizer(0, db.height);
+var base = new Color;
+var alphaRnd = new Randomizer(0.1, 0.5);
+base.a = alphaRnd.floatValue;
+var count = 4 * compositor.screenCount;
+var drawCircle = xRnd.boolValue;
+
+// Draw the pinwheels, each with a varied color
+for (var i = 0; i < count; ++i) {
+	desktop.fillStyle = base.vary(0.2, 0.2, 0.2, 0);
+	var pt = new Point(xRnd.intValue, yRnd.intValue);
+	Pinwheel(pt);
+}
+
+// Make it prettier
+var f = new Filter("CIBloom");
+desktop.applyFilter(f);
+
+function Pinwheel(pt) {
+	var stepRnd = new Randomizer(3, 16);
+	var steps = stepRnd.intValue;
+	var end = Math.PI * 2;
+	var inc = end / steps;
+	var sizeRnd = new Randomizer(50, 300);
+	var size = sizeRnd.intValue;
+	var max = size * 2;
+	var rnd = new Randomizer(0, max);
+	var inset = pt.add(rnd.intValue, 0);
+
+	// Ensure that we don't draw an extra position
+	end -= inc / 2;
+	
+	for (var s = 0; s < end; s += inc) {
+		// Rotate
+		desktop.save();
+		desktop.translate(inset.x, inset.y);
+		desktop.rotate(s);
+		desktop.translate(-inset.x, -inset.y);
+		
+		if (drawCircle)
+			desktop.circle(pt, size);
+		else
+			desktop.rect(pt.x, pt.y, size * 1.5, size);
+			
+		desktop.fill();
+		desktop.restore();
+	}	
+}
