@@ -525,10 +525,11 @@
     
     // Create our segments
     segmentCount_ = (int)rint(steps);
-    segments_ = (CGPoint *)malloc(sizeof(CGPoint) * (segmentCount_ + 1));
+    segments_ = (CGPoint *)malloc(sizeof(CGPoint) * (segmentCount_ + 2));
     
     segments_[0] = startPt;
     segments_[segmentCount_] = endPt;
+    segments_[segmentCount_ + 1] = endPt;
 
     CGFloat stepInc = 1.0 / segmentCount_;
     CGFloat step = stepInc;
