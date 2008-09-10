@@ -1,7 +1,7 @@
 // Fill background with black
 desktop.fillLayer(new Color("black"));
 
-// Setup randomizations and base color
+// Setup randomizations and base color2
 var db = desktop.bounds;
 var xRnd = new Randomizer(0, db.width);
 var yRnd = new Randomizer(0, db.height);

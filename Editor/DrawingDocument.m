@@ -14,6 +14,7 @@
 
 #import "ColorizingTextView.h"
 #import "Controller.h"
+#import "DocumentController.h"
 #import "DrawingDocument.h"
 #import "Exporter.h"
 #import "Installer.h"
@@ -145,6 +146,14 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
 }
 
 //------------------------------------------------------------------------------
+- (void)renderFrontmost {
+  NSWindow *window = [self windowForSheet];
+  
+  if ([window isKeyWindow])
+    [self render:nil];
+}
+
+//------------------------------------------------------------------------------
 #pragma mark -
 #pragma mark || NSDocument ||
 //------------------------------------------------------------------------------
@@ -243,8 +252,10 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
   [self setStatus:@"Idle."];
   [super windowControllerDidLoadNib:controller];
   
-  // Render it immediately
-  [self render:nil];
+  // Do a check in a short amount of time to see if we are the front window.
+  // Do this with a delay because we may be opening multiple windows and we only
+  // want to render the front window
+  [self performSelector:@selector(renderFrontmost) withObject:nil afterDelay:0.3];
 }
 
 //------------------------------------------------------------------------------
@@ -273,8 +284,8 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
 
 //------------------------------------------------------------------------------
 - (void)prepareSavePanel:(NSSavePanel *)panel {
-  // Suggest that we save in the Application support directory
-  [panel setDirectory:[Exporter scriptStorageDirectory]];
+  // Suggest that we save in the last place that something was loaded
+  [panel setDirectory:[DocumentController recommendedStorageFolder]];
   [panel setExtensionHidden:NO];
   [panel setCanSelectHiddenExtension:NO];
   [panel setAllowedFileTypes:[NSArray arrayWithObject:@"tds"]];
