@@ -23,7 +23,7 @@ var f = new Filter("CIBloom");
 desktop.applyFilter(f);
 
 function Pinwheel(pt) {
-	var stepRnd = new Randomizer(3, 16);
+	var stepRnd = new Randomizer(5, 16);
 	var steps = stepRnd.intValue;
 	var end = Math.PI * 2;
 	var inc = end / steps;
