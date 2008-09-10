@@ -260,6 +260,7 @@
 		9B4A90240E42970000777579 /* TopDraw.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = TopDraw.icns; sourceTree = "<group>"; };
 		9BB539B90E5B6E70008ED3AA /* PatternObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatternObject.h; sourceTree = "<group>"; };
 		9BB539BA0E5B6E70008ED3AA /* PatternObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PatternObject.m; sourceTree = "<group>"; };
+		9BC7F92D0E77704900131590 /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
 		9BC8E7B80E63A20800780CB6 /* Version.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 		9BDEC45E0E72261300B82883 /* TopDrawEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TopDrawEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BE3C04B0E4370AC00E3AA8A /* TopDraw.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html.documentation; name = TopDraw.html; path = Documentation/TopDraw.html; sourceTree = "<group>"; };
@@ -325,6 +326,7 @@
 		2A37F4AAFDCFA73011CA2CEA /* TopDraw */ = {
 			isa = PBXGroup;
 			children = (
+				9BC7F92D0E77704900131590 /* ReadMe.txt */,
 				9BC8E7B80E63A20800780CB6 /* Version.xcconfig */,
 				9BE3C03F0E43703C00E3AA8A /* Documentation */,
 				3CD4D6A90E42EBE400F37DC9 /* Common */,
@@ -559,6 +561,7 @@
 				9BF799460E72094700181888 /* Copy Renderer & Viewer */,
 				9BDEC3A60E720C4E00B82883 /* Zip Scripts and Copy Docs */,
 				9BDEC4030E721D3F00B82883 /* Remove Viewer Renderer */,
+				9BC7F93A0E77712200131590 /* Copy ReadMe */,
 			);
 			buildRules = (
 			);
@@ -631,6 +634,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		9BC7F93A0E77712200131590 /* Copy ReadMe */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy ReadMe";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\nREADME_NAME=\"ReadMe.txt\"\nREADME_SRC=${SRCROOT}/${README_NAME}\nREADME_TEMP=${TEMP_DIR}/${README_NAME}\nREADME_DEST=${CONFIGURATION_BUILD_DIR}/${README_NAME}\n\nVERSION=$(defaults read ${CONFIGURATION_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/Info CFBundleShortVersionString)\nBUILD_DATE=$(date \"+%B %d, %Y\")\n\n# Edit the readme to include the date and version\n/usr/bin/sed \"s/{VERS}/$VERSION/\" ${README_SRC} > ${README_TEMP}\n/usr/bin/sed \"s/{DATE}/$BUILD_DATE/\" ${README_TEMP} > ${README_DEST}\n\n";
+		};
 		9BDEC3A60E720C4E00B82883 /* Zip Scripts and Copy Docs */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
