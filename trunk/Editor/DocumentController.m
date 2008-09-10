@@ -17,10 +17,34 @@
 
 @implementation DocumentController
 
+NSString *kLastDocumentStorageFolder = @"lastFolder";
+
++ (NSString *)recommendedStorageFolder {
+  NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+  NSString *folder = [ud stringForKey:kLastDocumentStorageFolder];
+  BOOL isDir = NO;
+  
+  if (!([[NSFileManager defaultManager] fileExistsAtPath:folder isDirectory:&isDir] && isDir))
+    folder = [Exporter scriptStorageDirectory];
+
+  return folder;
+}
+
 - (NSInteger)runModalOpenPanel:(NSOpenPanel *)openPanel forTypes:(NSArray *)types {
-  [openPanel setDirectory:[Exporter scriptStorageDirectory]];
+  [openPanel setDirectory:[DocumentController recommendedStorageFolder]];
   
   return [super runModalOpenPanel:openPanel forTypes:types];
+}
+
+- (void)addDocument:(NSDocument *)document {
+  // Store the folder where we just loaded this
+  NSString *folder = [[[document fileURL] path] stringByDeletingLastPathComponent];
+  BOOL isDir = NO;
+  
+  if ([[NSFileManager defaultManager] fileExistsAtPath:folder isDirectory:&isDir] && isDir)
+    [[NSUserDefaults standardUserDefaults] setObject:folder forKey:kLastDocumentStorageFolder];
+  
+  [super addDocument:document];
 }
 
 @end

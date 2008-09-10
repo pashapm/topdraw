@@ -17,6 +17,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+extern NSString *kLastDocumentStorageFolder;
+
 @interface DocumentController : NSDocumentController
+
++ (NSString *)recommendedStorageFolder;
 
 @end

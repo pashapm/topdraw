@@ -70,16 +70,18 @@ static NSString *kInstalledScriptsKey = @"installed";
   NSArray *startupItems = (NSArray *)LSSharedFileListCopySnapshot(startupList, NULL);
   NSEnumerator *e = [startupItems objectEnumerator];
   id item;
-  NSURL *searchURL;
+  NSURL *searchURL = NULL;
   LSSharedFileListItemRef foundItem = NULL;
   while ((item = [e nextObject]) && !foundItem) {
-    LSSharedFileListItemResolve((LSSharedFileListItemRef)item,
-                                0, (CFURLRef *)&searchURL, NULL);
+    OSStatus status = LSSharedFileListItemResolve((LSSharedFileListItemRef)item,
+                                                  0, (CFURLRef *)&searchURL, NULL);
     
-    if ([searchURL isEqual:url])
-      foundItem = (LSSharedFileListItemRef)item;
-
-    [searchURL release];
+    if (status == noErr) {
+      if ([searchURL isEqual:url])
+        foundItem = (LSSharedFileListItemRef)item;
+      
+      [searchURL release];
+    }
   }
 
   [startupItems release];
