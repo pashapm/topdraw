@@ -68,6 +68,7 @@
 		9B4A8FCC0E428F4E00777579 /* Installer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8FCB0E428F4E00777579 /* Installer.m */; };
 		9B4A90260E42970000777579 /* TopDrawDoc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9B4A90230E42970000777579 /* TopDrawDoc.icns */; };
 		9BB539BB0E5B6E70008ED3AA /* PatternObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB539BA0E5B6E70008ED3AA /* PatternObject.m */; };
+		9BC706080E78A9F400131590 /* ColorSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC706070E78A9F400131590 /* ColorSet.m */; };
 		9BC8E7480E638D7100780CB6 /* NSScreen+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8ED20E428B8400777579 /* NSScreen+Convenience.m */; };
 		9BDEC3A10E720BF500B82883 /* TopDrawViewer.app in Copy Renderer & Viewer */ = {isa = PBXBuildFile; fileRef = 3CD4D7440E42F08000F37DC9 /* TopDrawViewer.app */; };
 		9BE37FD90E510E570083B486 /* Built-in.tds in Resources */ = {isa = PBXBuildFile; fileRef = 3CD4D7630E42F24200F37DC9 /* Built-in.tds */; };
@@ -260,6 +261,8 @@
 		9B4A90240E42970000777579 /* TopDraw.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = TopDraw.icns; sourceTree = "<group>"; };
 		9BB539B90E5B6E70008ED3AA /* PatternObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatternObject.h; sourceTree = "<group>"; };
 		9BB539BA0E5B6E70008ED3AA /* PatternObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PatternObject.m; sourceTree = "<group>"; };
+		9BC706060E78A9F400131590 /* ColorSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorSet.h; sourceTree = "<group>"; };
+		9BC706070E78A9F400131590 /* ColorSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorSet.m; sourceTree = "<group>"; };
 		9BC7F92D0E77704900131590 /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
 		9BC8E7B80E63A20800780CB6 /* Version.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 		9BDEC45E0E72261300B82883 /* TopDrawEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TopDrawEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -430,6 +433,8 @@
 			children = (
 				9B4A8EE80E428C7700777579 /* Color.h */,
 				9B4A8EE90E428C7700777579 /* Color.m */,
+				9BC706060E78A9F400131590 /* ColorSet.h */,
+				9BC706070E78A9F400131590 /* ColorSet.m */,
 				9B4A8EEA0E428C7700777579 /* Compositor.h */,
 				9B4A8EEB0E428C7700777579 /* Compositor.m */,
 				9B4A8EEC0E428C7700777579 /* Filter.h */,
@@ -742,6 +747,7 @@
 				9B296FB10E43EC0F00D89930 /* SimulatorObject.m in Sources */,
 				9B1164010E47BCB100C230D5 /* NSColor+Adjustment.m in Sources */,
 				9BB539BB0E5B6E70008ED3AA /* PatternObject.m in Sources */,
+				9BC706080E78A9F400131590 /* ColorSet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

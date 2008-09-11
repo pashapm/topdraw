@@ -15,6 +15,7 @@
 #import <JavaScriptCore/JavaScriptCore.h>
 
 #import "Color.h"
+#import "ColorSet.h"
 #import "Compositor.h"
 #import "Filter.h"
 #import "Gradient.h"
@@ -141,6 +142,7 @@ static int kCurrentVersion = 1;
   
   // Register classes
   [rt registerClass:[Color class]];
+  [rt registerClass:[ColorSet class]];
   [rt registerClass:[Filter class]];
   [rt registerClass:[Gradient class]];
   [rt registerClass:[GravityPoint class]];
