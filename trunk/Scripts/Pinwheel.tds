@@ -30,11 +30,12 @@ function BaseImage(size) {
 	var altColor = new Color;
 	altColor.a = base.a;
 	layer.fillStyle = fillColor;
+	var sizeRnd = new Randomizer(0.3, 1);
 	
 	if (drawCircle)
 		layer.circle(center, size / 2);
 	else
-		layer.rect(layer.bounds);
+		layer.rect(0, 0, size, size * sizeRnd.floatValue);
 		
 	layer.clip();
 	layer.fillLayer(new Gradient(fillColor, altColor));
