@@ -15,7 +15,6 @@
 #import <JavaScriptCore/JavaScriptCore.h>
 
 #import "Color.h"
-#import "ColorSet.h"
 #import "Compositor.h"
 #import "Filter.h"
 #import "Gradient.h"
@@ -23,6 +22,7 @@
 #import "Image.h"
 #import "Layer.h"
 #import "Noise.h"
+#import "PaletteObject.h"
 #import "Particles.h"
 #import "PatternObject.h"
 #import "Plasma.h"
@@ -33,6 +33,7 @@
 #import "Randomizer.h"
 #import "Runtime.h"
 #import "Simulator.h"
+#import "Storage.h"
 #import "Text.h"
 
 static inline BOOL IsEmptySize(NSSize size) {
@@ -142,12 +143,12 @@ static int kCurrentVersion = 1;
   
   // Register classes
   [rt registerClass:[Color class]];
-  [rt registerClass:[ColorSet class]];
   [rt registerClass:[Filter class]];
   [rt registerClass:[Gradient class]];
   [rt registerClass:[GravityPoint class]];
   [rt registerClass:[Image class]];
   [rt registerClass:[Noise class]];
+  [rt registerClass:[PaletteObject class]];
   [rt registerClass:[Particles class]];
   [rt registerClass:[PatternObject class]];
   [rt registerClass:[Plasma class]];
@@ -155,6 +156,7 @@ static int kCurrentVersion = 1;
   [rt registerClass:[RectObject class]];
   [rt registerClass:[Randomizer class]];
   [rt registerClass:[Simulator class]];
+  [rt registerClass:[Storage class]];
   [rt registerClass:[Text class]];
   
   // Register objects

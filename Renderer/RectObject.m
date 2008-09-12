@@ -12,6 +12,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+#import "Randomizer.h"
 #import "RectObject.h"
 
 @implementation RectObject
@@ -22,15 +23,16 @@
 
 + (NSSet *)properties {
   return [NSSet setWithObjects:@"x", @"y", @"width", @"height", 
-          @"midX", @"midY", @"maxX", @"maxY", @"isEmpty", nil];
+          @"midX", @"midY", @"maxX", @"maxY", @"isEmpty", @"pointtypes", nil];
 }
 
 + (NSSet *)readOnlyProperties {
-  return [NSSet setWithObjects:@"midX", @"midY", @"maxX", @"maxY", @"isEmpty", nil];
+  return [NSSet setWithObjects:@"midX", @"midY", @"maxX", @"maxY", @"isEmpty", 
+          @"pointTypes", nil];
 }
 
 + (NSSet *)methods {
-  return [NSSet setWithObjects:@"inset", @"intersect", @"union",
+  return [NSSet setWithObjects:@"inset", @"intersect", @"union", @"point",
           @"toString", nil];
 }
 
@@ -125,6 +127,14 @@
   return NSIsEmptyRect(rect_);
 }
 
+- (NSArray *)pointTypes {
+  return [NSArray arrayWithObjects:
+    @"topleft", @"topcenter", @"topright",
+    @"centerleft", @"center", @"centerright",
+    @"bottomleft", @"bottomcenter", @"bottomright",
+          nil];
+}
+
 - (RectObject *)inset:(NSArray *)arguments {
   float dx = 0;
   float dy = 0;
@@ -155,6 +165,42 @@
   NSRect otherRect = [otherRectObj rect];
   
   return [[[RectObject alloc] initWithRect:NSUnionRect(rect_, otherRect)] autorelease];
+}
+
+- (RectObject *)point:(NSArray *)arguments {
+  NSPoint pt = NSZeroPoint;
+
+  if ([arguments count] == 1) {
+    NSString *locStr = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[NSString class]];
+    locStr = [locStr lowercaseString];
+    
+    if ([locStr isEqualToString:@"random"]) {
+      NSArray *types = [self pointTypes];
+      int idx = RandomizerFloatValue() * ([types count] - 1);
+      locStr = [types objectAtIndex:idx];
+    }
+    
+    if ([locStr isEqualToString:@"topleft"])
+      pt = NSMakePoint(NSMinX(rect_), NSMaxY(rect_));
+    else if ([locStr isEqualToString:@"topcenter"])
+      pt = NSMakePoint(NSMidX(rect_), NSMaxY(rect_));
+    else if ([locStr isEqualToString:@"topright"])
+      pt = NSMakePoint(NSMaxX(rect_), NSMaxY(rect_));
+    else if ([locStr isEqualToString:@"centerleft"])
+      pt = NSMakePoint(NSMinX(rect_), NSMidY(rect_));
+    else if ([locStr isEqualToString:@"center"])
+      pt = NSMakePoint(NSMidX(rect_), NSMidY(rect_));
+    else if ([locStr isEqualToString:@"centerright"])
+      pt = NSMakePoint(NSMaxX(rect_), NSMidY(rect_));
+    else if ([locStr isEqualToString:@"bottomleft"])
+      pt = NSMakePoint(NSMinX(rect_), NSMinY(rect_));
+    else if ([locStr isEqualToString:@"bottomcenter"])
+      pt = NSMakePoint(NSMidX(rect_), NSMinY(rect_));
+    else if ([locStr isEqualToString:@"bottomright"])
+      pt = NSMakePoint(NSMaxX(rect_), NSMinY(rect_));
+  }
+  
+  return [[[PointObject alloc] initWithPoint:pt] autorelease];
 }
 
 - (NSString *)toString {
