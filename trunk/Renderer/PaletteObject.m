@@ -12,15 +12,15 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-#import "ColorSet.h"
+#import "PaletteObject.h"
 
-@implementation ColorSet
+@implementation PaletteObject
 //------------------------------------------------------------------------------
 #pragma mark -
 #pragma mark || Runtime ||
 //------------------------------------------------------------------------------
 + (NSString *)className {
-  return @"ColorSet";
+  return @"PaletteObject";
 }
 
 //------------------------------------------------------------------------------
