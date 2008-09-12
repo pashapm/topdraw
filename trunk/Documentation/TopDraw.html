@@ -182,12 +182,14 @@ In order to create more interesting renderings, several classes of objects and g
 <a href="#Image">Image</a>, 
 <a href="#Layer">Layer</a>, 
 <a href="#Noise">Noise</a>, 
+<a href="#Palette">Palette</a>, 
 <a href="#Particles">Particles</a>, 
 <a href="#Pattern">Pattern</a>, 
 <a href="#Point">Point</a>, 
 <a href="#Randomizer">Randomizer</a>, 
 <a href="#Rect">Rect</a>, 
 <a href="#Simulator">Simulator</a>, 
+<a href="#Storage">Storage</a>, 
 <a href="#Text">Text</a>
 
 <div class="Indented">
@@ -1628,6 +1630,15 @@ A 2-d rectangle.
 <th class="Function">Arguments</th>
 <th class="Function">Description</th>
 <th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">point</td>
+<td class="FunctionDetails">point-type: string</td>
+<td class="FunctionDetails">Create a new Point with the coorinates based on the point-type specifed. 
+Recognized values for point-type are: topleft, topcenter, topright, centerleft, center, centerright, bottomleft, bottomcenter, and bottomright.  A value of random will use one of the aforementioned point-types.
+</td>
+<td class="FunctionDetails">Point</td>
 </tr>
 
 <tr>
