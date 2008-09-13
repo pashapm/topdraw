@@ -1,6 +1,33 @@
+// Fill background with black
 desktop.fillLayer(new Color("black"));
 
-function koosh(pt, r, c, variation) {
+var db = desktop.bounds;
+var xRnd = new Randomizer(0, db.width);
+var yRnd = new Randomizer(0, db.height);
+var radiusRnd = new Randomizer(100, db.height / 4);
+var percentRnd = new Randomizer;
+var variation = 0.2;
+var count = 20 * compositor.screenCount;
+
+desktop.lineJoin = "round";
+
+// Draw a bunch of kooshes
+for (var x = 0; x < count; ++x) {
+	var pt = new Point(xRnd.intValue, yRnd.intValue);
+	var c = new Color;
+	c.a = 0.5;
+	desktop.lineWidth = 1 + percentRnd.floatValue * 4;
+	
+	Koosh(pt, radiusRnd.floatValue, c, variation);
+}
+
+// Add a blur to the rendering
+var f = new Filter("CIGaussianBlur");
+f.setValueForKey("inputRadius", 3);
+desktop.applyFilter(f);
+
+function Koosh(pt, r, c, variation) {
+	// Create a Koosh
 	var count = r;	
 	var e = new Point;
 	var angle = 2 * Math.PI / count;
@@ -18,24 +45,4 @@ function koosh(pt, r, c, variation) {
 	}
 }
 
-var db = desktop.bounds;
-var radiusRnd = new Randomizer(100, db.height / 4);
-var percentRnd = new Randomizer;
-var variation = 0.2;
-var count = 20 * compositor.screenCount;
 
-desktop.lineJoin = "round";
-
-for (var x = 0; x < count; ++x) {
-	var pt = new Point(db.width * percentRnd.floatValue, 
-		db.height * percentRnd.floatValue);
-	var c = new Color;
-	c.a = 0.5;
-	desktop.lineWidth = 1 + percentRnd.floatValue * 4;
-	
-	koosh(pt, radiusRnd.floatValue, c, variation);
-}
-
-var f = new Filter("CIGaussianBlur");
-f.setValueForKey("inputRadius", 3);
-desktop.applyFilter(f);
