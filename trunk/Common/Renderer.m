@@ -12,6 +12,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+#import "Exporter.h"
 #import "Renderer.h"
 
 NSString *RendererDidFinish = @"RendererDidFinish";
@@ -130,6 +131,14 @@ static NSString *kRendererName = @"TopDrawRenderer";
     
     [renderOutput release];
   }
+
+  // Cleanup
+  [outputPath_ release];
+  outputPath_ = nil;
+  [taskResponse_ release];
+  taskResponse_ = nil;
+  [task_ release];
+  task_ = nil;
   
   // Create a notification with the data
   NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -142,15 +151,7 @@ static NSString *kRendererName = @"TopDrawRenderer";
                             nil];
   
   if (!cancelNotifications_)
-    [center postNotificationName:RendererDidFinish object:self userInfo:userInfo];
-  
-  // Cleanup
-  [outputPath_ release];
-  outputPath_ = nil;
-  [taskResponse_ release];
-  taskResponse_ = nil;
-  [task_ release];
-  task_ = nil;
+    [center postNotificationName:RendererDidFinish object:self userInfo:userInfo];  
 }
 
 //------------------------------------------------------------------------------
@@ -166,17 +167,27 @@ static NSString *kRendererName = @"TopDrawRenderer";
 
 //------------------------------------------------------------------------------
 - (NSString *)rendererExecutablePath {
-  // Depending on the packaging, the renderer might be in the executable portion
-  // of the bundle, or it might be at the top level
-  NSString *path = [[NSBundle mainBundle] pathForAuxiliaryExecutable:kRendererName];
+  // Should be in application support
+  NSString *dir = [Exporter rendererDirectory];
+  NSString *path = [dir stringByAppendingPathComponent:kRendererName];
+
   if (![[NSFileManager defaultManager] isExecutableFileAtPath:path]) {
-    path = [[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent];
-    path = [path stringByAppendingPathComponent:kRendererName];
-    
-    if (![[NSFileManager defaultManager] isExecutableFileAtPath:path]) {
-      NSLog(@"Unable to locate: %@", kRendererName);
-      path = nil;
+    // Depending on the packaging, the renderer might be in the executable portion
+    // of the bundle, or it might be at the top level
+    NSString *src = [[NSBundle mainBundle] pathForAuxiliaryExecutable:kRendererName];
+    if (![[NSFileManager defaultManager] isExecutableFileAtPath:src]) {
+      src = [[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent];
+      src = [path stringByAppendingPathComponent:kRendererName];
+      
+      if (![[NSFileManager defaultManager] isExecutableFileAtPath:src]) {
+        NSLog(@"Unable to locate: %@", kRendererName);
+        src = nil;
+      }
     }
+    
+    // Copy to the path
+    if (src)
+      [[NSFileManager defaultManager] copyPath:src toPath:path handler:nil];
   }
   
   return path;
@@ -291,23 +302,23 @@ static NSString *kRendererName = @"TopDrawRenderer";
   CGFloat quality = 1.0;
   NSMutableArray *arguments = [NSMutableArray array];
   
-  [arguments addObject:[NSString stringWithFormat:@"-r %d", seed_]];
-  [arguments addObject:[NSString stringWithFormat:@"-o %@", outputPath_]];
-  [arguments addObject:[NSString stringWithFormat:@"-t %@", type_]];
-  [arguments addObject:[NSString stringWithFormat:@"-q %f", quality]];
+  [arguments addObject:[NSString stringWithFormat:@"-r%d", seed_]];
+  [arguments addObject:[NSString stringWithFormat:@"-o%@", outputPath_]];
+  [arguments addObject:[NSString stringWithFormat:@"-t%@", type_]];
+  [arguments addObject:[NSString stringWithFormat:@"-q%f", quality]];
   
   if ([name_ length])
-    [arguments addObject:[NSString stringWithFormat:@"-n \"%@\"", name_]];
+    [arguments addObject:[NSString stringWithFormat:@"-n%@", name_]];
   
   if (size_.width > 0 && size_.height > 0) {
     NSUInteger width = floor(size_.width);
     NSUInteger height = floor(size_.height);
-    [arguments addObject:[NSString stringWithFormat:@"-m %dx%d", width, height]];
+    [arguments addObject:[NSString stringWithFormat:@"-m%dx%d", width, height]];
   }
   
   if (shouldSplit_)
     [arguments addObject:@"-s"];
-
+  
   [arguments addObject:sourcePath];
   
   NSString *executablePath = [self rendererExecutablePath];
@@ -317,6 +328,10 @@ static NSString *kRendererName = @"TopDrawRenderer";
 
   [task_ setStandardOutput:[NSPipe pipe]];
   [task_ setStandardError:[task_ standardOutput]];
+
+  [task_ setEnvironment:[NSDictionary dictionaryWithObjectsAndKeys:
+                         [NSNumber numberWithInt:1], @"LSUIElement",
+                         nil]];
   
   taskResponse_ = [[NSMutableData alloc] init];
   taskResponseContainedErrors_ = NO;

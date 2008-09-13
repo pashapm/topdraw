@@ -60,7 +60,6 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
   if ([renderer_ isRendering]) {
     statusMsg = [NSString stringWithFormat:@"Rendering... (%.1f s)",
                  [renderer_ elapsedTime]];
-    [self performSelector:@selector(updateProgress) withObject:nil afterDelay:0.5];
     [status_ setStringValue:statusMsg];
   } else if (image_) {
     statusMsg = [NSString stringWithFormat:@"Render time: %.1f s",
@@ -78,6 +77,11 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
   statusRect.size.width += NSMaxX(progressRect);
   statusRect.origin.x -= NSMaxX(progressRect);
   [status_ setFrame:statusRect];
+  
+  [progressTimer_ invalidate];
+  [progressTimer_ release];
+  progressTimer_ = nil;
+  [self updateProgress];
 }
 
 //------------------------------------------------------------------------------
@@ -102,7 +106,8 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
   }
   
   if (![error length]) {
-    log = [NSString stringWithFormat:@"Rendering Complete (%d ms, seed: %@)",
+    log = [NSString stringWithFormat:@"Rendered: %@ (%d ms, seed: %@)",
+           [self name],
            (int)([[userInfo objectForKey:RendererTimeKey] floatValue] * 1000),
            [userInfo objectForKey:RendererSeedKey]];
            [logging addLogMsg:log];
@@ -273,6 +278,18 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
 }
 
 //------------------------------------------------------------------------------
+- (BOOL)revertToContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError {
+  BOOL result = [super revertToContentsOfURL:absoluteURL ofType:typeName error:outError];
+  
+  if (result) {
+    [text_ setString:source_];
+    [text_ colorize];
+  }
+  
+  return result;
+}
+
+//------------------------------------------------------------------------------
 - (BOOL)hasUndoManager {
   return YES;
 }
@@ -289,6 +306,7 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
   [panel setExtensionHidden:NO];
   [panel setCanSelectHiddenExtension:NO];
   [panel setAllowedFileTypes:[NSArray arrayWithObject:@"tds"]];
+  [panel setAllowsOtherFileTypes:NO];
 }
 
 //------------------------------------------------------------------------------
@@ -317,19 +335,28 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
   [renderer_ setDestination:nil];
   [renderer_ setMaximumSize:NSZeroSize];
   [renderer_ renderInBackgroundAndNotify];
-  [self updateProgress];
+  
+  // Fire an update timer
+  progressTimer_ = [[NSTimer scheduledTimerWithTimeInterval:0.5 target:self 
+                                                   selector:@selector(updateProgress) userInfo:nil repeats:YES] retain];
+  [[NSRunLoop currentRunLoop] addTimer:progressTimer_ forMode:NSRunLoopCommonModes];
+  [progressTimer_ fire];
 }
 
 //------------------------------------------------------------------------------
 - (IBAction)cancelRender:(id)sender {
   [renderer_ cancelRender];
+  [self updateProgress];
   [self setStatus:@"Cancelled Render"];
+  [progressTimer_ invalidate];
+  [progressTimer_ release];
+  progressTimer_ = nil;
 }
 
 //------------------------------------------------------------------------------
 - (IBAction)install:(id)sender {
   NSString *baseName = [Exporter nextBaseName];
-  NSString *destDir = [Exporter imageStorageDirectory];
+  NSString *destDir = [Exporter imageDirectory];
   NSString *path = [destDir stringByAppendingPathComponent:baseName];
   NSArray *files = [Exporter partitionAndWriteImage:[self image] path:path type:@"jpeg"];
   [Installer installDesktopImagesFromPaths:files];

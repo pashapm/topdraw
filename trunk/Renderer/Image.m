@@ -142,7 +142,7 @@
   
   if ([name length]) {
     NSString *safeName = [name lastPathComponent];
-    NSString *path = [[Exporter imageStorageDirectory] stringByAppendingPathComponent:safeName];
+    NSString *path = [[Exporter imageDirectory] stringByAppendingPathComponent:safeName];
     [Exporter exportImage:image_ path:path type:type quality:1.0];
   }
 }

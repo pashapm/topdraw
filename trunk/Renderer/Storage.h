@@ -18,6 +18,8 @@
 
 @interface Storage : RuntimeObject {
  @protected
+  NSString *name_;
+  NSMutableDictionary *dictionary_;
 }
 
 @end

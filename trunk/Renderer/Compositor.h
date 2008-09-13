@@ -37,7 +37,10 @@ typedef void (*LoggingCB)(const char *msg, void *context);
   Runtime *activeRuntime_;  // Weak
 }
 
++ (Compositor *)sharedCompositor;
+
 - (id)initWithSource:(NSString *)source name:(NSString *)name;
+- (NSString *)name;
 
 // Specify the maximum size for the drawing
 - (void)setMaximumSize:(NSSize)size;

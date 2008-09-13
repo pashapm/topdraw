@@ -41,7 +41,7 @@ static NSString *kInstalledScriptsKey = @"installed";
     return;
   
   // Launch a task to unzip
-  NSString *destinationPath = [Exporter scriptStorageDirectory];
+  NSString *destinationPath = [Exporter scriptDirectory];
   NSTask *unzipTask = [[NSTask alloc] init];
   [unzipTask setLaunchPath:@"/usr/bin/unzip"];
   NSArray *args = [NSArray arrayWithObjects:

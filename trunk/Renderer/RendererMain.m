@@ -203,7 +203,8 @@ static void SetupOptions(int argc, const char *argv[], Options *options) {
       }
         
       case 'n': {
-        options->name = [[NSString stringWithUTF8String:optarg] retain];
+        options->name = [[[NSString stringWithUTF8String:optarg]
+                          stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] copy];
         break;
       }
         

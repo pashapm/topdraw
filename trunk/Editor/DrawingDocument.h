@@ -33,6 +33,7 @@ extern NSString *DrawingDocumentNewImageNotification;
   NSString *imagePath_;
   Renderer *renderer_;
   BOOL isExporting_;
+  NSTimer *progressTimer_;
 }
 
 //------------------------------------------------------------------------------
@@ -49,5 +50,6 @@ extern NSString *DrawingDocumentNewImageNotification;
 + (NSColor *)errorHighlightColor;
 
 - (CGImageRef)image;
+- (NSString *)name;
 
 @end
