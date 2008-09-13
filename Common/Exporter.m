@@ -19,47 +19,48 @@ static const int kMaxCachedDrawings = 10;
 
 @implementation Exporter
 //------------------------------------------------------------------------------
-+ (NSString *)baseStorageDirectory {
-  NSString *result = nil;
++ (NSString *)supportDirectory:(NSString *)subdir {
+  NSString *path = nil;
   NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory,
                                                        NSUserDomainMask, YES);
   
   if ([paths count]) {
     NSString *dir = [paths objectAtIndex:0];
-    result = [dir stringByAppendingPathComponent:@"Google/TopDraw"];
+    path = [dir stringByAppendingPathComponent:@"Google/TopDraw"];
     NSError *error = nil;
     
-    if (![[NSFileManager defaultManager] createDirectoryAtPath:result withIntermediateDirectories:YES 
+    if (subdir)
+      path = [path stringByAppendingPathComponent:subdir];
+    
+    if (![[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES 
                                                     attributes:nil error:&error]) {
-      MethodLog("Unable to create %@: %@", result, [error localizedDescription]);
+      MethodLog("Unable to create %@: %@", path, [error localizedDescription]);
       return nil;
     }
   }
   
-  return result;
-}
-
-//------------------------------------------------------------------------------
-+ (NSString *)imageStorageDirectory {
-  NSString *base = [self baseStorageDirectory];
-
-  // We'll store the images in the base
-  return base;
-}
-
-//------------------------------------------------------------------------------
-+ (NSString *)scriptStorageDirectory {
-  NSString *base = [self baseStorageDirectory];
-  NSString *path = [base stringByAppendingPathComponent:@"Scripts"];
-  NSError *error = nil;
-  
-  if (![[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES 
-                                                  attributes:nil error:&error]) {
-    MethodLog("Unable to create %@: %@", path, [error localizedDescription]);
-    path = nil;
-  }
-    
   return path;
+}
+
+//------------------------------------------------------------------------------
++ (NSString *)imageDirectory {
+  // We'll store the images in the base
+  return [self supportDirectory:nil];
+}
+
+//------------------------------------------------------------------------------
++ (NSString *)scriptDirectory {
+  return [self supportDirectory:@"Scripts"];
+}
+
+//------------------------------------------------------------------------------
++ (NSString *)storageDirectory {
+  return [self supportDirectory:@"Storage"];
+}
+
+//------------------------------------------------------------------------------
++ (NSString *)rendererDirectory {
+  return [self supportDirectory:@"Renderer"];
 }
 
 //------------------------------------------------------------------------------
@@ -67,7 +68,7 @@ static const int kMaxCachedDrawings = 10;
   NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
   NSInteger idxNumber = [ud integerForKey:@"NextIndex"];
 
-  if (++idxNumber > kMaxCachedDrawings)
+  if (++idxNumber >= kMaxCachedDrawings)
     idxNumber = 0;
   
   [ud setInteger:idxNumber forKey:@"NextIndex"];

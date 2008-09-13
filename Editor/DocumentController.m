@@ -25,7 +25,7 @@ NSString *kLastDocumentStorageFolder = @"lastFolder";
   BOOL isDir = NO;
   
   if (!([[NSFileManager defaultManager] fileExistsAtPath:folder isDirectory:&isDir] && isDir))
-    folder = [Exporter scriptStorageDirectory];
+    folder = [Exporter scriptDirectory];
 
   return folder;
 }

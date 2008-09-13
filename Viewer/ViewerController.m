@@ -50,7 +50,7 @@ static NSString *kScriptExtension = @"tds";
 //------------------------------------------------------------------------------
 + (void)initialize {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  NSString *scriptPath = [Exporter scriptStorageDirectory];
+  NSString *scriptPath = [Exporter scriptDirectory];
   NSColor *activeColor = [NSColor colorWithCalibratedRed:0 green:0.8 blue:0 alpha:0.3];
   NSColor *idleColor = [NSColor colorWithCalibratedRed:0 green:0.5 blue:0.5 alpha:0.2];
   NSData *activeData = [NSArchiver archivedDataWithRootObject:activeColor];
@@ -257,7 +257,7 @@ static NSString *kScriptExtension = @"tds";
     // Render
     NSData *data = [NSData dataWithContentsOfFile:scriptPath];
     NSString *source = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSString *dest = [[Exporter imageStorageDirectory] stringByAppendingPathComponent:[Exporter nextBaseName]];
+    NSString *dest = [[Exporter imageDirectory] stringByAppendingPathComponent:[Exporter nextBaseName]];
     [renderer_ setSource:source name:scriptName seed:seed];
     [source release];
     [renderer_ setShouldSplitImages:YES];

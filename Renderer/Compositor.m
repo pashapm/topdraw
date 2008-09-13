@@ -41,8 +41,18 @@ static inline BOOL IsEmptySize(NSSize size) {
 }
 
 static int kCurrentVersion = 1;
+static Compositor *sSharedCompositor = nil;
 
 @implementation Compositor
+//------------------------------------------------------------------------------
+#pragma mark -
+#pragma mark || Class ||
+//------------------------------------------------------------------------------
++ (Compositor *)sharedCompositor {
+  // There should always be a compositor by the time that anyone asks for it
+  return sSharedCompositor;
+}
+
 //------------------------------------------------------------------------------
 #pragma mark -
 #pragma mark || Runtime ||
@@ -73,6 +83,7 @@ static int kCurrentVersion = 1;
     source_ = [source copy];
     name_ = [name copy];
     requiredVersion_ = kCurrentVersion;
+    sSharedCompositor = self;
   }
   
   return self;

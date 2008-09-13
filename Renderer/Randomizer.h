@@ -16,7 +16,7 @@
 
 #import "RuntimeObject.h"
 
-// C-api to getting a float value
+// C-api to getting a float value between 0 and 1
 CGFloat RandomizerFloatValue();
 
 @interface Randomizer : RuntimeObject {
