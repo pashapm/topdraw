@@ -28,6 +28,7 @@ typedef struct {
   BOOL isValid;
   BOOL canTerminate;
   BOOL shouldSplit;
+  BOOL disableMenubarRendering;
   unsigned long seed;
   NSSize size;
 } Options;
@@ -69,6 +70,7 @@ static void Process(Options *options) {
   NSString *errorStr = nil;
   [c setLoggingCallback:Logging context:options];
   [c setMaximumSize:options->size];
+  [c setDisableMenubarRendering:options->disableMenubarRendering];
 
   @try {
     errorStr = [c evaluateWithSeed:options->seed];
@@ -118,7 +120,7 @@ static void Usage(int argc, const char *argv[], int errorCode) {
   NSString *path = [NSString stringWithUTF8String:argv[0]];
   const char *exe = [[path lastPathComponent] fileSystemRepresentation];
   fprintf(stderr, "Render a Top Draw Document into an output image\n"); 
-  fprintf(stderr, "Usage: %s [-r randomSeed][-t type][-q quality][-s][-o output-image][-m WxH][-n name] source-file\n", exe);
+  fprintf(stderr, "Usage: %s [-r randomSeed][-t type][-q quality][-s][-d][-o output-image][-m WxH][-n name] source-file\n", exe);
   fprintf(stderr, "\tsource-file: a Top Draw Document\n");
   fprintf(stderr, "\t-r: Specify the random seed to use\n");
   fprintf(stderr, "\t-f: Specify the type (default: jpeg; allowed: jpeg, png, tiff)\n");
@@ -127,6 +129,7 @@ static void Usage(int argc, const char *argv[], int errorCode) {
   fprintf(stderr, "\t-o: Output filename (default: source-file base + type)\n");
   fprintf(stderr, "\t-m: Specify maximum width and height (default: actual desktop)\n");
   fprintf(stderr, "\t-n: Name of the script (default: Untitled)\n");
+  fprintf(stderr, "\t-d: Disable rendering of menubar area (default: NO)\n");
   fprintf(stderr, "\t-h: Usage\n");
   fprintf(stderr, "\t-?: Usage\n");
   exit(errorCode);
@@ -146,12 +149,15 @@ static void SetupOptions(int argc, const char *argv[], Options *options) {
   options->seed = 42;
   options->quality = 1.0;
   options->type = @"jpeg";
-  options->shouldSplit = NO;
 
-  while ((ch = getopt(argc, (char * const *)argv, "n:m:sq:t:r:o:h?")) != -1) {
+  while ((ch = getopt(argc, (char * const *)argv, "dn:m:sq:t:r:o:h?")) != -1) {
     switch (ch) {
       case 's':
         options->shouldSplit = YES;
+        break;
+        
+      case 'd':
+        options->disableMenubarRendering = YES;
         break;
         
       case 'q':
