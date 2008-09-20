@@ -24,7 +24,11 @@ NSString *RendererLogKey = @"RendererLogKey";
 NSString *RendererTimeKey = @"RendererTimeKey";
 NSString *RendererSeedKey = @"RendererSeedKey";
 
+NSString *kDefaultScriptName = @"Built-in";
+NSString *kScriptExtension = @"tds";
+
 static NSString *kRendererName = @"TopDrawRenderer";
+static NSString *kCopiedRendererVersionKey = @"copiedRenderVersion";
 
 @interface Renderer(PrivateMethods)
 - (void)renderData:(NSNotification *)note;
@@ -167,30 +171,48 @@ static NSString *kRendererName = @"TopDrawRenderer";
 
 //------------------------------------------------------------------------------
 - (NSString *)rendererExecutablePath {
-  // Should be in application support
+  static BOOL hasCheckedRenderVersion = NO;
+  
+  // Should ultimately be in application support
   NSString *dir = [Exporter rendererDirectory];
-  NSString *path = [dir stringByAppendingPathComponent:kRendererName];
+  NSString *appSupportExePath = [dir stringByAppendingPathComponent:kRendererName];
+  
+  // Ensure that we have the up-to-date executable out there
+  if ([[NSFileManager defaultManager] isExecutableFileAtPath:appSupportExePath] && hasCheckedRenderVersion)
+    return appSupportExePath;
+  
+  // The source might be in the executable dir or at our top level
+  NSString *srcExePath = [[NSBundle bundleForClass:[self class]] pathForAuxiliaryExecutable:kRendererName];
 
-  if (![[NSFileManager defaultManager] isExecutableFileAtPath:path]) {
-    // Depending on the packaging, the renderer might be in the executable portion
-    // of the bundle, or it might be at the top level
-    NSString *src = [[NSBundle mainBundle] pathForAuxiliaryExecutable:kRendererName];
-    if (![[NSFileManager defaultManager] isExecutableFileAtPath:src]) {
-      src = [[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent];
-      src = [path stringByAppendingPathComponent:kRendererName];
-      
-      if (![[NSFileManager defaultManager] isExecutableFileAtPath:src]) {
-        NSLog(@"Unable to locate: %@", kRendererName);
-        src = nil;
-      }
-    }
-    
-    // Copy to the path
-    if (src)
-      [[NSFileManager defaultManager] copyPath:src toPath:path handler:nil];
+  if (![[NSFileManager defaultManager] isExecutableFileAtPath:srcExePath]) {
+    srcExePath = [[[NSBundle bundleForClass:[self class]] bundlePath] stringByDeletingLastPathComponent];
+    srcExePath = [srcExePath stringByAppendingPathComponent:kRendererName];
   }
   
-  return path;
+  BOOL copyToAppSupport = YES;
+  NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+  NSDictionary *rendererInfo = [[NSBundle bundleForClass:[self class]] infoDictionary];
+  NSString *rendererVersion = [rendererInfo objectForKey:@"CFBundleShortVersionString"];
+  
+  if ([[NSFileManager defaultManager] isExecutableFileAtPath:appSupportExePath]) {
+    NSString *copiedVersion = [ud objectForKey:kCopiedRendererVersionKey];
+    
+    if ([rendererVersion isEqualToString:copiedVersion])
+      copyToAppSupport = NO;
+  }
+    
+  hasCheckedRenderVersion = YES;
+    
+  // Copy to the path
+  if (srcExePath && copyToAppSupport) {
+    [[NSFileManager defaultManager] removeItemAtPath:appSupportExePath error:nil];
+    BOOL result = [[NSFileManager defaultManager] copyPath:srcExePath toPath:appSupportExePath handler:nil];
+    
+    if (result)
+      [ud setObject:rendererVersion forKey:kCopiedRendererVersionKey];
+  }
+  
+  return appSupportExePath;
 }
 
 //------------------------------------------------------------------------------
@@ -212,6 +234,35 @@ static NSString *kRendererName = @"TopDrawRenderer";
 //------------------------------------------------------------------------------
 + (NSArray *)allowedTypes {
   return [NSArray arrayWithObjects:@"jpeg", @"tiff", @"png", nil];
+}
+
+//------------------------------------------------------------------------------
++ (NSDictionary *)scriptsInDirectory:(NSString *)dirPath {
+  NSMutableDictionary *scripts = [NSMutableDictionary dictionary];
+  NSString *dir = [dirPath stringByStandardizingPath];
+  NSFileManager *mgr = [NSFileManager defaultManager];
+  NSArray *files = [mgr contentsOfDirectoryAtPath:dir error:nil];
+  int count = [files count];
+  for (int i = 0; i < count; ++i) {
+    NSString *path = [files objectAtIndex:i];
+    
+    if ([[path pathExtension] isEqualToString:kScriptExtension]) {
+      NSString *fullPath = [dir stringByAppendingPathComponent:path];
+      NSString *base = [path stringByDeletingPathExtension];
+      [scripts setObject:fullPath forKey:base];
+    }
+  }
+  
+  // Add our default in the case where there are no scripts
+  if (![scripts count]) {
+    NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:kDefaultScriptName 
+                                                     ofType:kScriptExtension];
+    
+    if (path)
+      [scripts setObject:path forKey:kDefaultScriptName];
+  }
+  
+  return [NSDictionary dictionaryWithDictionary:scripts];
 }
 
 //------------------------------------------------------------------------------
@@ -248,6 +299,11 @@ static NSString *kRendererName = @"TopDrawRenderer";
 //------------------------------------------------------------------------------
 - (void)setMaximumSize:(NSSize)size {
   size_ = size;
+}
+
+//------------------------------------------------------------------------------
+- (void)setDisableMenubarRendering:(BOOL)yn {
+  disableMenubarRendering_ = yn;
 }
 
 //------------------------------------------------------------------------------
@@ -301,6 +357,12 @@ static NSString *kRendererName = @"TopDrawRenderer";
   // Run the script and wait for a notification of its success
   CGFloat quality = 1.0;
   NSMutableArray *arguments = [NSMutableArray array];
+
+  if (disableMenubarRendering_)
+    [arguments addObject:@"-d"];
+  
+  if (shouldSplit_)
+    [arguments addObject:@"-s"];
   
   [arguments addObject:[NSString stringWithFormat:@"-r%d", seed_]];
   [arguments addObject:[NSString stringWithFormat:@"-o%@", outputPath_]];
@@ -315,9 +377,6 @@ static NSString *kRendererName = @"TopDrawRenderer";
     NSUInteger height = floor(size_.height);
     [arguments addObject:[NSString stringWithFormat:@"-m%dx%d", width, height]];
   }
-  
-  if (shouldSplit_)
-    [arguments addObject:@"-s"];
   
   [arguments addObject:sourcePath];
   

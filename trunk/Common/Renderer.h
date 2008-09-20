@@ -26,6 +26,9 @@ extern NSString *RendererLogKey;        // NSString of any logging message (empt
 extern NSString *RendererTimeKey;       // NSNumber of elapsed time of render
 extern NSString *RendererSeedKey;       // NSNumber of the seed used for randomization
 
+extern NSString *kDefaultScriptName;
+extern NSString *kScriptExtension;
+
 @interface Renderer : NSObject {
   void *reference_;  // Weak reference -- only using pointer value
   NSString *source_;
@@ -42,6 +45,7 @@ extern NSString *RendererSeedKey;       // NSNumber of the seed used for randomi
   NSTimeInterval endTime_;
   NSSize size_;
   BOOL cancelNotifications_;
+  BOOL disableMenubarRendering_;
 }
 
 //------------------------------------------------------------------------------
@@ -50,10 +54,13 @@ extern NSString *RendererSeedKey;       // NSNumber of the seed used for randomi
 + (unsigned long)randomSeedFromDevice;
 + (NSArray *)allowedTypes;
 
++ (NSDictionary *)scriptsInDirectory:(NSString *)dirPath;
+
 - (id)initWithReference:(void *)reference;
 
 - (void)setSource:(NSString *)source name:(NSString *)name seed:(unsigned long)seed;
 - (void)setMaximumSize:(NSSize)size;
+- (void)setDisableMenubarRendering:(BOOL)yn;
 
 // Output type: jpeg, png, or tiff
 - (void)setType:(NSString *)type;
