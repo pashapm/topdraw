@@ -40,9 +40,6 @@ static const int kRefreshUnitHours = 3;
 static const int kRefreshActionWake = 1;
 static const int kRefreshActionStartup = 2;
 
-static NSString *kDefaultScriptName = @"Built-in";
-static NSString *kScriptExtension = @"tds";
-
 @implementation ViewerController
 //------------------------------------------------------------------------------
 #pragma mark -
@@ -94,7 +91,7 @@ static NSString *kScriptExtension = @"tds";
     currentScriptDirectory_ = [path retain];
     
     [scripts_ autorelease];
-    scripts_ = [[ViewerController scriptsOfDirectoryAtPath:path] retain];
+    scripts_ = [[Renderer scriptsInDirectory:path] retain];
   }
 
   [selectedScript_ autorelease];
@@ -117,33 +114,6 @@ static NSString *kScriptExtension = @"tds";
   [statusItemView_ setNeedsDisplay:YES];
 }
 
-//------------------------------------------------------------------------------
-+ (NSDictionary *)scriptsOfDirectoryAtPath:(NSString *)path {
-  NSMutableDictionary *scripts = [NSMutableDictionary dictionary];
-  NSString *dir = [path stringByStandardizingPath];
-  NSFileManager *mgr = [NSFileManager defaultManager];
-  NSArray *files = [mgr contentsOfDirectoryAtPath:dir error:nil];
-  int count = [files count];
-  for (int i = 0; i < count; ++i) {
-    NSString *path = [files objectAtIndex:i];
-    
-    if ([[path pathExtension] isEqualToString:kScriptExtension]) {
-      NSString *fullPath = [dir stringByAppendingPathComponent:path];
-      NSString *base = [path stringByDeletingPathExtension];
-      [scripts setObject:fullPath forKey:base];
-    }
-  }
-  
-  // Add our default in the case where there are no scripts
-  if (![scripts count]) {
-    NSString *path = [[NSBundle mainBundle] pathForResource:kDefaultScriptName ofType:kScriptExtension];
-    
-    if (path)
-      [scripts setObject:path forKey:kDefaultScriptName];
-  }
-  
-  return [NSDictionary dictionaryWithDictionary:scripts];
-}
 
 //------------------------------------------------------------------------------
 - (void)statusClicked:(id)sender {

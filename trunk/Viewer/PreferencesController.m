@@ -13,7 +13,7 @@
 // the License.
 
 #import "PreferencesController.h"
-#import "ViewerController.h"
+#import "Renderer.h"
 
 NSString *PreferencesControllerDidUpdate = @"PreferencesControllerDidUpdate";
 
@@ -63,7 +63,7 @@ NSString *PreferencesControllerDidUpdate = @"PreferencesControllerDidUpdate";
 - (void)updateScripts {
   NSString *path = [[self scriptDirectory] path];
   [scripts_ autorelease];
-  scripts_ = [[ViewerController scriptsOfDirectoryAtPath:path] retain];
+  scripts_ = [[Renderer scriptsInDirectory:path] retain];
 }
 
 //------------------------------------------------------------------------------
