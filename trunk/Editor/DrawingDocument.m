@@ -335,7 +335,7 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
   [renderer_ setDestination:nil];
   [renderer_ setMaximumSize:NSZeroSize];
   [renderer_ renderInBackgroundAndNotify];
-  
+
   // Fire an update timer
   progressTimer_ = [[NSTimer scheduledTimerWithTimeInterval:0.5 target:self 
                                                    selector:@selector(updateProgress) userInfo:nil repeats:YES] retain];
@@ -384,6 +384,8 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
   [renderer_ setDestination:[panel filename]];
   [renderer_ setMaximumSize:size];
   [renderer_ renderInBackgroundAndNotify];
+  [renderer_ setDisableMenubarRendering:YES];
+  
   [self updateProgress];
 }  
 
