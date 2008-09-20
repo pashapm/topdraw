@@ -40,8 +40,6 @@
   int renderCount_;
 }
 
-+ (NSDictionary *)scriptsOfDirectoryAtPath:(NSString *)path;
-
 - (IBAction)about:(id)sender;
 - (IBAction)renderImmediately:(id)sender;
 - (IBAction)preferences:(id)sender;
