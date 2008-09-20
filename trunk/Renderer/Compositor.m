@@ -217,7 +217,8 @@ static Compositor *sSharedCompositor = nil;
   }
   
   // Draw the menubar
-  CGContextDrawImage(dest, [menubar_ cgRectFrame], [menubar_ cgImage]);
+  if (!disableMenubarRendering_)
+    CGContextDrawImage(dest, [menubar_ cgRectFrame], [menubar_ cgImage]);
     
   return [desktop_ cgImage];
 }
@@ -352,6 +353,11 @@ static Compositor *sSharedCompositor = nil;
 - (void)setLoggingCallback:(LoggingCB)cb context:(void *)context {
   loggingCallback_ = cb;
   loggingCallbackContext_ = context;
+}
+
+//------------------------------------------------------------------------------
+- (void)setDisableMenubarRendering:(BOOL)yn {
+  disableMenubarRendering_ = yn;
 }
 
 @end

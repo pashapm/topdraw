@@ -35,6 +35,7 @@ typedef void (*LoggingCB)(const char *msg, void *context);
   NSSize size_;
   int requiredVersion_;
   Runtime *activeRuntime_;  // Weak
+  BOOL disableMenubarRendering_;
 }
 
 + (Compositor *)sharedCompositor;
@@ -58,5 +59,7 @@ typedef void (*LoggingCB)(const char *msg, void *context);
 - (NSUInteger)randomSeed;
 
 - (void)setLoggingCallback:(LoggingCB)cb context:(void *)context;
+
+- (void)setDisableMenubarRendering:(BOOL)yn;
 
 @end
