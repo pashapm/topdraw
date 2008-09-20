@@ -27,6 +27,12 @@
 		9B1164000E47BCB100C230D5 /* NSColor+Adjustment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1163FF0E47BCB100C230D5 /* NSColor+Adjustment.m */; };
 		9B1164010E47BCB100C230D5 /* NSColor+Adjustment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1163FF0E47BCB100C230D5 /* NSColor+Adjustment.m */; };
 		9B296FB10E43EC0F00D89930 /* SimulatorObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B296FB00E43EC0F00D89930 /* SimulatorObject.m */; };
+		9B36045F0E84604600BD5E4F /* TopDrawSaverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B36045E0E84604600BD5E4F /* TopDrawSaverView.m */; };
+		9B3604610E84606B00BD5E4F /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B3604600E84606B00BD5E4F /* ScreenSaver.framework */; };
+		9B3604970E8462A100BD5E4F /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8FBF0E428F2100777579 /* Renderer.m */; };
+		9B3604980E8462BA00BD5E4F /* Exporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8F220E428D7200777579 /* Exporter.m */; };
+		9B3604A40E8462FD00BD5E4F /* TopDrawRenderer in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9B4A8EE00E428BAF00777579 /* TopDrawRenderer */; };
+		9B3604E30E8465F000BD5E4F /* Built-in.tds in Resources */ = {isa = PBXBuildFile; fileRef = 3CD4D7630E42F24200F37DC9 /* Built-in.tds */; };
 		9B4A8EAD0E427E3B00777579 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4A8EAA0E427E3B00777579 /* Accelerate.framework */; };
 		9B4A8EAE0E427E3B00777579 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4A8EAB0E427E3B00777579 /* JavaScriptCore.framework */; };
 		9B4A8EAF0E427E3B00777579 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4A8EAC0E427E3B00777579 /* QuartzCore.framework */; };
@@ -107,6 +113,13 @@
 			remoteGlobalIDString = 9B4A8EDF0E428BAF00777579;
 			remoteInfo = Renderer;
 		};
+		9B36049F0E8462DD00BD5E4F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9B4A8EDF0E428BAF00777579 /* Renderer */;
+			remoteInfo = Renderer;
+		};
 		9BF7988A0E72012C00181888 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
@@ -131,6 +144,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		9B3604B00E84630300BD5E4F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				9B3604A40E8462FD00BD5E4F /* TopDrawRenderer in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9B4A8FA10E428E9400777579 /* Copy Renderer */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -194,6 +217,11 @@
 		9B1163FF0E47BCB100C230D5 /* NSColor+Adjustment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Adjustment.m"; sourceTree = "<group>"; };
 		9B296FAF0E43EC0F00D89930 /* SimulatorObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatorObject.h; sourceTree = "<group>"; };
 		9B296FB00E43EC0F00D89930 /* SimulatorObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimulatorObject.m; sourceTree = "<group>"; };
+		9B3604400E845EC400BD5E4F /* TopDrawSaver.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TopDrawSaver.saver; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B3604410E845EC400BD5E4F /* TopDrawSaver-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TopDrawSaver-Info.plist"; sourceTree = "<group>"; };
+		9B36045D0E84604600BD5E4F /* TopDrawSaverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TopDrawSaverView.h; path = Saver/TopDrawSaverView.h; sourceTree = "<group>"; };
+		9B36045E0E84604600BD5E4F /* TopDrawSaverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TopDrawSaverView.m; path = Saver/TopDrawSaverView.m; sourceTree = "<group>"; };
+		9B3604600E84606B00BD5E4F /* ScreenSaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenSaver.framework; path = /System/Library/Frameworks/ScreenSaver.framework; sourceTree = "<absolute>"; };
 		9B4A8EAA0E427E3B00777579 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
 		9B4A8EAB0E427E3B00777579 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = /System/Library/Frameworks/JavaScriptCore.framework; sourceTree = "<absolute>"; };
 		9B4A8EAC0E427E3B00777579 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
@@ -293,6 +321,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9B36043E0E845EC400BD5E4F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B3604610E84606B00BD5E4F /* ScreenSaver.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9B4A8EDE0E428BAF00777579 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -325,6 +361,7 @@
 				3CD4D7440E42F08000F37DC9 /* TopDrawViewer.app */,
 				9BF798CA0E72082100181888 /* TopDraw.app */,
 				9BDEC45E0E72261300B82883 /* TopDrawEditor.app */,
+				9B3604400E845EC400BD5E4F /* TopDrawSaver.saver */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -339,6 +376,7 @@
 				2A37F4ABFDCFA73011CA2CEA /* TopDraw + Editor */,
 				2A37F4AFFDCFA73011CA2CEA /* Renderer */,
 				9B4A8EC70E4285FC00777579 /* Viewer */,
+				9B3604530E845EE700BD5E4F /* ScreenSaver */,
 				9B4A90200E4296F700777579 /* Icons */,
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
@@ -392,6 +430,7 @@
 				2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */,
 				9B4A8EAB0E427E3B00777579 /* JavaScriptCore.framework */,
 				9B4A8EAC0E427E3B00777579 /* QuartzCore.framework */,
+				9B3604600E84606B00BD5E4F /* ScreenSaver.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -413,6 +452,16 @@
 				32DBCF750370BD2300C91783 /* TopDraw_Prefix.pch */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		9B3604530E845EE700BD5E4F /* ScreenSaver */ = {
+			isa = PBXGroup;
+			children = (
+				9B3604410E845EC400BD5E4F /* TopDrawSaver-Info.plist */,
+				9B36045D0E84604600BD5E4F /* TopDrawSaverView.h */,
+				9B36045E0E84604600BD5E4F /* TopDrawSaverView.m */,
+			);
+			name = ScreenSaver;
 			sourceTree = "<group>";
 		};
 		9B4A8EC70E4285FC00777579 /* Viewer */ = {
@@ -545,6 +594,25 @@
 			productReference = 9BDEC45E0E72261300B82883 /* TopDrawEditor.app */;
 			productType = "com.apple.product-type.application";
 		};
+		9B36043F0E845EC400BD5E4F /* TopDrawSaver */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9B3604440E845EC400BD5E4F /* Build configuration list for PBXNativeTarget "TopDrawSaver" */;
+			buildPhases = (
+				9B36043C0E845EC400BD5E4F /* Resources */,
+				9B36043D0E845EC400BD5E4F /* Sources */,
+				9B36043E0E845EC400BD5E4F /* Frameworks */,
+				9B3604B00E84630300BD5E4F /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9B3604A00E8462DD00BD5E4F /* PBXTargetDependency */,
+			);
+			name = TopDrawSaver;
+			productName = TopDrawSaver;
+			productReference = 9B3604400E845EC400BD5E4F /* TopDrawSaver.saver */;
+			productType = "com.apple.product-type.bundle";
+		};
 		9B4A8EDF0E428BAF00777579 /* Renderer */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9B4A8EE40E428BCE00777579 /* Build configuration list for PBXNativeTarget "Renderer" */;
@@ -600,6 +668,7 @@
 				8D15AC270486D014006FF6A4 /* Editor */,
 				3CD4D7430E42F08000F37DC9 /* Viewer */,
 				9B4A8EDF0E428BAF00777579 /* Renderer */,
+				9B36043F0E845EC400BD5E4F /* TopDrawSaver */,
 			);
 		};
 /* End PBXProject section */
@@ -625,6 +694,14 @@
 				3C4325000E42FEAD006C46D5 /* DrawingDocument.xib in Resources */,
 				9BE37FD90E510E570083B486 /* Built-in.tds in Resources */,
 				3CBA06D30E6C97E00039D5EA /* TopDraw.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9B36043C0E845EC400BD5E4F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B3604E30E8465F000BD5E4F /* Built-in.tds in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -723,6 +800,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9B36043D0E845EC400BD5E4F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B36045F0E84604600BD5E4F /* TopDrawSaverView.m in Sources */,
+				9B3604970E8462A100BD5E4F /* Renderer.m in Sources */,
+				9B3604980E8462BA00BD5E4F /* Exporter.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9B4A8EDD0E428BAF00777579 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -783,6 +870,11 @@
 			isa = PBXTargetDependency;
 			target = 9B4A8EDF0E428BAF00777579 /* Renderer */;
 			targetProxy = 3CD4D5D30E42DD1300F37DC9 /* PBXContainerItemProxy */;
+		};
+		9B3604A00E8462DD00BD5E4F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9B4A8EDF0E428BAF00777579 /* Renderer */;
+			targetProxy = 9B36049F0E8462DD00BD5E4F /* PBXContainerItemProxy */;
 		};
 		9BF7988B0E72012C00181888 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -875,6 +967,58 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = TopDrawViewer;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		9B3604420E845EC400BD5E4F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9BC8E7B80E63A20800780CB6 /* Version.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Common/TopDraw_Prefix.pch;
+				INFOPLIST_FILE = "TopDrawSaver-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = TopDrawSaver;
+				WRAPPER_EXTENSION = saver;
+			};
+			name = Debug;
+		};
+		9B3604430E845EC400BD5E4F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9BC8E7B80E63A20800780CB6 /* Version.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Common/TopDraw_Prefix.pch;
+				INFOPLIST_FILE = "TopDrawSaver-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = TopDrawSaver;
+				WRAPPER_EXTENSION = saver;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1043,6 +1187,15 @@
 			buildConfigurations = (
 				3CD4D7470E42F08000F37DC9 /* Debug */,
 				3CD4D7480E42F08000F37DC9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9B3604440E845EC400BD5E4F /* Build configuration list for PBXNativeTarget "TopDrawSaver" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9B3604420E845EC400BD5E4F /* Debug */,
+				9B3604430E845EC400BD5E4F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
