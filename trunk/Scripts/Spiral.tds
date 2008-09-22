@@ -21,6 +21,14 @@ for (var x = 0; x < count; ++x) {
 	Spiral(pt, radiusRnd.intValue, radiusRnd.intValue, radiusIncRnd.floatValue);
 }
 
+// Add a motion blur for excitement
+var f = new Filter("CIMotionBlur");
+var angleRnd = new Randomizer(-1, 1);
+f.setKeyValue("inputAngle", Math.PI * angleRnd.floatValue);
+var blurRadiusRnd = new Randomizer(0, 20);
+f.setKeyValue("inputRadius", blurRadiusRnd.intValue);
+desktop.applyFilter(f);
+
 function Spiral(pt, startR, endR, radiusInc) {
 	var arcLength = Math.PI / startR;
 	var arc = 0;
