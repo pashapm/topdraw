@@ -55,6 +55,7 @@ extern NSString *kScriptExtension;
 + (NSArray *)allowedTypes;
 
 + (NSDictionary *)scriptsInDirectory:(NSString *)dirPath;
++ (NSString *)rendererName;
 
 - (id)initWithReference:(void *)reference;
 
