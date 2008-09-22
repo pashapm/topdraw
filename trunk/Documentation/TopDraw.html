@@ -26,7 +26,10 @@ The Preview window will also open.  If you choose the "Render" item from the Dra
 <img src="Images/preview.png"/>
 <p>
 If you like this image and want to install it on your desktop, you can choose the "Install onto Desktop" item from the Drawing menu.  The image file (or files if you have multiple displays) will be set as your desktop.  You can use System Preferences to set your desktop back to the original image if you change your mind.
-The most recent 10 images will be saved in ~/Library/Application Support/Google/TopDraw.
+The most recent 10 images will be saved in
+<pre>
+ ~/Library/Application Support/Google/TopDraw
+</pre>
 
 <h1>Menus</h1>
 
@@ -435,7 +438,7 @@ This class encapsulates Core Image filters.  Filters can be chained together to 
 </tr>
 
 <tr>
-<td class="Function">setValueForKey</td>
+<td class="Function">setKeyValue</td>
 <td class="FunctionDetails">key: String, value: Number | Color | [Number <span class="Optional">[, ... Number]</span></td>
 <td class="FunctionDetails">Specify a key/value pair.  The value can be a Number, Color, or comma separated list of numbers when needing to specify a NSNumber, CIColor, or CIVector for the filter parameter respectively.</td>
 <td class="FunctionDetails">void</td>
@@ -644,7 +647,10 @@ A raster Image object which can be constructed from an existing Layer or from th
 <td class="Function">exportImage</td>
 <td class="FunctionDetails">name: String <span class="Optional">[, type: String]</span></td>
 <td class="FunctionDetails">Create a file with the contents of this image.  The name can contain an extension which
-will define the output file type.  If specified, the type will control the output file type.  Supported formats / extensions are "png", "jpeg", and "tiff".  The image file will saved to the folder: <pre>~/Library/Application Support/Google/TopDraw/</pre></td>
+will define the output file type.  If specified, the type will control the output file type.  Supported formats / extensions are "png", "jpeg", and "tiff".  The image file will saved to the folder: 
+<pre>
+~/Library/Application Support/Google/TopDraw
+</pre></td>
 <td class="FunctionDetails">void</td>
 </tr>
 
@@ -1168,6 +1174,118 @@ sized noise may take an appreciable amount of time to create.
 
 </table>
 
+</div>
+
+<a name="Palette"></a>
+<h3>Palette</h3>
+<div class="Indented">
+Palettes contain a series of colors.  Any Color objects can be added to a palette and Colors can be
+retrieved randomly or by an index.  Additionally, <a href="http://kuler.adobe.com/">Adobe Kuler</a> colors can be loaded via the Internet.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">(none)</td>
+<td class="ConstructorDetails">Creates an empty Palette object.
+</td>
+</tr>
+<tr>
+<td class="ConstructorDetails">color: Color<span class="Optional">[, color2: Color, ...]</span></td>
+<td class="ConstructorDetails">Creates a Palette with the specified colors.
+</td>
+</tr>
+</table>
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">addColors</td>
+<td class="FunctionDetails">color: Color<span class="Optional">[, color2: Color, ...]</span></td>
+<td class="FunctionDetails">Add colors to the Palette.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function" rowspan="2">addKulerColors</td>
+<td class="FunctionDetails">"search", query: String, <span class="Optional">[, themeCount: Integer]</span></td>
+<td class="FunctionDetails">Perform a search for the query string.  The query can be modified with additional tags -- see 
+<a href="http://learn.adobe.com/wiki/display/kulerdev/B.+Feeds">Adobe's Documentation</a> regarding the
+definitions.  Each kuler theme contains 5 colors.  The default is to load 5 themes, for a total of 25 colors.<br>Example: this line will search for themes with the term "beach" and load the Palette with the first 10 (or less) found themes, for a total of 50 colors:
+<pre>
+addKulerColors("search", "beach", 10);
+</pre>
+This requests this from Adobe's site: <a href="http://kuler.adobe.com/kuler/API/rss/search.cfm?searchQuery=beach">search:beach</a>.  
+ 
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="FunctionDetails">"popular" | "rating" | "recent" | "random":String <span class="Optional">[, themeCount: Integer]</span></td>
+<td class="FunctionDetails">Load the Palette with themes that match one of the allowed search types
+ and limit to an optional number of themes.  The default is to load 5 themes.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">colorAtIndex</td>
+<td class="FunctionDetails">index: Integer</td>
+<td class="FunctionDetails">Return the Color object at the specified index, or null if there is no color
+at that index.
+</td>
+<td class="FunctionDetails">Color</td>
+</tr>
+
+</tr>
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">count</td>
+<td class="PropertyDetails">The number of Color objects in the Palette</td>
+<td class="PropertyDetails">integer</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
+<tr>
+<td class="Property">colors</td>
+<td class="PropertyDetails">An Array containing all of the Colors in the Palette.</td>
+<td class="PropertyDetails">Array</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
+<tr>
+<td class="Property">randomColor</td>
+<td class="PropertyDetails">Returns a randomly chosen Color from the Palette</td>
+<td class="PropertyDetails">Color</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
+</table>
 </div>
 
 <a name="Particles"></a>
@@ -1799,6 +1917,92 @@ addSimulatorObject() function.
 <td class="PropertyDetails">float</td>
 <td class="PropertyDetails">Read/Write</td>
 </tr>
+</table>
+
+</div>
+
+<a name="Storage"></a>
+<h3>Storage</h3>
+<div class="Indented">
+The Storage class provides a means of saving persistant information across invocation of a script. 
+A number or string can be associated with a string key.  The data is saved in:
+<pre>
+~/Library/Application Support/Google/TopDraw/Storage
+</pre>
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">(none)</td>
+<td class="ConstructorDetails">A Storage object which is associated with the name of the script file.
+</td>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">identifier: String</td>
+<td class="ConstructorDetails">A Storage object associated with identifier
+</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">setKeyValue</td>
+<td class="FunctionDetails">key: String, value: Number | String</td>
+<td class="FunctionDetails">Set the value for key.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">keyValue</td>
+<td class="FunctionDetails">key: String</td>
+<td class="FunctionDetails">Return the value for key.
+</td>
+<td class="FunctionDetails">Number | String</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">allKeys</td>
+<td class="PropertyDetails">An Array of all of the keys.</td>
+<td class="PropertyDetails">Array</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
+<tr>
+<td class="Property">allValues</td>
+<td class="PropertyDetails">An Array of all of the values.</td>
+<td class="PropertyDetails">Array</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
 </table>
 
 </div>
