@@ -203,7 +203,7 @@ static NSString *kOutputSizeKey = @"outputSize";
 
 //------------------------------------------------------------------------------
 + (NSSet *)methods {
-  return [NSSet setWithObjects:@"setValueForKey", @"toString", nil];
+  return [NSSet setWithObjects:@"setKeyValue", @"toString", nil];
 }
 
 //------------------------------------------------------------------------------
@@ -270,7 +270,7 @@ static NSString *kOutputSizeKey = @"outputSize";
 }
 
 //------------------------------------------------------------------------------
-- (void)setValueForKey:(NSArray *)arguments {
+- (void)setKeyValue:(NSArray *)arguments {
   int count = [arguments count];
   
   if (count < 2)

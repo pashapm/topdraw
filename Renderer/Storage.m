@@ -50,8 +50,13 @@
 }
 
 //------------------------------------------------------------------------------
++ (NSSet *)readOnlyProperties {
+  return [NSSet setWithObjects:@"allKeys", @"allValues", nil]; 
+}
+
+//------------------------------------------------------------------------------
 + (NSSet *)methods {
-  return [NSSet setWithObjects:@"setValueForKey", @"valueForKey",
+  return [NSSet setWithObjects:@"setKeyValue", @"keyValue",
           @"toString", nil];
 }
 
@@ -88,13 +93,13 @@
 }
 
 //------------------------------------------------------------------------------
-- (void)setValueForKey:(NSArray *)arguments {
+- (void)setKeyValue:(NSArray *)arguments {
   if ([arguments count] == 2) {
-    id value = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[NSString class]];
-    NSString *key = [RuntimeObject coerceObject:[arguments objectAtIndex:1] toClass:[NSString class]];
+    NSString *key = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[NSString class]];
+    id value = [RuntimeObject coerceObject:[arguments objectAtIndex:1] toClass:[NSString class]];
     
     if (!value)
-      value = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[NSNumber class]];
+      value = [RuntimeObject coerceObject:[arguments objectAtIndex:1] toClass:[NSNumber class]];
     
     if (value)
       [dictionary_ setObject:value forKey:key];
@@ -102,7 +107,7 @@
 }
 
 //------------------------------------------------------------------------------
-- (id)valueForKey:(NSArray *)arguments {
+- (id)keyValue:(NSArray *)arguments {
   if ([arguments count] == 1) {
     NSString *key = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[NSString class]];
     

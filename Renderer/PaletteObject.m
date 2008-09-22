@@ -39,6 +39,11 @@
 }
 
 //------------------------------------------------------------------------------
++ (NSSet *)readOnlyProperties {
+  return [NSSet setWithObjects:@"count", @"colors", @"randomColor", nil]; 
+}
+
+//------------------------------------------------------------------------------
 + (NSSet *)methods {
   return [NSSet setWithObjects:@"addColors", @"addKulerColors",
           @"colorAtIndex",
@@ -151,7 +156,7 @@
 
   if (argCount) {
     NSString *type = [[RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[NSString class]] lowercaseString];
-    NSInteger count = 20;
+    NSInteger count = 5;
     NSString *search = nil;
     NSString *urlStr = [baseURLStr stringByAppendingFormat:getFmt, type];
     nextArgIndex = 1;
