@@ -16,14 +16,17 @@
 #import "DrawingDocument.h"
 #import "Exporter.h"
 #import "Preview.h"
+#import "Renderer.h"
 
 static Controller *sController = nil;
 
 static NSString *kOpenedDocumentsKey = @"opened";
 static NSString *kInstalledScriptsKey = @"installed";
+static NSString *kCopiedRendererVersionKey = @"copiedRenderVersion";
 
 @interface Controller (PrivateMethods)
 - (void)installScripts;
+- (void)installRenderer;
 - (NSString *)viewerPath;
 - (LSSharedFileListItemRef)viewerStartupItemRef;
 @end
@@ -34,31 +37,88 @@ static NSString *kInstalledScriptsKey = @"installed";
 #pragma mark || Private ||
 //------------------------------------------------------------------------------
 - (void)installScripts {
+  NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+
+  if ([ud boolForKey:kInstalledScriptsKey])
+    return;
+  
   NSString *scriptsArchivePath = [[NSBundle mainBundle] pathForResource:@"Scripts" ofType:@"zip"];
   
   // If we don't have any scripts, just bail
-  if (![[NSFileManager defaultManager] fileExistsAtPath:scriptsArchivePath])
+  if (![[NSFileManager defaultManager] fileExistsAtPath:scriptsArchivePath]) {
+    NSLog(@"Missing scripts");
     return;
+  }
   
   // Launch a task to unzip
   NSString *destinationPath = [Exporter scriptDirectory];
   NSTask *unzipTask = [[NSTask alloc] init];
   [unzipTask setLaunchPath:@"/usr/bin/unzip"];
   NSArray *args = [NSArray arrayWithObjects:
-                   @"-uq",
+                   @"-oq",
                    scriptsArchivePath,
                    nil];
   [unzipTask setArguments:args];
   [unzipTask setCurrentDirectoryPath:destinationPath];
   [unzipTask launch];
   [unzipTask waitUntilExit];
-  
   [unzipTask release];
+
+  [ud setBool:YES forKey:kInstalledScriptsKey];
+}
+
+//------------------------------------------------------------------------------
+- (void)installRenderer {
+  NSString *rendererArchivePath = [[NSBundle mainBundle] pathForResource:@"TopDrawRenderer" ofType:@"zip"];
+  
+  if (![[NSFileManager defaultManager] fileExistsAtPath:rendererArchivePath]) {
+    NSLog(@"Missing renderer archive");
+    return;
+  }
+
+  // Check and see if we've got a version that matches ours
+  NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+  NSDictionary *rendererInfo = [[NSBundle bundleForClass:[self class]] infoDictionary];
+  NSString *rendererVersion = [rendererInfo objectForKey:@"CFBundleShortVersionString"];
+  NSString *rendererDir = [Exporter rendererDirectory];
+  NSString *rendererPath = [rendererDir stringByAppendingPathComponent:[Renderer rendererName]];
+
+  BOOL copyToAppSupport = YES;
+
+  if ([[NSFileManager defaultManager] isExecutableFileAtPath:rendererPath]) {
+    NSString *copiedVersion = [ud objectForKey:kCopiedRendererVersionKey];
+  
+    if ([rendererVersion isEqualToString:copiedVersion])
+      copyToAppSupport = NO;
+  }
+  
+#if DEBUG
+  // Always copy for debug
+  copyToAppSupport = YES;
+#endif
+  
+  if (!copyToAppSupport)
+    return;
+  
+  // Launch a task to unzip
+  NSTask *unzipTask = [[NSTask alloc] init];
+  [unzipTask setLaunchPath:@"/usr/bin/unzip"];
+  NSArray *args = [NSArray arrayWithObjects:
+                   @"-oq",
+                   rendererArchivePath,
+                   nil];
+  [unzipTask setArguments:args];
+  [unzipTask setCurrentDirectoryPath:rendererDir];
+  [unzipTask launch];
+  [unzipTask waitUntilExit];
+  [unzipTask release];
+  
+  [ud setObject:rendererVersion forKey:kCopiedRendererVersionKey];
 }
 
 //------------------------------------------------------------------------------
 - (NSString *)viewerPath {
-  return [[NSBundle mainBundle] pathForAuxiliaryExecutable:@"TopDrawViewer.app"];
+  return [[NSBundle mainBundle] pathForAuxiliaryExecutable:@"Top Draw Viewer.app"];
 }
 
 //------------------------------------------------------------------------------
@@ -153,18 +213,31 @@ static NSString *kInstalledScriptsKey = @"installed";
 }
 
 //------------------------------------------------------------------------------
+- (IBAction)about:(id)sender {
+  [NSApp activateIgnoringOtherApps:YES];
+  
+  NSString *htmlStr = @"<html><a href='http://code.google.com/p/topdraw'>http://code.google.com/p/topdraw</a></html>";
+  NSData *htmlData = [htmlStr dataUsingEncoding:NSUTF8StringEncoding];
+  NSAttributedString *str = [[NSAttributedString alloc] initWithHTML:htmlData documentAttributes:nil];
+  NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                           str, @"Credits",
+                           nil];
+  [str release];
+  [NSApp orderFrontStandardAboutPanelWithOptions:options];
+}
+
+//------------------------------------------------------------------------------
 #pragma mark -
 #pragma mark || NSObject ||
 //------------------------------------------------------------------------------
 - (void)awakeFromNib {
   sController = self;
   
-  // Install our scripts if we're launching the first time
-  NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-  if (![ud boolForKey:kInstalledScriptsKey]) {
-    [self installScripts];
-    [ud setBool:YES forKey:kInstalledScriptsKey];
-  }
+  // Install our scripts
+  [self installScripts];
+  
+  // Always check to see if we've got the latest renderer
+  [self installRenderer];
 }
 
 //------------------------------------------------------------------------------
