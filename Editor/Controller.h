@@ -41,4 +41,6 @@
 - (IBAction)launchViewer:(id)sender;
 - (IBAction)launchViewerOnStartup:(id)sender;
 
+- (IBAction)about:(id)sender;
+
 @end
