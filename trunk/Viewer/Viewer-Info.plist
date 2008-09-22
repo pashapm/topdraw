@@ -9,7 +9,7 @@
 	<key>CFBundleIconFile</key>
 	<string>TopDraw</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.google.TopDrawViewer</string>
+	<string>com.google.${PRODUCT_NAME:identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
