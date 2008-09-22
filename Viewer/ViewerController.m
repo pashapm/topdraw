@@ -285,7 +285,16 @@ static const int kRefreshActionStartup = 2;
 #pragma mark || Actions ||
 //------------------------------------------------------------------------------
 - (IBAction)about:(id)sender {
-  [NSApp orderFrontStandardAboutPanel:sender];
+  [NSApp activateIgnoringOtherApps:YES];
+
+  NSString *htmlStr = @"<html><a href='http://code.google.com/p/topdraw'>http://code.google.com/p/topdraw</a></html>";
+  NSData *htmlData = [htmlStr dataUsingEncoding:NSUTF8StringEncoding];
+  NSAttributedString *str = [[NSAttributedString alloc] initWithHTML:htmlData documentAttributes:nil];
+  NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                           str, @"Credits",
+                           nil];
+  [str release];
+  [NSApp orderFrontStandardAboutPanelWithOptions:options];
 }
 
 //------------------------------------------------------------------------------
