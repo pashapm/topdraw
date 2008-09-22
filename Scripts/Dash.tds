@@ -23,7 +23,7 @@ for (var i = 0; i < count; ++i) {
 // Blur it out
 var f = new Filter("CIGaussianBlur");
 var r = new Randomizer(2, 20);
-f.setValueForKey("inputRadius", r.intValue);
+f.setKeyValue("inputRadius", r.intValue);
 desktop.applyFilter(f);
 
 function UpdateDash() {

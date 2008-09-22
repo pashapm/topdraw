@@ -53,11 +53,11 @@ var f;
 var filterRnd = new Randomizer;
 if (filterRnd.booleanValue) {
 	f = new Filter("CIGaussianBlur"); 
-	f.setValueForKey("inputRadius", (2 + filterRnd.floatValue * 10));
+	f.setKeyValue("inputRadius", (2 + filterRnd.floatValue * 10));
 } else {
 	f = new Filter("CIMotionBlur"); 
-	f.setValueForKey("inputRadius", 20);
-	f.setValueForKey("inputAngle", Math.PI * (1 - filterRnd.floatValue * 2));
+	f.setKeyValue("inputRadius", 20);
+	f.setKeyValue("inputAngle", Math.PI * (1 - filterRnd.floatValue * 2));
 }
 
 desktop.applyFilter(f);

@@ -7,6 +7,16 @@ desktop.lineJoin = "round";
 
 Lines();
 
+// Add filter for some extra glow-i-ness
+var bloom = new Filter("CIBloom");
+bloom.setKeyValue("inputRadius", 80);
+bloom.setKeyValue("inputIntensity", 2);
+
+// Blur
+var blur = new Filter("CIGaussianBlur");
+bloom.inputFilter = blur;
+desktop.applyFilter(bloom);
+
 function Lines() {
 	var db = desktop.bounds;
 	var displacementRnd = new Randomizer(-150, 150);
@@ -44,15 +54,3 @@ function Lines() {
 		desktop.stroke();
 	}
 }
-
-
-// Add filter for some extra glow-i-ness
-var bloom = new Filter("CIBloom");
-bloom.setValueForKey("inputRadius", 80);
-bloom.setValueForKey("inputIntensity", 2);
-
-// Blur
-var blur = new Filter("CIGaussianBlur");
-bloom.inputFilter = blur;
-desktop.applyFilter(bloom);
-

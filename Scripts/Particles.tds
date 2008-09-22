@@ -73,14 +73,14 @@ simulator.runInLayer(simulatorLayer, 150);
 
 // Bloom
 var bloom = new Filter("CIBloom");
-bloom.setValueForKey("inputRadius", 80);
-bloom.setValueForKey("inputIntensity", 3);
+bloom.setKeyValue("inputRadius", 80);
+bloom.setKeyValue("inputIntensity", 3);
 
 // Blur
 var blur = new Filter("CIBoxBlur");
-blur.setValueForKey("inputRadius", 16);
+blur.setKeyValue("inputRadius", 16);
 blur.inputFilter = bloom;
-//simulatorLayer.applyFilter(blur);
+simulatorLayer.applyFilter(blur);
 
 
 

@@ -1,0 +1,16 @@
+// Choose 4 random colors
+var p = new Palette;
+p.addKulerColors("random", 1);
+
+// Render the menubar Layer with a Gradient.
+var gradient = new Gradient(p.colorAtIndex(0), p.colorAtIndex(2), p.colorAtIndex(3));
+menubar.fillLayer(gradient);
+
+var bottomLeft = p.colorAtIndex(0);
+var topLeft = p.colorAtIndex(1);
+var topRight = p.colorAtIndex(2);
+var bottomRight = p.colorAtIndex(3);
+
+// Fill the desktop Layer with a rectangle colored in each corner
+desktop.coloredRect(desktop.bounds, bottomLeft, topLeft, topRight, bottomRight);
+
