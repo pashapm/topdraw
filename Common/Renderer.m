@@ -28,7 +28,6 @@ NSString *kDefaultScriptName = @"Built-in";
 NSString *kScriptExtension = @"tds";
 
 static NSString *kRendererName = @"TopDrawRenderer";
-static NSString *kCopiedRendererVersionKey = @"copiedRenderVersion";
 
 @interface Renderer(PrivateMethods)
 - (void)renderData:(NSNotification *)note;
@@ -171,48 +170,15 @@ static NSString *kCopiedRendererVersionKey = @"copiedRenderVersion";
 
 //------------------------------------------------------------------------------
 - (NSString *)rendererExecutablePath {
-  static BOOL hasCheckedRenderVersion = NO;
-  
-  // Should ultimately be in application support
   NSString *dir = [Exporter rendererDirectory];
-  NSString *appSupportExePath = [dir stringByAppendingPathComponent:kRendererName];
+  NSString *path = [dir stringByAppendingPathComponent:kRendererName];
   
-  // Ensure that we have the up-to-date executable out there
-  if ([[NSFileManager defaultManager] isExecutableFileAtPath:appSupportExePath] && hasCheckedRenderVersion)
-    return appSupportExePath;
+  if ([[NSFileManager defaultManager] isExecutableFileAtPath:path])
+    return path;
   
-  // The source might be in the executable dir or at our top level
-  NSString *srcExePath = [[NSBundle bundleForClass:[self class]] pathForAuxiliaryExecutable:kRendererName];
-
-  if (![[NSFileManager defaultManager] isExecutableFileAtPath:srcExePath]) {
-    srcExePath = [[[NSBundle bundleForClass:[self class]] bundlePath] stringByDeletingLastPathComponent];
-    srcExePath = [srcExePath stringByAppendingPathComponent:kRendererName];
-  }
+  NSLog(@"TopDrawRenderer has not been installed!");
   
-  BOOL copyToAppSupport = YES;
-  NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-  NSDictionary *rendererInfo = [[NSBundle bundleForClass:[self class]] infoDictionary];
-  NSString *rendererVersion = [rendererInfo objectForKey:@"CFBundleShortVersionString"];
-  
-  if ([[NSFileManager defaultManager] isExecutableFileAtPath:appSupportExePath]) {
-    NSString *copiedVersion = [ud objectForKey:kCopiedRendererVersionKey];
-    
-    if ([rendererVersion isEqualToString:copiedVersion])
-      copyToAppSupport = NO;
-  }
-    
-  hasCheckedRenderVersion = YES;
-    
-  // Copy to the path
-  if (srcExePath && copyToAppSupport) {
-    [[NSFileManager defaultManager] removeItemAtPath:appSupportExePath error:nil];
-    BOOL result = [[NSFileManager defaultManager] copyPath:srcExePath toPath:appSupportExePath handler:nil];
-    
-    if (result)
-      [ud setObject:rendererVersion forKey:kCopiedRendererVersionKey];
-  }
-  
-  return appSupportExePath;
+  return nil;
 }
 
 //------------------------------------------------------------------------------
@@ -263,6 +229,11 @@ static NSString *kCopiedRendererVersionKey = @"copiedRenderVersion";
   }
   
   return [NSDictionary dictionaryWithDictionary:scripts];
+}
+
+//------------------------------------------------------------------------------
++ (NSString *)rendererName {
+  return kRendererName;
 }
 
 //------------------------------------------------------------------------------
