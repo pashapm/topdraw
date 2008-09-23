@@ -24,6 +24,8 @@ static NSString *kOpenedDocumentsKey = @"opened";
 static NSString *kInstalledScriptsKey = @"installed";
 static NSString *kCopiedRendererVersionKey = @"copiedRenderVersion";
 
+static NSString *kScreenSaverName = @"Top Draw.saver";
+
 @interface Controller (PrivateMethods)
 - (void)installScripts;
 - (void)installRenderer;
@@ -210,6 +212,19 @@ static NSString *kCopiedRendererVersionKey = @"copiedRenderVersion";
   
   if (startupList)
     CFRelease(startupList);
+}
+
+//------------------------------------------------------------------------------
+- (IBAction)installScreenSaver:(id)sender {
+  NSString *destDir = [@"~/Library/Screen Savers" stringByStandardizingPath];
+  NSString *destPath = [destDir stringByAppendingPathComponent:kScreenSaverName];
+  NSString *srcPath = [[NSBundle mainBundle] pathForAuxiliaryExecutable:kScreenSaverName];
+  
+  // Setup a symbolic link.  Aliases do not seem to work.
+  [[NSFileManager defaultManager] createSymbolicLinkAtPath:destPath pathContent:srcPath];
+  
+  // Now open up the screen savers panel
+  [[NSWorkspace sharedWorkspace] openFile:@"/System/Library/PreferencePanes/ScreenSaver.prefPane"];
 }
 
 //------------------------------------------------------------------------------

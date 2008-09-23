@@ -40,6 +40,7 @@
 
 - (IBAction)launchViewer:(id)sender;
 - (IBAction)launchViewerOnStartup:(id)sender;
+- (IBAction)installScreenSaver:(id)sender;
 
 - (IBAction)about:(id)sender;
 
