@@ -23,6 +23,7 @@ static Controller *sController = nil;
 static NSString *kOpenedDocumentsKey = @"opened";
 static NSString *kInstalledScriptsKey = @"installed";
 static NSString *kCopiedRendererVersionKey = @"copiedRenderVersion";
+static NSString *kShowAtLaunchKey = @"showAtLaunch";
 
 static NSString *kScreenSaverName = @"Top Draw.saver";
 
@@ -37,6 +38,16 @@ static NSString *kScreenSaverName = @"Top Draw.saver";
 //------------------------------------------------------------------------------
 #pragma mark -
 #pragma mark || Private ||
+//------------------------------------------------------------------------------
++ (void)initialize {
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  NSDictionary *factoryValues = 
+  [NSDictionary dictionaryWithObjectsAndKeys:
+   [NSNumber numberWithBool:YES], kShowAtLaunchKey,
+   nil];
+  [defaults registerDefaults:factoryValues];
+}
+
 //------------------------------------------------------------------------------
 - (void)installScripts {
   NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
@@ -242,12 +253,25 @@ static NSString *kScreenSaverName = @"Top Draw.saver";
 }
 
 //------------------------------------------------------------------------------
+- (IBAction)getStartedWithViewer:(id)sender {
+  [self launchViewer:sender];
+  [NSApp terminate:sender];
+}
+
+//------------------------------------------------------------------------------
+- (IBAction)getStartedWithEditor:(id)sender {
+  [preview_ showPreview];
+  [[NSDocumentController sharedDocumentController] newDocument:sender];
+  [welcomeWindow_ close];
+}
+
+//------------------------------------------------------------------------------
 #pragma mark -
 #pragma mark || NSObject ||
 //------------------------------------------------------------------------------
 - (void)awakeFromNib {
   sController = self;
-  
+
   // Install our scripts
   [self installScripts];
   
@@ -260,6 +284,10 @@ static NSString *kScreenSaverName = @"Top Draw.saver";
 #pragma mark || NSApplicationDelegate ||
 //------------------------------------------------------------------------------
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)app {
+  // If we're showing the launch dialog at startup
+  if ([[NSUserDefaults standardUserDefaults] boolForKey:kShowAtLaunchKey])
+    return NO;
+  
   NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
   NSArray *openedDocuments = [ud objectForKey:kOpenedDocumentsKey];
   
@@ -298,8 +326,12 @@ static NSString *kScreenSaverName = @"Top Draw.saver";
       NSLog(@"Error: %@", error);
   }
   
-  // Always show the preview
-  [preview_ showPreview];
+  if ([ud boolForKey:kShowAtLaunchKey]) {
+    [welcomeWindow_ center];
+    [welcomeWindow_ orderFront:self];
+  } else {
+    [preview_ showPreview];
+  }
 }
 
 //------------------------------------------------------------------------------

@@ -23,6 +23,7 @@
  @protected
   IBOutlet Preview *preview_;
   IBOutlet Logging *logging_;
+  IBOutlet NSWindow *welcomeWindow_;
 }
 
 //------------------------------------------------------------------------------
@@ -43,5 +44,8 @@
 - (IBAction)installScreenSaver:(id)sender;
 
 - (IBAction)about:(id)sender;
+
+- (IBAction)getStartedWithViewer:(id)sender;
+- (IBAction)getStartedWithEditor:(id)sender;
 
 @end
