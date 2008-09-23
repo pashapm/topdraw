@@ -9,9 +9,11 @@
 Top Draw Viewer is the companion program to the <a href="TopDraw.html">Top Draw</a>.
 Both programs will evaluate a JavaScript based script to create an image
 that can be set as the Desktop Picture.  Scripts can be downloaded or created and placed
-in a common folder on your computer (typically ~/Library/Application Support/Google/TopDraw).
-Several example scripts are included with the application and automatically installed
-into that folder.
+in a common folder on your computer.  Several example scripts are included with the application and automatically installed into:
+<pre>
+~/Library/Application Support/Google/TopDraw/Scripts
+</pre>
+
 <p>
 The application runs as a Status Item, which means that there is no front window
 or icon in the dock.  Instead, there will be a colored shape in the menu bar to indicate the
@@ -43,7 +45,7 @@ choose another item from the popup menu list.</td>
 <td class="MenuItem" style="color: gray;">Render...</td>
 <td class="Menu">The name of the currently
 active script and the remaining time until it is rendered is listed.  In this example,
-the script "Pinwheel" will be rendered and installed as your desktop in about 1 minute and 10 seconds.</td>
+the script "Pattern" will be rendered and installed as your desktop in about 4 minutes and 36 seconds.</td>
 </tr>
 
 <tr>
@@ -54,6 +56,10 @@ the script "Pinwheel" will be rendered and installed as your desktop in about 1 
 <tr>
 <td class="MenuItem">Launch Top Draw</td>
 <td class="Menu">Open the Top Draw application.</td>
+</tr>
+<tr>
+<td class="MenuItem">Help with Top Draw Viewer</td>
+<td class="Menu">This documentation.</td>
 </tr>
 
 <tr>
@@ -89,7 +95,7 @@ to be used by Top Draw when rendering Desktop images.  Only files ending in .tds
 
 <tr>
 <td class="PreferenceItem">Script</td>
-<td class="Preferences">The chosen script to render.  If you've selected the "Randomly chosen" checkbox, one of the scripts contained in your Script Folder will be chosen at random for each rendering.  Also, the Script menu will be disabled.
+<td class="Preferences">The chosen script to render.  If you've selected the "Randomly chosen" checkbox, one of the scripts contained in your Script Folder will be chosen at random for each rendering.  Also, the Script menu will be disabled.  Clicking on the "Try it!" button to cause the currently selected (or a random one if configured) script to render.
 </td>
 </tr>
 
@@ -113,7 +119,11 @@ when idle or actively rendering a desktop.  You may also choose a pleasing geome
 <h1>Top Draw Scripts</h1>
 Top Draw reads Top Draw Script (.tds) files and renders them into images which are installed on your desktop.  The Top Draw application
 contains a ZIP archive of several example script files.  When the program is first launched, it will extract and copy the scripts
-into ~/Library/Application Support/Google/TopDraw/Scripts.
+into 
+<pre>
+~/Library/Application Support/Google/TopDraw/Scripts
+</pre>
+
 <p>
 If you're not interested in programming, you can visit the Top Draw project <a href="http://code.google.com/p/topdraw/wiki/Gallery">Wiki Gallery</a> site and download new script files.  You can then copy those files into the Script Folder that you've configured Top Draw to use.  If you open the Preferences window, the new script(s) will be available for your selection.
 <p>
