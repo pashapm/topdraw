@@ -62,6 +62,9 @@ typedef enum {
 - (int)indicatorStyle;
 - (void)setIndicatorStyle:(int)tag;
 
+- (BOOL)showPreferencesAtLaunch;
+- (void)setShowPreferencesAtLaunch:(BOOL)show;
+
 - (void)show;
 
 @end
