@@ -23,7 +23,6 @@
 		9B3604610E84606B00BD5E4F /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B3604600E84606B00BD5E4F /* ScreenSaver.framework */; };
 		9B3604970E8462A100BD5E4F /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8FBF0E428F2100777579 /* Renderer.m */; };
 		9B3604980E8462BA00BD5E4F /* Exporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8F220E428D7200777579 /* Exporter.m */; };
-		9B3604A40E8462FD00BD5E4F /* TopDrawRenderer in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9B4A8EE00E428BAF00777579 /* TopDrawRenderer */; };
 		9B3604E30E8465F000BD5E4F /* Built-in.tds in Resources */ = {isa = PBXBuildFile; fileRef = 3CD4D7630E42F24200F37DC9 /* Built-in.tds */; };
 		9B4A8EE50E428BF000777579 /* NSColor+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8ED60E428B8400777579 /* NSColor+Random.m */; };
 		9B4A8EE60E428BF100777579 /* NSColor+String.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8ED40E428B8400777579 /* NSColor+String.m */; };
@@ -53,8 +52,10 @@
 		9B4A8F2C0E428D9C00777579 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4A8EAA0E427E3B00777579 /* Accelerate.framework */; };
 		9B5C07E90E799EB700F4B6BF /* PaletteObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5C07E80E799EB700F4B6BF /* PaletteObject.m */; };
 		9B5C08050E799F6A00F4B6BF /* Storage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5C08040E799F6A00F4B6BF /* Storage.m */; };
+		9BA0D7BB0E8852300053DD93 /* Top Draw.saver in Copy Viewer + Saver */ = {isa = PBXBuildFile; fileRef = 9B3604400E845EC400BD5E4F /* Top Draw.saver */; };
+		9BA0DA430E8875250053DD93 /* TopDrawSaver.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA0DA420E8875250053DD93 /* TopDrawSaver.xib */; };
 		9BB539BB0E5B6E70008ED3AA /* PatternObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB539BA0E5B6E70008ED3AA /* PatternObject.m */; };
-		9BDEC3A10E720BF500B82883 /* Top Draw Viewer.app in Copy Viewer */ = {isa = PBXBuildFile; fileRef = 3CD4D7440E42F08000F37DC9 /* Top Draw Viewer.app */; };
+		9BDEC3A10E720BF500B82883 /* Top Draw Viewer.app in Copy Viewer + Saver */ = {isa = PBXBuildFile; fileRef = 3CD4D7440E42F08000F37DC9 /* Top Draw Viewer.app */; };
 		9BF7989D0E7201D600181888 /* Built-in.tds in Resources */ = {isa = PBXBuildFile; fileRef = 3CD4D7630E42F24200F37DC9 /* Built-in.tds */; };
 		9BF798D00E72089900181888 /* TopDrawDoc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9B4A90230E42970000777579 /* TopDrawDoc.icns */; };
 		9BF798D10E72089900181888 /* TopDraw.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9B4A90240E42970000777579 /* TopDraw.icns */; };
@@ -80,12 +81,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		9B36049F0E8462DD00BD5E4F /* PBXContainerItemProxy */ = {
+		9BA0D7AC0E88521C0053DD93 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 9B4A8EDF0E428BAF00777579;
-			remoteInfo = Renderer;
+			remoteGlobalIDString = 9B36043F0E845EC400BD5E4F /* TopDrawSaver */;
+			remoteInfo = TopDrawSaver;
 		};
 		9BF7993F0E7208C800181888 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -104,25 +105,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		9B3604B00E84630300BD5E4F /* CopyFiles */ = {
+		9BF799460E72094700181888 /* Copy Viewer + Saver */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				9B3604A40E8462FD00BD5E4F /* TopDrawRenderer in CopyFiles */,
+				9BA0D7BB0E8852300053DD93 /* Top Draw.saver in Copy Viewer + Saver */,
+				9BDEC3A10E720BF500B82883 /* Top Draw Viewer.app in Copy Viewer + Saver */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9BF799460E72094700181888 /* Copy Viewer */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 6;
-			files = (
-				9BDEC3A10E720BF500B82883 /* Top Draw Viewer.app in Copy Viewer */,
-			);
-			name = "Copy Viewer";
+			name = "Copy Viewer + Saver";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -156,7 +148,7 @@
 		9B1163FF0E47BCB100C230D5 /* NSColor+Adjustment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Adjustment.m"; sourceTree = "<group>"; };
 		9B296FAF0E43EC0F00D89930 /* SimulatorObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatorObject.h; sourceTree = "<group>"; };
 		9B296FB00E43EC0F00D89930 /* SimulatorObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimulatorObject.m; sourceTree = "<group>"; };
-		9B3604400E845EC400BD5E4F /* TopDrawSaver.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TopDrawSaver.saver; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B3604400E845EC400BD5E4F /* Top Draw.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Top Draw.saver"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B3604410E845EC400BD5E4F /* TopDrawSaver-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "TopDrawSaver-Info.plist"; path = "Saver/TopDrawSaver-Info.plist"; sourceTree = "<group>"; };
 		9B36045D0E84604600BD5E4F /* TopDrawSaverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TopDrawSaverView.h; path = Saver/TopDrawSaverView.h; sourceTree = "<group>"; };
 		9B36045E0E84604600BD5E4F /* TopDrawSaverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TopDrawSaverView.m; path = Saver/TopDrawSaverView.m; sourceTree = "<group>"; };
@@ -231,6 +223,7 @@
 		9B5C07E80E799EB700F4B6BF /* PaletteObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteObject.m; sourceTree = "<group>"; };
 		9B5C08030E799F6A00F4B6BF /* Storage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Storage.h; sourceTree = "<group>"; };
 		9B5C08040E799F6A00F4B6BF /* Storage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Storage.m; sourceTree = "<group>"; };
+		9BA0DA420E8875250053DD93 /* TopDrawSaver.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TopDrawSaver.xib; path = Saver/TopDrawSaver.xib; sourceTree = "<group>"; };
 		9BB539B90E5B6E70008ED3AA /* PatternObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatternObject.h; sourceTree = "<group>"; };
 		9BB539BA0E5B6E70008ED3AA /* PatternObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PatternObject.m; sourceTree = "<group>"; };
 		9BC8E7B80E63A20800780CB6 /* Version.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Version.xcconfig; path = Common/Version.xcconfig; sourceTree = "<group>"; };
@@ -279,7 +272,7 @@
 				9B4A8EE00E428BAF00777579 /* TopDrawRenderer */,
 				3CD4D7440E42F08000F37DC9 /* Top Draw Viewer.app */,
 				9BF798CA0E72082100181888 /* Top Draw.app */,
-				9B3604400E845EC400BD5E4F /* TopDrawSaver.saver */,
+				9B3604400E845EC400BD5E4F /* Top Draw.saver */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -377,6 +370,7 @@
 				9B3604410E845EC400BD5E4F /* TopDrawSaver-Info.plist */,
 				9B36045D0E84604600BD5E4F /* TopDrawSaverView.h */,
 				9B36045E0E84604600BD5E4F /* TopDrawSaverView.m */,
+				9BA0DA420E8875250053DD93 /* TopDrawSaver.xib */,
 			);
 			name = ScreenSaver;
 			sourceTree = "<group>";
@@ -497,16 +491,14 @@
 				9B36043C0E845EC400BD5E4F /* Resources */,
 				9B36043D0E845EC400BD5E4F /* Sources */,
 				9B36043E0E845EC400BD5E4F /* Frameworks */,
-				9B3604B00E84630300BD5E4F /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				9B3604A00E8462DD00BD5E4F /* PBXTargetDependency */,
 			);
 			name = TopDrawSaver;
 			productName = TopDrawSaver;
-			productReference = 9B3604400E845EC400BD5E4F /* TopDrawSaver.saver */;
+			productReference = 9B3604400E845EC400BD5E4F /* Top Draw.saver */;
 			productType = "com.apple.product-type.bundle";
 		};
 		9B4A8EDF0E428BAF00777579 /* Renderer */ = {
@@ -532,7 +524,7 @@
 				9BF798C60E72082100181888 /* Resources */,
 				9BF798C70E72082100181888 /* Sources */,
 				9BF798C80E72082100181888 /* Frameworks */,
-				9BF799460E72094700181888 /* Copy Viewer */,
+				9BF799460E72094700181888 /* Copy Viewer + Saver */,
 				9BDEC3A60E720C4E00B82883 /* Zip Files and Copy Docs */,
 				9BC7F93A0E77712200131590 /* Copy ReadMe */,
 			);
@@ -541,6 +533,7 @@
 			dependencies = (
 				9BF799400E7208C800181888 /* PBXTargetDependency */,
 				9BF799420E7208D000181888 /* PBXTargetDependency */,
+				9BA0D7AD0E88521C0053DD93 /* PBXTargetDependency */,
 			);
 			name = TopDraw;
 			productName = TopDraw;
@@ -582,6 +575,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B3604E30E8465F000BD5E4F /* Built-in.tds in Resources */,
+				9BA0DA430E8875250053DD93 /* TopDrawSaver.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -727,10 +721,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		9B3604A00E8462DD00BD5E4F /* PBXTargetDependency */ = {
+		9BA0D7AD0E88521C0053DD93 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9B4A8EDF0E428BAF00777579 /* Renderer */;
-			targetProxy = 9B36049F0E8462DD00BD5E4F /* PBXContainerItemProxy */;
+			target = 9B36043F0E845EC400BD5E4F /* TopDrawSaver */;
+			targetProxy = 9BA0D7AC0E88521C0053DD93 /* PBXContainerItemProxy */;
 		};
 		9BF799400E7208C800181888 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -834,7 +828,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Common/TopDraw_Prefix.pch;
-				INFOPLIST_FILE = "TopDrawSaver-Info.plist";
+				INFOPLIST_FILE = "Saver/TopDrawSaver-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -843,7 +837,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = TopDrawSaver;
+				PRODUCT_NAME = "Top Draw";
 				WRAPPER_EXTENSION = saver;
 			};
 			name = Debug;
@@ -859,7 +853,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Common/TopDraw_Prefix.pch;
-				INFOPLIST_FILE = "TopDrawSaver-Info.plist";
+				INFOPLIST_FILE = "Saver/TopDrawSaver-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -868,7 +862,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = TopDrawSaver;
+				PRODUCT_NAME = "Top Draw";
 				WRAPPER_EXTENSION = saver;
 				ZERO_LINK = NO;
 			};
