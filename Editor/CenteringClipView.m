@@ -12,6 +12,8 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+// This code borrows heavily from code and links posted on CocoaDev.com
+
 #import "CenteringClipView.h"
 
 @implementation CenteringClipView
@@ -43,7 +45,7 @@
     proposedNewOrigin.y = floor(delta.y / 2);
   else
     proposedNewOrigin.y = floor(MAX(0, MIN(proposedNewOrigin.y, delta.y)));
-  
+
   return proposedNewOrigin;
 }
 

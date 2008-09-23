@@ -48,6 +48,7 @@
   [self setBounds:bounds];
   
   zoom_ = zoom;
+  [[NSUserDefaults standardUserDefaults] setFloat:zoom_ forKey:@"zoom"];
 }
 
 //------------------------------------------------------------------------------
@@ -75,7 +76,10 @@
 //------------------------------------------------------------------------------
 - (id)initWithFrame:(NSRect)frame {
   if ((self == [super initWithFrame:frame])) {
-    zoom_ = 25;
+    zoom_ = [[NSUserDefaults standardUserDefaults] floatForKey:@"zoom"];
+    
+    if (zoom_ < 10)
+      [self setZoom:25];
   }
   
   return self;
@@ -89,10 +93,14 @@
 
 //------------------------------------------------------------------------------
 - (void)drawRect:(NSRect)rect {
-  if (!image_)
-    return;
-  
   NSRect bounds = [self bounds];
+
+  if (!image_) {
+    [[NSColor grayColor] set];
+    NSRectFill(bounds);
+    return;
+  }
+  
   CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
   CGContextDrawImage(context, NSRectToCGRect(bounds), image_);
 }

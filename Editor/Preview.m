@@ -93,6 +93,8 @@
   [ctr addObserver:self selector:@selector(keyWindowChanged:) name:NSWindowDidBecomeKeyNotification object:nil];
   [ctr addObserver:self selector:@selector(imageChanged:) name:DrawingDocumentNewImageNotification object:nil];
   
+  // TODO(waylonis): I'm not happy with the centering right now
+#if 0
   // Setup the centering clip view on the preview
   id contentView = [[scrollView_ documentView] retain];
   id clipView = [[CenteringClipView alloc] initWithFrame:[[scrollView_ contentView] frame]];
@@ -101,6 +103,7 @@
   [clipView release];
   [scrollView_ setDocumentView:contentView];
   [contentView release];
+#endif
 }
 
 //------------------------------------------------------------------------------
