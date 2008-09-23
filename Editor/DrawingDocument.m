@@ -383,8 +383,8 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
   [renderer_ setSource:[text_ string] name:[self name] seed:seed];
   [renderer_ setDestination:[panel filename]];
   [renderer_ setMaximumSize:size];
-  [renderer_ renderInBackgroundAndNotify];
   [renderer_ setDisableMenubarRendering:YES];
+  [renderer_ renderInBackgroundAndNotify];
   
   [self updateProgress];
 }  

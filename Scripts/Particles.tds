@@ -77,7 +77,7 @@ bloom.setKeyValue("inputRadius", 80);
 bloom.setKeyValue("inputIntensity", 3);
 
 // Blur
-var blur = new Filter("CIBoxBlur");
+var blur = new Filter("CIGaussianBlur");
 blur.setKeyValue("inputRadius", 16);
 blur.inputFilter = bloom;
 simulatorLayer.applyFilter(blur);
