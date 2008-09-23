@@ -177,6 +177,16 @@ static NSComparisonResult CompareBaseNames(id a, id b, void *context) {
 }
 
 //------------------------------------------------------------------------------
+- (BOOL)showPreferencesAtLaunch {
+  return [[NSUserDefaults standardUserDefaults] boolForKey:@"showPreferencesAtLaunch"];
+}
+
+//------------------------------------------------------------------------------
+- (void)setShowPreferencesAtLaunch:(BOOL)show {
+  [[NSUserDefaults standardUserDefaults] setBool:show forKey:@"showPreferencesAtLaunch"];  
+}
+
+//------------------------------------------------------------------------------
 - (void)show {
   [[NSColorPanel sharedColorPanel] setShowsAlpha:YES];
   

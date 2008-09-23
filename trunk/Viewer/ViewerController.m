@@ -58,12 +58,13 @@ static const int kRefreshActionStartup = 2;
    kDefaultScriptName, @"selectedScript",
    [NSNumber numberWithBool:YES], @"randomlyChosen",
    [NSNumber numberWithInt:kRefreshModeEvery], @"refreshMode",
-   [NSNumber numberWithInt:15], @"refreshTime",
+   [NSNumber numberWithInt:5], @"refreshTime",
    [NSNumber numberWithInt:kRefreshUnitMinutes], @"refreshUnit",
    [NSNumber numberWithInt:kRefreshActionWake], @"refreshAction",
    activeData, @"activeColor",
    idleData, @"idleColor",
-   [NSNumber numberWithInt:kIndicatorRectangle], @"indicatorStyle",
+   [NSNumber numberWithInt:kIndicatorCircle], @"indicatorStyle",
+   [NSNumber numberWithBool:YES], @"showPreferencesAtLaunch",
    nil];
   [defaults registerDefaults:factoryValues];
 }
@@ -301,11 +302,23 @@ static const int kRefreshActionStartup = 2;
 - (IBAction)renderImmediately:(id)sender {
   int tag = [sender tag];
   
+  if ([renderer_ isRendering])
+    [renderer_ cancelRender];
+  
   // The tag of the render menu is 1.  If that was not the sender, look at
   // the title of the script.
   if (!tag) {
+    NSString *newScriptName;
     [selectedScript_ autorelease];
-    selectedScript_ = [[sender title] retain];
+    selectedScript_ = nil;
+    
+    if ([sender isKindOfClass:[NSMenuItem class]])
+      newScriptName = [sender title];
+    else
+      newScriptName = [self nextScriptName];
+        
+    selectedScript_ = [newScriptName retain];
+    [preferences_ setSelectedScript:selectedScript_];
   }
     
   [self update:nil];
@@ -318,10 +331,17 @@ static const int kRefreshActionStartup = 2;
 
 //------------------------------------------------------------------------------
 - (IBAction)launchTopDraw:(id)sender {
-//  NSString *appDir = [[NSBundle bundleForClass:[self class]] bundlePath];
-//  NSString *appPath = [appDir stringByAppendingPathComponent:@"../../.."];
-  
   [[NSWorkspace sharedWorkspace] launchApplication:@"Top Draw"];
+}
+
+//------------------------------------------------------------------------------
+- (IBAction)showDocumentation:(id)sender {
+  NSString *executablePath = [[NSBundle mainBundle] bundlePath];
+  NSString *resources = [executablePath stringByAppendingPathComponent:@"../../Resources"];
+  NSString *documentFolder = @"Documentation/TopDrawViewer.html";
+  NSString *documentPath = [resources stringByAppendingPathComponent:documentFolder];
+  
+  [[NSWorkspace sharedWorkspace] openFile:documentPath];
 }
 
 //------------------------------------------------------------------------------
@@ -354,6 +374,9 @@ static const int kRefreshActionStartup = 2;
                                                name:PreferencesControllerDidUpdate 
                                              object:nil];
   [self updateSettingsForUserDefaults];
+  
+  if ([preferences_ showPreferencesAtLaunch])
+    [self preferences:nil];
 }
 
 //------------------------------------------------------------------------------
