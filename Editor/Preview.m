@@ -12,6 +12,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+#import "CenteringClipView.h"
 #import "CGImageView.h"
 #import "DrawingDocument.h"
 #import "Preview.h"
@@ -91,6 +92,15 @@
   
   [ctr addObserver:self selector:@selector(keyWindowChanged:) name:NSWindowDidBecomeKeyNotification object:nil];
   [ctr addObserver:self selector:@selector(imageChanged:) name:DrawingDocumentNewImageNotification object:nil];
+  
+  // Setup the centering clip view on the preview
+  id contentView = [[scrollView_ documentView] retain];
+  id clipView = [[CenteringClipView alloc] initWithFrame:[[scrollView_ contentView] frame]];
+  [clipView setBackgroundColor:[NSColor windowBackgroundColor]];
+  [scrollView_ setContentView:(NSClipView *)clipView];
+  [clipView release];
+  [scrollView_ setDocumentView:contentView];
+  [contentView release];
 }
 
 //------------------------------------------------------------------------------
