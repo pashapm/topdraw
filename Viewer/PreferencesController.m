@@ -181,10 +181,7 @@ static NSComparisonResult CompareBaseNames(id a, id b, void *context) {
   [[NSColorPanel sharedColorPanel] setShowsAlpha:YES];
   
   [window_ center];
-  
-  // There seem to be some problems with LSUIElement apps and the window getting
-  // activated and raised to the appropriate level.
-  [window_ orderFrontRegardless];
+  [NSApp activateIgnoringOtherApps:YES];
   [window_ setDelegate:self];
   [window_ orderFront:nil];
   [window_ makeKeyWindow];
