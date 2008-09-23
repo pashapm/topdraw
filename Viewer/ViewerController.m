@@ -317,6 +317,14 @@ static const int kRefreshActionStartup = 2;
 }
 
 //------------------------------------------------------------------------------
+- (IBAction)launchTopDraw:(id)sender {
+//  NSString *appDir = [[NSBundle bundleForClass:[self class]] bundlePath];
+//  NSString *appPath = [appDir stringByAppendingPathComponent:@"../../.."];
+  
+  [[NSWorkspace sharedWorkspace] launchApplication:@"Top Draw"];
+}
+
+//------------------------------------------------------------------------------
 - (IBAction)quit:(id)sender {
   [NSApp terminate:sender];
 }

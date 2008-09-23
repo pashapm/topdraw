@@ -43,6 +43,7 @@
 - (IBAction)about:(id)sender;
 - (IBAction)renderImmediately:(id)sender;
 - (IBAction)preferences:(id)sender;
+- (IBAction)launchTopDraw:(id)sender;
 - (IBAction)quit:(id)sender;
 
 @end

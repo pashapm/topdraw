@@ -71,13 +71,17 @@ const CGFloat kPadding = 4.0;
   if (style == kIndicatorRectangle)
     content.size.width = 20;
 
-  // Align it to our bounds
+  // Align it to our bounds and offset for the line width
   content.origin.x = (NSWidth(bounds) - NSWidth(content)) / 2.0;
   content.origin.y = (NSHeight(bounds) - NSHeight(content)) / 2.0;
   content = NSIntegralRect(content);
+  content.origin.x += 0.5;
+  content.origin.y += 0.5;
   
   // Create the path
   NSBezierPath *shape = [NSBezierPath bezierPath];
+  [shape setLineWidth:1.0];
+  
   switch (style) {
     case kIndicatorSquare:
       [shape appendBezierPathWithRect:content];
