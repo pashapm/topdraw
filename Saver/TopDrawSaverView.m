@@ -97,7 +97,7 @@ static CGFloat kFadeSteps = 30.0;
     [self updateScripts];
     
     NSString *fileName = [NSString stringWithFormat:@"TopDrawSaver-%x.jpeg", self];
-    imagePath_ = [[@"/tmp" stringByAppendingPathComponent:fileName] retain];
+    imagePath_ = [[NSTemporaryDirectory() stringByAppendingPathComponent:fileName] retain];
 
     [self updateAnimationTimeInterval];
   }
@@ -148,6 +148,8 @@ static CGFloat kFadeSteps = 30.0;
   if (fadeAmount_ >= 1.0) {
     fadeAmount_ = 0;
     [self stopFadeTimer];
+    CGImageRelease(backImage_);
+    backImage_ = NULL;
   }
   
   [self setNeedsDisplay:YES];
@@ -155,6 +157,10 @@ static CGFloat kFadeSteps = 30.0;
 
 //------------------------------------------------------------------------------
 - (void)animateOneFrame {
+  // If we're currently rendering something, kill it
+  if ([renderer_ isRendering])
+    [renderer_ cancelRender];
+  
   NSString *name = [self selectedScript];
   
   if ([self randomlyChosen])
@@ -179,6 +185,10 @@ static CGFloat kFadeSteps = 30.0;
   CGDataProviderRef src = CGDataProviderCreateWithURL((CFURLRef)url);
   frontImage_ = CGImageCreateWithJPEGDataProvider(src, nil, FALSE, kCGRenderingIntentDefault);
   CGDataProviderRelease(src);
+  
+  if (!frontImage_) {
+    NSLog(@"Error loading from %@", imagePath_);
+  }
   
   // Setup the fading, if needed
   fadeAmount_ = 0;
