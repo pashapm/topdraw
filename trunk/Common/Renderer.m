@@ -311,17 +311,20 @@ static NSString *kRendererName = @"TopDrawRenderer";
   outputPath_ = nil;
 
   // Write the data to a temporary file using the document identifier
-  NSString *sourcePath = [NSString stringWithFormat:@"/tmp/%x.tds", reference_];
+  NSString *sourceName = [NSString stringWithFormat:@"%x.tds", reference_];
+  NSString *sourcePath = [NSTemporaryDirectory() stringByAppendingPathComponent:sourceName];
   
-  if (!destination_)
-    outputPath_ = [[NSString stringWithFormat:@"/tmp/%x.%@", reference_, type_] retain];
+  if (!destination_) {
+    NSString *fileName = [NSString stringWithFormat:@"%x.%@", reference_, type_];
+    outputPath_ = [[NSTemporaryDirectory() stringByAppendingPathComponent:fileName] retain];
+  }
   else
     outputPath_ = [destination_ retain];
   
   NSData *sourceData = [source_ dataUsingEncoding:NSUTF8StringEncoding];
   
   if (![sourceData writeToFile:sourcePath atomically:NO]) {
-    NSLog(@"Unable to write to %@", sourcePath);
+    NSLog(@"Unable to write TDS (%d bytes) to %@ (%d)", [sourceData length], sourcePath, errno);
     return;
   }
   
