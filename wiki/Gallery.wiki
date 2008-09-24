@@ -20,7 +20,7 @@ A blurry checkerboard of varying square size and colors.  Shows how to chain Cor
 == [http://topdraw.googlecode.com/svn/trunk/Scripts/ColoredRect.tds ColoredRect.tds] ==
 http://topdraw.googlecode.com/svn/trunk/Gallery/ColoredRect1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/ColoredRect2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/ColoredRect3.jpeg
 
-Smooth interpolation across all four corners.  Very simple.
+Smooth interpolation across all four corners.  Very simple.  This is also the built-in script if no other scripts are found.
 
 == [http://topdraw.googlecode.com/svn/trunk/Scripts/ColoredRect+Time.tds ColoredRect+Time.tds] ==
 http://topdraw.googlecode.com/svn/trunk/Gallery/ColoredRect+Time1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/ColoredRect+Time2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/ColoredRect+Time3.jpeg
@@ -67,11 +67,6 @@ http://topdraw.googlecode.com/svn/trunk/Gallery/Koosh1.jpeg http://topdraw.googl
 
 Create randomly colored and varied Koosh balls.  Apply a Core Image gaussian blur to soften the image.
 
-== [http://topdraw.googlecode.com/svn/trunk/Scripts/Layer.tds Layer.tds] ==
-http://topdraw.googlecode.com/svn/trunk/Gallery/Layer.jpeg 
-
-Demonstrate layering and mirroring as well as text drawing.
-
 == [http://topdraw.googlecode.com/svn/trunk/Scripts/Nodes.tds Nodes.tds] ==
 http://topdraw.googlecode.com/svn/trunk/Gallery/Nodes1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Nodes2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Nodes3.jpeg
 
@@ -96,6 +91,12 @@ Create a colored, stroked ellipse in a pattern.  Fill the background with a line
 http://topdraw.googlecode.com/svn/trunk/Gallery/Pie1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Pie2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Pie3.jpeg
 
 Pick a random color and fill the background with a bunch of pie-chart-like objects.
+
+== [http://topdraw.googlecode.com/svn/trunk/Scripts/Pinwheel.tds Pinwheel.tds] ==
+http://topdraw.googlecode.com/svn/trunk/Gallery/Pinwheel1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Pinwheel 2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Pinwheel 3.jpeg
+
+Draw either a circle or rectangular object with a two-color gradient and rotate it about a center point.  Also
+background gradient is randomly chosen.
 
 == [http://topdraw.googlecode.com/svn/trunk/Scripts/Plasma+Rects.tds Plasma+Rects.tds] ==
 http://topdraw.googlecode.com/svn/trunk/Gallery/Plasma+Rects1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Plasma+Rects2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Plasma+Rects3.jpeg
@@ -135,9 +136,7 @@ Demonstrates the Text object by drawing randomly chosen interesting characters f
 == [http://topdraw.googlecode.com/svn/trunk/Scripts/WavyGlow.tds WavyGlow.tds] ==
 http://topdraw.googlecode.com/svn/trunk/Gallery/WavyGlow1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/WavyGlow2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/WavyGlow3.jpeg
 
-Draw some wavy lines of varying colors and apply a Core Image filter.  Looks like an oil slick.
-
-
+Draw some wavy lines of varying colors and apply a Core Image filter.  Sorta looks like an oil slick... :-)
 
 
 
