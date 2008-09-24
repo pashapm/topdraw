@@ -3,9 +3,7 @@
 
 = Introduction =
 
-This is a gallery of Top Draw Scripts.
-
-= Factory Defaults scripts =
+This is a gallery of the Factory Top Draw Scripts.
 
 == [http://topdraw.googlecode.com/svn/trunk/Scripts/Apple.tds Apple.tds] ==
 http://topdraw.googlecode.com/svn/trunk/Gallery/Apple1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Apple2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/Apple3.jpeg
@@ -137,8 +135,6 @@ Demonstrates the Text object by drawing randomly chosen interesting characters f
 http://topdraw.googlecode.com/svn/trunk/Gallery/WavyGlow1.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/WavyGlow2.jpeg http://topdraw.googlecode.com/svn/trunk/Gallery/WavyGlow3.jpeg
 
 Draw some wavy lines of varying colors and apply a Core Image filter.  Sorta looks like an oil slick... :-)
-
-
 
 
 
