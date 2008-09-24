@@ -20,7 +20,6 @@
 
 static Controller *sController = nil;
 
-static NSString *kOpenedDocumentsKey = @"opened";
 static NSString *kInstalledScriptsKey = @"installed";
 static NSString *kCopiedRendererVersionKey = @"copiedRenderVersion";
 static NSString *kShowAtLaunchKey = @"showAtLaunch";
@@ -104,11 +103,6 @@ static NSString *kScreenSaverName = @"Top Draw.saver";
     if ([rendererVersion isEqualToString:copiedVersion])
       copyToAppSupport = NO;
   }
-  
-#if DEBUG
-  // Always copy for debug
-  copyToAppSupport = YES;
-#endif
   
   if (!copyToAppSupport)
     return;
@@ -284,72 +278,20 @@ static NSString *kScreenSaverName = @"Top Draw.saver";
 #pragma mark || NSApplicationDelegate ||
 //------------------------------------------------------------------------------
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)app {
-  // If we're showing the launch dialog at startup
-  if ([[NSUserDefaults standardUserDefaults] boolForKey:kShowAtLaunchKey])
-    return NO;
-  
-  NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-  NSArray *openedDocuments = [ud objectForKey:kOpenedDocumentsKey];
-  
-  // Validate the documents
-  BOOL hasDocument = NO;
-  int i, count = [openedDocuments count];
-
-  for (i = 0; (i < count) && (!hasDocument); ++i) {
-    NSString *path = [openedDocuments objectAtIndex:i];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:path])
-      hasDocument = YES;
-  }
-  
-  return !hasDocument;
+  return ![[NSUserDefaults standardUserDefaults] boolForKey:kShowAtLaunchKey];
 }
 
 //------------------------------------------------------------------------------
 - (void)applicationDidFinishLaunching:(NSNotification *)note {
   NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-  NSArray *openedDocuments = [ud objectForKey:kOpenedDocumentsKey];
-  int i, count = [openedDocuments count];
-  NSDocumentController *dc = [NSDocumentController sharedDocumentController];
-  NSURL *url;
-  NSError *error;
-  
-  for (i = 0; i < count; ++i) {
-    // Ensure that it exists
-    NSString *path = [openedDocuments objectAtIndex:i];
-    if (![[NSFileManager defaultManager] fileExistsAtPath:path])
-      continue;
-    
-    url = [NSURL fileURLWithPath:path];
-    error = nil;
-    [dc openDocumentWithContentsOfURL:url display:YES error:&error];
-    if (error)
-      NSLog(@"Error: %@", error);
-  }
   
   if ([ud boolForKey:kShowAtLaunchKey]) {
     [welcomeWindow_ center];
     [welcomeWindow_ orderFront:self];
-  } else {
-    [preview_ showPreview];
+    return;
   }
-}
 
-//------------------------------------------------------------------------------
-- (void)applicationWillTerminate:(NSNotification *)note {
-  NSArray *documents = [[NSDocumentController sharedDocumentController] documents];
-  int i, count = [documents count];
-  NSMutableArray *paths = [NSMutableArray array];
-  
-  for (i = 0; i < count; ++i) {
-    NSURL *url = [[documents objectAtIndex:i] fileURL];
-    if (url) {
-      NSString *path = [url path];
-      [paths addObject:path];
-    }
-  }
-  
-  NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-  [ud setObject:paths forKey:kOpenedDocumentsKey];
+  [preview_ showPreview];
 }
 
 //------------------------------------------------------------------------------
