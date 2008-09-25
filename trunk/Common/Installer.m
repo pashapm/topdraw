@@ -38,7 +38,11 @@
     NSString *screenID = [[[screen deviceDescription] objectForKey:@"NSScreenNumber"] stringValue];
     NSMutableDictionary *screenDict = [[backgroundDict objectForKey:screenID] mutableCopy];
     
-    [screenDict setObject:path forKey:@"ImageFilePath"];
+    if (path)
+      [screenDict setObject:path forKey:@"ImageFilePath"];
+    else
+      NSLog(@"Installer: path for screen %d is NULL", i);
+    
     [screenDict setObject:@"Never" forKey:@"Change"];
 
     // Remove these as they seem to confuse slamming the image file path
