@@ -122,8 +122,11 @@ static Compositor *sSharedCompositor = nil;
   NSScanner *scanner = [NSScanner scannerWithString:source];
   
   // Check the required version.  If we can't run, substitute a helpful
-  // script that prints the name, required, current version.
-  if ([scanner scanUpToString:@".requiredVersion" intoString:nil]) {
+  // script that prints the name, required, current version.  This is a bit of
+  // a hack because it doesn't actually evaluate the script.  So, if the string
+  // below appears in a comment, it will still check.
+  [scanner scanUpToString:@"compositor.requiredVersion" intoString:nil];
+  if (![scanner isAtEnd]) {
     [scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:nil];
     int version;
     [scanner scanInt:&version];
