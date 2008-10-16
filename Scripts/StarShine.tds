@@ -1,0 +1,61 @@
+// Modification of a script submitted by Charles M. Dietrich
+
+// Interesting parameters to play with
+var lineCount = 300;
+var radius = 200;
+var sphereAlpha = 0.5;
+var lineAlpha = 0.1;
+
+// Fill the background
+desktop.fillLayer(new Color("black"));
+
+var db = desktop.bounds;
+var rndX = new Randomizer(radius, db.width - radius);
+var rndY = new Randomizer(radius, db.height - radius);
+var center = new Point(rndX.intValue, rndY.intValue);
+var halfRadius = radius / 2;
+
+// Draw the sphere at the center with a radial gradient
+var innerColor = new Color;
+var outerColor = new Color;
+innerColor.a = outerColor.a = sphereAlpha;
+var grad = new Gradient(innerColor, outerColor);
+grad.start = center;
+grad.end = center;
+grad.radius = new Point(halfRadius, radius);
+
+desktop.lineWidth = 1;
+desktop.save();
+desktop.beginPath();
+desktop.circle(center, radius);
+desktop.fillStyle = grad;
+desktop.fill();
+
+// Draw the lines within the sphere
+var randAngle = new Randomizer(0, 2 * Math.PI);
+
+for (i = 0; i < lineCount; ++i) {
+	var lineColor = new Color;
+	lineColor.a = lineAlpha;
+	desktop.strokeStyle = lineColor;
+	lineInCircle(randAngle.floatValue, randAngle.floatValue);
+}
+
+function lineInCircle(a1, a2) {
+	var b = new Point(center.x + radius * Math.cos(a1), 
+		center.y + radius * Math.sin(a1));
+	var e = new Point(center.x + radius * Math.cos(a2), 
+		center.y + radius * Math.sin(a2));
+	
+	desktop.beginPath();
+	desktop.moveTo(b);
+	desktop.lineTo(e);
+	desktop.stroke();
+}
+
+// Apply distortion filter
+var filterName = "CICircleSplashDistortion";
+var f = new Filter(filterName);
+f.setKeyValue("inputCenter", center.x, center.y);
+f.setKeyValue("inputRadius", radius);
+desktop.applyFilter(f);
