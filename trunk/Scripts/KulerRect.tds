@@ -2,6 +2,13 @@
 var p = new Palette;
 p.addKulerColors("random", 1);
 
+// Sometimes we don't get a response back
+if (!p.length) {
+	log("Unable to load Kuler colors");
+	for (var i = 0; i < 4; ++i)
+		p.addColors(new Color);
+}
+
 // Render the menubar Layer with a Gradient.
 var gradient = new Gradient(p.colorAtIndex(0), p.colorAtIndex(2), p.colorAtIndex(3));
 menubar.fillLayer(gradient);
