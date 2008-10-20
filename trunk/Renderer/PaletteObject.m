@@ -12,8 +12,6 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-#import <PubSub/PubSub.h>
-
 #import "Color.h"
 #import "PaletteObject.h"
 #import "Randomizer.h"
@@ -147,10 +145,10 @@
 //------------------------------------------------------------------------------
 - (void)addKulerColors:(NSArray *)arguments {
   // Load Adobe Kuler colors
-  // http://learn.adobe.com/wiki/display/kulerdev/A.+API+Documentation
+  // http://learn.adobe.com/wiki/display/kulerdev/A.+Kuler+API+Documentation
   NSInteger argCount = [arguments count];
   NSInteger nextArgIndex = 0;
-  NSString *baseURLStr = @"http://kuler.adobe.com/kuler/API/rss/";
+  NSString *baseURLStr = @"http://kuler-api.adobe.com/rss/";
   NSString *getFmt = @"get.cfm?listtype=%@";
   NSString *searchFmt = @"search.cfm?searchQuery=%@";
 
@@ -172,8 +170,11 @@
         count = [RuntimeObject coerceObjectToInteger:[arguments objectAtIndex:nextArgIndex]];
     }
 
-    urlStr = [urlStr stringByAppendingFormat:@"&itemsPerPage=%d", count];
+    // Add the key and a limit
+    urlStr = [urlStr stringByAppendingFormat:@"&itemsPerPage=%d&key=9B9B1A989185ED36A88A2E7817FF7389",
+              count];
     NSString *escaped = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
     NSURL *url = [NSURL URLWithString:escaped];
     NSData *data = [NSData dataWithContentsOfURL:url];
     [self addKulerFeed:data];

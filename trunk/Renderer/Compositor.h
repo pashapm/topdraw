@@ -59,6 +59,7 @@ typedef void (*LoggingCB)(const char *msg, void *context);
 - (NSUInteger)randomSeed;
 
 - (void)setLoggingCallback:(LoggingCB)cb context:(void *)context;
+- (void)addLogMessage:(NSString *)message;
 
 - (void)setDisableMenubarRendering:(BOOL)yn;
 

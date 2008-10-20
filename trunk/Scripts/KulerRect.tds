@@ -3,7 +3,7 @@ var p = new Palette;
 p.addKulerColors("random", 1);
 
 // Sometimes we don't get a response back
-if (!p.length) {
+if (!p.count) {
 	log("Unable to load Kuler colors");
 	for (var i = 0; i < 4; ++i)
 		p.addColors(new Color);
