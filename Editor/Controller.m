@@ -93,16 +93,19 @@ static NSString *kScreenSaverName = @"Top Draw.saver";
   NSDictionary *rendererInfo = [[NSBundle bundleForClass:[self class]] infoDictionary];
   NSString *rendererVersion = [rendererInfo objectForKey:@"CFBundleShortVersionString"];
   NSString *rendererDir = [Exporter rendererDirectory];
-  NSString *rendererPath = [rendererDir stringByAppendingPathComponent:[Renderer rendererName]];
 
   BOOL copyToAppSupport = YES;
 
+  // For debug builds, always install
+#ifndef DEBUG
+  NSString *rendererPath = [rendererDir stringByAppendingPathComponent:[Renderer rendererName]];
   if ([[NSFileManager defaultManager] isExecutableFileAtPath:rendererPath]) {
     NSString *copiedVersion = [ud objectForKey:kCopiedRendererVersionKey];
   
     if ([rendererVersion isEqualToString:copiedVersion])
       copyToAppSupport = NO;
   }
+#endif
   
   if (!copyToAppSupport)
     return;

@@ -113,8 +113,7 @@ static Compositor *sSharedCompositor = nil;
 
 //------------------------------------------------------------------------------
 - (void)runtime:(Runtime *)runtime didReceiveLogMessage:(NSString *)msg {
-  if (loggingCallback_)
-    loggingCallback_([msg UTF8String], loggingCallbackContext_);
+  [self addLogMessage:msg];
 }
 
 //------------------------------------------------------------------------------
@@ -356,6 +355,12 @@ static Compositor *sSharedCompositor = nil;
 - (void)setLoggingCallback:(LoggingCB)cb context:(void *)context {
   loggingCallback_ = cb;
   loggingCallbackContext_ = context;
+}
+
+//------------------------------------------------------------------------------
+- (void)addLogMessage:(NSString *)message {
+  if (loggingCallback_)
+    loggingCallback_([message UTF8String], loggingCallbackContext_);
 }
 
 //------------------------------------------------------------------------------
