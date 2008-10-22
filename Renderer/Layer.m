@@ -673,8 +673,13 @@
     CIColor *bottomRight = [[[CIColor alloc] initWithColor:[br color]] autorelease]; 
     CIVector *size = [CIVector vectorWithX:[rect width] Y:[rect height]];
     CIImage *result = [crop apply:coloredKernel, topLeft, topRight, bottomLeft, bottomRight, size, nil];
-    
-    CIContext *context = [CIContext contextWithCGContext:backingStore_ options:nil];
+
+    // Use Linear RGB space
+    CGColorSpaceRef csRef = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);	
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:(id)csRef, kCIContextWorkingColorSpace, 
+                                    (id)csRef, kCIContextOutputColorSpace,nil];
+    CGColorSpaceRelease(csRef);
+    CIContext *context = [CIContext contextWithCGContext:backingStore_ options:options];
     [context drawImage:result atPoint:CGPointMake([rect x], [rect y]) fromRect:CGRectMake(0, 0, [rect width], [rect height])];
   }
 }
@@ -933,7 +938,13 @@
     CIImage *output = [crop valueForKey:@"outputImage"];
     CGImageRelease(current);
     
-    CIContext *context = [CIContext contextWithCGContext:backingStore_ options:nil];
+    // Use Linear RGB space
+    CGColorSpaceRef csRef = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);	
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:(id)csRef, kCIContextWorkingColorSpace, 
+                             (id)csRef, kCIContextOutputColorSpace,nil];
+    CGColorSpaceRelease(csRef);
+    
+    CIContext *context = [CIContext contextWithCGContext:backingStore_ options:options];
     [context drawImage:output atPoint:CGPointZero fromRect:bounds];
   }
 }
