@@ -1,5 +1,5 @@
-// Gradient menubar from white to a random color
-menubar.fillLayer(new Gradient(new Color("white"), new Color));
+// Gradient menubar from random color to white to a random color
+menubar.fillLayer(new Gradient(new Color, new Color("white"), new Color));
 
 // Create three new colors and full alpha
 var a = new Color;
