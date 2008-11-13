@@ -12,13 +12,15 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-// Help keep the image centered
+// Center the contents of the scroll view
 
 #import <Cocoa/Cocoa.h>
 
-@interface CenteringClipView : NSClipView {
-}
+@interface CenteringScrollView : NSScrollView
 
-- (void)centerDocumentView;
+// NSScrollView
+- (void)tile;
+
+- (void)scrollWheel:(NSEvent *)event;
 
 @end
