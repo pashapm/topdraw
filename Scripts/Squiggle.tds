@@ -1,0 +1,39 @@
+// Fill the background with a nice, dark gradient
+var grad = new Gradient();
+var c1 = new Color;
+var c2 = new Color;
+c1 = c1.darker(0.5);
+c2 = c2.darker(0.5);
+grad.addColorStop(c1, 0);
+grad.addColorStop(c2, 1);
+desktop.fillLayer(grad);
+
+var db = desktop.bounds;
+var xRnd = new Randomizer(db.width / 10, db.width / 2);
+var yRnd = new Randomizer(db.height / 10, db.height / 2);
+var rect = new Rect(0, 0, xRnd.intValue, yRnd.intValue);
+var translateRnd = new Randomizer(-20, 20);
+var scaleRnd = new Randomizer(0.9, 1.1);
+var count = 300;
+
+// Pick a starting point around the center
+desktop.translate(new Point(desktop.bounds.midX + translateRnd.intValue * 10, 
+	desktop.bounds.midY + translateRnd.intValue * 10));
+	
+// Pick a stroke color that's light and transparent
+var s = new Color;
+s.a = 0.1;
+s.brightness = 0.7;
+desktop.strokeStyle = s;
+
+for (var i = 0; i < 200; ++i) {
+	desktop.lineWidth = 2.0 - (2 * i / count);
+	desktop.translate(translateRnd.intValue, translateRnd.intValue);
+	desktop.scale(scaleRnd.floatValue, scaleRnd.floatValue);
+	rect.x += translateRnd.intValue;
+	rect.y += translateRnd.intValue;
+	desktop.rotate(0.1);
+	desktop.beginPath();
+	desktop.ellipse(rect);
+	desktop.stroke();
+}
