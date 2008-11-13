@@ -17,6 +17,19 @@
 @implementation CGImageView
 //------------------------------------------------------------------------------
 #pragma mark -
+#pragma mark || Private ||
+//------------------------------------------------------------------------------
+- (BOOL)isViewCompletelyVisible {
+  NSClipView *clip = (NSClipView *)[self superview];
+  NSRect documentRect = [clip documentRect];
+  NSRect documentVisibleRect = [clip documentVisibleRect];
+  
+  // If they're the same size, no panning
+  return NSEqualSizes(documentRect.size, documentVisibleRect.size);
+}
+
+//------------------------------------------------------------------------------
+#pragma mark -
 #pragma mark || Public ||
 //------------------------------------------------------------------------------
 - (void)setImage:(CGImageRef)image {
@@ -35,7 +48,8 @@
 
 //------------------------------------------------------------------------------
 - (void)setZoom:(CGFloat)zoom {
-  NSRect bounds = [[self enclosingScrollView] bounds];
+  NSScrollView *scrollView = [self enclosingScrollView];
+  NSRect bounds = [scrollView bounds];
   
   if (image_)
     bounds = NSMakeRect(0, 0, CGImageGetWidth(image_), CGImageGetHeight(image_));
@@ -49,6 +63,7 @@
   
   zoom_ = zoom;
   [[NSUserDefaults standardUserDefaults] setFloat:zoom_ forKey:@"zoom"];
+  [scrollView tile];
 }
 
 //------------------------------------------------------------------------------
@@ -58,12 +73,17 @@
 
 //------------------------------------------------------------------------------
 - (NSRect)optimalFrame {
+  return [self optimalFrameForZoom:zoom_];
+}
+
+//------------------------------------------------------------------------------
+- (NSRect)optimalFrameForZoom:(CGFloat)zoom {
   NSRect frame = [self frame];
   
   if (image_) {
     NSRect imageRect = NSMakeRect(0, 0, CGImageGetWidth(image_), CGImageGetHeight(image_));
-    imageRect.size.width *= zoom_ / 100.0;
-    imageRect.size.height *= zoom_ / 100.0;
+    imageRect.size.width *= zoom / 100.0;
+    imageRect.size.height *= zoom / 100.0;
     frame = NSIntegralRect(imageRect);
   }
   
@@ -108,7 +128,9 @@
 //------------------------------------------------------------------------------
 - (void)resetCursorRects {
   NSCursor *hand = isDown_ ? [NSCursor closedHandCursor] : [NSCursor openHandCursor];
-  [self addCursorRect:[self visibleRect] cursor:hand];
+  
+  if (![self isViewCompletelyVisible])
+    [self addCursorRect:[self visibleRect] cursor:hand];
 }
 
 //------------------------------------------------------------------------------
@@ -121,6 +143,10 @@
 #pragma mark || NSResponder ||
 //------------------------------------------------------------------------------
 - (void)mouseDown:(NSEvent *)event {
+  // No panning if we're completely visible
+  if ([self isViewCompletelyVisible])
+    return;
+  
   NSClipView *clip = (NSClipView *)[self superview];
   initialPt_ = [self convertPoint:[event locationInWindow] toView:clip];
   initialOrigin_ = [clip bounds].origin;
@@ -130,6 +156,10 @@
 
 //------------------------------------------------------------------------------
 - (void)mouseDragged:(NSEvent *)event {
+  // No panning if we're completely visible
+  if ([self isViewCompletelyVisible])
+    return;
+
   NSClipView *clip = (NSClipView *)[self superview];
   NSPoint localPt = [self convertPoint:[event locationInWindow] toView:clip];
   NSPoint delta;

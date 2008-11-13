@@ -36,6 +36,7 @@
 - (CGFloat)zoom;
 
 - (NSRect)optimalFrame;
+- (NSRect)optimalFrameForZoom:(CGFloat)zoom;
 
 //------------------------------------------------------------------------------
 // NSView
