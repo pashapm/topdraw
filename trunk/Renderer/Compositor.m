@@ -21,6 +21,7 @@
 #import "GravityPoint.h"
 #import "Image.h"
 #import "Layer.h"
+#import "LSystem.h"
 #import "Noise.h"
 #import "PaletteObject.h"
 #import "Particles.h"
@@ -150,7 +151,6 @@ static Compositor *sSharedCompositor = nil;
 - (NSString *)evaluateWithSeed:(NSUInteger)seed {
   Runtime *rt = [[Runtime alloc] initWithName:@"Drawing"];
   
-  activeRuntime_ = rt;
   [rt setDelegate:self];
   [self setRandomSeed:seed];
   
@@ -160,6 +160,7 @@ static Compositor *sSharedCompositor = nil;
   [rt registerClass:[Gradient class]];
   [rt registerClass:[GravityPoint class]];
   [rt registerClass:[Image class]];
+  [rt registerClass:[LSystem class]];
   [rt registerClass:[Noise class]];
   [rt registerClass:[PaletteObject class]];
   [rt registerClass:[Particles class]];
@@ -203,7 +204,8 @@ static Compositor *sSharedCompositor = nil;
   int count = [layers_ count];
   CGContextRef dest = [desktop_ backingStore];
   
-  // Restore the clip
+  // Restore the state and clip
+  CGContextRestoreGState(dest);
   CGRect rect = [desktop_ cgRectFrame];
   rect.origin = CGPointZero;
   CGContextClipToRect(dest, rect);
@@ -211,16 +213,17 @@ static Compositor *sSharedCompositor = nil;
   // Draw each layer into the desktop
   for (int i = 0; i < count; ++i) {
     Layer *layer = [layers_ objectAtIndex:i];
-    CGContextSaveGState(dest);
     CGBlendMode blendMode = [Layer blendModeFromString:[blendModes_ objectAtIndex:i]];
     CGContextSetBlendMode(dest, blendMode);
     CGContextDrawImage(dest, [layer cgRectFrame], [layer cgImage]);
-    CGContextRestoreGState(dest);
   }
   
   // Draw the menubar
   if (!disableMenubarRendering_)
     CGContextDrawImage(dest, [menubar_ cgRectFrame], [menubar_ cgImage]);
+  
+  // Save the state for the future
+  CGContextSaveGState(dest);
     
   return [desktop_ cgImage];
 }
@@ -237,6 +240,9 @@ static Compositor *sSharedCompositor = nil;
     // The desktop is always at the origin
     frame.origin = NSZeroPoint;
     desktop_ = [[Layer alloc] initWithFrame:frame];
+    
+    // Push the context state so that we can cleanly restore before compositing
+    CGContextSaveGState([desktop_ backingStore]);
   }
   
   return desktop_;

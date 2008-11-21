@@ -25,6 +25,8 @@
 }
 
 - (id)initWithJSFunction:(JSObjectRef)function runtime:(Runtime *)runtime;
+
+- (Runtime *)runtime;
 - (JSObjectRef)function;
 
 - (id)invokeWithArguments:(NSArray *)arguments;

@@ -688,7 +688,7 @@
   CGContextDrawPath(backingStore_, kCGPathStroke);
 }
 
-- (void)fill {
+- (void)fill:(NSArray *)arguments {
   if (fillGradient_) {
     CGPoint start = NSPointToCGPoint([[fillGradient_ start] point]);
     CGPoint end = NSPointToCGPoint([[fillGradient_ end] point]);
@@ -709,7 +709,16 @@
     }
     CGContextRestoreGState(backingStore_);
   } else {
-    CGContextDrawPath(backingStore_, kCGPathFill);
+    CGPathDrawingMode fillMode = kCGPathFill;
+    
+    if ([arguments count] == 1) {
+      NSNumber *mode = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[NSNumber class]];
+      
+      if ([mode boolValue])
+        fillMode = kCGPathEOFill;
+    }
+      
+    CGContextDrawPath(backingStore_, fillMode);
   }
 }
 
