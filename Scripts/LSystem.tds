@@ -1,0 +1,59 @@
+
+desktop.fillLayer(new Gradient(new Color(0.3), new Color(0.8)));
+
+var ls = new LSystem();
+var iterations = 10;
+var db = desktop.bounds;
+var circleRnd = new Randomizer(5, 30);
+
+function FilledCircle() {
+	desktop.beginPath();
+	desktop.circle(0, 0, circleRnd.intValue); 
+	desktop.fill();
+}
+
+function Sierpinski() {
+	ls.root = "A";
+	ls.addRule("A", "B-A-B");
+	ls.addRule("B", "A+B+A");
+	ls.length = 9;
+	ls.angle = 60;
+	desktop.translate(1100, 50)
+	desktop.rotate(Math.PI * (0 / 180));
+	iterations = 7;
+}
+
+function DragonCurve() {
+	ls.drawFunction = FilledCircle;
+	ls.root = "FX";
+	ls.addRule("X", "X+YF+");
+	ls.addRule("Y", "-FX-Y");
+	ls.length = 15;
+	ls.angle = 90;
+	iterations = 10;
+	desktop.rotate(Math.PI * (0 / 180));
+	desktop.translate(1500, 400)
+}
+
+// Draw the Sierpinski in green
+desktop.strokeStyle = new Color("yellow");
+desktop.save();
+Sierpinski();
+ls.drawInLayer(desktop, 0, 0, iterations);
+desktop.restore();
+
+desktop.strokeStyle = new Color("blue");
+desktop.fillStyle = new Color("red", 0.3);
+desktop.save();
+DragonCurve();
+ls.drawFunction = undefined;
+ls.drawInLayer(desktop, 0, 0, iterations);
+desktop.restore();
+
+desktop.save();
+DragonCurve();
+ls.drawInLayer(desktop, 0, 0, iterations);
+desktop.restore();
+
+
+

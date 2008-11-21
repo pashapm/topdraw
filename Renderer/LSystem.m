@@ -108,9 +108,13 @@ static inline CGFloat RadToDeg(CGFloat rad) {
 }
 
 //------------------------------------------------------------------------------
-- (void)setDrawFunction:(NSString *)drawFunction {
+- (void)setDrawFunction:(Function *)drawFunction {
   [drawFunction_ autorelease];
-  drawFunction_ = [drawFunction retain];
+  
+  if ([drawFunction isKindOfClass:[Function class]])
+    drawFunction_ = [drawFunction retain];
+  else
+    drawFunction_ = nil;
 }
 
 //------------------------------------------------------------------------------
@@ -138,11 +142,16 @@ static inline CGFloat RadToDeg(CGFloat rad) {
 }
 
 //------------------------------------------------------------------------------
-- (void)moveForward {
-  CGContextBeginPath(layerRef_);
-  CGContextMoveToPoint(layerRef_, 0, 0);
-  CGContextAddLineToPoint(layerRef_, 0, length_);
-  CGContextStrokePath(layerRef_);
+- (void)drawAtCurrentLocation {
+  if (drawFunction_) {
+    [[drawFunction_ runtime] invokeFunction:drawFunction_ arguments:nil];
+  } else {
+    CGContextBeginPath(layerRef_);
+    CGContextMoveToPoint(layerRef_, 0, 0);
+    CGContextAddLineToPoint(layerRef_, 0, length_);
+    CGContextStrokePath(layerRef_);
+  }
+  
   CGContextTranslateCTM(layerRef_, 0, length_);
 }
 
@@ -171,7 +180,7 @@ static inline CGFloat RadToDeg(CGFloat rad) {
         NSString *rule = [rules_ objectForKey:cmdStr];
         [self drawRule:rule depth:depth];
       } else {
-        [self moveForward];
+        [self drawAtCurrentLocation];
       }
     }
   }
@@ -185,7 +194,7 @@ static inline CGFloat RadToDeg(CGFloat rad) {
     for (int i = 0; i < len; ++i)
       [self drawCommand:[rule characterAtIndex:i] depth:depth - 1];  
   else
-    [self moveForward];
+    [self drawAtCurrentLocation];
 }
 
 //------------------------------------------------------------------------------
