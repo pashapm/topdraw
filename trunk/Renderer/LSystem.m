@@ -19,12 +19,16 @@
 #import "Runtime.h"
 
 static inline CGFloat DegToRad(CGFloat deg) {
-  return deg / 180.0;
+  return M_PI * deg / 180.0;
 }
 
 static inline CGFloat RadToDeg(CGFloat rad) {
-  return rad * 180.0;
+  return rad * 180.0 / M_PI;
 }
+
+@interface LSystem(PrivateMethods)
+- (void)drawRule:(NSString *)rule depth:(int)depth;
+@end
 
 @implementation LSystem
 //------------------------------------------------------------------------------
@@ -121,41 +125,67 @@ static inline CGFloat RadToDeg(CGFloat rad) {
 }
 
 //------------------------------------------------------------------------------
-- (void)drawCommand:(NSString *)cmd depth:(int)depth {
-  if (depth <= 0)
+// args: rule, string
+- (void)addRule:(NSArray *)arguments {
+  if ([arguments count] < 2)
     return;
   
-  int len = [cmd length];
+  NSString *rule = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[NSString class]];
+  NSString *replacement = [RuntimeObject coerceObject:[arguments objectAtIndex:1] toClass:[NSString class]];
   
-  for (int i = 0; i < len; ++i) {
-    NSString *subCmd = [cmd substringWithRange:NSMakeRange(i, 1)];
-    NSString *rule = [rules_ objectForKey:subCmd];
-    
-    if (rule) {
-      [self drawCommand:rule depth:depth - 1];
-      continue;
-    } 
+  if (rule && replacement)
+    [rules_ setObject:replacement forKey:rule];
+}
 
-    const char *ch = [subCmd UTF8String];
-    
-    switch (*ch) {
-      case '+':
-        CGContextRotateCTM(layerRef_, -angle_);
-        break;
-        
-      case '-':
-        CGContextRotateCTM(layerRef_, angle_);
-        break;
-        
-      case 'D':
-        CGContextBeginPath(layerRef_);
-        CGContextMoveToPoint(layerRef_, 0, 0);
-        CGContextAddLineToPoint(layerRef_, 0, length_);
-        CGContextStrokePath(layerRef_);
-        CGContextTranslateCTM(layerRef_, 0, length_);
-        break;
+//------------------------------------------------------------------------------
+- (void)moveForward {
+  CGContextBeginPath(layerRef_);
+  CGContextMoveToPoint(layerRef_, 0, 0);
+  CGContextAddLineToPoint(layerRef_, 0, length_);
+  CGContextStrokePath(layerRef_);
+  CGContextTranslateCTM(layerRef_, 0, length_);
+}
+
+//------------------------------------------------------------------------------
+- (void)drawCommand:(unichar)cmd depth:(int)depth {
+  switch (cmd) {
+    case '+':
+      CGContextRotateCTM(layerRef_, -angle_);
+      break;
+      
+    case '-':
+      CGContextRotateCTM(layerRef_, angle_);
+      break;
+      
+    case '[':
+      CGContextSaveGState(layerRef_);
+      break;
+      
+    case ']':
+      CGContextRestoreGState(layerRef_);
+      break;
+      
+    default: {
+      if (depth > 0) {
+        NSString *cmdStr = [NSString stringWithCharacters:&cmd length:1];
+        NSString *rule = [rules_ objectForKey:cmdStr];
+        [self drawRule:rule depth:depth];
+      } else {
+        [self moveForward];
+      }
     }
   }
+}
+
+//------------------------------------------------------------------------------
+- (void)drawRule:(NSString *)rule depth:(int)depth {
+  int len = [rule length];
+  
+  if (len)
+    for (int i = 0; i < len; ++i)
+      [self drawCommand:[rule characterAtIndex:i] depth:depth - 1];  
+  else
+    [self moveForward];
 }
 
 //------------------------------------------------------------------------------
@@ -182,7 +212,7 @@ static inline CGFloat RadToDeg(CGFloat rad) {
   // Draw
   CGContextSaveGState(layerRef_);
   CGContextTranslateCTM(layerRef_, [start x], [start y]);
-  [self drawCommand:root_ depth:depth];
+  [self drawRule:root_ depth:depth + 1];
   CGContextRestoreGState(layerRef_);
 }
 
