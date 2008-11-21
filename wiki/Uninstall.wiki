@@ -1,0 +1,20 @@
+#summary How to uninstall Top Draw.
+
+= Introduction =
+
+There are three components to Top Draw:  the viewer, the editor, and an application support folder.  The rest of this page will describe how you can remove these components.
+
+= Details =
+
+Viewer
+  # Open the System Preferences pane, and choose Accounts.
+  # Select the Login Items tab
+  # Remove Top Draw Viewer (if present)
+
+Editor
+  # Drag the Top Draw application to the Trash
+
+Application Support
+  # Navigate to your Home directory
+  # Navigate into Library > Application Support > Google 
+  # Drag the TopDraw filter to the Trash
