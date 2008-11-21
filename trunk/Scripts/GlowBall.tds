@@ -11,7 +11,7 @@ colorSets.push(new Array("white", "blue", "white", "white", "blue"));
 colorSets.push(new Array("black", "blue", "cyan", "green", "black"));
 colorSets.push(new Array("pink", "red", "white", "magenta", "black"));
 
-// If you want a totally random one, uncomment this next line
+// Totally random color
 colorSets.push(new Array("", "", "", "", ""));
 
 // Select the color set
@@ -29,8 +29,8 @@ var width = desktop.bounds.width;
 var height = desktop.bounds.height / 2;
 
 var widthRnd = new Randomizer(0.1, 0.8);
-var heightRnd = new Randomizer(0.3, 0.5);
-var firstHeight = height * heightRnd.floatValue;
+var heightRnd = new Randomizer(0.1, 0.5);
+var firstHeight = desktop.bounds.height * heightRnd.floatValue;
 var firstWidth = width * widthRnd.floatValue;
 
 gradient.start = new Point(firstWidth, firstHeight);
