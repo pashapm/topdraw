@@ -56,6 +56,7 @@
 		9B6B76830ECB9D5400E76069 /* CenteringScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6B76820ECB9D5400E76069 /* CenteringScrollView.m */; };
 		9BA0D7BB0E8852300053DD93 /* Top Draw.saver in Copy Viewer + Saver */ = {isa = PBXBuildFile; fileRef = 9B3604400E845EC400BD5E4F /* Top Draw.saver */; };
 		9BA0DA430E8875250053DD93 /* TopDrawSaver.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA0DA420E8875250053DD93 /* TopDrawSaver.xib */; };
+		9BA969250ED675D900CA4C2A /* LSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA969240ED675D900CA4C2A /* LSystem.m */; };
 		9BB539BB0E5B6E70008ED3AA /* PatternObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB539BA0E5B6E70008ED3AA /* PatternObject.m */; };
 		9BDEC3A10E720BF500B82883 /* Top Draw Viewer.app in Copy Viewer + Saver */ = {isa = PBXBuildFile; fileRef = 3CD4D7440E42F08000F37DC9 /* Top Draw Viewer.app */; };
 		9BF7989D0E7201D600181888 /* Built-in.tds in Resources */ = {isa = PBXBuildFile; fileRef = 3CD4D7630E42F24200F37DC9 /* Built-in.tds */; };
@@ -230,6 +231,8 @@
 		9B6B76810ECB9D5400E76069 /* CenteringScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CenteringScrollView.h; sourceTree = "<group>"; };
 		9B6B76820ECB9D5400E76069 /* CenteringScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CenteringScrollView.m; sourceTree = "<group>"; };
 		9BA0DA420E8875250053DD93 /* TopDrawSaver.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TopDrawSaver.xib; path = Saver/TopDrawSaver.xib; sourceTree = "<group>"; };
+		9BA969230ED675C000CA4C2A /* LSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSystem.h; sourceTree = "<group>"; };
+		9BA969240ED675D900CA4C2A /* LSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSystem.m; sourceTree = "<group>"; };
 		9BB539B90E5B6E70008ED3AA /* PatternObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatternObject.h; sourceTree = "<group>"; };
 		9BB539BA0E5B6E70008ED3AA /* PatternObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PatternObject.m; sourceTree = "<group>"; };
 		9BC8E7B80E63A20800780CB6 /* Version.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Version.xcconfig; path = Common/Version.xcconfig; sourceTree = "<group>"; };
@@ -418,6 +421,8 @@
 				9B4A8EF30E428C7700777579 /* Image.m */,
 				9B4A8EF40E428C7700777579 /* Layer.h */,
 				9B4A8EF50E428C7700777579 /* Layer.m */,
+				9BA969230ED675C000CA4C2A /* LSystem.h */,
+				9BA969240ED675D900CA4C2A /* LSystem.m */,
 				9B4A8EF60E428C7700777579 /* Noise.h */,
 				9B4A8EF70E428C7700777579 /* Noise.m */,
 				9B4A8ED70E428B8400777579 /* NSColor+Random.h */,
@@ -710,6 +715,7 @@
 				9B5C07E90E799EB700F4B6BF /* PaletteObject.m in Sources */,
 				9B5C08050E799F6A00F4B6BF /* Storage.m in Sources */,
 				9B2A5C170ED652AC00F58165 /* Function.m in Sources */,
+				9BA969250ED675D900CA4C2A /* LSystem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
