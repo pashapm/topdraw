@@ -20,6 +20,8 @@
 
 #import "RuntimeObject.h"
 
+@class Function;
+
 @interface Runtime : NSObject {
   NSString *name_;
   JSGlobalContextRef globalContext_;
@@ -46,8 +48,8 @@
 - (BOOL)setObject:(NSObject <RuntimeObject> *)obj withName:(NSString *)name;
 
 - (BOOL)evaluateScript:(NSString *)script exception:(NSException **)exception;
-- (id)callAsFunction:(NSString *)str;
 
+- (id)invokeFunction:(Function *)function arguments:(NSArray *)arguments;
 @end
 
 @interface NSObject(RuntimeDelegate)

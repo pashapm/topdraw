@@ -12,6 +12,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+#import "Function.h"
 #import "Runtime.h"
 
 @interface Runtime(PrivateMethods)
@@ -242,31 +243,37 @@ static JSValueRef LogFn(JSContextRef ctx, JSObjectRef function, JSObjectRef this
     case kJSTypeObject: {
       JSObjectRef objRef = JSValueToObject(context, value, exception);
       obj = JSObjectGetPrivate(objRef);
-
+      
       if (!obj) {
-        // Try to convert array to NSArray
-        JSStringRef array = JSStringCreateWithUTF8CString("Array");
-        JSObjectRef arrayConstructor = JSValueToObject(context, JSObjectGetProperty(context, global_, array, NULL), NULL);
-        JSStringRelease(array);
-        
-        if (JSValueIsInstanceOfConstructor(context, value, arrayConstructor, NULL)) {
-          JSValueRef val;
-          obj = [NSMutableArray array];
-          
-          for (int i = 0; i < INT_MAX; ++i) {
-            val = JSObjectGetPropertyAtIndex(context, objRef, i, NULL);
-            if (JSValueIsUndefined(context, val))
-              break;
-            id valObj = [self convertJSValue:val exception:exception context:context];
-            if (valObj)
-              [obj addObject:valObj];
-          }
+        // Try function
+        if (JSObjectIsFunction(context, objRef)) {
+          obj = [[[Function alloc] initWithJSFunction:objRef runtime:self] autorelease];
         } else {
-          obj = [NSString stringWithFormat:@"[Object %x]", objRef];
+          // Try to convert array to NSArray
+          JSStringRef array = JSStringCreateWithUTF8CString("Array");
+          JSObjectRef arrayConstructor = JSValueToObject(context, JSObjectGetProperty(context, global_, array, NULL), NULL);
+          JSStringRelease(array);
+          
+          if (JSValueIsInstanceOfConstructor(context, value, arrayConstructor, NULL)) {
+            JSValueRef val;
+            obj = [NSMutableArray array];
+            
+            for (int i = 0; i < INT_MAX; ++i) {
+              val = JSObjectGetPropertyAtIndex(context, objRef, i, NULL);
+              if (JSValueIsUndefined(context, val))
+                break;
+              id valObj = [self convertJSValue:val exception:exception context:context];
+              if (valObj)
+                [obj addObject:valObj];
+            }
+          }
         }
+      } else {
+        obj = [NSString stringWithFormat:@"[Object %x]", objRef];
       }
     }
       break;
+      
     default:
       MethodLog("Unexpected JS type: %d", type);
       break;
@@ -654,6 +661,21 @@ static void CopyStringToCString(NSString *str, char **cStr) {
     NSString *reason = [exceptionDict objectForKey:@"message"];
     *exception = [NSException exceptionWithName:name reason:reason userInfo:exceptionDict];
   }
+  
+  return result;
+}
+
+- (id)invokeFunction:(Function *)function arguments:(NSArray *)arguments {
+  id result = nil;
+  JSValueRef *argumentValues = NULL;
+  
+  if ([arguments count]) {
+    
+    argumentValues = [self convertObject:arguments context:globalContext_];
+    
+  }
+  
+  JSValueRef resultRef = JSObjectCallAsFunction(globalContext_, [function function], NULL, [arguments count], argumentValues, &exception);
   
   return result;
 }

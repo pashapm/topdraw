@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C566CB70E88D2E100B88C21 /* CenteringClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C566CB60E88D2E100B88C21 /* CenteringClipView.m */; };
 		3C9E51EB0E725B03009417F8 /* DocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9E51EA0E725B03009417F8 /* DocumentController.m */; };
 		3CD4D7500E42F12F00F37DC9 /* ViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD4D74A0E42F12F00F37DC9 /* ViewerController.m */; };
 		3CD4D7510E42F12F00F37DC9 /* StatusItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD4D74C0E42F12F00F37DC9 /* StatusItemView.m */; };
@@ -20,6 +19,7 @@
 		9B1164000E47BCB100C230D5 /* NSColor+Adjustment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1163FF0E47BCB100C230D5 /* NSColor+Adjustment.m */; };
 		9B1164010E47BCB100C230D5 /* NSColor+Adjustment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1163FF0E47BCB100C230D5 /* NSColor+Adjustment.m */; };
 		9B296FB10E43EC0F00D89930 /* SimulatorObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B296FB00E43EC0F00D89930 /* SimulatorObject.m */; };
+		9B2A5C170ED652AC00F58165 /* Function.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2A5C160ED652AC00F58165 /* Function.m */; };
 		9B36045F0E84604600BD5E4F /* TopDrawSaverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B36045E0E84604600BD5E4F /* TopDrawSaverView.m */; };
 		9B3604610E84606B00BD5E4F /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B3604600E84606B00BD5E4F /* ScreenSaver.framework */; };
 		9B3604970E8462A100BD5E4F /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A8FBF0E428F2100777579 /* Renderer.m */; };
@@ -53,6 +53,7 @@
 		9B4A8F2C0E428D9C00777579 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4A8EAA0E427E3B00777579 /* Accelerate.framework */; };
 		9B5C07E90E799EB700F4B6BF /* PaletteObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5C07E80E799EB700F4B6BF /* PaletteObject.m */; };
 		9B5C08050E799F6A00F4B6BF /* Storage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5C08040E799F6A00F4B6BF /* Storage.m */; };
+		9B6B76830ECB9D5400E76069 /* CenteringScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6B76820ECB9D5400E76069 /* CenteringScrollView.m */; };
 		9BA0D7BB0E8852300053DD93 /* Top Draw.saver in Copy Viewer + Saver */ = {isa = PBXBuildFile; fileRef = 9B3604400E845EC400BD5E4F /* Top Draw.saver */; };
 		9BA0DA430E8875250053DD93 /* TopDrawSaver.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA0DA420E8875250053DD93 /* TopDrawSaver.xib */; };
 		9BB539BB0E5B6E70008ED3AA /* PatternObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB539BA0E5B6E70008ED3AA /* PatternObject.m */; };
@@ -130,8 +131,6 @@
 		3C4324F90E42FEAD006C46D5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		3C4324FB0E42FEAD006C46D5 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C4324FD0E42FEAD006C46D5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/DrawingDocument.xib; sourceTree = "<group>"; };
-		3C566CB50E88D2E100B88C21 /* CenteringClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CenteringClipView.h; sourceTree = "<group>"; };
-		3C566CB60E88D2E100B88C21 /* CenteringClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CenteringClipView.m; sourceTree = "<group>"; };
 		3C9E51E90E725B03009417F8 /* DocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocumentController.h; sourceTree = "<group>"; };
 		3C9E51EA0E725B03009417F8 /* DocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocumentController.m; sourceTree = "<group>"; };
 		3CD4D7440E42F08000F37DC9 /* Top Draw Viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Top Draw Viewer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -151,6 +150,8 @@
 		9B1163FF0E47BCB100C230D5 /* NSColor+Adjustment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Adjustment.m"; sourceTree = "<group>"; };
 		9B296FAF0E43EC0F00D89930 /* SimulatorObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatorObject.h; sourceTree = "<group>"; };
 		9B296FB00E43EC0F00D89930 /* SimulatorObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimulatorObject.m; sourceTree = "<group>"; };
+		9B2A5C150ED652AC00F58165 /* Function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Function.h; sourceTree = "<group>"; };
+		9B2A5C160ED652AC00F58165 /* Function.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Function.m; sourceTree = "<group>"; };
 		9B3604400E845EC400BD5E4F /* Top Draw.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Top Draw.saver"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B3604410E845EC400BD5E4F /* TopDrawSaver-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "TopDrawSaver-Info.plist"; path = "Saver/TopDrawSaver-Info.plist"; sourceTree = "<group>"; };
 		9B36045D0E84604600BD5E4F /* TopDrawSaverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TopDrawSaverView.h; path = Saver/TopDrawSaverView.h; sourceTree = "<group>"; };
@@ -226,6 +227,8 @@
 		9B5C07E80E799EB700F4B6BF /* PaletteObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteObject.m; sourceTree = "<group>"; };
 		9B5C08030E799F6A00F4B6BF /* Storage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Storage.h; sourceTree = "<group>"; };
 		9B5C08040E799F6A00F4B6BF /* Storage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Storage.m; sourceTree = "<group>"; };
+		9B6B76810ECB9D5400E76069 /* CenteringScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CenteringScrollView.h; sourceTree = "<group>"; };
+		9B6B76820ECB9D5400E76069 /* CenteringScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CenteringScrollView.m; sourceTree = "<group>"; };
 		9BA0DA420E8875250053DD93 /* TopDrawSaver.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TopDrawSaver.xib; path = Saver/TopDrawSaver.xib; sourceTree = "<group>"; };
 		9BB539B90E5B6E70008ED3AA /* PatternObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatternObject.h; sourceTree = "<group>"; };
 		9BB539BA0E5B6E70008ED3AA /* PatternObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PatternObject.m; sourceTree = "<group>"; };
@@ -300,8 +303,8 @@
 		2A37F4ABFDCFA73011CA2CEA /* TopDraw */ = {
 			isa = PBXGroup;
 			children = (
-				3C566CB50E88D2E100B88C21 /* CenteringClipView.h */,
-				3C566CB60E88D2E100B88C21 /* CenteringClipView.m */,
+				9B6B76810ECB9D5400E76069 /* CenteringScrollView.h */,
+				9B6B76820ECB9D5400E76069 /* CenteringScrollView.m */,
 				9B4A8FB40E428F2100777579 /* CGImageView.h */,
 				9B4A8FB50E428F2100777579 /* CGImageView.m */,
 				9B4A8FB60E428F2100777579 /* ColorizingTextView.h */,
@@ -405,6 +408,8 @@
 				9B4A8EEB0E428C7700777579 /* Compositor.m */,
 				9B4A8EEC0E428C7700777579 /* Filter.h */,
 				9B4A8EED0E428C7700777579 /* Filter.m */,
+				9B2A5C150ED652AC00F58165 /* Function.h */,
+				9B2A5C160ED652AC00F58165 /* Function.m */,
 				9B4A8EEE0E428C7700777579 /* Gradient.h */,
 				9B4A8EEF0E428C7700777579 /* Gradient.m */,
 				9B4A8EF00E428C7700777579 /* GravityPoint.h */,
@@ -550,6 +555,9 @@
 /* Begin PBXProject section */
 		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+			};
 			buildConfigurationList = C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "TopDraw" */;
 			compatibilityVersion = "Xcode 3.0";
 			hasScannedForEncodings = 1;
@@ -701,6 +709,7 @@
 				9BB539BB0E5B6E70008ED3AA /* PatternObject.m in Sources */,
 				9B5C07E90E799EB700F4B6BF /* PaletteObject.m in Sources */,
 				9B5C08050E799F6A00F4B6BF /* Storage.m in Sources */,
+				9B2A5C170ED652AC00F58165 /* Function.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -720,7 +729,7 @@
 				9BF798E00E7208A900181888 /* Installer.m in Sources */,
 				9BF798E10E7208A900181888 /* NSScreen+Convenience.m in Sources */,
 				3C9E51EB0E725B03009417F8 /* DocumentController.m in Sources */,
-				3C566CB70E88D2E100B88C21 /* CenteringClipView.m in Sources */,
+				9B6B76830ECB9D5400E76069 /* CenteringScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
