@@ -12,30 +12,22 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-#import "Function.h"
-#import "Runtime.h"
+// Implement L-System module
 
-@implementation Function
-- (id)initWithJSFunction:(JSObjectRef)function runtime:(Runtime *)runtime {
-  if ((self = [super init])) {
-    runtime_ = runtime;
-    // Not sure if we need to protect this one
-    function_ = function;
-  }
+#import "RuntimeObject.h"
+
+@class Function;
+
+@interface LSystem : RuntimeObject {
+  Function *drawFunction_;
+  CGFloat length_;
+  CGFloat lengthScale_;
+  CGFloat angle_;
+  NSString *root_;
+  NSMutableDictionary *rules_;
   
-  return self;
-}
-
-- (Runtime *)runtime {
-  return runtime_;
-}
-
-- (JSObjectRef)function {
-  return function_;
-}
-
-- (id)invokeWithArguments:(NSArray *)arguments {
-  return [runtime_ invokeFunction:self arguments:arguments];
+  Runtime *runtime_;
+  CGContextRef layerRef_;
 }
 
 @end

@@ -245,8 +245,8 @@ static JSValueRef LogFn(JSContextRef ctx, JSObjectRef function, JSObjectRef this
       obj = JSObjectGetPrivate(objRef);
       
       if (!obj) {
-        // Try function
         if (JSObjectIsFunction(context, objRef)) {
+          // Try function
           obj = [[[Function alloc] initWithJSFunction:objRef runtime:self] autorelease];
         } else {
           // Try to convert array to NSArray
@@ -267,9 +267,10 @@ static JSValueRef LogFn(JSContextRef ctx, JSObjectRef function, JSObjectRef this
                 [obj addObject:valObj];
             }
           }
-        }
-      } else {
-        obj = [NSString stringWithFormat:@"[Object %x]", objRef];
+        } 
+        
+        if (!obj)
+          obj = [NSString stringWithFormat:@"[Object %x]", objRef];
       }
     }
       break;
@@ -666,41 +667,27 @@ static void CopyStringToCString(NSString *str, char **cStr) {
 }
 
 - (id)invokeFunction:(Function *)function arguments:(NSArray *)arguments {
-  id result = nil;
   JSValueRef *argumentValues = NULL;
+  int argCount = [arguments count];
   
-  if ([arguments count]) {
-    
-    argumentValues = [self convertObject:arguments context:globalContext_];
-    
+  if (argCount) {
+    argumentValues = malloc(sizeof(JSValueRef) * argCount);
+    for (int i = 0; i < argCount; ++i) {
+      argumentValues[i] = [self convertObject:[arguments objectAtIndex:i] context:globalContext_];
+    }
   }
   
-  JSValueRef resultRef = JSObjectCallAsFunction(globalContext_, [function function], NULL, [arguments count], argumentValues, &exception);
+  JSValueRef exception = NULL;
+  JSValueRef resultRef = JSObjectCallAsFunction(globalContext_, [function function], NULL, argCount, argumentValues, &exception);
+  id result = nil;
+
+  if (resultRef)
+    result = [self convertJSValue:resultRef exception:NULL context:globalContext_];
+  
+  // Since the values are GC'd, we don't have to clean them up
+  free(argumentValues);
   
   return result;
 }
-
-- (id)callAsFunction:(NSString *)fnStr {
-  JSStringRef fnStrRef = JSStringCreateWithCFString((CFStringRef)fnStr);
-  JSValueRef fnValue = JSValueMakeString(globalContext_, fnStrRef);
-  JSValueRef jsException = NULL;
-  JSObjectRef fnObj = JSValueToObject(globalContext_, fnValue, &jsException);
-  JSStringRelease(fnStrRef);
-  JSValueRef protoVal = JSObjectGetPrototype(globalContext_, fnObj);
-  JSObjectRef protoObj = JSValueToObject(globalContext_, protoVal, NULL);
-  bool isObj = JSObjectIsFunction(globalContext_, protoObj);
-  NSLog(@"isObj: %d", isObj);
-/*  
-  jsException = NULL;
-  JSValueRef result = JSObjectCallAsFunction(globalContext_, fnObj, NULL, 0, NULL, &jsException);
-*/
-  id resultObj = nil;
- 
-//  if (result)
-//    resultObj = [self convertJSValue:result exception:NULL context:globalContext_];
-
-  return resultObj;
-}
-
 
 @end
