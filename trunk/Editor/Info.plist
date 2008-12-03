@@ -53,5 +53,7 @@
 	<string>NSApplication</string>
 	<key>CFBundleShortVersionString</key>
 	<string>${TOP_DRAW_VERSION}</string>
+  <key>LSMinimumSystemVersion</key>
+  <string>10.5</string>
 </dict>
 </plist>
