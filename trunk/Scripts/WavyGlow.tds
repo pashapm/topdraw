@@ -1,7 +1,10 @@
 // Menubar and background
 var grad = new Gradient(new Color("white"), new Color);
 menubar.fillLayer(grad);
-desktop.fillLayer(new Color("black"));
+
+// Very dark color background
+var bg = new Color("black");
+desktop.fillLayer(bg.vary(0.05, 0.05, 0.05, 0));
 
 desktop.lineJoin = "round";
 
