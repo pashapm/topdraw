@@ -32,8 +32,13 @@ The last 10 images rendered will be saved in ~/Library/Application Support/Googl
 TopDraw requires Mac OS X 10.5 (Leopard) or later as it uses the JavaScriptCore.framework to evaluate the JavaScript.
 
 == History ==
-2008-01-13 (1.0.1)
-- Fix problem with parsing script (http://code.google.com/p/topdraw/issues/detail?id=4)
+12/15/2008 - 1.0.2
+- Improve filter rendering by using CIAffineClamp so that the filter is applied to the edges
+- Added LSystem support
 
-2008-09-29 (1.0)
-Initial release
+10/03/2008 - 1.0.1
+- Fix problem with parsing script (http://code.google.com/p/topdraw/issues/detail?id=4)
+- Ensure that update interval is an integer greater than 1
+
+09/29/2008 - 1.0
+Initial Release
