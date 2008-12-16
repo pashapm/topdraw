@@ -109,6 +109,9 @@ static NSComparisonResult CompareBaseNames(id a, id b, void *context) {
 
 //------------------------------------------------------------------------------
 - (void)setRefreshTime:(int)time {
+  if (time < 1)
+    time = 1;
+  
   [[NSUserDefaults standardUserDefaults] setInteger:time forKey:@"refreshTime"];
 }
 
@@ -199,8 +202,8 @@ static NSComparisonResult CompareBaseNames(id a, id b, void *context) {
 
 //------------------------------------------------------------------------------
 - (void)windowWillClose:(NSNotification *)note {
-  [[NSNotificationCenter defaultCenter] postNotificationName:PreferencesControllerDidUpdate object:nil];
   [window_ endEditingFor:nil];
+  [[NSNotificationCenter defaultCenter] postNotificationName:PreferencesControllerDidUpdate object:nil];
 }
 
 //------------------------------------------------------------------------------
