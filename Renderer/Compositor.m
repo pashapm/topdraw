@@ -126,9 +126,10 @@ static Compositor *sSharedCompositor = nil;
   // a hack because it doesn't actually evaluate the script.  So, if the string
   // below appears in a comment, it will still check.
   [scanner scanUpToString:@"compositor.requiredVersion" intoString:nil];
+  
   if (![scanner isAtEnd]) {
     [scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:nil];
-    int version;
+    int version = kCurrentVersion;
     [scanner scanInt:&version];
     
     if (version > kCurrentVersion) {
@@ -140,7 +141,6 @@ static Compositor *sSharedCompositor = nil;
       "var textBounds = t.bounds;"
       "var pt = new Point(db.midX - textBounds.width / 2, db.midY - textBounds.height / 2);"
                 "desktop.drawText(t, pt);", version];
-      
     }
   }
   

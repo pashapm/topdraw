@@ -892,10 +892,18 @@
     // Create an image of our background
     CGImageRef current = CGBitmapContextCreateImage(backingStore_);
     CIImage *input = [CIImage imageWithCGImage:current];
+    
+    // Always put an CIAffineClamp at the head so that the edge is duplicated
+    CIFilter *clampFilter = [CIFilter filterWithName:@"CIAffineClamp"];
+    [clampFilter setDefaults];
+    [clampFilter setValue:[NSAffineTransform transform]
+                   forKey:@"inputTransform"];
+    [clampFilter setValue:input forKey:@"inputImage"];
+    CIImage *affineInput = [clampFilter valueForKey:@"outputImage"];
 
     // If this is a generator, it may not respond to this message
     @try {
-      [[firstFilter ciFilter] setValue:input forKey:@"inputImage"];
+      [[firstFilter ciFilter] setValue:affineInput forKey:@"inputImage"];
     }
     
     @catch (NSException *e) {
