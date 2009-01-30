@@ -12,6 +12,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+#import "Compositor.h"
 #import "Function.h"
 #import "Layer.h"
 #import "LSystem.h"
@@ -43,13 +44,13 @@ static inline CGFloat RadToDeg(CGFloat rad) {
 + (NSSet *)properties {
   return [NSSet setWithObjects:@"angle", 
           @"length", @"lengthScale",
-          @"root",
+          @"root", @"depth", @"lastRule", @"lastTurn",
           @"drawFunction", nil];
 }
 
 //------------------------------------------------------------------------------
 + (NSSet *)readOnlyProperties {
-  return nil;
+  return [NSSet setWithObjects:@"depth", @"lastRule", @"lastTurn", nil];
 }
 
 //------------------------------------------------------------------------------
@@ -129,6 +130,21 @@ static inline CGFloat RadToDeg(CGFloat rad) {
 }
 
 //------------------------------------------------------------------------------
+- (int)depth {
+  return depth_;
+}
+
+//------------------------------------------------------------------------------
+- (NSString *)lastRule {
+  return [NSString stringWithCharacters:&lastRule_ length:1];
+}
+
+//------------------------------------------------------------------------------
+- (NSString *)lastTurn {
+  return [NSString stringWithCharacters:&lastTurn_ length:1];
+}
+
+//------------------------------------------------------------------------------
 // args: rule, string
 - (void)addRule:(NSArray *)arguments {
   if ([arguments count] < 2)
@@ -142,9 +158,10 @@ static inline CGFloat RadToDeg(CGFloat rad) {
 }
 
 //------------------------------------------------------------------------------
-- (void)drawAtCurrentLocation {
+- (void)drawAtCurrentLocation:(int)depth {
   if (drawFunction_) {
-    [[drawFunction_ runtime] invokeFunction:drawFunction_ arguments:nil];
+    depth_ = depth;
+    [[drawFunction_ runtime] invokeFunction:drawFunction_ arguments:[NSArray arrayWithObject:self]];
   } else {
     CGContextBeginPath(layerRef_);
     CGContextMoveToPoint(layerRef_, 0, 0);
@@ -157,13 +174,17 @@ static inline CGFloat RadToDeg(CGFloat rad) {
 
 //------------------------------------------------------------------------------
 - (void)drawCommand:(unichar)cmd depth:(int)depth {
+  lastRule_ = cmd;
+
   switch (cmd) {
     case '+':
       CGContextRotateCTM(layerRef_, -angle_);
+      lastTurn_ = cmd;
       break;
       
     case '-':
       CGContextRotateCTM(layerRef_, angle_);
+      lastTurn_ = cmd;
       break;
       
     case '[':
@@ -180,7 +201,7 @@ static inline CGFloat RadToDeg(CGFloat rad) {
         NSString *rule = [rules_ objectForKey:cmdStr];
         [self drawRule:rule depth:depth];
       } else {
-        [self drawAtCurrentLocation];
+        [self drawAtCurrentLocation:depth];
       }
     }
   }
@@ -194,7 +215,7 @@ static inline CGFloat RadToDeg(CGFloat rad) {
     for (int i = 0; i < len; ++i)
       [self drawCommand:[rule characterAtIndex:i] depth:depth - 1];  
   else
-    [self drawAtCurrentLocation];
+    [self drawAtCurrentLocation:depth];
 }
 
 //------------------------------------------------------------------------------

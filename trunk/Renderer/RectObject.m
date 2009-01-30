@@ -23,11 +23,11 @@
 
 + (NSSet *)properties {
   return [NSSet setWithObjects:@"x", @"y", @"width", @"height", 
-          @"midX", @"midY", @"maxX", @"maxY", @"isEmpty", @"pointtypes", nil];
+          @"midX", @"midY", @"maxX", @"maxY", @"center", @"isEmpty", @"pointtypes", nil];
 }
 
 + (NSSet *)readOnlyProperties {
-  return [NSSet setWithObjects:@"midX", @"midY", @"maxX", @"maxY", @"isEmpty", 
+  return [NSSet setWithObjects:@"midX", @"midY", @"maxX", @"maxY", @"center", @"isEmpty", 
           @"pointTypes", nil];
 }
 
@@ -121,6 +121,10 @@
 
 - (CGFloat)maxY {
   return NSMaxY(rect_);
+}
+
+- (PointObject *)center {
+  return [[[PointObject alloc] initWithPoint:NSMakePoint(NSMidX(rect_), NSMidY(rect_))] autorelease];
 }
 
 - (BOOL)isEmpty {
