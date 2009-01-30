@@ -26,6 +26,10 @@ s.a = 0.1;
 s.brightness = 0.7;
 desktop.strokeStyle = s;
 
+var shadowRnd = new Randomizer(-5, 5);
+desktop.shadow(new Point(shadowRnd.intValue, shadowRnd.intValue), 
+	shadowRnd.intValue + 5, new Color());
+
 for (var i = 0; i < 200; ++i) {
 	desktop.lineWidth = 2.0 - (2 * i / count);
 	desktop.translate(translateRnd.intValue, translateRnd.intValue);

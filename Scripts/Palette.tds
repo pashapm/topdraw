@@ -1,0 +1,32 @@
+var drawing = new Layer(desktop.bounds);
+var rnd = new Randomizer(1, 30);
+var p = new Palette;
+if (rnd.boolValue)
+	p.addKulerColors("search", "surf", 3);
+else
+	p.addKulerColors("random", 3);
+
+// If we couldn't load, add something
+if (!p.count)
+	p.addColors("red", "blue", "green", new Color(0.5, 0.5));
+
+var colors = p.colors;
+var count = colors.length;
+var slice = drawing.bounds.width / count;
+var r = new Rect(slice, drawing.bounds.height);
+
+for (var i = 0; i < count; ++i) {
+	drawing.beginPath();
+	drawing.fillStyle = p.colorAtIndex(i);
+	r.x = i * slice;
+	drawing.rect(r);
+	drawing.fill();
+}
+
+//var background = new Filter("
+var f = new Filter("CIPointillize");
+f.setKeyValue("inputCenter", desktop.bounds.midX, desktop.bounds.midY);
+f.setKeyValue("inputRadius", rnd.intValue);
+drawing.applyFilter(f);
+
+compositor.addLayer(drawing, "normal");
