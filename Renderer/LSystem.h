@@ -23,6 +23,9 @@
   CGFloat length_;
   CGFloat lengthScale_;
   CGFloat angle_;
+  int depth_;
+  unichar lastRule_;
+  unichar lastTurn_;
   NSString *root_;
   NSMutableDictionary *rules_;
   

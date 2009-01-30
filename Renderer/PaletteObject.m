@@ -13,13 +13,14 @@
 // the License.
 
 #import "Color.h"
+#import "Compositor.h"
 #import "PaletteObject.h"
 #import "Randomizer.h"
 
 @interface PaletteObject (PrivateMethods)
 - (void)addColors:(NSArray *)colors;
 - (Color *)internalColorAtIndex:(int)index;
-- (void)addKulerFeed:(NSData *)data;
+- (void)addKulerResponse:(NSString *)response;
 @end
 
 @implementation PaletteObject
@@ -115,11 +116,10 @@
 }
 
 //------------------------------------------------------------------------------
-- (void)addKulerFeed:(NSData *)data {
-  NSString *dataStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-  NSScanner *scanner = [NSScanner scannerWithString:dataStr];
+- (void)addKulerResponse:(NSString *)response {
+  NSScanner *scanner = [NSScanner scannerWithString:response];
   NSString *hexMarkerStr = @"kuler:swatchHexColor>";
-  
+
   while (1) {
     [scanner scanUpToString:hexMarkerStr intoString:nil];
     if ([scanner isAtEnd])
@@ -138,8 +138,6 @@
     
     [scanner setScanLocation:[scanner scanLocation] + [hexMarkerStr length]];
   }
-  
-  [dataStr release];
 }
 
 //------------------------------------------------------------------------------
@@ -177,7 +175,9 @@
     
     NSURL *url = [NSURL URLWithString:escaped];
     NSData *data = [NSData dataWithContentsOfURL:url];
-    [self addKulerFeed:data];
+    NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    [self addKulerResponse:response];
+    [response release];
   }
 }
 
