@@ -1,5 +1,13 @@
-// Fill background with black
-desktop.fillLayer(new Color("black"));
+// Fill background
+var c = new Array(new Color, new Color, new Color);
+// Desaturate and brighten -- makes a pastel
+for (i = 0; i < c.length; ++i) {
+	c[i].saturation = 0.1;
+	c[i].brightness = 0.9;
+}
+	
+var g = new Gradient(c[0], c[1], c[2]);
+desktop.fillLayer(g);
 
 var db = desktop.bounds;
 var xRnd = new Randomizer(0, db.width);
@@ -7,26 +15,35 @@ var yRnd = new Randomizer(0, db.height);
 var radiusRnd = new Randomizer(100, db.height / 4);
 var percentRnd = new Randomizer;
 var variation = 0.2;
-var count = 20 * compositor.screenCount;
+var layerCount = 3;
+var count = (20 * compositor.screenCount) / layerCount;
 
-desktop.lineJoin = "round";
-
-// Draw a bunch of kooshes
-for (var x = 0; x < count; ++x) {
-	var pt = new Point(xRnd.intValue, yRnd.intValue);
-	var c = new Color;
-	c.a = 0.5;
-	desktop.lineWidth = 1 + percentRnd.floatValue * 4;
+// Create several layers for compositing.
+for (var i = 0; i < layerCount; ++i) {
+	var l = new Layer(db);
+	l.fillLayer(new Color("white"));
+	l.lineJoin = "round";
+	l.lineCap = "round";
 	
-	Koosh(pt, radiusRnd.floatValue, c, variation);
+	// Draw a bunch of kooshes
+	for (var x = 0; x < count; ++x) {
+		var pt = new Point(xRnd.intValue, yRnd.intValue);
+		var c = new Color;
+		c.a = 0.5;
+		l.lineWidth = 1 + percentRnd.floatValue * 4;
+		Koosh(l, pt, radiusRnd.floatValue, c, variation);
+	}
+	
+	// Add a blur to the layer, more blur to the background layers
+	var f = new Filter("CIGaussianBlur");
+	f.setKeyValue("inputRadius", 2 + 5 * (layerCount - i - 1));
+	l.applyFilter(f);
+
+	// Add it to the compositor with multiply so that the white disappears
+	compositor.addLayer(l, "multiply");
 }
 
-// Add a blur to the rendering
-var f = new Filter("CIGaussianBlur");
-f.setKeyValue("inputRadius", 3);
-desktop.applyFilter(f);
-
-function Koosh(pt, r, c, variation) {
+function Koosh(layer, pt, r, c, variation) {
 	// Create a Koosh
 	var count = r;	
 	var e = new Point;
@@ -37,11 +54,11 @@ function Koosh(pt, r, c, variation) {
 		e.x = pt.x + Math.cos(i * angle) * r + displacer.floatValue;
 		e.y = pt.y + Math.sin(i * angle) * r + displacer.floatValue;
 		
-		desktop.beginPath();
-		desktop.moveTo(pt);
-		desktop.wavyLineTo(e, 0.9, displacer);
-		desktop.strokeStyle = c.vary(variation, variation, variation, 0);
-		desktop.stroke();
+		l.beginPath();
+		l.moveTo(pt);
+		l.wavyLineTo(e, 0.9, displacer);
+		l.strokeStyle = c.vary(variation, variation, variation, 0);
+		l.stroke();
 	}
 }
 
