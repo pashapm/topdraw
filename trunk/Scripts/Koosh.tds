@@ -36,7 +36,7 @@ for (var i = 0; i < layerCount; ++i) {
 	
 	// Add a blur to the layer, more blur to the background layers
 	var f = new Filter("CIGaussianBlur");
-	f.setKeyValue("inputRadius", 2 + 5 * (layerCount - i - 1));
+	f.setKeyValue("inputRadius", 2 + 3 * (layerCount - i - 1));
 	l.applyFilter(f);
 
 	// Add it to the compositor with multiply so that the white disappears
