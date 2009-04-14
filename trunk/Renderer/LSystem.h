@@ -24,6 +24,7 @@
   CGFloat lengthScale_;
   CGFloat angle_;
   int depth_;
+  int maxDepth_;
   unichar lastRule_;
   unichar lastTurn_;
   NSString *root_;
