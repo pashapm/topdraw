@@ -1,10 +1,11 @@
 // Fill the desktop
 var base = new Color;
 base.saturation = 0.01; base.brightness = 0.05;
-var c1 = base.vary(0.1, 0.1, 0.1, 0);
-var c2 = base.vary(0.1, 0.1, 0.1, 0);
-var c3 = base.vary(0.1, 0.1, 0.1, 0);
-var c4 = base.vary(0.1, 0.1, 0.1, 0);
+var v = 0.3;
+var c1 = base.vary(v, v, v, 0);
+var c2 = base.vary(v, v, v, 0);
+var c3 = base.vary(v, v, v, 0);
+var c4 = base.vary(v, v, v, 0);
 desktop.coloredRect(desktop.bounds, c1, c2, c3, c4);
 
 // Gather information about each display
