@@ -233,6 +233,7 @@
 		9BA0DA420E8875250053DD93 /* TopDrawSaver.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TopDrawSaver.xib; path = Saver/TopDrawSaver.xib; sourceTree = "<group>"; };
 		9BA969230ED675C000CA4C2A /* LSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSystem.h; sourceTree = "<group>"; };
 		9BA969240ED675D900CA4C2A /* LSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSystem.m; sourceTree = "<group>"; };
+		9BB4390C0F940E7500EB7D9B /* UninstallTopDraw.app */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = UninstallTopDraw.app; sourceTree = "<group>"; };
 		9BB539B90E5B6E70008ED3AA /* PatternObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatternObject.h; sourceTree = "<group>"; };
 		9BB539BA0E5B6E70008ED3AA /* PatternObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PatternObject.m; sourceTree = "<group>"; };
 		9BC8E7B80E63A20800780CB6 /* Version.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Version.xcconfig; path = Common/Version.xcconfig; sourceTree = "<group>"; };
@@ -371,6 +372,7 @@
 				9B4A8FBE0E428F2100777579 /* Renderer.h */,
 				9B4A8FBF0E428F2100777579 /* Renderer.m */,
 				32DBCF750370BD2300C91783 /* TopDraw_Prefix.pch */,
+				9BB4390C0F940E7500EB7D9B /* UninstallTopDraw.app */,
 			);
 			path = Common;
 			sourceTree = "<group>";

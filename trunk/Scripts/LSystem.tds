@@ -1,13 +1,13 @@
-
+// Make a gray background
 desktop.fillLayer(new Gradient(new Color(0.3), new Color(0.8)));
 
 var ls = new LSystem();
 var iterations = 10;
 var db = desktop.bounds;
-var circleRnd = new Randomizer(0.1, 3.0);
+var circleRnd = new Randomizer(0.3, 3.0);
 var circleScale = circleRnd.floatValue;
 
-function FilledCircle(lsys) {
+function InterestingCircle(lsys) {
 	var depth = lsys.depth;
 	var size = lsys.length * circleScale;
 	var radius = depth > 0 ? depth * size : size;
@@ -17,60 +17,74 @@ function FilledCircle(lsys) {
 	if (lastRule != "Y")
 		return;
 
+	var color;
 	if (lastTurn == "+") {
-		desktop.fillStyle = new Color("green", 0.5);
+		color = new Color("green", 0.5);
 		radius *= 0.5;
 	}	else {
-		desktop.fillStyle = new Color("blue", 0.3);
+		color = new Color("blue", 0.3);
 	}
-
+	
+	// Vary the red channel for variety
+	color = color.vary(1, 0, 0, 0);
+	desktop.strokeStyle = color;
+	
 	desktop.beginPath();
-	desktop.circle(0, 0, radius); 
-	desktop.fill();
+	desktop.circle(0, 0, radius);
+	desktop.stroke();
 }
 
 function Sierpinski() {
 	ls.root = "A";
 	ls.addRule("A", "B-A-B");
 	ls.addRule("B", "A+B+A");
-	ls.length = 9;
+	ls.length = 2.5;
 	ls.angle = 60;
-	desktop.translate(1100, 50)
-	desktop.rotate(Math.PI * (0 / 180));
-	iterations = 7;
+	iterations = 9;
+
+	// Draw in lower left corner, rotate by 90 degrees
+	var origin = new Point(10, 10);
+	desktop.translate(origin);
+	desktop.rotate(-Math.PI * (90 / 180));
+	desktop.translate(-origin);
 }
 
-function DragonCurve() {
-	ls.drawFunction = FilledCircle;
+function DragonCurve(drawFunction) {
+	ls.drawFunction = drawFunction;
 	ls.root = "FX";
 	ls.addRule("X", "X+YF+");
 	ls.addRule("Y", "-FX-Y");
 	ls.length = 8;
 	ls.angle = 90;
 	iterations = 12;
-	desktop.rotate(Math.PI * (90 / 180));
-	desktop.translate(400, -1800)
+	
+	// Draw in center and rotate by 90 degrees
+	var origin = new Point(db.midX, db.height / 3);
+	desktop.translate(origin);
+	desktop.rotate(Math.PI * (90 / 180)); // Landscape
+	desktop.translate(-origin);
 }
 
-// Draw the Sierpinski in yellow
-desktop.strokeStyle = new Color("yellow");
+// Draw the Sierpinski in yellow-ish
+var strokeColor = new Color("yellow");
+strokeColor = strokeColor.vary(1, 1, 0, 0);
+desktop.strokeStyle = strokeColor;
 desktop.save();
 Sierpinski();
-ls.drawInLayer(desktop, 0, 0, iterations);
+ls.drawInLayer(desktop, iterations);
 desktop.restore();
 
-// Draw the Dragon lines
-desktop.strokeStyle = new Color("white");
+// Draw the Dragon lines in White
+desktop.strokeStyle = new Color("white", 0.15);
 desktop.save();
 DragonCurve();
-ls.drawFunction = undefined;
-ls.drawInLayer(desktop, 0, 0, iterations);
+ls.drawInLayer(desktop, iterations);
 desktop.restore();
 
-// Now draw it with filled circles
+// Now draw it with filled circles at interesting locations
 desktop.save();
-DragonCurve();
-ls.drawInLayer(desktop, 0, 0, iterations);
+DragonCurve(InterestingCircle);
+ls.drawInLayer(desktop, iterations);
 desktop.restore();
 
 

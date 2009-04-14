@@ -66,6 +66,7 @@
           // Extended
           @"applyFilter", 
           @"circle", @"coloredRect", @"colorAtPoint",
+          @"curveFit",
           @"drawText",
           @"ellipse", 
           @"fillLayer", @"fillStroke",
@@ -507,6 +508,165 @@
   } else {
     CGContextSetLineDash(backingStore_, 0, NULL, 0);
   }
+}
+
+static CGPoint HermiteInterpolate(CGPoint *points, CGFloat t, CGFloat tension, CGFloat bias) {
+  CGFloat t2 = t * t;
+  CGFloat t3 = t * t2;
+  
+  CGFloat h1 = 2.0 * t3 - 3.0 * t2 + 1.0;
+  CGFloat h2 = -2.0 * t3 + 3.0 * t2;
+  CGFloat h3 = t3 - 2.0 * t2 + t;
+  CGFloat h4 = t3 - t2;
+  
+  // Use TCB-Splines to create tangent points: 
+  // ts = start, te = end
+  CGFloat scaler1 = (1.0 + bias) * (1.0 - tension) / 2.0;
+  CGFloat scaler2 = (1.0 - bias) * (1.0 - tension) / 2.0;
+  CGPoint ts, te;
+  ts.x = (points[1].x - points[0].x) * scaler1 + (points[2].x - points[1].x) * scaler2;
+  ts.y = (points[1].y - points[0].y) * scaler1 + (points[2].y - points[1].y) * scaler2;
+  te.x = (points[2].x - points[1].x) * scaler1 + (points[3].x - points[2].x) * scaler2;
+  te.y = (points[2].y - points[1].y) * scaler1 + (points[3].y - points[2].y) * scaler2;
+  
+  CGPoint r;
+  r.x = h1 * points[1].x + h2 * points[2].x + h3 * ts.x + h4 * te.x;
+  r.y = h1 * points[1].y + h2 * points[2].y + h3 * ts.y + h4 * te.y;
+  
+  return r;
+}
+
+void SubdivideCurve(CGMutablePathRef path, CGPoint *points, CGFloat t0, CGFloat t1, CGFloat flatnessSquared, 
+                    CGFloat tension, CGFloat bias) {
+  // Minimum span
+  if (t1 - t0 < 0.01)
+    return;
+  
+  // Subdivide until we meet our error
+  CGPoint p0 = HermiteInterpolate(points, t0, tension, bias);
+  CGPoint p1 = HermiteInterpolate(points, t1, tension, bias);
+  CGFloat tm = (t0 + t1) / 2.0;
+  CGPoint m = HermiteInterpolate(points, tm, tension, bias);
+  CGFloat xErr = p0.x + (p1.x - p0.x) / 2.0 - m.x;
+  CGFloat yErr = p0.y + (p1.y - p0.y) / 2.0 - m.y;
+  
+  if ((xErr * xErr) + (yErr * yErr) > flatnessSquared) {
+    SubdivideCurve(path, points, t0, tm, flatnessSquared, tension, bias);
+    SubdivideCurve(path, points, tm, t1, flatnessSquared, tension, bias);
+  } else {
+    // If we're under the error, we can use this segment
+    CGPathAddLineToPoint(path, NULL, p1.x, p1.y);
+  }
+}
+
+CGPathRef CreateCurveWithPoints(CGPoint *points, NSUInteger count, CGFloat flatness, 
+                                CGFloat tension, CGFloat bias, BOOL closed) {
+  CGMutablePathRef path = CGPathCreateMutable();
+  
+  if (count < 2)
+    return path;
+  
+  // Add the initial point
+  CGPathMoveToPoint(path, NULL, points[0].x, points[0].y);
+  
+  if (count > 2) {
+    // Use a sliding buffer of four points with the indexes meaning:
+    // 0 = previous, 1 = current start
+    // 2 = current end, 3 = next
+    CGPoint buffer[4];
+    CGPoint first = points[0];
+    CGPoint last = points[count - 1];
+    CGPoint mid = CGPointMake(first.x + (last.x - first.x) / 2.0,
+                              first.y + (last.y - last.y) / 2.0);
+    if (closed) {
+      first = mid;
+      last = mid;
+    }
+    
+    NSUInteger idx = 0;
+    while (idx < count - 1) {
+      // Could be more clever here?  Perhaps create count + 2 sized buffer and pad?
+      buffer[0] = idx ? points[idx - 1] : first;
+      buffer[1] = points[idx];
+      buffer[2] = points[idx + 1];
+      buffer[3] = idx < count - 2 ? points[idx + 2] : last;
+      
+      SubdivideCurve(path, buffer, 0, 1, flatness * flatness, tension, bias);
+      ++idx;
+    }
+    
+    if (closed) {
+      buffer[0] = points[count - 2];
+      buffer[1] = points[count - 1];
+      buffer[2] = points[0];
+      buffer[3] = points[1];
+      SubdivideCurve(path, buffer, 0, 1, flatness * flatness, tension, bias);
+    }
+  }
+  
+  return path;
+}
+
+- (void)curveFit:(NSArray *)arguments {
+  // args: array of points, closed (0/1), flatness [0.1 - 10], tension [-1, 1], bias [-1, 1]
+  int argCount = [arguments count];
+  if (argCount < 1)
+    return;
+  
+  NSArray *pointArray = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[NSArray class]];
+  if (![pointArray count])
+    return;
+  
+  BOOL closed = NO;
+  if (argCount > 1)
+    closed = [[RuntimeObject coerceObject:[arguments objectAtIndex:1] toClass:[NSNumber class]] boolValue];
+  
+  CGFloat flatness = 0.6;
+  if (argCount > 2)
+    flatness = [[RuntimeObject coerceObject:[arguments objectAtIndex:2] toClass:[NSNumber class]] floatValue];
+  
+  if (flatness < 0.01)
+    flatness = 0.01;
+  
+  CGFloat tension = 0;
+  if (argCount > 3)
+    tension = [[RuntimeObject coerceObject:[arguments objectAtIndex:3] toClass:[NSNumber class]] floatValue];
+  
+  if (tension < -1)
+    tension = -1;
+  else if (tension > 1)
+    tension = 1;
+
+  CGFloat bias = 0;
+  if (argCount > 4)
+    bias = [[RuntimeObject coerceObject:[arguments objectAtIndex:4] toClass:[NSNumber class]] floatValue];
+  
+  if (bias < -1)
+    bias = -1;
+  else if (bias > 1)
+    bias = 1;
+  
+  NSUInteger pointCount = [pointArray count];
+  CGPoint *points = (CGPoint *)malloc(sizeof(CGPoint) * pointCount);
+  BOOL valid = YES;
+  for (NSUInteger i = 0; (i < pointCount); ++i) {
+    id pointObj = [pointArray objectAtIndex:i];
+    
+    if ([pointObj isKindOfClass:[PointObject class]])
+      points[i] = NSPointToCGPoint([(PointObject *)pointObj point]);
+    else {
+      valid = NO;
+      break;
+    }
+  }
+  
+  if (valid) {
+    CGPathRef curve = CreateCurveWithPoints(points, pointCount, flatness, tension, bias, closed);
+    CGContextAddPath(backingStore_, curve);
+    CGPathRelease(curve);
+  }
+    
+  free(points);
 }
 
 - (void)wavyLineTo:(NSArray *)arguments {

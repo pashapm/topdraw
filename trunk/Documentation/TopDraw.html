@@ -195,6 +195,7 @@ In order to create more interesting renderings, several classes of objects and g
 <a href="#GravityPoint">GravityPoint</a>, 
 <a href="#Image">Image</a>, 
 <a href="#Layer">Layer</a>, 
+<a href="#LSystem">L-System</a>, 
 <a href="#Noise">Noise</a>, 
 <a href="#Palette">Palette</a>, 
 <a href="#Particles">Particles</a>, 
@@ -1095,6 +1096,81 @@ will be scaled to fit.</li>
 <td class="PropertyDetails">Color</td>
 <td class="PropertyDetails">Write-only</td>
 </tr>
+
+</table>
+</div>
+
+<a name="LSystem"></a>
+<h3>Layer</h3>
+<div class="Indented">
+L-Systems are a type of algorithmic drawing.
+
+<div class="ClassSection">Constructor</div>
+<table class="ConstructorTable" border="1">
+
+<tr>
+<th class="Constructor">Arguments</th>
+<th class="Constructor">Description</th>
+</tr>
+
+<tr>
+<td class="ConstructorDetails">(none)</td>
+<td class="ConstructorDetails">Create an empty L-System.</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Functions</div>
+<table class="FunctionTable" border="1">
+<tr>
+<th class="Function">Name</th>
+<th class="Function">Arguments</th>
+<th class="Function">Description</th>
+<th class="Function">Returns</th>
+</tr>
+
+<tr>
+<td class="Function">addRule</td>
+<td class="FunctionDetails">rule: String</td>
+<td class="FunctionDetails">Add the rule to the L-System
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
+<td class="Function">drawInLayer</td>
+<td class="FunctionDetails">layer: Layer</td>
+<td class="FunctionDetails">Draw this noise into the specified layer.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+</table>
+
+<div class="ClassSection">Properties</div>
+<table class="PropertyTable" border="1">
+
+<tr>
+<th class="Property">Name</th>
+<th class="Property">Description</th>
+<th class="Property">Type</th>
+<th class="Property">Read/Write</th>
+</tr>
+
+<tr>
+<td class="Property">angle</td>
+<td class="PropertyDetails">The angle (radians) to use when making a turn ("+" or "-" rule)</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">length</td>
+<td class="PropertyDetails">The length (in pixels) to use when moving forward</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
 
 </table>
 </div>
