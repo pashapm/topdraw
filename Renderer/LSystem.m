@@ -159,7 +159,6 @@ static inline CGFloat RadToDeg(CGFloat rad) {
 
 //------------------------------------------------------------------------------
 - (void)drawAtCurrentLocation:(int)depth length:(CGFloat)length{
-
   if (drawFunction_) {
     depth_ = depth;
     [[drawFunction_ runtime] invokeFunction:drawFunction_ arguments:[NSArray arrayWithObject:self]];
@@ -197,7 +196,7 @@ static inline CGFloat RadToDeg(CGFloat rad) {
       break;
       
     default: {
-      if (depth > 0) {
+      if (depth < maxDepth_) {
         NSString *cmdStr = [NSString stringWithCharacters:&cmd length:1];
         NSString *rule = [rules_ objectForKey:cmdStr];
         [self drawRule:rule depth:depth length:length];
@@ -214,11 +213,12 @@ static inline CGFloat RadToDeg(CGFloat rad) {
   
   length *= lengthScale_;
   
-  if (len)
+  if (len) {
     for (int i = 0; i < len; ++i)
-      [self drawCommand:[rule characterAtIndex:i] depth:depth - 1 length:length];  
-  else
+      [self drawCommand:[rule characterAtIndex:i] depth:depth + 1 length:length];
+  } else {
     [self drawAtCurrentLocation:depth length:length];
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -227,10 +227,9 @@ static inline CGFloat RadToDeg(CGFloat rad) {
   if ([arguments count] < 1 || [arguments count] > 2)
     return;
   
-  int depth = 10;
-  
+  maxDepth_ = 10;
   if ([arguments count] > 1)
-    depth = [RuntimeObject coerceObjectToInteger:[arguments objectAtIndex:1]];
+    maxDepth_ = [RuntimeObject coerceObjectToInteger:[arguments objectAtIndex:1]];
   
   runtime_ = [drawFunction_ runtime];
   Layer *layer = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[Layer class]];
@@ -238,7 +237,7 @@ static inline CGFloat RadToDeg(CGFloat rad) {
 
   // Draw
   CGContextSaveGState(layerRef_);
-  [self drawRule:root_ depth:depth + 1 length:length_];
+  [self drawRule:root_ depth:0 length:length_];
   CGContextRestoreGState(layerRef_);
 }
 
