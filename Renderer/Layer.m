@@ -542,20 +542,31 @@ void SubdivideCurve(CGMutablePathRef path, CGPoint *points, CGFloat t0, CGFloat 
   if (t1 - t0 < 0.01)
     return;
   
-  // Subdivide until we meet our error
+  // Subdivide until we meet our error.  Just taking the midpoint isn't sufficient
+  // so we need to take three points on the curve
   CGPoint p0 = HermiteInterpolate(points, t0, tension, bias);
   CGPoint p1 = HermiteInterpolate(points, t1, tension, bias);
   CGFloat tm = (t0 + t1) / 2.0;
+  CGFloat tm0 = (t0 + tm) / 2.0;
+  CGFloat tm1 = (tm + t1) / 2.0;
   CGPoint m = HermiteInterpolate(points, tm, tension, bias);
+  CGPoint m0 = HermiteInterpolate(points, tm0, tension, bias);
+  CGPoint m1 = HermiteInterpolate(points, tm1, tension, bias);
+  
   CGFloat xErr = p0.x + (p1.x - p0.x) / 2.0 - m.x;
   CGFloat yErr = p0.y + (p1.y - p0.y) / 2.0 - m.y;
-  
-  if ((xErr * xErr) + (yErr * yErr) > flatnessSquared) {
+  CGFloat x0Err = p0.x + (m.x - p0.x) / 2.0 - m0.x;
+  CGFloat y0Err = p0.y + (m.y - p0.y) / 2.0 - m0.y;
+  CGFloat x1Err = m.x + (p1.x - m.x) / 2.0 - m1.x;
+  CGFloat y1Err = m.y + (p1.y - m.y) / 2.0 - m1.y;
+
+  if ((xErr * xErr) + (x0Err * x0Err) + (x1Err * x1Err) +
+      (yErr * yErr) + (y0Err * y0Err) + (y1Err * y1Err) > flatnessSquared) {
     SubdivideCurve(path, points, t0, tm, flatnessSquared, tension, bias);
     SubdivideCurve(path, points, tm, t1, flatnessSquared, tension, bias);
   } else {
     // If we're under the error, we can use this segment
-    CGPathAddLineToPoint(path, NULL, p1.x, p1.y);
+    CGPathAddLineToPoint(path, NULL, m.x, m.y);
   }
 }
 
@@ -601,7 +612,10 @@ CGPathRef CreateCurveWithPoints(CGPoint *points, NSUInteger count, CGFloat flatn
       buffer[2] = points[0];
       buffer[3] = points[1];
       SubdivideCurve(path, buffer, 0, 1, flatness * flatness, tension, bias);
+      last = points[0];
     }
+    // Add the last point
+    CGPathAddLineToPoint(path, NULL, last.x, last.y);
   }
   
   return path;

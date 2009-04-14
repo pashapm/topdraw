@@ -20,7 +20,7 @@ var steps = 10;
 var stepSize = db.width / steps;
 var mid = 100;
 
-desktop.strokeStyle = new Color("white", 0.2);
+desktop.strokeStyle = new Color("white", 0.1);
 
 // Create a bunch of points going from left to right and of varying y value
 var points = new Array;
@@ -37,7 +37,7 @@ desktop.lineWidth = lw;
 
 for (i = 0; i < 50; ++i, tension += inc) {
 	desktop.beginPath();
-	desktop.translate(3, 1.5 * lw + 2);
-	desktop.curveFit(points, false, 0.3, tension);
+	desktop.translate(0, 1.5 * lw + 2);
+	desktop.curveFit(points, false, 0.3, tension, tension);
 	desktop.stroke();
 }
