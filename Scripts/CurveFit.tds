@@ -1,0 +1,43 @@
+// Render the menubar Layer with a Gradient.
+// Creating a new Color object will fill the red, blue, and green channels with
+// a random value.  The alpha channel will be set to 1.0.
+var gradient = new Gradient(new Color, new Color);
+menubar.fillLayer(gradient);
+
+// Choose 4 random colors
+var bottomLeft = new Color;
+var topLeft = new Color;
+var topRight = new Color;
+var bottomRight = new Color;
+
+// Fill the desktop Layer with a rectangle colored in each corner
+desktop.coloredRect(desktop.bounds, bottomLeft, topLeft, topRight, bottomRight);
+
+// Make a curve to fit some random points going from left to right
+var db = desktop.bounds;
+var rnd = new Randomizer(-200, 200);
+var steps = 10;
+var stepSize = db.width / steps;
+var mid = 200;
+
+desktop.strokeStyle = new Color("white", 0.2);
+
+// Create a bunch of points going from left to right and of varying y value
+var points = new Array;
+for (i = 0; i <= (steps + 1); ++i)
+	points[i] = new Point(-50 + i * stepSize, mid + rnd.floatValue);
+
+// Vary the tension value and offset vertically
+var tension = 0;
+var steps = 50;
+var inc = 1.0 / 50;
+var lwRnd = new Randomizer(2, 25);
+var lw = lwRnd.intValue;
+desktop.lineWidth = lw;
+
+for (i = 0; i < 50; ++i, tension -= inc) {
+	desktop.beginPath();
+	desktop.translate(0, lw + 2);
+	desktop.curveFit(points, false, 0.3, tension);
+	desktop.stroke();
+}

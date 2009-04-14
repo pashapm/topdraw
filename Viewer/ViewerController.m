@@ -151,8 +151,8 @@ static const int kRefreshActionStartup = 2;
 
   if ([defaults integerForKey:@"refreshMode"] == kRefreshModeEvery) {
     NSTimeInterval seconds = [[updateTimer_ fireDate] timeIntervalSinceNow];
-    NSTimeInterval minutes = floor(seconds / 60);
-    NSTimeInterval hours = floor(minutes / 60);
+    NSTimeInterval hours = floor(seconds / 3600);
+    NSTimeInterval minutes = floor((seconds - (hours * 3600)) / 60);
     NSMutableString *timeStr = [NSMutableString string];
     NSString *separatorStr = @"";
     
@@ -166,8 +166,10 @@ static const int kRefreshActionStartup = 2;
       separatorStr = @" ";
     }
     
-    seconds = fmod(seconds, 60);
-    [timeStr appendFormat:@"%@%ds", separatorStr, (int)seconds];
+    int secondsRemaining = floor(fmod(seconds, 60));
+    if (secondsRemaining > 0 && secondsRemaining < 60)
+      [timeStr appendFormat:@"%@%ds", separatorStr, secondsRemaining];
+    
     title = [NSString stringWithFormat:@"Render %@ in %@",
              selectedScript_, timeStr];
   } else {

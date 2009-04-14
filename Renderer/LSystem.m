@@ -28,7 +28,7 @@ static inline CGFloat RadToDeg(CGFloat rad) {
 }
 
 @interface LSystem(PrivateMethods)
-- (void)drawRule:(NSString *)rule depth:(int)depth;
+- (void)drawRule:(NSString *)rule depth:(int)depth length:(CGFloat)length;
 @end
 
 @implementation LSystem
@@ -63,7 +63,7 @@ static inline CGFloat RadToDeg(CGFloat rad) {
   if ((self = [super initWithArguments:arguments])) {
     angle_ = DegToRad(20);
     length_ = 40;
-    lengthScale_ = 0.8;
+    lengthScale_ = 1.0;
     root_ = @"1";
     rules_ = [[NSMutableDictionary alloc] init];
     
@@ -158,22 +158,23 @@ static inline CGFloat RadToDeg(CGFloat rad) {
 }
 
 //------------------------------------------------------------------------------
-- (void)drawAtCurrentLocation:(int)depth {
+- (void)drawAtCurrentLocation:(int)depth length:(CGFloat)length{
+
   if (drawFunction_) {
     depth_ = depth;
     [[drawFunction_ runtime] invokeFunction:drawFunction_ arguments:[NSArray arrayWithObject:self]];
   } else {
     CGContextBeginPath(layerRef_);
     CGContextMoveToPoint(layerRef_, 0, 0);
-    CGContextAddLineToPoint(layerRef_, 0, length_);
+    CGContextAddLineToPoint(layerRef_, 0, length);
     CGContextStrokePath(layerRef_);
   }
   
-  CGContextTranslateCTM(layerRef_, 0, length_);
+  CGContextTranslateCTM(layerRef_, 0, length);
 }
 
 //------------------------------------------------------------------------------
-- (void)drawCommand:(unichar)cmd depth:(int)depth {
+- (void)drawCommand:(unichar)cmd depth:(int)depth length:(CGFloat)length {
   lastRule_ = cmd;
 
   switch (cmd) {
@@ -199,50 +200,45 @@ static inline CGFloat RadToDeg(CGFloat rad) {
       if (depth > 0) {
         NSString *cmdStr = [NSString stringWithCharacters:&cmd length:1];
         NSString *rule = [rules_ objectForKey:cmdStr];
-        [self drawRule:rule depth:depth];
+        [self drawRule:rule depth:depth length:length];
       } else {
-        [self drawAtCurrentLocation:depth];
+        [self drawAtCurrentLocation:depth length:length];
       }
     }
   }
 }
 
 //------------------------------------------------------------------------------
-- (void)drawRule:(NSString *)rule depth:(int)depth {
+- (void)drawRule:(NSString *)rule depth:(int)depth length:(CGFloat)length {
   int len = [rule length];
+  
+  length *= lengthScale_;
   
   if (len)
     for (int i = 0; i < len; ++i)
-      [self drawCommand:[rule characterAtIndex:i] depth:depth - 1];  
+      [self drawCommand:[rule characterAtIndex:i] depth:depth - 1 length:length];  
   else
-    [self drawAtCurrentLocation:depth];
+    [self drawAtCurrentLocation:depth length:length];
 }
 
 //------------------------------------------------------------------------------
-// Args: layer, x, y, depth
+// Args: layer, depth
 - (void)drawInLayer:(NSArray *)arguments {
-  if ([arguments count] < 3 || [arguments count] > 4)
+  if ([arguments count] < 1 || [arguments count] > 2)
     return;
   
-  PointObject *start = [RuntimeObject coerceObject:[arguments objectAtIndex:1] toClass:[PointObject class]];
-  int depthIdx = 2;
+  int depth = 10;
   
-  if (!start) {
-    NSArray *subArgs = [arguments subarrayWithRange:NSMakeRange(1, [arguments count] - 1)];
-    start = [[PointObject alloc] initWithArguments:subArgs];
-    depthIdx = 3;
-  }
+  if ([arguments count] > 1)
+    depth = [RuntimeObject coerceObjectToInteger:[arguments objectAtIndex:1]];
   
-  int depth = [RuntimeObject coerceObjectToInteger:[arguments objectAtIndex:depthIdx]];
   runtime_ = [drawFunction_ runtime];
   Layer *layer = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[Layer class]];
-  
   layerRef_ = [layer backingStore];
 
   // Draw
   CGContextSaveGState(layerRef_);
-  CGContextTranslateCTM(layerRef_, [start x], [start y]);
-  [self drawRule:root_ depth:depth + 1];
+  [self drawRule:root_ depth:depth + 1 length:length_];
   CGContextRestoreGState(layerRef_);
 }
 
