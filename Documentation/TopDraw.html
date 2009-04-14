@@ -832,6 +832,15 @@ functions are very similar to the HTML Canvas object, but with some enhancements
 </tr>
 
 <tr>
+<td class="Function">curveFit</td>
+<td class="FunctionDetails">points: Array [, closed: Boolean [, flatness: float [, tension: float [, bias: float]]]]</td>
+<td class="FunctionDetails">Given the array of points, draw a smooth Hermite curve between the points, intersecting each point.
+If specified, the curve can be closed.  The flatness argument [0.1, 10] (default: 0.6) sets the amount of error allowed at each point when fitting.  Tension [-1, 1] (default: 0) will change the curviness.  Bias [-1, 1] (default: 0) will shift the weighting from the first to last point.
+</td>
+<td class="FunctionDetails">void</td>
+</tr>
+
+<tr>
 <td class="Function">drawImage</td>
 <td class="FunctionDetails">
 image: Image [, point: Point | destination: Rect | source, destination: Rect
@@ -1101,9 +1110,10 @@ will be scaled to fit.</li>
 </div>
 
 <a name="LSystem"></a>
-<h3>Layer</h3>
+<h3>L-System</h3>
 <div class="Indented">
-L-Systems are a type of algorithmic drawing.
+L-Systems are a type of algorithmic drawing which uses a string and replacement rules to create complex
+images.  Please read <a href="http://en.wikipedia.org/wiki/L-system">http://en.wikipedia.org/wiki/L-system</a> for more information.
 
 <div class="ClassSection">Constructor</div>
 <table class="ConstructorTable" border="1">
@@ -1140,7 +1150,7 @@ L-Systems are a type of algorithmic drawing.
 <tr>
 <td class="Function">drawInLayer</td>
 <td class="FunctionDetails">layer: Layer</td>
-<td class="FunctionDetails">Draw this noise into the specified layer.
+<td class="FunctionDetails">Draw this L-System into the specified layer.  The default behavior is to stroke any forward lines.  See the drawFunction description on how to change the appearance.
 </td>
 <td class="FunctionDetails">void</td>
 </tr>
@@ -1165,9 +1175,51 @@ L-Systems are a type of algorithmic drawing.
 </tr>
 
 <tr>
-<td class="Property">length</td>
-<td class="PropertyDetails">The length (in pixels) to use when moving forward</td>
+<td class="Property">depth</td>
+<td class="PropertyDetails">The current depth of the system.</td>
 <td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
+<tr>
+<td class="Property">drawFunction</td>
+<td class="PropertyDetails">Call this function instead of stroking the line.  The L-System object will be passed as the single argument to the function.</td>
+<td class="PropertyDetails">Function</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">lastRule</td>
+<td class="PropertyDetails">The last rule evaluated.</td>
+<td class="PropertyDetails">String</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
+<tr>
+<td class="Property">lastTurn</td>
+<td class="PropertyDetails">The last direction change evaluated.</td>
+<td class="PropertyDetails">String</td>
+<td class="PropertyDetails">Read-only</td>
+</tr>
+
+<tr>
+<td class="Property">length</td>
+<td class="PropertyDetails">The length (in pixels) to use when moving forward.</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">lengthScale</td>
+<td class="PropertyDetails">The length will be multiplied by this factor for each iteration.  The default is 1.0.</td>
+<td class="PropertyDetails">float</td>
+<td class="PropertyDetails">Read/Write</td>
+</tr>
+
+<tr>
+<td class="Property">root</td>
+<td class="PropertyDetails">The root rule of the L-System.</td>
+<td class="PropertyDetails">String</td>
 <td class="PropertyDetails">Read/Write</td>
 </tr>
 
