@@ -2,15 +2,15 @@
 desktop.fillLayer(new Gradient(new Color(0.3), new Color(0.8)));
 
 var ls = new LSystem();
-var iterations = 10;
+var maxDepth = 10;
 var db = desktop.bounds;
-var circleRnd = new Randomizer(0.3, 3.0);
+var circleRnd = new Randomizer(0.3, 5.0);
 var circleScale = circleRnd.floatValue;
 
 function InterestingCircle(lsys) {
 	var depth = lsys.depth;
 	var size = lsys.length * circleScale;
-	var radius = depth > 0 ? depth * size : size;
+	var radius = depth < maxDepth ? depth * size : size;
 	var lastRule = lsys.lastRule;
 	var lastTurn = lsys.lastTurn;
 		
@@ -40,7 +40,7 @@ function Sierpinski() {
 	ls.addRule("B", "A+B+A");
 	ls.length = 2.5;
 	ls.angle = 60;
-	iterations = 9;
+	maxDepth = 10;
 
 	// Draw in lower left corner, rotate by 90 degrees
 	var origin = new Point(10, 10);
@@ -56,7 +56,7 @@ function DragonCurve(drawFunction) {
 	ls.addRule("Y", "-FX-Y");
 	ls.length = 8;
 	ls.angle = 90;
-	iterations = 12;
+	maxDepth = 13;
 	
 	// Draw in center and rotate by 90 degrees
 	var origin = new Point(db.midX, db.height / 3);
@@ -65,27 +65,69 @@ function DragonCurve(drawFunction) {
 	desktop.translate(-origin);
 }
 
+function Plant(xOffset) {
+	ls.drawFunction = null;
+	ls.root = "X";
+	var baseRule = "F-[[X]+X]+F[+FX]-X";
+	
+	// Change one of the angles
+	var baseRnd = new Randomizer(0, baseRule.length);
+	var flipChar = baseRnd.boolValue ? "+" : "-";
+	var changeIdx = baseRule.indexOf(flipChar, baseRnd.intValue);
+	var rule = baseRule;
+	
+	if (changeIdx > -1) {
+		rule = baseRule.substr(0, changeIdx);
+		rule += (flipChar == "-" ? "+" : "-");
+		rule += baseRule.substr(changeIdx + 1);
+	}
+
+	ls.addRule("X", rule);
+	ls.addRule("F", "FF");
+	ls.length = 3;
+	
+	var angleRnd = new Randomizer(10, 45);
+	ls.angle = angleRnd.intValue;
+	maxDepth = 8;
+	
+	// Draw at bottom at xOffset
+	var origin = new Point(xOffset, -100);
+	desktop.translate(origin);
+}
+
 // Draw the Sierpinski in yellow-ish
 var strokeColor = new Color("yellow");
 strokeColor = strokeColor.vary(1, 1, 0, 0);
 desktop.strokeStyle = strokeColor;
 desktop.save();
 Sierpinski();
-ls.drawInLayer(desktop, iterations);
+ls.drawInLayer(desktop, maxDepth);
 desktop.restore();
 
 // Draw the Dragon lines in White
 desktop.strokeStyle = new Color("white", 0.15);
 desktop.save();
 DragonCurve();
-ls.drawInLayer(desktop, iterations);
+ls.drawInLayer(desktop, maxDepth);
 desktop.restore();
 
 // Now draw it with filled circles at interesting locations
 desktop.save();
 DragonCurve(InterestingCircle);
-ls.drawInLayer(desktop, iterations);
+ls.drawInLayer(desktop, maxDepth);
 desktop.restore();
+
+// Draw a couple of plants
+for (i = 0; i < 4; ++i) {
+	var strokeColor = new Color("darkgreen", 0.5);
+	strokeColor = strokeColor.vary(0.2, 0.3, 0.1, 0);
+	desktop.strokeStyle = strokeColor;
+	desktop.lineWidth = 2;
+	desktop.save();
+	Plant(db.maxX - ((i + 1) * 100));
+	ls.drawInLayer(desktop, maxDepth);
+	desktop.restore();
+}
 
 
 
