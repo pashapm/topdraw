@@ -36,7 +36,13 @@
     NSString *path = [paths objectAtIndex:i];
     NSScreen *screen = [screens objectAtIndex:i];
     NSString *screenID = [[[screen deviceDescription] objectForKey:@"NSScreenNumber"] stringValue];
-    NSMutableDictionary *screenDict = [[backgroundDict objectForKey:screenID] mutableCopy];
+    NSDictionary *origScreenDict = [backgroundDict objectForKey:screenID];
+    
+    // For some, the key of the screen is not a number but the word "default"
+    if (!origScreenDict)
+      origScreenDict = [backgroundDict objectForKey:@"default"];
+      
+    NSMutableDictionary *screenDict = [origScreenDict mutableCopy];
     
     if (path)
       [screenDict setObject:path forKey:@"ImageFilePath"];
@@ -55,7 +61,9 @@
     [screenDict removeObjectForKey:@"ChangePath"];
     [screenDict removeObjectForKey:@"CollectionString"];
     
-    [backgroundDict setObject:screenDict forKey:screenID];
+    if (screenDict)
+      [backgroundDict setObject:screenDict forKey:screenID];
+    
     [screenDict release];
   }
 

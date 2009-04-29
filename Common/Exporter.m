@@ -88,38 +88,28 @@ static const int kMaxCachedDrawings = 10;
     if (writtenPath)
       [result addObject:writtenPath];
   } else {
-    NSEnumerator *e = [screens objectEnumerator];
-    NSScreen *screen;
-    NSRect desktop = [NSScreen desktopFrame];
-    NSRect imageRect = NSMakeRect(NSMinX(desktop), NSMinY(desktop), CGImageGetWidth(image), CGImageGetHeight(image));
     NSString *baseName = [[path lastPathComponent] stringByDeletingPathExtension];
     NSString *baseDir = [path stringByDeletingLastPathComponent];
     int idxNumber = 0;
-   
-    while ((screen = [e nextObject])) {
-      NSRect frame = [screen frame];
+    CGFloat height = CGImageGetHeight(image);
+    
+    for (NSScreen *screen in screens) {
+      NSRect frame = [screen globalFrame];
       
-      // If the frame of this screen intersects with the image, partition off
-      // the image, and save the file
-      if (NSIntersectsRect(frame, imageRect)) {
-        // The subimage bounds are (0,0) - (width, height)
-        NSRect subImageRect = frame;
-        subImageRect.origin.x -= NSMinX(desktop);
-        subImageRect.origin.y -= NSMinY(desktop);
-        CGImageRef subImage = CGImageCreateWithImageInRect(image, NSRectToCGRect(subImageRect));
-        NSString *filePath = [baseDir stringByAppendingPathComponent:baseName];
-        filePath = [filePath stringByAppendingFormat:@"-%d", idxNumber];
-        
-        writtenPath = [self exportImage:subImage path:filePath type:type quality:1.0];
-        
-        if (writtenPath)
-          [result addObject:writtenPath];
-        else
-          MethodLog("Failed to write to %@", filePath);
-        
-        CGImageRelease(subImage);
-      }
+      // subimage is (0,0) in upper left so flip around
+      frame.origin.y = (height - frame.size.height - frame.origin.y);
       
+      CGImageRef subImage = CGImageCreateWithImageInRect(image, NSRectToCGRect(frame));
+      NSString *filePath = [baseDir stringByAppendingPathComponent:baseName];
+      filePath = [filePath stringByAppendingFormat:@"-%d", idxNumber];      
+      writtenPath = [self exportImage:subImage path:filePath type:type quality:1.0];
+      
+      if (writtenPath)
+        [result addObject:writtenPath];
+      else
+        MethodLog("Failed to write to %@", filePath);
+      
+      CGImageRelease(subImage);
       ++idxNumber;
     }
   }

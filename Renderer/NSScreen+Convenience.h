@@ -23,4 +23,7 @@
 
 + (void)descriptions;
 
+// Return the frame for the in the union rect of all screen space
+- (NSRect)globalFrame;
+
 @end
