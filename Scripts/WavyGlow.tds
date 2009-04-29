@@ -6,8 +6,8 @@ menubar.fillLayer(grad);
 var bg = new Color("black");
 desktop.fillLayer(bg.vary(0.05, 0.05, 0.05, 0));
 
+// Draw lines
 desktop.lineJoin = "round";
-
 Lines();
 
 // Add filter for some extra glow-i-ness
@@ -22,7 +22,7 @@ desktop.applyFilter(bloom);
 
 function Lines() {
 	var db = desktop.bounds;
-	var displacementRnd = new Randomizer(-150, 150);
+	var displacementRnd = new Randomizer(-200, 200);
 	var gray = new Randomizer(0.1, 1);
 	var smoothRnd = new Randomizer(0.4, 1);
 	var height = db.height / 4;
@@ -31,29 +31,30 @@ function Lines() {
 	var lineWidthRnd = new Randomizer(5, 50);
 	var count = 25;
 	var heightOffset = 2 * height / count;
-	var shortening = -10;//db.width / (10 * count);
-
+	var alpha = 0.3;
+	
 	for (x = 0; x < count; ++x) {
 		desktop.beginPath();
 		desktop.lineWidth = 5;
 		
-		if (x < (count / 1.5)) {
-			desktop.strokeStyle = new Color(gray.floatValue, 0.3);
+		// 1/2 lines gray, 1/2 colored
+		if (x < (count / 2)) {
+			desktop.strokeStyle = new Color(gray.floatValue, alpha);
 		} else {
 			var sc = new Color;
-			sc.a = 0.3;
+			sc.a = alpha;
 			desktop.strokeStyle = sc;
 		}
 
 		desktop.moveTo(start);
 		start.y -= heightOffset;
 		
-		var waveEnd = new Point(end);
-		waveEnd.x -= x * shortening;
+		// Move the end slightly
+		var waveEnd = new Point(end.x, end.y + displacementRnd.floatValue);
+		
 		// end point, smoothness, displacement randomizer
 		desktop.wavyLineTo(waveEnd, smoothRnd.floatValue, displacementRnd);
 		desktop.lineWidth = lineWidthRnd.floatValue;
-		desktop.lineTo(end);
 		desktop.stroke();
 	}
 }

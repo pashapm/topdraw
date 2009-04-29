@@ -16,7 +16,8 @@ desktop.coloredRect(desktop.bounds, bottomLeft, topLeft, topRight, bottomRight);
 // Make a curve to fit some random points going from left to right
 var db = desktop.bounds;
 var rnd = new Randomizer(-200, 200);
-var steps = 10;
+var stepRnd = new Randomizer(5, 30);
+var steps = stepRnd.intValue;
 var stepSize = db.width / steps;
 var mid = 100;
 
@@ -25,19 +26,25 @@ desktop.strokeStyle = new Color("white", 0.1);
 // Create a bunch of points going from left to right and of varying y value
 var points = new Array;
 for (i = 0; i <= (steps + 1); ++i)
-	points[i] = new Point(-150 + i * stepSize, mid + rnd.floatValue);
+	points[i] = new Point(-10 + i * stepSize, mid + rnd.floatValue);
 
 // Vary the tension value and offset vertically
 var tension = -1;
+var bias = -1;
 var steps = 50;
 var inc = 1.0 / 50;
 var lwRnd = new Randomizer(2, 15);
 var lw = lwRnd.intValue;
+var offsetRnd = new Randomizer(0.5, 1.5);
+var lwOffset = offsetRnd.floatValue;
+var lineCount = 100;
+
 desktop.lineWidth = lw;
 
-for (i = 0; i < 50; ++i, tension += inc) {
+for (i = 0; i < lineCount; ++i, bias += inc, tension += inc / 2) {
 	desktop.beginPath();
-	desktop.translate(0, 1.5 * lw + 2);
-	desktop.curveFit(points, false, 0.3, tension, tension);
+	desktop.translate(0, lwOffset * lw + 2);
+	desktop.curveFit(points, false, 0.3, tension, bias);
 	desktop.stroke();
 }
+
