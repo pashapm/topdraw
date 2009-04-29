@@ -258,10 +258,6 @@ static Compositor *sSharedCompositor = nil;
       frame.origin.x = 0;
       frame.origin.y = size_.height - NSHeight(frame);
       frame.size.width = size_.width;
-    } else {
-      // Set the menubar relative to the desktop
-      NSRect desktop = [NSScreen desktopFrame];
-      frame.origin.x -= NSMinX(desktop);
     }
 
     menubar_ = [[Layer alloc] initWithFrame:frame];

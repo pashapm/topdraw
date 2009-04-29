@@ -18,45 +18,34 @@
 //------------------------------------------------------------------------------
 + (NSRect)desktopFrame {
   NSArray *screens = [NSScreen screens];
-  NSRect frame;
-  NSScreen *screen;
   
   if (!screens)
     return NSZeroRect;
   
-  // Menubar is the 0th screen (according to the NSScreen docs)
-  NSEnumerator *e = [screens objectEnumerator];
-  frame = [[screens objectAtIndex:0] frame];
-  while (screen = [e nextObject]) {
-    // Union the entirety of the frame (not just the visible area)
-    frame = NSUnionRect(frame, [screen frame]);
-  }
+  NSRect frame = [[NSScreen mainScreen] frame];
   
+  if ([screens count] > 1) {
+    // Union the entirety of the frame (not just the visible area)
+    for (NSScreen *screen in screens)
+      frame = NSUnionRect(frame, [screen frame]);
+  }
+
   return frame;
 }
 
 //------------------------------------------------------------------------------
 + (NSRect)menubarFrame {
-  NSArray *screens = [NSScreen screens];
-  
-  if (!screens)
-    return NSZeroRect;
-
-  // Menubar is the 0th screen (according to the NSScreen docs)
-  NSScreen *mainScreen = [screens objectAtIndex:0];
+  NSScreen *mainScreen = [NSScreen mainScreen];
   NSRect frame = [mainScreen frame];
-  
-  // Since the dock can only be on the bottom or the sides, calculate the difference
-  // between the frame and the visibleFrame at the top
   NSRect visibleFrame = [mainScreen visibleFrame];
-  NSRect menubarFrame;
+  CGFloat height = NSMaxY(frame) - NSMaxY(visibleFrame);
   
-  menubarFrame.origin.x = NSMinX(frame);
-  menubarFrame.origin.y = NSMaxY(visibleFrame);
-  menubarFrame.size.width = NSWidth(frame);
-  menubarFrame.size.height = NSMaxY(frame) - NSMaxY(visibleFrame);
-  
-  return menubarFrame;
+  // Assume menubar goes all the way across the main screen
+  frame = [mainScreen globalFrame];
+  frame.origin.y = NSMaxY(frame) - height;
+  frame.size.height = height;
+
+  return frame;
 }
 
 //------------------------------------------------------------------------------
@@ -73,5 +62,24 @@
   }
 }
 
+//------------------------------------------------------------------------------
+- (NSRect)globalFrame {
+  NSRect global = [[NSScreen mainScreen] frame];
+  NSRect screenFrame = NSZeroRect;
+  
+  NSArray *screens = [NSScreen screens];
+  for (NSScreen *screen in screens) {
+    global = NSUnionRect(global, [screen frame]);
+    
+    if (screen == self)
+      screenFrame = [screen frame];
+  }
+  
+  // Based on the size and origin of the global screen, offset accordingly
+  screenFrame.origin.x -= NSMinX(global);
+  screenFrame.origin.y -= NSMinY(global);
+  
+  return screenFrame;
+}
 
 @end
