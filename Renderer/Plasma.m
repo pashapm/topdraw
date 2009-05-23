@@ -427,7 +427,7 @@ static void *PlasmaRectThread(void *context) {
   data.rowBytes = ((sizeof(long) * data.width) + 0xF) & ~0xF; // 16 byte alignment
   data.rowLongs = data.rowBytes / sizeof(long);
   data.bitmap = (unsigned char *)malloc(data.height * data.rowBytes);
-  CGColorSpaceRef cs = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
+  CGColorSpaceRef cs = [Color createDefaultCGColorSpace];
   data.context = CGBitmapContextCreate(data.bitmap, data.width, data.height, 8, 
                                        data.rowBytes, cs, kCGImageAlphaPremultipliedLast); // RGBA or ABGR
   data.variation = variation_;

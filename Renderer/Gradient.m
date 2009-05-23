@@ -121,7 +121,7 @@
       components[i * 4 + 3] = c[3];
     }
     
-    CGColorSpaceRef cs = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
+    CGColorSpaceRef cs = [Color createDefaultCGColorSpace];
     gradient_ = CGGradientCreateWithColorComponents(cs, components, locations, count);
     CGColorSpaceRelease(cs);
     free(locations);

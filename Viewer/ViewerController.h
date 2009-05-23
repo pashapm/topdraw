@@ -44,6 +44,7 @@
 - (IBAction)renderImmediately:(id)sender;
 - (IBAction)preferences:(id)sender;
 - (IBAction)launchTopDraw:(id)sender;
+- (IBAction)showImages:(id)sender;
 - (IBAction)showDocumentation:(id)sender;
 - (IBAction)quit:(id)sender;
 

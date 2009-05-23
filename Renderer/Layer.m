@@ -239,7 +239,7 @@
 
 - (BOOL)resizeBackingStore {
   CGContextRelease(backingStore_);
-  CGColorSpaceRef cs = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
+  CGColorSpaceRef cs = [Color createDefaultCGColorSpace];
   CGBitmapInfo info = kCGImageAlphaPremultipliedFirst;
   backingStore_ = CGBitmapContextCreate(NULL, NSWidth(frame_), NSHeight(frame_), 8, 0, cs, info);
   CGColorSpaceRelease(cs);
@@ -834,9 +834,9 @@ CGPathRef CreateCurveWithPoints(CGPoint *points, NSUInteger count, CGFloat flatn
     NSString *program =
     @"kernel vec4 coloredRect(__color topLeft, __color topRight, __color bottomLeft, __color bottomRight, vec2 size)"
     "{ vec2 t = destCoord() / size;"
-    "vec4 leftCol = topLeft * t.y + bottomLeft * (1.0 - t.y);"
-    "vec4 rightCol = topRight * t.y + bottomRight * (1.0 - t.y);"
-    "return clamp(rightCol * t.x + leftCol * (1.0 - t.x), 0.0, 1.0); }";
+    "vec4 leftCol = mix(bottomLeft, topLeft, t.y);"
+    "vec4 rightCol = mix(bottomRight, topRight, t.y);"
+    "return mix(leftCol, rightCol, t.x); }";
     NSArray *kernels = [CIKernel kernelsWithString:program];
     CIKernel *coloredKernel = [kernels objectAtIndex:0];
     CIFilter *crop = [CIFilter filterWithName:@"CICrop" keysAndValues:
@@ -848,8 +848,9 @@ CGPathRef CreateCurveWithPoints(CGPoint *points, NSUInteger count, CGFloat flatn
     CIVector *size = [CIVector vectorWithX:[rect width] Y:[rect height]];
     CIImage *result = [crop apply:coloredKernel, topLeft, topRight, bottomLeft, bottomRight, size, nil];
 
-    // Use Linear RGB space
-    CGColorSpaceRef csRef = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);	
+    // Use device RGB space (not linear or generic as they don't do what you expect)
+//    CGColorSpaceRef csRef = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGBLinear);	
+    CGColorSpaceRef csRef = CGColorSpaceCreateDeviceRGB();
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:(id)csRef, kCIContextWorkingColorSpace, 
                                     (id)csRef, kCIContextOutputColorSpace,nil];
     CGColorSpaceRelease(csRef);
@@ -1129,8 +1130,8 @@ CGPathRef CreateCurveWithPoints(CGPoint *points, NSUInteger count, CGFloat flatn
     CIImage *output = [crop valueForKey:@"outputImage"];
     CGImageRelease(current);
     
-    // Use Linear RGB space
-    CGColorSpaceRef csRef = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);	
+    // Use the applications colorspace
+    CGColorSpaceRef csRef = [Color createDefaultCGColorSpace];
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:(id)csRef, kCIContextWorkingColorSpace, 
                              (id)csRef, kCIContextOutputColorSpace,nil];
     CGColorSpaceRelease(csRef);

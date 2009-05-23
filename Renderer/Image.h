@@ -24,7 +24,6 @@
   CGBlendMode blendMode_;
 }
 
-
 - (id)initWithCGImage:(CGImageRef)image;
 - (CGImageRef)cgImage;
 
