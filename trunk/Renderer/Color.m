@@ -105,6 +105,16 @@ static const int kInvalidColorIndex = -1;
 #pragma mark -
 #pragma mark || Public Methods ||
 //------------------------------------------------------------------------------
++ (CGColorSpaceRef)createDefaultCGColorSpace {
+  return CGColorSpaceCreateDeviceRGB();
+}
+
+//------------------------------------------------------------------------------
++ (NSColorSpace *)defaultColorSpace {
+  return [NSColorSpace deviceRGBColorSpace];
+}
+
+//------------------------------------------------------------------------------
 - (id)initWithColorName:(NSString *)name {
   NSColor *color = [NSColor colorWithString:name];
   if ((self == [super init])) {
@@ -124,14 +134,14 @@ static const int kInvalidColorIndex = -1;
 
 //------------------------------------------------------------------------------
 - (void)setColor:(NSColor *)color {
-  NSColor *rgba = [color colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];
+  NSColor *rgba = [color colorUsingColorSpace:[Color defaultColorSpace]];
   [rgba getComponents:color_];
   hsb_[0] = kInvalidHue;
 }
           
 //------------------------------------------------------------------------------
 - (CGColorRef)createCGColor {
-  CGColorSpaceRef cs = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
+  CGColorSpaceRef cs = [Color createDefaultCGColorSpace];
   CGColorRef color = CGColorCreate(cs, color_);
   CGColorSpaceRelease(cs);
   

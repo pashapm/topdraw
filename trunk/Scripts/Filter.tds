@@ -1,0 +1,44 @@
+// Clear the background to a neutral
+desktop.fillLayer(new Color(0.5));
+
+// Create a layer that we'll fill with our source
+var srcLayer = new Layer(300, 300);
+
+// Draw a red filled, blue stroked circle on a black background
+srcLayer.fillLayer(new Color("black"));
+srcLayer.fillStyle = new Color("red");
+srcLayer.strokeStyle = new Color("blue");
+srcLayer.lineWidth = 10;
+srcLayer.beginPath();
+srcLayer.circle(new Point(150, 150), 100);
+srcLayer.fillStroke();
+
+// Create an image with the rendered contents of the srcLayer
+var srcImage = new Image(srcLayer);
+
+// Convince ourselves that it's the right thing
+desktop.drawImage(srcImage, new Point(200, 200));
+
+// Now, let's filter that image into a new layer
+var destLayer = new Layer(300, 300);
+
+// We'll convert any black pixels to alpha 0
+var src = "\
+kernel vec4 copier(vec2 outputSize, sampler src) { \
+	vec2 srcLoc = samplerTransform(src, samplerCoord(src)); \
+	vec4 result = sample(src, srcLoc); \
+	float len = length(result.rgb); \
+	result.a = (len < 0.01) ? 0.0 : result.a; \
+	return (result); \
+}\
+";
+
+var f = new Filter();
+f.kernelSource = src;
+f.setKeyValue("src", srcImage);
+destLayer.applyFilter(f);
+
+// Make an image of that layer and draw it
+var destImage = new Image(destLayer);
+desktop.drawImage(destImage, new Point(600, 200));
+

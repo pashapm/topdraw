@@ -14,6 +14,7 @@
 
 #import <Accelerate/Accelerate.h>
 
+#import "Color.h"
 #import "Image.h"
 #import "Layer.h"
 #import "Noise.h"
@@ -48,7 +49,7 @@
   // Use width and height for a 32-bit/pixel ARGB.  16 byte align rowbytes
   int rowBytes = 0xFFF0 & ((4 * width_) + 0xF);
   buffer_ = malloc(height_ * rowBytes);
-  CGColorSpaceRef cs = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
+  CGColorSpaceRef cs = [Color createDefaultCGColorSpace];
   CGBitmapInfo info = kCGImageAlphaPremultipliedFirst;
   bitmap_ = CGBitmapContextCreate(buffer_, width_, height_, 8, rowBytes, cs, info);
   CGColorSpaceRelease(cs);

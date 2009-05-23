@@ -332,6 +332,12 @@ static const int kRefreshActionStartup = 2;
 }
 
 //------------------------------------------------------------------------------
+- (IBAction)showImages:(id)sender {
+  NSString *path = [Exporter imageDirectory];
+  [[NSWorkspace sharedWorkspace] selectFile:path inFileViewerRootedAtPath:nil];
+}
+
+//------------------------------------------------------------------------------
 - (IBAction)launchTopDraw:(id)sender {
   [[NSWorkspace sharedWorkspace] launchApplication:@"Top Draw"];
 }

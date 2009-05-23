@@ -26,6 +26,9 @@ typedef unsigned long RGBAPixel;
   CGFloat hsb_[3];    // HSB
 }
 
++ (CGColorSpaceRef)createDefaultCGColorSpace;
++ (NSColorSpace *)defaultColorSpace;
+
 - (id)initWithColorName:(NSString *)name;
 - (id)initWithArguments:(NSArray *)arguments;
 

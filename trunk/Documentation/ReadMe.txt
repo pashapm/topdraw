@@ -32,6 +32,14 @@ The last 10 images rendered will be saved in ~/Library/Application Support/Googl
 TopDraw requires Mac OS X 10.5 (Leopard) or later as it uses the JavaScriptCore.framework to evaluate the JavaScript.
 
 == History ==
+05/22/2009 - 1.3
+- Fixed Filter class so that you can specify Image objects to be used as a sampler to your filter function
+
+04/28/2009 - 1.2
+- Add menu item to open created images folder
+- Simplify the code for Layer's coloredRect kernel; use device colorspace for rendering
+- Fix bug with calculating location of menubar when screens are arranged in interesting orientations
+
 04/13/2009 - 1.1
 - Added CurveFit support
 - Added LSystem support

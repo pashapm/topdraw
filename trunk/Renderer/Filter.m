@@ -16,6 +16,7 @@
 
 #import "Color.h"
 #import "Filter.h"
+#import "Image.h"
 
 static NSString *kDynamicFilterName = @"TopDrawDynamicFilter";
 static NSString *kKernelSourceKey = @"kernelSource";
@@ -25,6 +26,7 @@ static NSString *kOutputSizeKey = @"outputSize";
 // If no name is specified, we'll expose a dynamic filter.
 @interface DynamicFilter : CIFilter {
   NSMutableDictionary *parameters_;
+  NSMutableArray *arguments_;
 	CIKernel *kernel_;
 }
 @end
@@ -46,7 +48,7 @@ static NSString *kOutputSizeKey = @"outputSize";
   "vec2 t = destCoord() / outputSize;"
   "vec4 white = vec4(1.0, 1.0, 1.0, 1.0);"
   "vec4 black = vec4(0.0, 0.0, 0.0, 1.0);"
-  "vec4 result = vec4(black * t.x + white * (1.0 - t.x));"
+  "vec4 result = vec4(black * t.x + white * (1b.0 - t.x));"
   "return premultiply(result);}";
   
   return source;
@@ -123,7 +125,10 @@ static NSString *kOutputSizeKey = @"outputSize";
 - (NSDictionary *)kernelArguments {
   NSString *source = [self valueForUndefinedKey:@"kernelSource"];
   NSScanner *scanner = [NSScanner scannerWithString:source];
-  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+  NSMutableDictionary *argumentValueDict = [NSMutableDictionary dictionary];
+  
+  [arguments_ release];
+  arguments_ = [[NSMutableArray alloc] init];
   
   // Find the start of the arguments
   if ([scanner scanUpToString:@"(" intoString:nil]) {
@@ -141,12 +146,15 @@ static NSString *kOutputSizeKey = @"outputSize";
         [argScanner scanUpToCharactersFromSet:delimiterSet intoString:&type];
         [argScanner scanUpToCharactersFromSet:delimiterSet intoString:&arg];
         [argScanner scanCharactersFromSet:delimiterSet intoString:nil];
-        [arguments setObject:type forKey:arg];
+        [argumentValueDict setObject:type forKey:arg];
+
+        // Save the names in order
+        [arguments_ addObject:arg];
       }
     }
   }
   
-  return arguments;
+  return argumentValueDict;
 }
 
 - (NSDictionary *)attributes {
@@ -154,6 +162,7 @@ static NSString *kOutputSizeKey = @"outputSize";
   NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
   NSEnumerator *e = [arguments keyEnumerator];
   NSString *key, *type;
+  
   while ((key = [e nextObject])) {
     type = [arguments objectForKey:key];
     if ([type isEqualToString:@"__color"])
@@ -162,6 +171,8 @@ static NSString *kOutputSizeKey = @"outputSize";
       type = @"CIVector";
     else if ([type isEqualToString:@"float"])
       type = @"NSNumber";
+    else if ([type isEqualToString:@"sampler"])
+      type = @"CIImage";
     
     NSDictionary *attrDict = [NSDictionary dictionaryWithObject:type forKey:@"CIAttributeClass"];
     [attributes setObject:attrDict forKey:key];
@@ -173,9 +184,12 @@ static NSString *kOutputSizeKey = @"outputSize";
 - (CIImage *)outputImage {
   CIKernel *kernel = [self compiledKernel];
   CIImage *result = nil;
-  NSArray *argumentKeys = [[self kernelArguments] allKeys];
   CIVector *zero = [CIVector vectorWithX:0];
-  NSArray *arguments = [parameters_ objectsForKeys:argumentKeys notFoundMarker:zero];
+  
+  // Parse the kernel source, extracting argument names and types
+  [self kernelArguments];
+  
+  NSArray *arguments = [parameters_ objectsForKeys:arguments_ notFoundMarker:zero];
   
   @try {
     result = [self apply:kernel arguments:arguments options:nil];
@@ -310,7 +324,10 @@ static NSString *kOutputSizeKey = @"outputSize";
     CGFloat v = [RuntimeObject coerceObjectToDouble:[parameters objectAtIndex:0]];
     [filter_ setValue:[NSNumber numberWithFloat:v] forKey:key];
   } else if ([attributeClass isEqualToString:@"CIImage"]) {
-    // Create a sampler?
+    Image *image = [RuntimeObject coerceObject:[parameters objectAtIndex:0] toClass:[Image class]];
+    CIImage *ciImage = [CIImage imageWithCGImage:[image cgImage]];
+    CISampler *sampler = [CISampler samplerWithImage:ciImage];
+    [filter_ setValue:sampler forKey:key];
   } 
 }
 
