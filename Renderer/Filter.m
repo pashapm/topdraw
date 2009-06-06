@@ -17,6 +17,8 @@
 #import "Color.h"
 #import "Filter.h"
 #import "Image.h"
+#import "PointObject.h"
+#import "RectObject.h"
 
 static NSString *kDynamicFilterName = @"TopDrawDynamicFilter";
 static NSString *kKernelSourceKey = @"kernelSource";
@@ -301,13 +303,27 @@ static NSString *kOutputSizeKey = @"outputSize";
   
   // Support conversion to CIVector, CIColor, Image, and NSNumber
   if ([attributeClass isEqualToString:@"CIVector"]) {
-    CGFloat *values = (CGFloat *)malloc(sizeof(CGFloat) * count);
-    for (int i = 0; i < count; ++i)
-      values[i] = [[parameters objectAtIndex:i] floatValue];
-
-    CIVector *v = [CIVector vectorWithValues:values count:count];
+    CIVector *v = nil;
+    if (count == 1) {
+      id parameter = [parameters objectAtIndex:0];
+      if ([parameter isKindOfClass:[RectObject class]]) {
+        RectObject *r = (RectObject *)parameter;
+        v = [CIVector vectorWithX:[r x] Y:[r y] Z:[r width] W:[r height]];
+      } else if ([parameter isKindOfClass:[PointObject class]]) {
+        PointObject *p = (PointObject *)parameter;
+        v = [CIVector vectorWithX:[p x] Y:[p y]];
+      }
+    } else {
+      CGFloat *values = (CGFloat *)malloc(sizeof(CGFloat) * count);
+      for (int i = 0; i < count; ++i)
+        values[i] = [[parameters objectAtIndex:i] floatValue];
+      
+      v = [CIVector vectorWithValues:values count:count];
+      free(values);
+    }
+    
     [filter_ setValue:v forKey:key];
-    free(values);
+
   } else if ([attributeClass isEqualToString:@"CIColor"]) {
     CGFloat c[4] = { 1 };
     
