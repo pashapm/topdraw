@@ -133,10 +133,10 @@ static JSValueRef CallAsFunction(JSContextRef ctx, JSObjectRef function, JSObjec
       const char *returnType = [methodSig methodReturnType];
       if (strlen(returnType)) {
         char type = returnType[0];
-        int returnInt;
-        unsigned int returnUnsignedInt;
-        float returnFloat;
-        double returnDouble;
+        int returnInt = 0;
+        unsigned int returnUnsignedInt = 0;
+        float returnFloat = 0.0;
+        double returnDouble = 0.0;
         switch (type) {
           case 'c':
           case 'i':

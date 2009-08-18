@@ -38,6 +38,11 @@ typedef unsigned long RGBAPixel;
 - (CGColorRef)createCGColor;
 
 - (void)getComponents:(CGFloat *)components;
+- (void)getHSBComponents:(CGFloat *)components;
+- (void)setComponents:(CGFloat *)components rgb:(BOOL)isRGB;
+
 - (void)getRGBAPixel:(unsigned long *)pixel;
+
+- (BOOL)isEqualToColor:(Color *)color;
 
 @end

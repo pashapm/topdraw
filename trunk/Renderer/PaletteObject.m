@@ -45,7 +45,7 @@
 //------------------------------------------------------------------------------
 + (NSSet *)methods {
   return [NSSet setWithObjects:@"addColors", @"addKulerColors",
-          @"colorAtIndex",
+          @"colorAtIndex", @"adjustHSB",
           @"toString", nil];
 }
 
@@ -179,6 +179,35 @@
     [self addKulerResponse:response];
     [response release];
   }
+}
+
+//------------------------------------------------------------------------------
+- (void)adjustHSB:(NSArray *)arguments {
+  NSInteger argCount = [arguments count];
+  
+  if (argCount != 3)
+    return;
+  
+  CGFloat deltaH = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:0]];
+  CGFloat deltaS = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:1]];
+  CGFloat deltaB = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:2]];
+  
+  int count = [colors_ count];
+  CGFloat hsb[3];
+  for (int i = 0; i < count; ++i) {
+    Color *c = [colors_ objectAtIndex:i];
+    [c getHSBComponents:hsb];
+    hsb[0] += deltaH;
+    hsb[1] += deltaS;
+    hsb[2] += deltaB;
+    
+    // Clamp
+    hsb[0] = MIN(1, MAX(0, hsb[0]));
+    hsb[1] = MIN(1, MAX(0, hsb[1]));
+    hsb[2] = MIN(1, MAX(0, hsb[2]));
+    [c setComponents:hsb rgb:NO];
+  }
+
 }
 
 @end

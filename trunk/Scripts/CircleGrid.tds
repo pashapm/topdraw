@@ -1,0 +1,94 @@
+// Draw some circles on a grid
+
+// Pick some colors, desaturated and light
+var palette = new Palette(new Color, new Color, new Color, new Color);
+palette.adjustHSB(0, -0.5, 0.2);
+var background = palette.randomColor;
+
+var db = desktop.bounds;
+desktop.fillLayer(background);
+
+// Pick the diameter
+var diameterRnd = new Randomizer(50, 300);
+var diameter = diameterRnd.intValue;
+var radius = diameter / 2.0;
+
+// Create blocks of same orientation
+var blockSize = 2;	// 2x2
+var countX = Math.ceil(db.width / (diameter * blockSize));
+var countY = Math.ceil(db.height / (diameter * blockSize));
+var slideInset = 2;
+
+for (var y = 0; y < countY; ++y) {
+	for (var x = 0; x < countX; ++x) {
+		var isHorizontal = diameterRnd.booleanValue;
+		DrawBlock(x, y, isHorizontal);
+	}
+}
+
+function DrawBlock(x, y, isHorizontal) {
+	x = x * diameter * blockSize;
+	y = y * diameter * blockSize;
+
+	if (isHorizontal)
+		DrawHorizontalBlock(x, y);
+	else
+		DrawVerticalBlock(x, y);
+}
+
+function RandomDifferentColor(color) {
+	var contrast;
+	var count = palette.count;
+	do {
+		contrast = palette.randomColor;
+		--count;
+	}	while (contrast.isEqual(color) && count > 0);
+	
+	return contrast;
+}
+
+function DrawHorizontalBlock(x, y) {
+	// Pick the direction of the first slide, the other will be the opposite
+	var onRight = diameterRnd.booleanValue;
+	DrawHCylinder(x, y, onRight);
+	DrawHCylinder(x, y + diameter, !onRight);
+}
+
+function DrawHCylinder(x, y, onRight) {
+	var color = palette.randomColor;
+	DrawSlide(x + slideInset, y, diameter * 2 - slideInset * 2, diameter, color);
+	var contrast = RandomDifferentColor(color);
+	DrawCircle(x + (onRight ? diameter : 0), y, contrast);
+}
+
+function DrawVerticalBlock(x, y) {
+	// Pick the direction of the first slide, the other will be the opposite
+	var onTop = diameterRnd.booleanValue;
+	DrawVCylinder(x, y, onTop);
+	DrawVCylinder(x + diameter, y, !onTop);
+}
+
+function DrawVCylinder(x, y, onTop) {
+	var color = palette.randomColor;
+	DrawSlide(x, y + slideInset, diameter, diameter * 2 - slideInset * 2, color);
+	var contrast = RandomDifferentColor(color);
+	DrawCircle(x, y + (onTop ? diameter : 0), contrast);
+}
+
+function DrawCircle(x, y, color) {
+	desktop.fillStyle = color;
+	desktop.beginPath();
+	desktop.circle(x + radius, y + radius, radius);
+	desktop.closePath();
+	desktop.fill();
+}
+
+function DrawSlide(x, y, w, h, color) {
+	var slideRect = new Rect(x, y, w, h);
+	slideRect.normalize();
+	desktop.fillStyle = color;
+	desktop.beginPath();
+	desktop.roundedRect(slideRect, radius);
+	desktop.closePath();
+	desktop.fill();
+}
