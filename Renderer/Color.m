@@ -22,6 +22,8 @@ static const int kInvalidColorIndex = -1;
 
 @interface Color (PrivateMethods)
 - (Color *)adjustColorBrightness:(CGFloat)amount;
+- (void)ensureHSB;
+- (void)updateRGBFromHSB;
 @end
 
 @implementation Color
@@ -42,7 +44,7 @@ static const int kInvalidColorIndex = -1;
 //------------------------------------------------------------------------------
 + (NSSet *)methods {
   return [NSSet setWithObjects:@"blend", @"vary", @"darker", @"lighter", 
-          @"contrasting", @"toString", nil];
+          @"contrasting", @"isEqual", @"toString", nil];
 }
 
 //------------------------------------------------------------------------------
@@ -154,6 +156,23 @@ static const int kInvalidColorIndex = -1;
 }
 
 //------------------------------------------------------------------------------
+- (void)getHSBComponents:(CGFloat *)components {
+  [self ensureHSB];
+  memcpy(components, hsb_, sizeof(hsb_));
+}
+
+//------------------------------------------------------------------------------
+- (void)setComponents:(CGFloat *)components rgb:(BOOL)isRGB {
+  if (isRGB) {
+    memcpy(color_, components, sizeof(color_));
+    hsb_[0] = kInvalidHue;
+  } else {
+    memcpy(hsb_, components, sizeof(hsb_));
+    [self updateRGBFromHSB];
+  }
+}
+
+//------------------------------------------------------------------------------
 - (void)getRGBAPixel:(unsigned long *)pixel {
   unsigned long temp;
   temp = (unsigned long)rint(color_[0] * 255.0);
@@ -240,8 +259,7 @@ static int HSBPropertyToIndex(NSString *property) {
   if (colorIdx != kInvalidColorIndex) {
     color_[colorIdx] = floatValue;
     hsb_[0] = kInvalidHue;
-  }
-  else {
+  } else {
     [self ensureHSB];
     colorIdx = HSBPropertyToIndex(key);
     
@@ -332,6 +350,31 @@ static int HSBPropertyToIndex(NSString *property) {
   Color *result = [[[Color alloc] init] autorelease];
   [result setColor:adjusted];
   return result;
+}
+
+//------------------------------------------------------------------------------
+- (BOOL)isEqualToColor:(Color *)color {
+  if (color) {
+    CGFloat c[4];
+    [color getComponents:c];
+    if ((color_[0] == c[0]) &&
+        (color_[1] == c[1]) &&
+        (color_[2] == c[2]) &&
+        (color_[3] == c[3]))
+      return YES;
+  }
+  
+  return NO;
+}
+
+//------------------------------------------------------------------------------
+- (BOOL)isEqual:(NSArray *)arguments {
+  Color *c = nil;
+  
+  if ([arguments count] == 1)
+    c = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[Color class]];
+  
+  return [self isEqualToColor:c];
 }
 
 //------------------------------------------------------------------------------

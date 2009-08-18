@@ -32,7 +32,7 @@
 }
 
 + (NSSet *)methods {
-  return [NSSet setWithObjects:@"inset", @"intersect", @"union", @"point",
+  return [NSSet setWithObjects:@"normalize", @"inset", @"intersect", @"union", @"point",
           @"toString", nil];
 }
 
@@ -137,6 +137,18 @@
     @"centerleft", @"center", @"centerright",
     @"bottomleft", @"bottomcenter", @"bottomright",
           nil];
+}
+
+- (void)normalize {
+  if (rect_.size.width < 0) {
+    rect_.size.width = -rect_.size.width;
+    rect_.origin.x -= rect_.size.width;
+  }
+
+  if (rect_.size.height < 0) {
+    rect_.size.height = -rect_.size.height;
+    rect_.origin.y -= rect_.size.height;
+  }
 }
 
 - (RectObject *)inset:(NSArray *)arguments {
