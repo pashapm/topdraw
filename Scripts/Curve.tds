@@ -2,65 +2,45 @@
 var db = desktop.bounds;
 desktop.fillLayer(new Color("black"));
 
-// Draw some blue curves
-var curveColor = new Color(0, 0, 1, 0.2);
+// Draw some overlapping curves
+var curveColor = new Color(0, 0, 1, 0.05);
 desktop.strokeStyle = curveColor;
 
 var rnd = new Randomizer(0, 1);
-var s = new Point(db.x, db.height / (1 + 9 * rnd.floatValue));
-var e = new Point(db.width, db.height / (1 + 9 * rnd.floatValue));
+var s = new Point(db.x, db.height / (1 + 20 * rnd.floatValue));
+var e = new Point(db.width, db.height / (1 + 20 * rnd.floatValue));
 var c = new Point(0, db.height);
 
 var curveXOffset = 150 * rnd.floatValue;
 var curveYOffset = 5 * rnd.floatValue;
 
-desktop.lineWidth = 5 + 10 * rnd.floatValue;
+desktop.lineWidth = 1;
+desktop.strokeStyle = new Color("white", 0.2);
 
-for (i = 0; i < 20; ++i) {
+for (i = 0; i < 10; ++i) {
 	c.x = i * curveXOffset;
 	c.y += i * curveYOffset;
-	curveColor.r += 0.03;
+	curveColor.r += 0.1;
 
 	desktop.beginPath();
-	desktop.strokeStyle = curveColor;
+	desktop.fillStyle = curveColor;
+	desktop.moveTo(s);
+	desktop.quadraticCurveTo(c, e);
+	desktop.lineTo(e.x, 0);
+	desktop.lineTo(0, 0);
+	desktop.closePath();
+	desktop.fill();
+}
+
+c.x = 0;
+c.y = db.height;
+
+for (i = 0; i < 10; ++i) {
+	c.x = i * curveXOffset;
+	c.y += i * curveYOffset;
+
+	desktop.beginPath();
 	desktop.moveTo(s);
 	desktop.quadraticCurveTo(c, e);
 	desktop.stroke();
 }
-
-// Draw some arcs
-curveColor = new Color(1, 1, 1, 0.2);
-desktop.strokeStyle = curveColor;
-desktop.lineWidth = 3;
-desktop.fillStyle = new Color(0, 0, 0, 0.3);
-
-var r = 50;
-var e = 0;
-var s = Math.PI;
-var count = 20;
-
-curveXOffset = 50 * rnd.floatValue;
-curveYOffset = 200 * rnd.floatValue;
-
-for (x = 0; x < count; ++x) {
-	desktop.beginPath();
-
-	c.x = 500 + x * (curveXOffset + x * 5);
-	c.y = 500 + Math.sin(3 * Math.PI * x / count) * curveYOffset;
-	e += 0.1;
-	s += 0.3;
-	r += 20 * Math.sin(s + Math.PI);
-	
-	if (s > Math.PI * 2)
-		s = Math.PI * 2;
-
-	desktop.arc(c, r, s, e);
-	desktop.closePath();
-	desktop.fillStroke();
-	
-	// Adjust the color for the next one
-	curveColor.g -= 0.02;
-	curveColor.b -= 0.05;
-	desktop.strokeStyle = curveColor;
-}
-
