@@ -1,8 +1,13 @@
 // Draw some circles on a grid
 
-// Pick some colors, desaturated and light
-var palette = new Palette(new Color, new Color, new Color, new Color);
-palette.adjustHSB(0, -0.5, 0.2);
+// Pick a color, vary it slightly, and desaturate and darken
+var c = new Color;
+var palette = new Palette(c);
+
+for (var i = 0; i < 3; ++i)
+	palette.addColors(c.vary(0.1, 0.1, 0.1, 0));
+
+palette.adjustHSB(0, -0.5, -0.2);
 var background = palette.randomColor;
 
 var db = desktop.bounds;
@@ -25,6 +30,12 @@ for (var y = 0; y < countY; ++y) {
 		DrawBlock(x, y, isHorizontal);
 	}
 }
+
+// Filter
+var f = new Filter("CIGaussianBlur");
+var radiusRnd = new Randomizer(4, 10);
+f.setKeyValue("inputRadius", radiusRnd.intValue);
+desktop.applyFilter(f);
 
 function DrawBlock(x, y, isHorizontal) {
 	x = x * diameter * blockSize;
