@@ -6,8 +6,9 @@ var widthRnd = new Randomizer(1, 10);
 var dashRnd = new Randomizer(0, 40);
 var count = 30 * compositor.screenCount;
 
-// Fill to black
-desktop.fillLayer(new Color("black"));
+// Fill to dark
+var darkness = new Randomizer(0, 0.25);
+desktop.fillLayer(new Color(darkness.floatValue, 1.0));
 
 // Draw a bunch of dashed circles
 for (var i = 0; i < count; ++i) {
@@ -22,7 +23,7 @@ for (var i = 0; i < count; ++i) {
 
 // Blur it out
 var f = new Filter("CIGaussianBlur");
-var r = new Randomizer(2, 20);
+var r = new Randomizer(3, 15);
 f.setKeyValue("inputRadius", r.intValue);
 desktop.applyFilter(f);
 
@@ -38,11 +39,12 @@ function UpdateDash() {
 function Dashed(s, e) {
 	var r = s.distance(e) / 2;
 	var c = new Color;
-	c.a = 0.2;
+	c.a = 0.4;
 
 	desktop.strokeStyle = c;
 	desktop.beginPath();
 	desktop.circle(e, r);
+	desktop.closePath();
 	desktop.stroke();
 }
 

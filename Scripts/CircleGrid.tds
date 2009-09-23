@@ -33,7 +33,7 @@ for (var y = 0; y < countY; ++y) {
 
 // Filter
 var f = new Filter("CIGaussianBlur");
-var radiusRnd = new Randomizer(4, 10);
+var radiusRnd = new Randomizer(3, 10);
 f.setKeyValue("inputRadius", radiusRnd.intValue);
 desktop.applyFilter(f);
 

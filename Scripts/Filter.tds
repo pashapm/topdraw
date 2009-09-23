@@ -28,15 +28,17 @@ kernel vec4 copier(vec2 outputSize, sampler src) { \
 	vec2 srcLoc = samplerTransform(src, samplerCoord(src)); \
 	vec4 result = sample(src, srcLoc); \
 	float len = length(result.rgb); \
-	result.a = (len < 0.01) ? 0.0 : result.a; \
+	result.a = (len < 1.0) ? len : result.a; \
 	return (result); \
 }\
 ";
 
-var f = new Filter();
-f.kernelSource = src;
-f.setKeyValue("src", srcImage);
-destLayer.applyFilter(f);
+if (1) {
+	var f = new Filter();
+	f.kernelSource = src;
+	f.setKeyValue("src", srcImage);
+	destLayer.applyFilter(f);
+}
 
 // Make an image of that layer and draw it
 var destImage = new Image(destLayer);
