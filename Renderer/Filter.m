@@ -244,6 +244,7 @@ static NSString *kOutputSizeKey = @"outputSize";
 //------------------------------------------------------------------------------
 - (void)dealloc {
   [filter_ release];
+  filter_ = nil;
   [super dealloc];
 }
 

@@ -27,7 +27,7 @@ static void InitializeRandomizerWithSeed(NSUInteger seed) {
     
     kSeed = seed;
     kRandomTableIndex = 0;
-    NSUInteger lo = kSeed, hi = ~kSeed;
+    unsigned int lo = kSeed, hi = ~kSeed;
     for (NSUInteger i = 0; i < kRandomTableSize; ++i) {
       hi = (hi << 16) + (hi >> 16);
       hi += lo;
