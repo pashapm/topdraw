@@ -250,7 +250,7 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
   [text_ setDefaultParagraphStyle:style];
   NSDictionary *attrs = [NSDictionary dictionaryWithObject:style forKey:NSParagraphStyleAttributeName];
   [storage addAttributes:attrs range:NSMakeRange(0, textLength)];
-  [text_ setTypingAttributes:currentAttributes];
+//  [text_ setTypingAttributes:currentAttributes];
   [style release];
 
   [text_ setAllowsUndo:YES];
@@ -300,13 +300,15 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
 }
 
 //------------------------------------------------------------------------------
-- (void)prepareSavePanel:(NSSavePanel *)panel {
+- (BOOL)prepareSavePanel:(NSSavePanel *)panel {
   // Suggest that we save in the last place that something was loaded
   [panel setDirectory:[DocumentController recommendedStorageFolder]];
   [panel setExtensionHidden:NO];
   [panel setCanSelectHiddenExtension:NO];
   [panel setAllowedFileTypes:[NSArray arrayWithObject:@"tds"]];
   [panel setAllowsOtherFileTypes:NO];
+  
+  return YES;
 }
 
 //------------------------------------------------------------------------------

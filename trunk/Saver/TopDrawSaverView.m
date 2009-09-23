@@ -167,7 +167,8 @@ static CGFloat kFadeSteps = 30.0;
     name = [[scripts_ allKeys] objectAtIndex:random() % [scripts_ count]];
 
   NSString *path = [scripts_ objectForKey:name];
-  NSString *source = [NSString stringWithContentsOfFile:path];
+  NSError *error;
+  NSString *source = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
 
   // Setup the renderer and make it go
   [renderer_ setSource:source name:name seed:[Renderer randomSeedFromDevice]];

@@ -232,7 +232,13 @@ static NSString *kScreenSaverName = @"Top Draw.saver";
   [[NSFileManager defaultManager] createSymbolicLinkAtPath:destPath pathContent:srcPath];
   
   // Now open up the screen savers panel
-  [[NSWorkspace sharedWorkspace] openFile:@"/System/Library/PreferencePanes/ScreenSaver.prefPane"];
+  NSString *path = @"/System/Library/PreferencePanes/ScreenSaver.prefPane";
+  
+  // Name changed in Snowy -- perhaps there's a more generic way to reference this?
+  if (![[NSFileManager defaultManager] fileExistsAtPath:path])
+    path = @"/System/Library/PreferencePanes/DesktopScreenEffectsPref.prefPane";
+    
+  [[NSWorkspace sharedWorkspace] openFile:path];
 }
 
 //------------------------------------------------------------------------------

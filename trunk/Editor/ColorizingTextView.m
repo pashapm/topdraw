@@ -78,7 +78,7 @@ static NSString *ColorizerTemporaryRangeHighlightAttr = @"ColorizerTemporaryRang
   // If the most recent change was a newline, we need to extend the range on 
   // either side of the current insertion point
   if (insertedNewLine_) {
-    unsigned int lineStart, lineEnd;
+    NSUInteger lineStart, lineEnd;
 
 //    NSMethodLog("before: %@ (ts: %d)", NSStringFromRange(range), tsLen);
     [str getLineStart:&lineStart end:&lineEnd contentsEnd:nil forRange:NSMakeRange(newRange.location, 0)];
@@ -240,7 +240,7 @@ static NSString *ColorizerTemporaryRangeHighlightAttr = @"ColorizerTemporaryRang
   NSString *str = [ts string];
   NSRange lineRange, commentRange;
   unsigned int loc = range.location;
-  unsigned int lineStart, lineEnd;
+  NSUInteger lineStart, lineEnd;
   NSRange quoteRange;
    
   do {
@@ -346,7 +346,7 @@ static NSString *ColorizerTemporaryRangeHighlightAttr = @"ColorizerTemporaryRang
 - (int)indentationForLineAtRange:(NSRange)range {
   NSTextStorage *ts = [self textStorage];
   NSString *str = [ts string];
-  unsigned int lineStart, lineEnd;
+  NSUInteger lineStart, lineEnd;
   NSCharacterSet *ws = [NSCharacterSet whitespaceCharacterSet];
   unsigned int count = 0;
   
@@ -370,7 +370,7 @@ static NSString *ColorizerTemporaryRangeHighlightAttr = @"ColorizerTemporaryRang
   NSTextStorage *ts = [self textStorage];
   NSString *str = [ts string];
   unsigned int loc = range.location;
-  unsigned int lineStart, lineEnd;
+  NSUInteger lineStart, lineEnd;
   NSRange lineRange;
   NSCharacterSet *ws = [NSCharacterSet whitespaceCharacterSet];
   
@@ -669,7 +669,7 @@ static NSString *ColorizerTemporaryRangeHighlightAttr = @"ColorizerTemporaryRang
   NSTextStorage *storage = [self textStorage];
   NSRange selection = [self selectedRange];
   NSRange subRange = NSMakeRange(selection.location, 1);
-  unsigned int startIdx = 0, endIdx = 0;
+  NSUInteger startIdx = 0, endIdx = 0;
   
   // Group this undo
   [[self undoManager] registerUndoWithTarget:self selector:@selector(unindentSelection:) object:nil];
@@ -695,7 +695,7 @@ static NSString *ColorizerTemporaryRangeHighlightAttr = @"ColorizerTemporaryRang
   NSTextStorage *storage = [self textStorage];
   NSRange selection = [self selectedRange];
   NSRange subRange = NSMakeRange(selection.location, 1);
-  unsigned int startIdx = 0, endIdx = 0, lastStart = 0;
+  NSUInteger startIdx = 0, endIdx = 0, lastStart = 0;
   
   [[self undoManager] registerUndoWithTarget:self selector:@selector(indentSelection:) object:nil];
 

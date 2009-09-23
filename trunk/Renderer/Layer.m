@@ -501,7 +501,7 @@
     CGFloat *lengths = (CGFloat *)malloc(count * sizeof(CGFloat) + 10);
     
     for (int i = 0; i < count; ++i)
-      lengths[i] = [[points objectAtIndex:i] floatValue];
+      lengths[i] = [(NSNumber *)[points objectAtIndex:i] floatValue];
     
     CGContextSetLineDash(backingStore_, 0, lengths, count);
     free(lengths);
@@ -637,14 +637,14 @@ CGPathRef CreateCurveWithPoints(CGPoint *points, NSUInteger count, CGFloat flatn
   
   CGFloat flatness = 0.6;
   if (argCount > 2)
-    flatness = [[RuntimeObject coerceObject:[arguments objectAtIndex:2] toClass:[NSNumber class]] floatValue];
+    flatness = [(NSNumber *)[RuntimeObject coerceObject:[arguments objectAtIndex:2] toClass:[NSNumber class]] floatValue];
   
   if (flatness < 0.01)
     flatness = 0.01;
   
   CGFloat tension = 0;
   if (argCount > 3)
-    tension = [[RuntimeObject coerceObject:[arguments objectAtIndex:3] toClass:[NSNumber class]] floatValue];
+    tension = [(NSNumber *)[RuntimeObject coerceObject:[arguments objectAtIndex:3] toClass:[NSNumber class]] floatValue];
   
   if (tension < -1)
     tension = -1;
@@ -653,7 +653,7 @@ CGPathRef CreateCurveWithPoints(CGPoint *points, NSUInteger count, CGFloat flatn
 
   CGFloat bias = 0;
   if (argCount > 4)
-    bias = [[RuntimeObject coerceObject:[arguments objectAtIndex:4] toClass:[NSNumber class]] floatValue];
+    bias = [(NSNumber *)[RuntimeObject coerceObject:[arguments objectAtIndex:4] toClass:[NSNumber class]] floatValue];
   
   if (bias < -1)
     bias = -1;
@@ -740,7 +740,7 @@ CGPathRef CreateCurveWithPoints(CGPoint *points, NSUInteger count, CGFloat flatn
     CGFloat start = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:2]];
     CGFloat end = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:3]];
     
-    CGContextAddArc(backingStore_, [center x], [center y], radius, start, end, 1);
+    CGContextAddArc(backingStore_, [center x], [center y], radius, start, end, 0);
   }
 }
 
@@ -820,7 +820,7 @@ CGPathRef CreateCurveWithPoints(CGPoint *points, NSUInteger count, CGFloat flatn
   }
   
   if (pt)
-    CGContextAddArc(backingStore_, [pt x], [pt y], radius, 0, M_PI * 2, 1);
+    CGContextAddArc(backingStore_, [pt x], [pt y], radius, 0, M_PI * 2.0, 0);
 }
 
 - (void)coloredRect:(NSArray *)arguments {

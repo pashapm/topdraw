@@ -21,7 +21,7 @@ static inline float Clamp(float a) {
 @implementation NSColor(TopDrawAdjustment)
 //------------------------------------------------------------------------------
 - (NSColor *)colorByAdjustingBrightness:(CGFloat)amount {
-  float c[4];
+  CGFloat c[4];
   NSColor *color = self;
   
   if ([self numberOfComponents] < 3)
@@ -35,7 +35,7 @@ static inline float Clamp(float a) {
 
 //------------------------------------------------------------------------------
 - (NSColor *)contrastingColor:(CGFloat)amount {
-  float h, s, b, a;
+  CGFloat h, s, b, a;
   
   [self getHue:&h saturation:&s brightness:&b alpha:&a];
   
