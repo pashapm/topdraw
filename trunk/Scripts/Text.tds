@@ -18,7 +18,8 @@ var symbols = new Array(	0xf8ff, // Apple
 	0x238b, // Power (alt)
 	0x2603, // Snowman
 	0x2615, // Hot beverage
-	0x263a  // Smiley
+	0x263a, // Smiley
+	0x231A  // Watch
 );
 
 var text = new Text("");
