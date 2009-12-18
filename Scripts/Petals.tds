@@ -1,0 +1,144 @@
+// Draw some tiled petals
+
+var flowerSize = 300;
+var flowerLineWidth = Math.ceil(flowerSize / 50);
+var petalFillColor = new Color(0.584, 0.831, 0.8);
+var petalInteriorStrokeColor = new Color(0.467, 0.78, 0.62);
+var petalStrokeColor = new Color("white");
+var rosetteFillColor = new Color(0.533, 0.129, 0.051);
+var petalHeightScale = 2.5;
+
+// Fill background
+desktop.fillLayer(new Color(0.82, 0.925, 0.941));
+
+var rosetteSize = flowerSize / 2.5;
+var flowerImage = new FlowerImage(flowerSize);
+var rosetteImage = new RosetteImage(rosetteSize);
+var flowerOffset = flowerSize / 1.05;
+var flowerPt = new Point(0, 0);
+var widthCount = 1 + desktop.bounds.width / flowerSize;
+var heightCount = 1 + desktop.bounds.height / flowerSize;
+var initialOffset = new Point(-flowerSize / 2, -flowerSize / 2);
+
+for (y = 0; y < heightCount; ++y) {
+	for (x = 0; x < widthCount; ++x) {
+		flowerPt.x = x * flowerOffset + initialOffset.x;
+		flowerPt.y = y * flowerOffset + initialOffset.y;
+		desktop.drawImage(flowerImage, flowerPt);
+	}
+}
+
+for (y = 0; y < heightCount; ++y) {
+	for (x = 0; x < widthCount; ++x) {
+		flowerPt.x = x * flowerOffset + initialOffset.x;
+		flowerPt.y = y * flowerOffset + initialOffset.y;
+		desktop.drawImage(rosetteImage, flowerPt.add(flowerSize / 3.55, flowerSize / 1.32));
+		desktop.drawImage(rosetteImage, flowerPt.add(flowerSize / 1.32, flowerSize / 3.55));
+	}
+}
+
+function Petal(layer, pt, width, height, petalHeight) {
+	// Draw a horizontal "petal" centered at pt
+	var start = new Point(pt.x - width / 2, pt.y);
+	var end = new Point(pt.x + width / 2, pt.y);
+	var cWidth = width / 3;
+	var c1 = new Point(start.x + cWidth, start.y - petalHeight);
+	var c2 = new Point(start.x + 2 * cWidth, start.y - petalHeight);
+
+	layer.moveTo(start);
+	layer.bezierCurveTo(c1, c2, end);
+	c1.y = start.y + petalHeight;
+	c2.y = start.y + petalHeight;
+	layer.bezierCurveTo(c2, c1, start);
+}
+
+function FillPattern() {
+	var offset = Math.ceil(flowerSize / 60);
+	var width = 20;
+	var height = 64;
+	var l = new Layer(width, height);
+	l.fillLayer(petalFillColor);
+	l.lineWidth = 2;
+	l.strokeStyle = petalInteriorStrokeColor;
+	
+	l.beginPath();
+	var i = 1;
+	while (i < height) {
+		l.moveTo(0, i + 0.5);
+		l.lineTo(width, i + 0.5);
+		i += offset;
+	}
+
+	l.stroke();
+
+	return new Pattern(new Image(l));
+}
+
+function FlowerImage(size) {
+	width = size / 1.5;
+	height = size / 3;
+	var petalHeight = height / petalHeightScale;
+	
+	// Draw a single petal which we'll turn into an image and rotate
+	var petalLayer = new Layer(width, height);
+	var lineWidth = flowerLineWidth;
+	petalLayer.strokeStyle = petalStrokeColor;
+	petalLayer.lineWidth = lineWidth;
+	petalLayer.fillStyle = FillPattern();
+	petalLayer.beginPath();
+	Petal(petalLayer, new Point(width / 2, height / 2), width - lineWidth, height - lineWidth, petalHeight);
+	petalLayer.closePath();
+	petalLayer.fillStroke();
+	var petalImage = new Image(petalLayer);
+	
+	var flowerLayer = new Layer(size, size);
+	var pt = new Point(size / 2, size / 2);
+	var rotation = Math.PI / 4;
+	var rotationInc = Math.PI / 2;
+	for (var i = 0; i < 4; ++i, rotation += rotationInc) {
+		flowerLayer.save();
+		flowerLayer.translate(pt.x, pt.y);
+		flowerLayer.rotate(rotation);
+		flowerLayer.translate(-pt.x, -pt.y - height / 2);
+		flowerLayer.drawImage(petalImage, pt);
+//		layer.strokeRect(new Rect(pt.x, pt.y, width, height));
+		flowerLayer.restore();
+	}
+	return new Image(flowerLayer);
+}
+
+function RosetteImage(size) {
+	var lineWidth = flowerLineWidth;
+	var center = new Point(size / 2 + lineWidth, size / 2 + lineWidth);
+	var layer = new Layer(size + lineWidth * 2, size + lineWidth * 2);
+	
+	// Main part
+	layer.fillStyle = rosetteFillColor;
+	layer.strokeStyle = petalStrokeColor;
+	layer.lineWidth = lineWidth;
+	layer.beginPath();
+	layer.circle(center, size / 2);
+	layer.fillStroke();
+	
+	// Inner
+	layer.strokeStyle = new Color("white");
+	layer.fillStyle = petalFillColor;
+	layer.lineWidth = 3;
+
+	var rotation = Math.PI;
+	var rotationInc = Math.PI / 2.5;
+	var innerSize = size / 10;
+	for (i = 0; i < 5; ++i, rotation += rotationInc) {
+		layer.save();
+		layer.beginPath();
+		layer.translate(center.x, center.y);
+		layer.rotate(rotation);
+		layer.translate(-center.x, -center.y - innerSize / 1.4);
+		layer.circle(center, innerSize / 2);
+		layer.fillStroke();
+		layer.restore();
+	}
+	
+	return new Image(layer);
+}
+
