@@ -40,6 +40,8 @@ static const int kRefreshUnitHours = 3;
 static const int kRefreshActionWake = 1;
 static const int kRefreshActionStartup = 2;
 
+static NSString *kRenderFormat = @"tiff";
+
 @implementation ViewerController
 //------------------------------------------------------------------------------
 #pragma mark -
@@ -234,7 +236,7 @@ static const int kRefreshActionStartup = 2;
     [renderer_ setSource:source name:scriptName seed:seed];
     [source release];
     [renderer_ setShouldSplitImages:YES];
-    [renderer_ setType:@"jpeg"];
+    [renderer_ setType:kRenderFormat];
     [renderer_ setDestination:dest];
     
     [renderer_ renderInBackgroundAndNotify];

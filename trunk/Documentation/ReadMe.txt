@@ -32,7 +32,7 @@ The last 10 images rendered will be saved in ~/Library/Application Support/Googl
 TopDraw requires Mac OS X 10.5 (Leopard) or later as it uses the JavaScriptCore.framework to evaluate the JavaScript.
 
 == History ==
-09/16/2009 - 1.4
+11/16/2009 - 1.4
 - Update for Snow Leopard (Added 64-bit, fixed 64-bit bugs)
 
 05/22/2009 - 1.3

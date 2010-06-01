@@ -60,7 +60,7 @@
           @"moveTo",
           @"quadraticCurveTo",
           @"rect", @"restore", @"rotate",
-          @"save", @"scale", @"stroke", @"strokeRect",
+          @"save", @"scale", @"skew", @"stroke", @"strokeRect",
           @"translate",
           
           // Extended
@@ -1025,6 +1025,15 @@ CGPathRef CreateCurveWithPoints(CGPoint *points, NSUInteger count, CGFloat flatn
 - (void)scale:(NSArray *)arguments {
   PointObject *pt = [[PointObject alloc] initWithArguments:arguments];
   CGContextScaleCTM(backingStore_, [pt x], [pt y]);
+  [pt release];
+}
+
+- (void)skew:(NSArray *)arguments {
+  PointObject *pt = [[PointObject alloc] initWithArguments:arguments];
+  CGAffineTransform xform = CGAffineTransformIdentity;
+  xform.c = pt.x;
+  xform.b = pt.y;
+  CGContextConcatCTM(backingStore_, xform);
   [pt release];
 }
 
