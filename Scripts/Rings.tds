@@ -6,7 +6,7 @@ var rnd = new Randomizer;
 var segsRnd = new Randomizer(1, 8);
 var widthRnd = new Randomizer(1, 20);
 var variationRnd = new Randomizer(0.0, 0.3);
-var spacingRnd = new Randomizer(5, 40);
+var spacingRnd = new Randomizer(5, 60);
 var count = 7 * compositor.screenCount;
 
 for (var x = 0; x < count; ++x) {

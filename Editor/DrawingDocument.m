@@ -25,6 +25,7 @@ NSString *DrawingDocumentNewImageNotification = @"DrawingDocumentNewImageNotific
 
 static NSString *kIdleMsg = @"Idle";
 static NSTimeInterval kSucessfulRenderDuration = 5.0;
+static NSString *kRenderFormat = @"tiff";
 
 @implementation DrawingDocument
 //------------------------------------------------------------------------------
@@ -360,7 +361,7 @@ static NSTimeInterval kSucessfulRenderDuration = 5.0;
   NSString *baseName = [Exporter nextBaseName];
   NSString *destDir = [Exporter imageDirectory];
   NSString *path = [destDir stringByAppendingPathComponent:baseName];
-  NSArray *files = [Exporter partitionAndWriteImage:[self image] path:path type:@"jpeg"];
+  NSArray *files = [Exporter partitionAndWriteImage:[self image] path:path type:kRenderFormat];
   [Installer installDesktopImagesFromPaths:files];
 }
 
