@@ -1103,13 +1103,8 @@ CGPathRef CreateCurveWithPoints(CGPoint *points, NSUInteger count, CGFloat flatn
     while ((filter = [e nextObject])) {
       @try {
         // Set our special outputSize on the previous fit
-        @try {
+        if ([[NSSet setWithArray:[[previousFilter ciFilter] inputKeys]] containsObject:@"outputSize"])
           [[previousFilter ciFilter] setValue:outputSize forKey:@"outputSize"];
-        }
-        
-        @catch (NSException *e) {
-          // Not a problem if it doesn't respond
-        }
         
         CIImage *input = [[previousFilter ciFilter] valueForKey:@"outputImage"];
         [[filter ciFilter] setValue:input forKey:@"inputImage"];
@@ -1123,13 +1118,13 @@ CGPathRef CreateCurveWithPoints(CGPoint *points, NSUInteger count, CGFloat flatn
       previousFilter = filter;
     }
     
-    // Set our special outputSize on the filter
     @try {
-      [ciFilter setValue:outputSize forKey:@"outputSize"];
+      // Set our special outputSize on the filter
+      if ([[NSSet setWithArray:[ciFilter inputKeys]] containsObject:@"outputSize"])
+        [ciFilter setValue:outputSize forKey:@"outputSize"];
     }
-    
     @catch (NSException *e) {
-      // Not a problem if it doesn't respond
+      NSLog(@"Setting output size: %@", e);
     }
 
     // Always crop the output
