@@ -5,11 +5,13 @@ menubar.fillLayer(new Color);
 var db = desktop.bounds;
 desktop.fillLayer(new Color("black"));
 
-var symbols = new Array(	0xf8ff, // Apple
+var symbols = new Array(
+	0xf8ff, // Apple
 	0x21e5, // Tab forward
 	0x21e4, // Tab back
 	0x21ea, // Caps lock
-	0x2325, // Option 	0x2318, // Commad
+	0x2325, // Option
+	0x2318, // Command
 	0x23ce, // Return
 	0x232b, // Delete back
 	0x2326, // Delete forward
@@ -30,13 +32,17 @@ var count = 15 * compositor.screenCount;
 var symbolRnd = new Randomizer(0, symbols.length - 1);
 var rotateRnd = new Randomizer(0, 2 * Math.PI);
 var variation = 0.5;
-var fontColor = new Color;
-fontColor.a = 0.2;
+var fontColor = new Color("white");
+fontColor.a = 1;
+
+text.string = "D";
+text.fontSize = 40;
+text.foregroundColor = new Color("white");
 
 // Draw 
 for (var i = 0; i < count; ++i) {
-	text.string = String.fromCharCode(symbols[symbolRnd.intValue]);
-	text.foregroundColor = fontColor.vary(variation, variation, variation, 0);
+//	text.string = String.fromCharCode(symbols[symbolRnd.intValue]);
+//	text.foregroundColor = fontColor.vary(variation, variation, variation);
 	text.fontSize = sizeRnd.intValue;
 	
 	// Rotate randomly
@@ -61,5 +67,5 @@ if (filterRnd.booleanValue) {
 	f.setKeyValue("inputAngle", Math.PI * (1 - filterRnd.floatValue * 2));
 }
 
-desktop.applyFilter(f);
+//desktop.applyFilter(f);
 

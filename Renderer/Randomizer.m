@@ -1,11 +1,11 @@
 // Copyright 2008 Google Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not
 // use this file except in compliance with the License.  You may obtain a copy
 // of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
 // WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -24,15 +24,15 @@ static void InitializeRandomizerWithSeed(NSUInteger seed) {
   @synchronized ([Randomizer class]) {
     if (!kRandomTable)
       kRandomTable = (CGFloat *)malloc(sizeof(CGFloat) * kRandomTableSize);
-    
+
     kSeed = seed;
     kRandomTableIndex = 0;
-    unsigned int lo = kSeed, hi = ~kSeed;
+    NSUInteger lo = kSeed, hi = ~kSeed;
     for (NSUInteger i = 0; i < kRandomTableSize; ++i) {
       hi = (hi << 16) + (hi >> 16);
       hi += lo;
       lo += hi;
-      kRandomTable[i] = (CGFloat)hi / (CGFloat)UINT_MAX;
+      kRandomTable[i] = (CGFloat)hi / (CGFloat)NSUIntegerMax;
     }
   }
 }
@@ -40,17 +40,17 @@ static void InitializeRandomizerWithSeed(NSUInteger seed) {
 CGFloat RandomizerFloatValue() {
   if (!kRandomTable)
     InitializeRandomizerWithSeed(CFAbsoluteTimeGetCurrent() * 10);
-  
+
   if (kRandomTableIndex >= kRandomTableSize)
     kRandomTableIndex = 0;
 
   // In case there's a threaded access to bump this, we'll get a local
   // copy of the index and also check it
   NSUInteger idx = kRandomTableIndex++;
-  
+
   if (idx >= kRandomTableSize)
     idx = 0;
-  
+
   return kRandomTable[idx];
 }
 
@@ -78,23 +78,23 @@ CGFloat RandomizerFloatValue() {
   if ((self = [super initWithArguments:arguments])) {
     min_ = 0;
     max_ = 1.0;
-    
+
     if ([arguments count] == 2) {
       min_ = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:0]];
       max_ = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:1]];
- 
+
       if (max_ < min_) {
         CGFloat temp = min_;
         min_ = max_;
         max_ = temp;
-      }      
+      }
     }
   }
-  
+
   return self;
 }
 
-- (CGFloat)floatValue {  
+- (CGFloat)floatValue {
   return min_ + RandomizerFloatValue() * (max_ - min_);
 }
 
