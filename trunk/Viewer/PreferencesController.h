@@ -25,7 +25,7 @@ typedef enum {
   kIndicatorTriangle
 } IndicatorStyle;
 
-@interface PreferencesController : NSObject {
+@interface PreferencesController : NSObject <NSWindowDelegate> {
   IBOutlet NSWindow *window_;
   NSDictionary *scripts_;   // key: name of script, object: full path
 }

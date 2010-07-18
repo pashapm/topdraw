@@ -16,7 +16,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface StatusItemView : NSView {
+@interface StatusItemView : NSView <NSMenuDelegate> {
   NSStatusItem *statusItem_;
   id target_;
   SEL action_;
