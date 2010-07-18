@@ -1,0 +1,81 @@
+
+// Choose three colors
+var topColor = new Color("cyan");
+var rightColor = new Color("orange");
+var leftColor = new Color("blue");
+var squareSize = 200;
+var shortening = 1.1;
+
+function topSide(corner) {
+	desktop.fillStyle = topColor;
+	desktop.save();
+	desktop.translate(corner.x, corner.y);
+	desktop.scale(1, 0.5);
+	desktop.rotate(Math.PI / 4);
+	desktop.beginPath();
+	desktop.rect(0, 0, squareSize, squareSize);
+	desktop.closePath();
+	desktop.fillStroke();
+	desktop.restore();
+}
+
+function rightSide(corner) {
+	desktop.fillStyle = rightColor;
+	desktop.save();
+	desktop.translate(corner.x, corner.y);
+	desktop.scale(0.5, 1);
+	desktop.skew(1, -0.5);
+	desktop.rotate(-Math.PI / 4);
+	desktop.beginPath();
+	desktop.rect(0, 0, squareSize / shortening, squareSize);
+	desktop.closePath();
+	desktop.fillStroke();
+	desktop.restore();
+}
+
+function leftSide(corner) {
+	desktop.fillStyle = leftColor;
+	desktop.save();
+	desktop.translate(corner.x, corner.y);
+	desktop.scale(0.5, 1);
+	desktop.skew(-1, 0.5);
+	desktop.rotate(3 * Math.PI / 4 );
+	desktop.beginPath();
+	desktop.rect(0, 0, squareSize, squareSize / shortening);
+	desktop.closePath();
+	desktop.fillStroke();
+	desktop.restore();
+}
+
+var count = 50;
+var widthRnd = new Randomizer(0, desktop.bounds.width / squareSize);
+var heightRnd = new Randomizer(0, desktop.bounds.height / squareSize);
+var drawTop = new Randomizer();
+var drawLeft = new Randomizer();
+var drawRight = new Randomizer();
+desktop.strokeStyle = new Color("gray");
+
+// Background gradient
+var gRnd = new Randomizer(0.3, 1.0);
+var bgGray = gRnd.floatValue;
+var g = new Gradient(new Color(bgGray), new Color(bgGray / 10));
+g.radius = new Point(100, desktop.bounds.width / 2);
+
+desktop.fillLayer(g);
+
+while (count -= 1) {
+	var pt = new Point(widthRnd.intValue * squareSize, heightRnd.intValue * squareSize);
+	
+	if (drawTop.boolValue)
+		topSide(pt);
+	
+	if (drawRight.boolValue)
+		rightSide(pt);
+		
+	if (drawLeft.boolValue)
+		leftSide(pt);
+}
+
+
+
+

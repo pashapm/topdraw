@@ -229,7 +229,9 @@ static NSString *kScreenSaverName = @"Top Draw.saver";
   NSString *srcPath = [[NSBundle mainBundle] pathForAuxiliaryExecutable:kScreenSaverName];
   
   // Setup a symbolic link.  Aliases do not seem to work.
-  [[NSFileManager defaultManager] createSymbolicLinkAtPath:destPath pathContent:srcPath];
+  [[NSFileManager defaultManager] createSymbolicLinkAtPath:destPath 
+                                       withDestinationPath:srcPath
+                                                     error:nil];
   
   // Now open up the screen savers panel
   NSString *path = @"/System/Library/PreferencePanes/ScreenSaver.prefPane";

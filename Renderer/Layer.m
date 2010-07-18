@@ -734,13 +734,17 @@ CGPathRef CreateCurveWithPoints(CGPoint *points, NSUInteger count, CGFloat flatn
 
 - (void)arc:(NSArray *)arguments {
   // args: center, radius, startAngle, endAngle
-  if ([arguments count] == 4) {
+  if ([arguments count] >= 4) {
     PointObject *center = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[PointObject class]];
     CGFloat radius = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:1]];
     CGFloat start = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:2]];
     CGFloat end = [RuntimeObject coerceObjectToDouble:[arguments objectAtIndex:3]];
     
-    CGContextAddArc(backingStore_, [center x], [center y], radius, start, end, 0);
+    int clockWise = 0;
+    if ([arguments count] > 4)
+      clockWise = [RuntimeObject coerceObjectToInteger:[arguments objectAtIndex:4]];
+    
+    CGContextAddArc(backingStore_, [center x], [center y], radius, start, end, clockWise);
   }
 }
 

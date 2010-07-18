@@ -25,8 +25,11 @@ static void InitializeRandomizerWithSeed(NSUInteger seed) {
     if (!kRandomTable)
       kRandomTable = (CGFloat *)malloc(sizeof(CGFloat) * kRandomTableSize);
 
+    // Choose a random starting point as well.  It seems like making it 0 will
+    // cause the first value to be 0.
+    kRandomTableIndex = arc4random() % kRandomTableSize;
+
     kSeed = seed;
-    kRandomTableIndex = 0;
     NSUInteger lo = kSeed, hi = ~kSeed;
     for (NSUInteger i = 0; i < kRandomTableSize; ++i) {
       hi = (hi << 16) + (hi >> 16);
