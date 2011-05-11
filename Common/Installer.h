@@ -19,6 +19,6 @@
 @interface Installer : NSObject
 
 // The images referenced by |paths| will be installed as the desktop image(s).
-+ (BOOL)installDesktopImagesFromPaths:(NSArray *)paths;
++ (BOOL)installDesktopImagesFromScreenImageDict:(NSDictionary *)imageDict;
 
 @end

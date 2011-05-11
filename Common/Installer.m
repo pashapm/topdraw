@@ -15,8 +15,33 @@
 #import "Installer.h"
 
 @implementation Installer
+
++ (NSDictionary *)dictionaryForImageAtPath:(NSString *)path forScreenID:(NSString *)screenID 
+																baseDictionary:(NSDictionary *)baseDict {
+	NSMutableDictionary *screenDict = [[baseDict mutableCopy] autorelease];
+	
+	if (path)
+		[screenDict setObject:path forKey:@"ImageFilePath"];
+	else
+		NSLog(@"Installer: path for screen %@ is NULL", screenID);
+	
+	[screenDict setObject:@"Never" forKey:@"Change"];
+	
+	// Remove these as they seem to confuse slamming the image file path
+	[screenDict removeObjectForKey:@"NewChangePath"];
+	[screenDict removeObjectForKey:@"NewChooseFolderPath"];
+	[screenDict removeObjectForKey:@"NewImageFilePath"];
+	[screenDict removeObjectForKey:@"ImageFileAlias"];
+	[screenDict removeObjectForKey:@"LastName"];
+	[screenDict removeObjectForKey:@"ChooseFolderPath"];
+	[screenDict removeObjectForKey:@"ChangePath"];
+	[screenDict removeObjectForKey:@"CollectionString"];
+	
+	return screenDict;
+}
+
 //------------------------------------------------------------------------------
-+ (BOOL)installDesktopImagesFromPaths:(NSArray *)paths {
++ (BOOL)installDesktopImagesFromScreenImageDict:(NSDictionary *)screenImageDict {
   // com.apple.desktop.plist: Background = {key for dict is screen number
   // Change = Never;  Turn off random images
   // ImageFilePath = <path>;
@@ -27,45 +52,42 @@
   CFStringRef appID = CFSTR("com.apple.desktop");
   NSDictionary *origBackgroundDict = (NSDictionary *)CFPreferencesCopyAppValue(CFSTR("Background"), appID);
   NSMutableDictionary *backgroundDict = [origBackgroundDict mutableCopy];
-  NSArray *screens = [NSScreen screens];
-  int screenCount = [screens count];
-  int pathCount = [paths count];
-  int count = MIN(screenCount, pathCount);
+	NSArray *screenImageKeys = [screenImageDict allKeys];
+	NSMutableSet *appliedScreenIDs = [NSMutableSet set];
 
-  for (int i = 0; i < count; ++i) {
-    NSString *path = [paths objectAtIndex:i];
-    NSScreen *screen = [screens objectAtIndex:i];
-    NSString *screenID = [[[screen deviceDescription] objectForKey:@"NSScreenNumber"] stringValue];
+	// Install the known images on the known screens.
+	for (NSString *screenID in screenImageKeys) {
     NSDictionary *origScreenDict = [backgroundDict objectForKey:screenID];
     
     // For some, the key of the screen is not a number but the word "default"
     if (!origScreenDict)
       origScreenDict = [backgroundDict objectForKey:@"default"];
-      
-    NSMutableDictionary *screenDict = [origScreenDict mutableCopy];
-    
-    if (path)
-      [screenDict setObject:path forKey:@"ImageFilePath"];
-    else
-      NSLog(@"Installer: path for screen %d is NULL", i);
-    
-    [screenDict setObject:@"Never" forKey:@"Change"];
-
-    // Remove these as they seem to confuse slamming the image file path
-    [screenDict removeObjectForKey:@"NewChangePath"];
-    [screenDict removeObjectForKey:@"NewChooseFolderPath"];
-    [screenDict removeObjectForKey:@"NewImageFilePath"];
-    [screenDict removeObjectForKey:@"ImageFileAlias"];
-    [screenDict removeObjectForKey:@"LastName"];
-    [screenDict removeObjectForKey:@"ChooseFolderPath"];
-    [screenDict removeObjectForKey:@"ChangePath"];
-    [screenDict removeObjectForKey:@"CollectionString"];
-    
-    if (screenDict)
+		
+		NSString *path = [screenImageDict objectForKey:screenID];
+		NSDictionary *screenDict = [self dictionaryForImageAtPath:path forScreenID:screenID
+																							 baseDictionary:origScreenDict];
+    if (screenDict) {
       [backgroundDict setObject:screenDict forKey:screenID];
-    
-    [screenDict release];
+			[appliedScreenIDs addObject:screenID];
+		}
   }
+	
+	// If there are other screen definitions in the background dict, slam them with the first image.
+	NSArray *backgroundScreenKeys = [backgroundDict allKeys];
+	NSString *path = [screenImageDict objectForKey:[screenImageKeys objectAtIndex:0]];
+	for (NSString *screenID in backgroundScreenKeys) {
+		// Skip anything we've already applied.
+		if ([appliedScreenIDs containsObject:screenID]) {
+			continue;
+		}
+
+		NSDictionary *origScreenDict = [backgroundDict objectForKey:screenID];
+		NSDictionary *screenDict = [self dictionaryForImageAtPath:path forScreenID:screenID
+																							 baseDictionary:origScreenDict];
+    if (screenDict) {
+      [backgroundDict setObject:screenDict forKey:screenID];
+		}			
+	}
 
   // Store, sync, and cleanup
   CFPreferencesSetAppValue(CFSTR("Background"), (CFPropertyListRef)backgroundDict, appID);

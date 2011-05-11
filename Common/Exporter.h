@@ -28,9 +28,10 @@
 + (NSString *)nextBaseName;
 
 // Breaks up |image| (if necessary, for the screens) and saves the resulting images to the 
-// application support directory.  Returns an array of NSStrings that are the
-// paths to the files written out.
-+ (NSArray *)partitionAndWriteImage:(CGImageRef)image path:(NSString *)path type:(NSString *)type;
+// application support directory.  Returns an array of NSDictionaries that map from the known
+// screenIDs to the paths to the files written out.
+// Key: NSString screenIDs Value: NSString paths
++ (NSDictionary *)partitionAndWriteImage:(CGImageRef)image path:(NSString *)path type:(NSString *)type;
 
 // Export |image| to |path| with UTI type and quality.  The |type| should be one of: jpeg, png, or tiff
 // and quality is between 0 and 1.  If |path| is lacking an extension, the type will be used.

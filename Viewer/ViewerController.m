@@ -188,15 +188,23 @@ static NSString *kRenderFormat = @"tiff";
 - (void)rendererFinished:(NSNotification *)note {
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   NSDictionary *userInfo = [note userInfo];
-  NSArray *paths = [[userInfo objectForKey:RendererOutputKey] componentsSeparatedByString:@","];
+
+	// Render output format: <screenID>:<path>
+  NSArray *screenImagePairs = [[userInfo objectForKey:RendererOutputKey] componentsSeparatedByString:@","];	
   NSString *error = [userInfo objectForKey:RendererErrorKey];
   
   if ([error length])
     MethodLog(@"Error: %@", error);
+	
+	NSMutableDictionary *screenImageDict = [NSMutableDictionary dictionary];
+	for (NSString *screenImagePair in screenImagePairs) {
+		NSArray *pair = [screenImagePair componentsSeparatedByString:@":"];
+		[screenImageDict setObject:[pair objectAtIndex:1] forKey:[pair objectAtIndex:0]];
+	}
   
-  if ([paths count] && ![error length]) {
+  if ([screenImageDict count] && ![error length]) {
     // We've asked the renderer to output the file(s) on our behalf 
-    [Installer installDesktopImagesFromPaths:paths];
+    [Installer installDesktopImagesFromScreenImageDict:screenImageDict];
   }
   
   [statusItemView_ setIsRendering:NO];
