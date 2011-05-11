@@ -77,16 +77,21 @@ static const int kMaxCachedDrawings = 10;
 }
 
 //------------------------------------------------------------------------------
-+ (NSArray *)partitionAndWriteImage:(CGImageRef)image path:(NSString *)path type:(NSString *)type {
++ (NSString *)idForScreen:(NSScreen *)screen {
+	return [[[screen deviceDescription] objectForKey:@"NSScreenNumber"] stringValue];
+}
+
+//------------------------------------------------------------------------------
++ (NSDictionary *)partitionAndWriteImage:(CGImageRef)image path:(NSString *)path type:(NSString *)type {
   NSArray *screens = [NSScreen screens];
-  NSMutableArray *result = [NSMutableArray array];
+  NSMutableDictionary *result = [NSMutableDictionary dictionary];
   NSString *writtenPath;
-  
+
   if ([screens count] == 1) {
     writtenPath = [self exportImage:image path:path type:type quality:1.0];
     
     if (writtenPath)
-      [result addObject:writtenPath];
+      [result setObject:writtenPath forKey:[self idForScreen:[NSScreen mainScreen]]];
   } else {
     NSString *baseName = [[path lastPathComponent] stringByDeletingPathExtension];
     NSString *baseDir = [path stringByDeletingLastPathComponent];
@@ -105,7 +110,7 @@ static const int kMaxCachedDrawings = 10;
       writtenPath = [self exportImage:subImage path:filePath type:type quality:1.0];
       
       if (writtenPath)
-        [result addObject:writtenPath];
+        [result setObject:writtenPath forKey:[self idForScreen:screen]];
       else
         MethodLog("Failed to write to %@", filePath);
       

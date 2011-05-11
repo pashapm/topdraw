@@ -87,15 +87,18 @@ static void Process(Options *options) {
     Log(@"Preamble: Top Draw Renderer v 1.0");
     
     if (options->shouldSplit) {
-      NSArray *imagePaths = [Exporter partitionAndWriteImage:image path:options->destPath type:options->type];
-      for (int i = 0; i < [imagePaths count]; ++i)
-        Log(@"Output: %@", [imagePaths objectAtIndex:i]);
-      
+      NSDictionary *imageDict = [Exporter partitionAndWriteImage:image path:options->destPath 
+																														type:options->type];
+			NSArray *screenKeys = [imageDict allKeys];
+			for (NSString *screenID in screenKeys) {
+        Log(@"Output: %@:%@", screenID, [imageDict objectForKey:screenID]);
+			}
     } else {
-      NSString *outputPath = [Exporter exportImage:image path:options->destPath type:options->type quality:options->quality];
+      NSString *outputPath = [Exporter exportImage:image path:options->destPath type:options->type 
+																					 quality:options->quality];
       
       if ([outputPath length])
-        Log(@"Output: %@", outputPath);
+        Log(@"Output: %@:%@", @"default", outputPath);
       else
         Log(@"Error: Unable to write: %@", options->destPath);
     }

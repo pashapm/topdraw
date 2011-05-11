@@ -88,7 +88,8 @@ static NSString *kRenderFormat = @"tiff";
 //------------------------------------------------------------------------------
 - (void)rendererFinished:(NSNotification *)note {
   NSDictionary *userInfo = [note userInfo];
-  NSString *imagePath = [userInfo objectForKey:RendererOutputKey];
+	NSArray *screenImagePair = [[userInfo objectForKey:RendererOutputKey] componentsSeparatedByString:@":"];
+  NSString *imagePath = [screenImagePair objectAtIndex:1];
   NSString *error = [userInfo objectForKey:RendererErrorKey];
   NSString *log = [userInfo objectForKey:RendererLogKey];
   Logging *logging = [[NSApp delegate] logging];
@@ -361,8 +362,9 @@ static NSString *kRenderFormat = @"tiff";
   NSString *baseName = [Exporter nextBaseName];
   NSString *destDir = [Exporter imageDirectory];
   NSString *path = [destDir stringByAppendingPathComponent:baseName];
-  NSArray *files = [Exporter partitionAndWriteImage:[self image] path:path type:kRenderFormat];
-  [Installer installDesktopImagesFromPaths:files];
+  NSDictionary *screenImageDict = [Exporter partitionAndWriteImage:[self image] path:path
+																															type:kRenderFormat];
+  [Installer installDesktopImagesFromScreenImageDict:screenImageDict];
 }
 
 //------------------------------------------------------------------------------
