@@ -95,7 +95,7 @@
 #pragma mark || NSView ||
 //------------------------------------------------------------------------------
 - (id)initWithFrame:(NSRect)frame {
-  if ((self == [super initWithFrame:frame])) {
+  if ((self = [super initWithFrame:frame])) {
     zoom_ = [[NSUserDefaults standardUserDefaults] floatForKey:@"zoom"];
     
     if (zoom_ < 10)

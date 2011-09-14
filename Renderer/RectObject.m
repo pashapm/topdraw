@@ -183,7 +183,7 @@
   return [[[RectObject alloc] initWithRect:NSUnionRect(rect_, otherRect)] autorelease];
 }
 
-- (RectObject *)point:(NSArray *)arguments {
+- (PointObject *)point:(NSArray *)arguments {
   NSPoint pt = NSZeroPoint;
 
   if ([arguments count] == 1) {

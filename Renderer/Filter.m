@@ -34,11 +34,12 @@ static NSString *kOutputSizeKey = @"outputSize";
 @end
 
 @implementation DynamicFilter
+
 + (void)initialize {
   NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
                         kDynamicFilterName, kCIAttributeFilterDisplayName,
                          NULL];
-  [CIFilter registerFilterName:kDynamicFilterName constructor:self classAttributes:attrs];
+  [CIFilter registerFilterName:kDynamicFilterName constructor:(id)self classAttributes:attrs];
 }
 
 + (CIFilter *)filterWithName:(NSString *)name {

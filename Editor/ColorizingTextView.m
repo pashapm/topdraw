@@ -438,8 +438,10 @@ static NSString *ColorizerTemporaryRangeHighlightAttr = @"ColorizerTemporaryRang
 //------------------------------------------------------------------------------
 - (void)flashBackgroundForRange:(id)rangeValue {
 #if 1
-  if (ColorizerTemporaryRangeHighlightAttr)
-    ;
+  if (ColorizerTemporaryRangeHighlightAttr) {
+    
+  }
+
 #else    
   NSRange range = [rangeValue rangeValue];
   NSLayoutManager *lm = [self layoutManager];

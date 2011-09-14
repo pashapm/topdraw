@@ -27,6 +27,9 @@
 
 + (NSString *)nextBaseName;
 
+// Return a unique identifier for a screen.
++ (NSString *)idForScreen:(NSScreen *)screen;
+
 // Breaks up |image| (if necessary, for the screens) and saves the resulting images to the 
 // application support directory.  Returns an array of NSDictionaries that map from the known
 // screenIDs to the paths to the files written out.

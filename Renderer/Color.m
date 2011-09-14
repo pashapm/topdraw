@@ -119,7 +119,7 @@ static const int kInvalidColorIndex = -1;
 //------------------------------------------------------------------------------
 - (id)initWithColorName:(NSString *)name {
   NSColor *color = [NSColor colorWithString:name];
-  if ((self == [super init])) {
+  if ((self = [super init])) {
     if (!color)
       color = [NSColor whiteColor];
 

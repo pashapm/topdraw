@@ -47,7 +47,7 @@
 }
 
 - (id)initWithArguments:(NSArray *)arguments {
-  if ((self == [super initWithArguments:arguments])) {
+  if ((self = [super initWithArguments:arguments])) {
     gravity_ = CGPointMake(0, -9.8);
     alphaDelta_ = -0.01;
     alphaDelay_ = 0;
