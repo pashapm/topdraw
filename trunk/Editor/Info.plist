@@ -36,7 +36,7 @@
 	<key>CFBundleIconFile</key>
 	<string>TopDraw</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.google.${PRODUCT_NAME:identifier}</string>
+	<string>com.google.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -53,7 +53,7 @@
 	<string>NSApplication</string>
 	<key>CFBundleShortVersionString</key>
 	<string>${TOP_DRAW_VERSION}</string>
-  <key>LSMinimumSystemVersion</key>
-  <string>10.5</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.5</string>
 </dict>
 </plist>

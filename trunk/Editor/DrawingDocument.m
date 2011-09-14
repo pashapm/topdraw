@@ -192,7 +192,8 @@ static NSString *kRenderFormat = @"tiff";
   if (!source_) {
     NSBundle *bundle = [NSBundle mainBundle];
     NSString *builtInPath = [bundle pathForResource:@"Built-in" ofType:@"tds"];
-    source_ = [[NSString alloc] initWithContentsOfFile:builtInPath];
+    source_ = [[NSString alloc] initWithContentsOfFile:builtInPath encoding:NSUTF8StringEncoding
+                                                 error:nil];
     [self setFileType:@"tds"];
   }  
 
@@ -304,7 +305,9 @@ static NSString *kRenderFormat = @"tiff";
 //------------------------------------------------------------------------------
 - (BOOL)prepareSavePanel:(NSSavePanel *)panel {
   // Suggest that we save in the last place that something was loaded
-  [panel setDirectory:[DocumentController recommendedStorageFolder]];
+  NSURL *folderURL = [NSURL fileURLWithPath:[DocumentController recommendedStorageFolder]
+                                isDirectory:YES];
+  [panel setDirectoryURL:folderURL];
   [panel setExtensionHidden:NO];
   [panel setCanSelectHiddenExtension:NO];
   [panel setAllowedFileTypes:[NSArray arrayWithObject:@"tds"]];
@@ -386,7 +389,7 @@ static NSString *kRenderFormat = @"tiff";
   
   NSSize size = NSMakeSize(1024, 768);
   [renderer_ setSource:[text_ string] name:[self name] seed:seed];
-  [renderer_ setDestination:[panel filename]];
+  [renderer_ setDestination:[[panel URL] path]];
   [renderer_ setMaximumSize:size];
   [renderer_ setDisableMenubarRendering:YES];
   [renderer_ renderInBackgroundAndNotify];
@@ -408,8 +411,10 @@ static NSString *kRenderFormat = @"tiff";
   NSWindow *window = [[[self windowControllers] objectAtIndex:0] window];
   NSString *baseName = [[self displayName] stringByDeletingPathExtension];
   NSString *name = [NSString stringWithFormat:@"%@.jpeg", baseName];
-  [panel beginSheetForDirectory:nil file:name modalForWindow:window modalDelegate:self
-                 didEndSelector:@selector(exportPanelEnded:code:context:) contextInfo:nil];
+  [panel setNameFieldStringValue:name];
+  [panel beginSheetModalForWindow:window completionHandler:^(NSInteger result) {
+    [self exportPanelEnded:panel code:result context:nil];
+  }];
 }
 
 //------------------------------------------------------------------------------

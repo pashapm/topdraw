@@ -324,7 +324,7 @@ static NSString *kRendererName = @"TopDrawRenderer";
   NSData *sourceData = [source_ dataUsingEncoding:NSUTF8StringEncoding];
   
   if (![sourceData writeToFile:sourcePath atomically:NO]) {
-    NSLog(@"Unable to write TDS (%d bytes) to %@ (%d)", [sourceData length], sourcePath, errno);
+    NSLog(@"Unable to write TDS (%lu bytes) to %@ (%d)", [sourceData length], sourcePath, errno);
     return;
   }
   

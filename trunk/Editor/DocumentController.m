@@ -31,7 +31,8 @@ NSString *kLastDocumentStorageFolder = @"lastFolder";
 }
 
 - (NSInteger)runModalOpenPanel:(NSOpenPanel *)openPanel forTypes:(NSArray *)types {
-  [openPanel setDirectory:[DocumentController recommendedStorageFolder]];
+  NSURL *url = [NSURL fileURLWithPath:[DocumentController recommendedStorageFolder] isDirectory:YES];
+  [openPanel setDirectoryURL:url];
   
   return [super runModalOpenPanel:openPanel forTypes:types];
 }
