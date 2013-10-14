@@ -311,11 +311,11 @@ static NSString *kRendererName = @"TopDrawRenderer";
   outputPath_ = nil;
 
   // Write the data to a temporary file using the document identifier
-  NSString *sourceName = [NSString stringWithFormat:@"%x.tds", reference_];
+  NSString *sourceName = [NSString stringWithFormat:@"%p.tds", reference_];
   NSString *sourcePath = [NSTemporaryDirectory() stringByAppendingPathComponent:sourceName];
   
   if (!destination_) {
-    NSString *fileName = [NSString stringWithFormat:@"%x.%@", reference_, type_];
+    NSString *fileName = [NSString stringWithFormat:@"%p.%@", reference_, type_];
     outputPath_ = [[NSTemporaryDirectory() stringByAppendingPathComponent:fileName] retain];
   }
   else
@@ -337,8 +337,8 @@ static NSString *kRendererName = @"TopDrawRenderer";
   
   if (shouldSplit_)
     [arguments addObject:@"-s"];
-  
-  [arguments addObject:[NSString stringWithFormat:@"-r%d", seed_]];
+
+  [arguments addObject:[NSString stringWithFormat:@"-r%lu", seed_]];
   [arguments addObject:[NSString stringWithFormat:@"-o%@", outputPath_]];
   [arguments addObject:[NSString stringWithFormat:@"-t%@", type_]];
   [arguments addObject:[NSString stringWithFormat:@"-q%f", quality]];
@@ -347,8 +347,8 @@ static NSString *kRendererName = @"TopDrawRenderer";
     [arguments addObject:[NSString stringWithFormat:@"-n%@", name_]];
   
   if (size_.width > 0 && size_.height > 0) {
-    NSUInteger width = floor(size_.width);
-    NSUInteger height = floor(size_.height);
+    int width = floor(size_.width);
+    int height = floor(size_.height);
     [arguments addObject:[NSString stringWithFormat:@"-m%dx%d", width, height]];
   }
   

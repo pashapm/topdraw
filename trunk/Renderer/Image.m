@@ -150,7 +150,7 @@
 //------------------------------------------------------------------------------
 - (NSString *)description {
   return [NSString stringWithFormat:@"%d x %d image, %g alpha, %@ blend mode",
-          width_, height_, alpha_, [Layer blendModeToString:blendMode_]];
+          (int)width_, (int)height_, alpha_, [Layer blendModeToString:blendMode_]];
 }
 
 @end

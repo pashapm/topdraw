@@ -96,7 +96,7 @@ static CGFloat kFadeSteps = 30.0;
     renderer_ = [[Renderer alloc] initWithReference:self];
     [self updateScripts];
     
-    NSString *fileName = [NSString stringWithFormat:@"TopDrawSaver-%x.jpeg", self];
+    NSString *fileName = [NSString stringWithFormat:@"TopDrawSaver-%p.jpeg", self];
     imagePath_ = [[NSTemporaryDirectory() stringByAppendingPathComponent:fileName] retain];
 
     [self updateAnimationTimeInterval];
