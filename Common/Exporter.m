@@ -73,7 +73,7 @@ static const int kMaxCachedDrawings = 10;
   
   [ud setInteger:idxNumber forKey:@"NextIndex"];
   
-  return [NSString stringWithFormat:@"Image-%d", idxNumber];
+  return [NSString stringWithFormat:@"Image-%ld", (long)idxNumber];
 }
 
 //------------------------------------------------------------------------------

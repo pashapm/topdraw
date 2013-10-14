@@ -270,7 +270,7 @@ static JSValueRef LogFn(JSContextRef ctx, JSObjectRef function, JSObjectRef this
         } 
         
         if (!obj)
-          obj = [NSString stringWithFormat:@"[Object %x]", objRef];
+          obj = [NSString stringWithFormat:@"[Object %p]", objRef];
       }
     }
       break;
