@@ -1,0 +1,27 @@
+// Choose 4 random colors
+var bottomLeft = new Color;
+var topLeft = new Color;
+var topRight = new Color;
+var bottomRight = new Color;
+
+// Make a layer with iPad dimensions.
+var l = new Layer(768, 1024);
+l.coloredRect(l.bounds, bottomLeft, topLeft, topRight, bottomRight);
+
+// Draw the status bar 
+var gradient = new Gradient(new Color, new Color);
+gradient.start = new Point(0, 0);
+gradient.end = new Point(768, 0);
+l.fillStyle = gradient;
+l.fillRect(new Rect(0, 1004, 768, 20));
+
+var i = new Image(l);
+desktop.drawImage(i, new Point(10, 10));
+
+// Generate a unique name.
+var d = new Date();
+var n = "pad" + d.getTime();
+
+//i.exportImage(n, "jpeg");
+
+

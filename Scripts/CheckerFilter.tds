@@ -30,6 +30,6 @@ function Overlay() {
 	var br = new Color;
 	
 	// Ensure light alpha overlay
-	bl.a = tl.a = tr.a = br.a = 0.3;
+	bl.a = tl.a = tr.a = br.a = 0.2;
 	desktop.coloredRect(db, bl, tl, tr, br);
 }

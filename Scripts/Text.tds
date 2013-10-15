@@ -41,8 +41,8 @@ text.foregroundColor = new Color("white");
 
 // Draw 
 for (var i = 0; i < count; ++i) {
-//	text.string = String.fromCharCode(symbols[symbolRnd.intValue]);
-//	text.foregroundColor = fontColor.vary(variation, variation, variation);
+	text.string = String.fromCharCode(symbols[symbolRnd.intValue]);
+	text.foregroundColor = fontColor.vary(variation, variation, variation);
 	text.fontSize = sizeRnd.intValue;
 	
 	// Rotate randomly

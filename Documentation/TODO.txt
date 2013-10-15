@@ -1,0 +1,10 @@
+2013-10-14
+
+- Fix preview scroll / pan
+- Broken scripts (noise, plasma)
+
+Improvements:
+- Use JSON for exchange
+- Use xpc for exchange
+- wavyLine isn't continuous
+

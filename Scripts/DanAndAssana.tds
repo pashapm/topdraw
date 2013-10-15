@@ -1,0 +1,36 @@
+// Draw the Dan And Assana logo into a layer
+
+// Create the layer
+var textLayer = new Layer(460, 110);
+
+// Setup the background and font colors
+var bgColor = new Color(79/255, 68/255, 55/255);
+var clearColor = new Color("white", 0);
+var fontColor = new Color(217/255, 187/255, 145/255);
+
+// Setup the text
+var text = new Text("DanAndAssana");
+text.fontName = "Big Limbo BT";
+text.fontSize = 85;
+text.foregroundColor = fontColor;
+
+// Setup the shadow (black, 30% opacity)
+var offset = new Point(0, 0);
+var blur = 10;
+var shadowColor = new Color("black", 0.3);
+textLayer.shadow(offset, blur, shadowColor);
+
+// Fill the layer and draw the text 
+//textLayer.fillLayer(bgColor);
+textLayer.fillLayer(clearColor);
+
+var pt = new Point(15, 5);
+textLayer.drawText(text, pt);
+
+// Create an image and export it to the image folder
+var textImage = new Image(textLayer);
+textImage.exportImage("DanAndAssana.png");
+
+// Draw it on the desktop, just to show
+var db = desktop.bounds;
+desktop.drawImage(textImage, new Point(100, 100));
