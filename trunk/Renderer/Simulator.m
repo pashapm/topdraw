@@ -78,7 +78,7 @@
 }
 
 - (NSString *)toString {
-  return [NSString stringWithFormat:@"Simulation with %ld objects", (long)objects_.count];
+  return [NSString stringWithFormat:@"Simulation with %lu objects", (unsigned long)[objects_ count]];
 }
 
 @end

@@ -183,8 +183,8 @@
 
 //------------------------------------------------------------------------------
 - (NSString *)toString {
-  return [NSString stringWithFormat:@"Gradient: %d locations and colors",
-          (int)[colors_ count]];
+  return [NSString stringWithFormat:@"Gradient: %lu locations and colors",
+          (unsigned long)[colors_ count]];
 }
 
 @end

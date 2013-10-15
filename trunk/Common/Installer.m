@@ -37,6 +37,13 @@
     NSError *error = nil;
     NSScreen *screen = [self screenWithIDString:screenID];
     [[NSWorkspace sharedWorkspace] setDesktopImageURL:url forScreen:screen options:nil error:&error];
+    
+    if (error) {
+      MethodLog(@"Error: %@", error);
+    }
+    
+    NSURL *imageURL = [[NSWorkspace sharedWorkspace] desktopImageURLForScreen:screen];
+    NSLog(@"URL: %@", imageURL);
   }
   
   return YES;

@@ -324,7 +324,7 @@ static NSString *kRendererName = @"TopDrawRenderer";
   NSData *sourceData = [source_ dataUsingEncoding:NSUTF8StringEncoding];
   
   if (![sourceData writeToFile:sourcePath atomically:NO]) {
-    NSLog(@"Unable to write TDS (%lu bytes) to %@ (%d)", [sourceData length], sourcePath, errno);
+    NSLog(@"Unable to write TDS (%ld bytes) to %@ (%d)", (long)[sourceData length], sourcePath, errno);
     return;
   }
   
@@ -337,8 +337,8 @@ static NSString *kRendererName = @"TopDrawRenderer";
   
   if (shouldSplit_)
     [arguments addObject:@"-s"];
-
-  [arguments addObject:[NSString stringWithFormat:@"-r%lu", seed_]];
+  
+  [arguments addObject:[NSString stringWithFormat:@"-r%ld", (long)seed_]];
   [arguments addObject:[NSString stringWithFormat:@"-o%@", outputPath_]];
   [arguments addObject:[NSString stringWithFormat:@"-t%@", type_]];
   [arguments addObject:[NSString stringWithFormat:@"-q%f", quality]];
@@ -347,9 +347,9 @@ static NSString *kRendererName = @"TopDrawRenderer";
     [arguments addObject:[NSString stringWithFormat:@"-n%@", name_]];
   
   if (size_.width > 0 && size_.height > 0) {
-    int width = floor(size_.width);
-    int height = floor(size_.height);
-    [arguments addObject:[NSString stringWithFormat:@"-m%dx%d", width, height]];
+    NSUInteger width = floor(size_.width);
+    NSUInteger height = floor(size_.height);
+    [arguments addObject:[NSString stringWithFormat:@"-m%lulx%lu", (unsigned long)width, (unsigned long)height]];
   }
   
   [arguments addObject:sourcePath];

@@ -89,7 +89,6 @@ static NSString *kRenderFormat = @"tiff";
 - (void)rendererFinished:(NSNotification *)note {
   NSDictionary *userInfo = [note userInfo];
 	NSArray *screenImagePair = [[userInfo objectForKey:RendererOutputKey] componentsSeparatedByString:@":"];
-  NSString *imagePath = [screenImagePair objectAtIndex:1];
   NSString *error = [userInfo objectForKey:RendererErrorKey];
   NSString *log = [userInfo objectForKey:RendererLogKey];
   Logging *logging = [[NSApp delegate] logging];
@@ -120,6 +119,7 @@ static NSString *kRenderFormat = @"tiff";
     CGImageRelease(image_);
     image_ = nil;
     
+    NSString *imagePath = screenImagePair.count > 1 ? [screenImagePair objectAtIndex:1] : nil;
     if ([imagePath length] && ![error length]) {
       NSData *data = [NSData dataWithContentsOfFile:imagePath options:0 error:nil];
       

@@ -29,7 +29,12 @@ Both the Top Draw application and the Viewer use a separate TopDrawRenderer proc
 The last 10 images rendered will be saved in ~/Library/Application Support/Google/TopDraw.
 
 == Requirements ==
-TopDraw requires Mac OS X 10.5 (Leopard) or later as it uses the JavaScriptCore.framework to evaluate the JavaScript.
+TopDraw requires Mac OS X 10.6 or later as it uses the JavaScriptCore.framework to evaluate the JavaScript.
+
+== TODO ==
+- Fix Plasma, noise
+- Build in renderer for debug build
+- Consider JSON output format from renderer
 
 == History ==
 11/16/2009 - 1.4
