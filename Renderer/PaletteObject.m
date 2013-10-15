@@ -169,8 +169,8 @@
     }
 
     // Add the key and a limit
-    urlStr = [urlStr stringByAppendingFormat:@"&itemsPerPage=%d&key=9B9B1A989185ED36A88A2E7817FF7389",
-              (int)count];
+    urlStr = [urlStr stringByAppendingFormat:@"&itemsPerPage=%ld&key=9B9B1A989185ED36A88A2E7817FF7389",
+              (long)count];
     NSString *escaped = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSURL *url = [NSURL URLWithString:escaped];

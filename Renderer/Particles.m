@@ -307,7 +307,7 @@
 }
 
 - (NSString *)toString {
-  return [NSString stringWithFormat:@"Particles: %lu (max: %ld)", (unsigned long)currentCount_, (long)maxParticleCount_];
+  return [NSString stringWithFormat:@"Particles: %lu (max: %lu)", (unsigned long)currentCount_, (unsigned long)maxParticleCount_];
 }
 
 @end

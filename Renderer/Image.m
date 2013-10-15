@@ -57,8 +57,11 @@
           NSData *data = [NSData dataWithContentsOfURL:url];
           CGImageSourceRef src = CGImageSourceCreateWithData((CFDataRef)data, NULL);
           
-          if (CGImageSourceGetCount(src))
+          if (CGImageSourceGetCount(src)) {
             image_ = CGImageSourceCreateImageAtIndex(src, 0, NULL);
+          }
+
+          CFRelease(src);
         }
       }
       
@@ -149,8 +152,8 @@
 
 //------------------------------------------------------------------------------
 - (NSString *)description {
-  return [NSString stringWithFormat:@"%d x %d image, %g alpha, %@ blend mode",
-          (int)width_, (int)height_, alpha_, [Layer blendModeToString:blendMode_]];
+  return [NSString stringWithFormat:@"%lu x %lu image, %g alpha, %@ blend mode",
+          (unsigned long)width_, (unsigned long)height_, alpha_, [Layer blendModeToString:blendMode_]];
 }
 
 @end

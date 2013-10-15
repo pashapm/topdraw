@@ -96,42 +96,40 @@
 //------------------------------------------------------------------------------
 + (CGBlendMode)blendModeFromString:(NSString *)blendModeStr {
   static NSDictionary *sBlendMode = nil;
-  
-  @synchronized (sBlendMode) {
-    if (!sBlendMode) {
-      sBlendMode = [[NSDictionary dictionaryWithObjectsAndKeys:
-                     [NSNumber numberWithInt:kCGBlendModeNormal], @"normal",
-                     [NSNumber numberWithInt:kCGBlendModeMultiply], @"multiply",
-                     [NSNumber numberWithInt:kCGBlendModeOverlay], @"overlay",
-                     [NSNumber numberWithInt:kCGBlendModeDarken], @"darken",
-                     [NSNumber numberWithInt:kCGBlendModeLighten], @"lighten",
-                     [NSNumber numberWithInt:kCGBlendModeColorDodge], @"color-dodge",
-                     [NSNumber numberWithInt:kCGBlendModeColorBurn], @"color-burn",
-                     [NSNumber numberWithInt:kCGBlendModeSoftLight], @"soft-light",
-                     [NSNumber numberWithInt:kCGBlendModeHardLight], @"hard-light",
-                     [NSNumber numberWithInt:kCGBlendModeDifference], @"difference",
-                     [NSNumber numberWithInt:kCGBlendModeExclusion], @"exclusion",
-                     [NSNumber numberWithInt:kCGBlendModeHue], @"hue",
-                     [NSNumber numberWithInt:kCGBlendModeSaturation], @"saturation",
-                     [NSNumber numberWithInt:kCGBlendModeColor], @"color",
-                     [NSNumber numberWithInt:kCGBlendModeLuminosity], @"luminosity",
-
-                     [NSNumber numberWithInt:kCGBlendModeClear], @"clear",
-                     [NSNumber numberWithInt:kCGBlendModeCopy], @"copy",
-                     [NSNumber numberWithInt:kCGBlendModeSourceIn], @"source-in",
-                     [NSNumber numberWithInt:kCGBlendModeSourceOut], @"source-out",
-                     [NSNumber numberWithInt:kCGBlendModeSourceAtop], @"source-atop",
-                     [NSNumber numberWithInt:kCGBlendModeDestinationOver], @"destination-over",
-                     [NSNumber numberWithInt:kCGBlendModeDestinationIn], @"destination-in",
-                     [NSNumber numberWithInt:kCGBlendModeDestinationOut], @"destination-out",
-                     [NSNumber numberWithInt:kCGBlendModeDestinationAtop], @"destination-atop",
-                     [NSNumber numberWithInt:kCGBlendModeXOR], @"xor",
-                     [NSNumber numberWithInt:kCGBlendModePlusDarker], @"darker",
-                     [NSNumber numberWithInt:kCGBlendModePlusLighter], @"lighter",
-                     
-                     nil] retain];                     
-    }
-  }
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    sBlendMode = [[NSDictionary dictionaryWithObjectsAndKeys:
+                   [NSNumber numberWithInt:kCGBlendModeNormal], @"normal",
+                   [NSNumber numberWithInt:kCGBlendModeMultiply], @"multiply",
+                   [NSNumber numberWithInt:kCGBlendModeOverlay], @"overlay",
+                   [NSNumber numberWithInt:kCGBlendModeDarken], @"darken",
+                   [NSNumber numberWithInt:kCGBlendModeLighten], @"lighten",
+                   [NSNumber numberWithInt:kCGBlendModeColorDodge], @"color-dodge",
+                   [NSNumber numberWithInt:kCGBlendModeColorBurn], @"color-burn",
+                   [NSNumber numberWithInt:kCGBlendModeSoftLight], @"soft-light",
+                   [NSNumber numberWithInt:kCGBlendModeHardLight], @"hard-light",
+                   [NSNumber numberWithInt:kCGBlendModeDifference], @"difference",
+                   [NSNumber numberWithInt:kCGBlendModeExclusion], @"exclusion",
+                   [NSNumber numberWithInt:kCGBlendModeHue], @"hue",
+                   [NSNumber numberWithInt:kCGBlendModeSaturation], @"saturation",
+                   [NSNumber numberWithInt:kCGBlendModeColor], @"color",
+                   [NSNumber numberWithInt:kCGBlendModeLuminosity], @"luminosity",
+                   
+                   [NSNumber numberWithInt:kCGBlendModeClear], @"clear",
+                   [NSNumber numberWithInt:kCGBlendModeCopy], @"copy",
+                   [NSNumber numberWithInt:kCGBlendModeSourceIn], @"source-in",
+                   [NSNumber numberWithInt:kCGBlendModeSourceOut], @"source-out",
+                   [NSNumber numberWithInt:kCGBlendModeSourceAtop], @"source-atop",
+                   [NSNumber numberWithInt:kCGBlendModeDestinationOver], @"destination-over",
+                   [NSNumber numberWithInt:kCGBlendModeDestinationIn], @"destination-in",
+                   [NSNumber numberWithInt:kCGBlendModeDestinationOut], @"destination-out",
+                   [NSNumber numberWithInt:kCGBlendModeDestinationAtop], @"destination-atop",
+                   [NSNumber numberWithInt:kCGBlendModeXOR], @"xor",
+                   [NSNumber numberWithInt:kCGBlendModePlusDarker], @"darker",
+                   [NSNumber numberWithInt:kCGBlendModePlusLighter], @"lighter",
+                   
+                   nil] retain];                     
+  });
   
   return [[sBlendMode objectForKey:[blendModeStr lowercaseString]] intValue];
 }
@@ -1216,7 +1214,7 @@ CGPathRef CreateCurveWithPoints(CGPoint *points, NSUInteger count, CGFloat flatn
     NSString *mode = [RuntimeObject coerceObject:[arguments objectAtIndex:0] toClass:[NSString class]];
     CGFloat alpha = 1.0;
     CGImageRef baseImage = CGBitmapContextCreateImage(backingStore_);
-    CGImageRef srcImage;
+    CGImageRef srcImage = NULL;
     CGRect bounds = [self cgRectFrame];
     bounds.origin.x = bounds.origin.y = 0;
     CGRect srcRect;

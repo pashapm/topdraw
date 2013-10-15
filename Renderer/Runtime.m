@@ -546,8 +546,8 @@ static void CopyStringToCString(NSString *str, char **cStr) {
 - (void)dealloc {
   // This seems a bit strange, as you'd expect the release to invalidate the
   // context.  However, the documentation (and when running), it seems to work.
-  JSGlobalContextRelease(globalContext_);
   JSGarbageCollect(globalContext_);
+  JSGlobalContextRelease(globalContext_);
 
   // Release the created JSClassRef objects that we allocated
   NSMapEnumerator e = NSEnumerateMapTable(classMap_);

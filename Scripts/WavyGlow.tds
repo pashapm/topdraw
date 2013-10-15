@@ -2,9 +2,14 @@
 var grad = new Gradient(new Color("white"), new Color);
 menubar.fillLayer(grad);
 
-// Very dark color background
+// Very dark color background corners
 var bg = new Color("black");
-desktop.fillLayer(bg.vary(0.05, 0.05, 0.05, 0));
+var colors = new Array();
+var vary = 0.3;
+for (var i = 0; i < 4; ++i)
+	colors.push(bg.vary(vary, vary, vary, 0));
+	
+desktop.coloredRect(desktop.bounds, colors[0], colors[1], colors[2], colors[3]);
 
 // Draw lines
 desktop.lineJoin = "round";
