@@ -5,9 +5,9 @@ menubar.fillLayer(grad);
 // Very dark color background corners
 var bg = new Color("black");
 var colors = new Array();
-var vary = 0.3;
+var range = 0.25;
 for (var i = 0; i < 4; ++i)
-	colors.push(bg.vary(vary, vary, vary, 0));
+	colors.push(bg.vary(range, range, range, 0));
 	
 desktop.coloredRect(desktop.bounds, colors[0], colors[1], colors[2], colors[3]);
 
